@@ -22,7 +22,7 @@ import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
-  public static int ID = 5;
+  public static int ID = 2;
   public static int VERSION = 2;
   public static String NAME = "tcfeuv2";
 
@@ -151,25 +151,25 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   public String encode() throws EncodingException {
     List<String> segmentBitStrings = this.encodeSegmentsToBitStrings();
     List<String> encodedSegments = new ArrayList<>();
-    encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(0)));
-    Boolean isServiceSpecific = (Boolean)this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
-    if (isServiceSpecific != null && isServiceSpecific) {
-      String segment1BitString = segmentBitStrings.get(1);
-      if (segment1BitString != null && segment1BitString.length() > 0) {
-        encodedSegments.add(Base64UrlEncoder.encode(segment1BitString));
-      }
-    } else {
-      String segment2BitString = segmentBitStrings.get(2);
-      if (segment2BitString != null && segment2BitString.length() > 0) {
-        encodedSegments.add(Base64UrlEncoder.encode(segment2BitString));
-      }
-
-      String segment3BitString = segmentBitStrings.get(3);
-      if (segment3BitString != null && segment3BitString.length() > 0) {
-        encodedSegments.add(Base64UrlEncoder.encode(segment3BitString));
+    if(segmentBitStrings.size() >= 1) {
+      encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(0)));
+      
+      Boolean isServiceSpecific = (Boolean)this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
+      if (isServiceSpecific) {
+        if(segmentBitStrings.size() >= 2) {
+          encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(1)));
+        }
+      } else {
+        if(segmentBitStrings.size() >= 2) {
+          encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(2)));
+          
+          if(segmentBitStrings.size() >= 3) {
+            encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(3)));
+          }
+        }
       }
     }
-
+    
     return encodedSegments.stream().collect(Collectors.joining("."));
   }
 
