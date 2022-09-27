@@ -1,15 +1,109 @@
 package com.iab.gpp.encoder.section;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfEuV2Test {
 
+  @Test
+  public void testEncode1() throws EncodingException {
+    TcfEuV2 tcfEuV2 = new TcfEuV2();
+    Assertions.assertEquals("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
+  }
+  
+  @Test
+  public void testEncode2() throws EncodingException {
+    TcfEuV2 tcfEuV2 = new TcfEuV2();
+    tcfEuV2.setFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC, true);
+    tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", tcfEuV2.encode());
+  }
+  
+  @Test
+  public void testDecode1() throws DecodingException {
+    TcfEuV2 tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
+    
+    Assertions.assertEquals(2, tcfEuV2.getVersion());
+    Assertions.assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getCreated());
+    Assertions.assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getLastUpdated());
+    Assertions.assertEquals(0, tcfEuV2.getCmpId());
+    Assertions.assertEquals(0, tcfEuV2.getCmpVersion());
+    Assertions.assertEquals(0, tcfEuV2.getConsentScreen());
+    Assertions.assertEquals("EN", tcfEuV2.getConsentLanguage());
+    Assertions.assertEquals(0, tcfEuV2.getVendorListVersion());
+    Assertions.assertEquals(2, tcfEuV2.getPolicyVersion());
+    Assertions.assertEquals(false, tcfEuV2.getIsServiceSpecific());
+    Assertions.assertEquals(false, tcfEuV2.getUseNonStandardStacks());
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), tcfEuV2.getSpecialFeatureOptins());
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), tcfEuV2.getPurposeConsents());
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), tcfEuV2.getPurposeLegitimateInterests());
+    Assertions.assertEquals(false, tcfEuV2.getPurposeOneTreatment());
+    Assertions.assertEquals("AA", tcfEuV2.getPublisherCountryCode());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorConsents());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorLegitimateInterests());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherRestrictions());
+    Assertions.assertEquals(3, tcfEuV2.getPublisherPurposesSegmentType());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherConsents());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherLegitimateInterests());
+    Assertions.assertEquals(0, tcfEuV2.getNumCustomPurposes());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomConsents());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomLegitimateInterests());
+    Assertions.assertEquals(2, tcfEuV2.getVendorsAllowedSegmentType());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorsAllowed());
+    Assertions.assertEquals(1, tcfEuV2.getVendorsDisclosedSegmentType());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorsDisclosed());
+    
+    Assertions.assertEquals(2, tcfEuV2.getId());
+  }
+  
+  @Test
+  public void testDecode2() throws DecodingException {
+    TcfEuV2 tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    
+    Assertions.assertEquals(2, tcfEuV2.getVersion());
+    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getCreated());
+    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getLastUpdated());
+    Assertions.assertEquals(0, tcfEuV2.getCmpId());
+    Assertions.assertEquals(0, tcfEuV2.getCmpVersion());
+    Assertions.assertEquals(0, tcfEuV2.getConsentScreen());
+    Assertions.assertEquals("EN", tcfEuV2.getConsentLanguage());
+    Assertions.assertEquals(0, tcfEuV2.getVendorListVersion());
+    Assertions.assertEquals(2, tcfEuV2.getPolicyVersion());
+    Assertions.assertEquals(true, tcfEuV2.getIsServiceSpecific());
+    Assertions.assertEquals(false, tcfEuV2.getUseNonStandardStacks());
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), tcfEuV2.getSpecialFeatureOptins());
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), tcfEuV2.getPurposeConsents());
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), tcfEuV2.getPurposeLegitimateInterests());
+    Assertions.assertEquals(false, tcfEuV2.getPurposeOneTreatment());
+    Assertions.assertEquals("AA", tcfEuV2.getPublisherCountryCode());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorConsents());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorLegitimateInterests());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherRestrictions());
+    Assertions.assertEquals(3, tcfEuV2.getPublisherPurposesSegmentType());
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), tcfEuV2.getPublisherConsents());
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), tcfEuV2.getPublisherLegitimateInterests());
+    Assertions.assertEquals(0, tcfEuV2.getNumCustomPurposes());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomConsents());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomLegitimateInterests());
+    Assertions.assertEquals(2, tcfEuV2.getVendorsAllowedSegmentType());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorsAllowed());
+    Assertions.assertEquals(1, tcfEuV2.getVendorsDisclosedSegmentType());
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorsDisclosed());
+    
+    Assertions.assertEquals(2, tcfEuV2.getId());
+  }
+  
   @SuppressWarnings("unchecked")
   @Test
-  public void testDecode() throws DecodingException {
+  public void testDecode3() throws DecodingException {
     TcfEuV2 tcfEuV2 = new TcfEuV2(
         "CPcqBNJPcqBNJNwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.QGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g.IGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g");
 

@@ -9,12 +9,13 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.section.EncodableSection;
 import com.iab.gpp.encoder.section.HeaderV1;
+import com.iab.gpp.encoder.section.TcfCaV2;
 import com.iab.gpp.encoder.section.TcfEuV2;
 import com.iab.gpp.encoder.section.UspV1;
 
 public class GppModel {
   private Map<String, EncodableSection> sections = new HashMap<>();
-  private String[] sectionOrder = new String[] {TcfEuV2.NAME, UspV1.NAME};
+  private String[] sectionOrder = new String[] {TcfEuV2.NAME, TcfCaV2.NAME, UspV1.NAME};
 
   public GppModel() {
     
@@ -29,7 +30,10 @@ public class GppModel {
   public void setFieldValue(String sectionName, String fieldName, Object value) {
     EncodableSection section = null;
     if (!this.sections.containsKey(sectionName)) {
-      if (sectionName.equals(TcfEuV2.NAME)) {
+      if (sectionName.equals(TcfCaV2.NAME)) {
+        section = new TcfCaV2();
+        this.sections.put(TcfCaV2.NAME, section);
+      } else if (sectionName.equals(TcfEuV2.NAME)) {
         section = new TcfEuV2();
         this.sections.put(TcfEuV2.NAME, section);
       } else if (sectionName.equals(UspV1.NAME)) {
@@ -81,6 +85,10 @@ public class GppModel {
     }
   }
 
+  public TcfCaV2 getTcfCaV2Section() {
+    return (TcfCaV2)getSection(TcfCaV2.NAME);
+  }
+  
   public TcfEuV2 getTcfEuV2Section() {
     return (TcfEuV2)getSection(TcfEuV2.NAME);
   }
@@ -134,6 +142,9 @@ public class GppModel {
       if (sectionIds.get(i).equals(TcfEuV2.ID)) {
         TcfEuV2 section = new TcfEuV2(encodedSections[i + 1]);
         this.sections.put(TcfEuV2.NAME, section);
+      } else if (sectionIds.get(i).equals(TcfCaV2.ID)) {
+        TcfCaV2 section = new TcfCaV2(encodedSections[i + 1]);
+        this.sections.put(TcfCaV2.NAME, section);
       } else if (sectionIds.get(i).equals(UspV1.ID)) {
         UspV1 section = new UspV1(encodedSections[i + 1]);
         this.sections.put(UspV1.NAME, section);
@@ -155,6 +166,9 @@ public class GppModel {
       if (sectionName.equals(TcfEuV2.NAME)) {
         section = new TcfEuV2();
         this.sections.put(TcfEuV2.NAME, section);
+      } else if (sectionName.equals(TcfCaV2.NAME)) {
+        section = new TcfCaV2();
+        this.sections.put(TcfCaV2.NAME, section);
       } else if (sectionName.equals(UspV1.NAME)) {
         section = new UspV1();
         this.sections.put(UspV1.NAME, section);
