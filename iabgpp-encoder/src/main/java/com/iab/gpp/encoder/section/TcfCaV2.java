@@ -99,7 +99,6 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
       TcfCaV2Field.SPECIAL_FEATURE_EXPRESS_CONSENT,
       TcfCaV2Field.PURPOSES_EXPRESS_CONSENT,
       TcfCaV2Field.PURPOSES_IMPLIED_CONSENT,
-      TcfCaV2Field.PUB_PURPOSES_IMPLIED_CONSENT,
       TcfCaV2Field.VENDOR_EXPRESS_CONSENT,
       TcfCaV2Field.VENDOR_IMPLIED_CONSENT
     };
