@@ -6,6 +6,7 @@ import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<List<Integer>> {
   
@@ -17,7 +18,7 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     super(value);
   }
 
-  public String encode() {
+  public String encode() throws EncodingException {
     //TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
     //to identify in advance which will be shorter based on the array length and values
     int max = this.value.size() > 0 ? this.value.get(this.value.size()-1) : 0;
@@ -28,14 +29,14 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     if (rangeLength <= bitFieldLength) {
       return "1" + FixedIntegerEncoder.encode(max, 16) + rangeBitString;
     } else {
-      List<Integer> bits = new ArrayList<>();
+      List<Boolean> bits = new ArrayList<>();
       int index = 0;
       for (int i = 0; i < max; i++) {
         if (i == this.value.get(index) - 1) {
-          bits.add(1);
+          bits.add(true);
           index++;
         } else {
-          bits.add(0);
+          bits.add(false);
         }
       }
       return "0" + FixedIntegerEncoder.encode(max, 16) + FixedBitfieldEncoder.encode(bits, bitFieldLength);
@@ -47,9 +48,9 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
       this.value = FixedIntegerRangeEncoder.decode(bitString.substring(17));
     } else {
       List<Integer> value = new ArrayList<>();
-      List<Integer> bits = FixedBitfieldEncoder.decode(bitString.substring(17));
+      List<Boolean> bits = FixedBitfieldEncoder.decode(bitString.substring(17));
       for (int i = 0; i < bits.size(); i++) {
-        if (bits.get(i) == 1) {
+        if (bits.get(i) == true) {
           value.add(i + 1);
         }
       }
