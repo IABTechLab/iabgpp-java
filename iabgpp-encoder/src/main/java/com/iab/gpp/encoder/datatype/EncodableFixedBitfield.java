@@ -3,8 +3,9 @@ package com.iab.gpp.encoder.datatype;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<List<Integer>> {
+public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<List<Boolean>> {
   
   private int bitStringLength;
   
@@ -13,12 +14,12 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
     this.bitStringLength = bitStringLength;
   }
   
-  public EncodableFixedBitfield(int bitStringLength, List<Integer> value) {
+  public EncodableFixedBitfield(int bitStringLength, List<Boolean> value) {
     super(value);
     this.bitStringLength = bitStringLength;
   }
   
-  public String encode() {
+  public String encode() throws EncodingException {
     return FixedBitfieldEncoder.encode(this.value, this.bitStringLength);
   }
 
