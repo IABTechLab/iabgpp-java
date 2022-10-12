@@ -18,9 +18,9 @@ public class GppModel {
   private String[] sectionOrder = new String[] {TcfEuV2.NAME, TcfCaV2.NAME, UspV1.NAME};
 
   public GppModel() {
-    
+
   }
-  
+
   public GppModel(String encodedString) throws DecodingException {
     if (encodedString != null && encodedString.length() > 0) {
       this.decode(encodedString);
@@ -86,17 +86,17 @@ public class GppModel {
   }
 
   public TcfCaV2 getTcfCaV2Section() {
-    return (TcfCaV2)getSection(TcfCaV2.NAME);
+    return (TcfCaV2) getSection(TcfCaV2.NAME);
   }
-  
+
   public TcfEuV2 getTcfEuV2Section() {
-    return (TcfEuV2)getSection(TcfEuV2.NAME);
+    return (TcfEuV2) getSection(TcfEuV2.NAME);
   }
-  
+
   public UspV1 getUspV1Section() {
-    return (UspV1)getSection(UspV1.NAME);
+    return (UspV1) getSection(UspV1.NAME);
   }
-  
+
   public List<Integer> getSectionIds() {
     List<Integer> sectionIds = new ArrayList<>();
     for (int i = 0; i < this.sectionOrder.length; i++) {
@@ -137,7 +137,7 @@ public class GppModel {
     this.sections.put(HeaderV1.NAME, header);
 
     @SuppressWarnings("unchecked")
-    List<Integer> sectionIds = (List<Integer>)header.getFieldValue("SectionIds");
+    List<Integer> sectionIds = (List<Integer>) header.getFieldValue("SectionIds");
     for (int i = 0; i < sectionIds.size(); i++) {
       if (sectionIds.get(i).equals(TcfEuV2.ID)) {
         TcfEuV2 section = new TcfEuV2(encodedSections[i + 1]);

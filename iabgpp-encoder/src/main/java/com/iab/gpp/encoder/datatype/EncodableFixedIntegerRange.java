@@ -6,15 +6,15 @@ import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataType<List<Integer>> {
-  
+
   public EncodableFixedIntegerRange() {
     super();
   }
-  
+
   public EncodableFixedIntegerRange(List<Integer> value) {
     super(value);
   }
-  
+
   public String encode() {
     return FixedIntegerRangeEncoder.encode(this.value);
   }
@@ -24,7 +24,7 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
   }
 
   public String substring(String bitString, int fromIndex) throws DecodingException {
-    //TODO: add some validation
+    // TODO: add some validation
     int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
     int index = fromIndex + 12;
     for (int i = 0; i < count; i++) {

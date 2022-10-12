@@ -7,14 +7,14 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<List<Boolean>> {
-  
+
   private IntSupplier getLengthSupplier;
-  
+
   public EncodableFlexibleBitfield(IntSupplier getLengthSupplier) {
     super();
     this.getLengthSupplier = getLengthSupplier;
   }
-  
+
   public EncodableFlexibleBitfield(IntSupplier getLengthSupplier, List<Boolean> value) {
     super(value);
     this.getLengthSupplier = getLengthSupplier;
@@ -29,7 +29,7 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
   }
 
   public String substring(String bitString, int fromIndex) {
-    //TODO: validate
+    // TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.getLengthSupplier.getAsInt());
   }
 }

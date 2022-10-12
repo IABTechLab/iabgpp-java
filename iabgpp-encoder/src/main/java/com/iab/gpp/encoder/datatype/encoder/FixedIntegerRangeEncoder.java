@@ -12,13 +12,13 @@ public class FixedIntegerRangeEncoder {
 
   public static String encode(List<Integer> value) {
     Collections.sort(value);
-    
+
     List<List<Integer>> groups = new ArrayList<>();
-    
+
     int groupStartIndex = 0;
     while (groupStartIndex < value.size()) {
       int groupEndIndex = groupStartIndex;
-      while (groupEndIndex < value.size() - 1 && value.get(groupEndIndex) + 1 == value.get(groupEndIndex+1)) {
+      while (groupEndIndex < value.size() - 1 && value.get(groupEndIndex) + 1 == value.get(groupEndIndex + 1)) {
         groupEndIndex++;
       }
 
@@ -32,10 +32,8 @@ public class FixedIntegerRangeEncoder {
       if (groups.get(i).size() == 1) {
         bitString += "0" + FixedIntegerEncoder.encode(groups.get(i).get(0), 16);
       } else {
-        bitString +=
-          "1" +
-          FixedIntegerEncoder.encode(groups.get(i).get(0), 16) +
-          FixedIntegerEncoder.encode(groups.get(i).get(groups.get(i).size()-1), 16);
+        bitString += "1" + FixedIntegerEncoder.encode(groups.get(i).get(0), 16)
+            + FixedIntegerEncoder.encode(groups.get(i).get(groups.get(i).size() - 1), 16);
       }
     }
     return bitString;

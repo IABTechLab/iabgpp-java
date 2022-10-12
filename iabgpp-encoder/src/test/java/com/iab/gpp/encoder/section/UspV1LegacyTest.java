@@ -11,7 +11,7 @@ public class UspV1LegacyTest {
     UspV1Legacy uspv1 = new UspV1Legacy();
     Assertions.assertEquals("1---", uspv1.encode());
   }
-  
+
   @Test
   public void testEncode2() throws EncodingException {
     UspV1Legacy uspv1 = new UspV1Legacy();
@@ -21,7 +21,7 @@ public class UspV1LegacyTest {
 
     Assertions.assertEquals("1YNN", uspv1.encode());
   }
-  
+
   @Test
   public void testEncode3() throws EncodingException {
     UspV1Legacy uspv1 = new UspV1Legacy();
@@ -32,7 +32,7 @@ public class UspV1LegacyTest {
 
     Assertions.assertEquals("2NYY", uspv1.encode());
   }
-  
+
   @Test
   public void testDecode1() throws EncodingException {
     UspV1Legacy uspv1 = new UspV1Legacy("1NYN");
@@ -40,13 +40,13 @@ public class UspV1LegacyTest {
     Assertions.assertEquals("N", uspv1.getFieldValue("Notice"));
     Assertions.assertEquals("Y", uspv1.getFieldValue("OptOutSale"));
     Assertions.assertEquals("N", uspv1.getFieldValue("LspaCovered"));
-    
+
     Assertions.assertEquals(uspv1.getFieldValue("Version"), uspv1.getVersion());
     Assertions.assertEquals(uspv1.getFieldValue("Notice"), uspv1.getNotice());
     Assertions.assertEquals(uspv1.getFieldValue("OptOutSale"), uspv1.getOptOutSale());
     Assertions.assertEquals(uspv1.getFieldValue("LspaCovered"), uspv1.getLspaCovered());
   }
-  
+
   @Test
   public void testDecode2() throws EncodingException {
     UspV1Legacy uspv1 = new UspV1Legacy("2YNY");
@@ -54,11 +54,11 @@ public class UspV1LegacyTest {
     Assertions.assertEquals("Y", uspv1.getFieldValue("Notice"));
     Assertions.assertEquals("N", uspv1.getFieldValue("OptOutSale"));
     Assertions.assertEquals("Y", uspv1.getFieldValue("LspaCovered"));
-    
+
     Assertions.assertEquals(uspv1.getFieldValue("Version"), uspv1.getVersion());
     Assertions.assertEquals(uspv1.getFieldValue("Notice"), uspv1.getNotice());
     Assertions.assertEquals(uspv1.getFieldValue("OptOutSale"), uspv1.getOptOutSale());
     Assertions.assertEquals(uspv1.getFieldValue("LspaCovered"), uspv1.getLspaCovered());
   }
-  
+
 }

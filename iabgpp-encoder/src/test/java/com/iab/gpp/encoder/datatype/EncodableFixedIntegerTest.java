@@ -14,5 +14,5 @@ class EncodableFixedIntegerTest {
   void testSubstring2() {
     Assertions.assertEquals("111", new EncodableFixedInteger(3).substring("01110", 1));
   }
-  
+
 }

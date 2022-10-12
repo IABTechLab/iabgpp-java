@@ -13,7 +13,7 @@ class DatetimeEncoderTest {
     ZonedDateTime date1 = ZonedDateTime.now(ZoneId.of("UTC"));
     String encodedDate1 = DatetimeEncoder.encode(date1);
     ZonedDateTime date2 = DatetimeEncoder.decode(encodedDate1);
-    
+
     Assertions.assertEquals((date1.toInstant().toEpochMilli() / 100L) * 100L, date2.toInstant().toEpochMilli());
   }
 }

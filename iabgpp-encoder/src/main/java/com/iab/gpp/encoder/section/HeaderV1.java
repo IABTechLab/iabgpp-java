@@ -32,7 +32,7 @@ public class HeaderV1 extends AbstractEncodableBitStringSection {
     fields.put(HeaderV1Field.ID, new EncodableFixedInteger(6, HeaderV1.ID));
     fields.put(HeaderV1Field.VERSION, new EncodableFixedInteger(6, HeaderV1.VERSION));
     fields.put(HeaderV1Field.SECTION_IDS, new EncodableFibonacciIntegerRange(new ArrayList<>()));
-  
+
     //@formatter:off
     fieldOrder = new String[] {
         HeaderV1Field.ID, 
@@ -41,7 +41,7 @@ public class HeaderV1 extends AbstractEncodableBitStringSection {
     };
     //@formatter:on
   }
-  
+
   @Override
   public String encode() throws EncodingException {
     String bitString = this.encodeToBitString();
@@ -64,13 +64,13 @@ public class HeaderV1 extends AbstractEncodableBitStringSection {
   public String getName() {
     return HeaderV1.NAME;
   }
-  
+
   public Integer getVersion() {
-    return (Integer)this.fields.get(HeaderV1Field.VERSION).getValue();
+    return (Integer) this.fields.get(HeaderV1Field.VERSION).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getSectionsIds() {
-    return (List<Integer>)this.fields.get(HeaderV1Field.SECTION_IDS).getValue();
+    return (List<Integer>) this.fields.get(HeaderV1Field.SECTION_IDS).getValue();
   }
 }
