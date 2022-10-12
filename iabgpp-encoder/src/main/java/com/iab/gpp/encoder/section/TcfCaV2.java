@@ -28,7 +28,7 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
   public TcfCaV2() {
     initFields();
   }
-  
+
   public TcfCaV2(String encodedString) throws DecodingException {
     initFields();
 
@@ -39,7 +39,7 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
 
   private void initFields() {
     fields = new HashMap<>();
-    
+
     // core section
     fields.put(TcfCaV2Field.VERSION, new EncodableFixedInteger(6, TcfCaV2.VERSION));
     fields.put(TcfCaV2Field.CREATED, new EncodableDatetime());
@@ -71,18 +71,14 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
       public int getAsInt() {
         return numCustomPurposes.getValue();
       }
-      
-    };
-    
-    fields.put(
-      TcfCaV2Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
-      new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>())
-    );
 
-    fields.put(
-      TcfCaV2Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
-      new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>())
-    );
+    };
+
+    fields.put(TcfCaV2Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
+        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>()));
+
+    fields.put(TcfCaV2Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
+        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>()));
 
     //@formatter:off
     String[] coreSegment = new String[] {
@@ -118,19 +114,19 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
     };
     //@formatter:on
   }
-  
+
   @Override
   public String encode() throws EncodingException {
     List<String> segmentBitStrings = this.encodeSegmentsToBitStrings();
     List<String> encodedSegments = new ArrayList<>();
-    if(segmentBitStrings.size() >= 1) {
+    if (segmentBitStrings.size() >= 1) {
       encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(0)));
-      
-      if(segmentBitStrings.size() >= 2) {
+
+      if (segmentBitStrings.size() >= 2) {
         encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(1)));
       }
     }
-    
+
     return encodedSegments.stream().collect(Collectors.joining("."));
   }
 
@@ -140,11 +136,10 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
     String[] segmentBitStrings = new String[4];
     for (int i = 0; i < encodedSegments.length; i++) {
       /**
-       * first char will contain 6 bits, we only need the first 3. In version 1
-       * and 2 of the TC string there is no segment type for the CORE string.
-       * Instead the first 6 bits are reserved for the encoding version, but
-       * because we're only on a maximum of encoding version 2 the first 3 bits
-       * in the core segment will evaluate to 0.
+       * first char will contain 6 bits, we only need the first 3. In version 1 and 2 of the TC string
+       * there is no segment type for the CORE string. Instead the first 6 bits are reserved for the
+       * encoding version, but because we're only on a maximum of encoding version 2 the first 3 bits in
+       * the core segment will evaluate to 0.
        */
       String segmentBitString = Base64UrlEncoder.decode(encodedSegments[i]);
       switch (segmentBitString.substring(0, 3)) {
@@ -168,10 +163,10 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
   @Override
   public void setFieldValue(String fieldName, Object value) {
     super.setFieldValue(fieldName, value);
-    
+
     if (!fieldName.equals(TcfCaV2Field.CREATED) && !fieldName.equals(TcfCaV2Field.LAST_UPDATED)) {
       ZonedDateTime utcDateTime = ZonedDateTime.now(ZoneId.of("UTC"));
-      
+
       super.setFieldValue(TcfCaV2Field.CREATED, utcDateTime);
       super.setFieldValue(TcfCaV2Field.LAST_UPDATED, utcDateTime);
     }
@@ -186,98 +181,98 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
   public String getName() {
     return TcfCaV2.NAME;
   }
-  
+
   public Integer getVersion() {
-    return (Integer)this.fields.get(TcfCaV2Field.VERSION).getValue();
+    return (Integer) this.fields.get(TcfCaV2Field.VERSION).getValue();
   }
-  
+
   public ZonedDateTime getCreated() {
-    return (ZonedDateTime)this.fields.get(TcfCaV2Field.CREATED).getValue();
+    return (ZonedDateTime) this.fields.get(TcfCaV2Field.CREATED).getValue();
   }
-  
+
   public ZonedDateTime getLastUpdated() {
-    return (ZonedDateTime)this.fields.get(TcfCaV2Field.LAST_UPDATED).getValue();
+    return (ZonedDateTime) this.fields.get(TcfCaV2Field.LAST_UPDATED).getValue();
   }
-  
+
   public Integer getCmpId() {
-    return (Integer)this.fields.get(TcfCaV2Field.CMP_ID).getValue();
+    return (Integer) this.fields.get(TcfCaV2Field.CMP_ID).getValue();
   }
-  
+
   public Integer getCmpVersion() {
-    return (Integer)this.fields.get(TcfCaV2Field.CMP_VERSION).getValue();
+    return (Integer) this.fields.get(TcfCaV2Field.CMP_VERSION).getValue();
   }
-  
+
   public Integer getConsentScreen() {
-    return (Integer)this.fields.get(TcfCaV2Field.CONSENT_SCREEN).getValue();
+    return (Integer) this.fields.get(TcfCaV2Field.CONSENT_SCREEN).getValue();
   }
-  
+
   public String getConsentLanguage() {
-    return (String)this.fields.get(TcfCaV2Field.CONSENT_LANGUAGE).getValue();
+    return (String) this.fields.get(TcfCaV2Field.CONSENT_LANGUAGE).getValue();
   }
-  
+
   public Integer getVendorListVersion() {
-    return (Integer)this.fields.get(TcfCaV2Field.VENDOR_LIST_VERSION).getValue();
+    return (Integer) this.fields.get(TcfCaV2Field.VENDOR_LIST_VERSION).getValue();
   }
-  
+
   public Integer getPolicyVersion() {
-    return (Integer)this.fields.get(TcfCaV2Field.TCF_POLICY_VERSION).getValue();
+    return (Integer) this.fields.get(TcfCaV2Field.TCF_POLICY_VERSION).getValue();
   }
-  
+
   public Boolean getUseNonStandardStacks() {
-    return (Boolean)this.fields.get(TcfCaV2Field.USE_NON_STANDARD_STACKS).getValue();
+    return (Boolean) this.fields.get(TcfCaV2Field.USE_NON_STANDARD_STACKS).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getSpecialFeatureExpressConsent() {
-    return (List<Integer>)this.fields.get(TcfCaV2Field.SPECIAL_FEATURE_EXPRESS_CONSENT).getValue();
+    return (List<Integer>) this.fields.get(TcfCaV2Field.SPECIAL_FEATURE_EXPRESS_CONSENT).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getPurposesExpressConsent() {
-    return (List<Integer>)this.fields.get(TcfCaV2Field.PURPOSES_EXPRESS_CONSENT).getValue();
+    return (List<Integer>) this.fields.get(TcfCaV2Field.PURPOSES_EXPRESS_CONSENT).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getPurposesImpliedConsent() {
-    return (List<Integer>)this.fields.get(TcfCaV2Field.PURPOSES_IMPLIED_CONSENT).getValue();
+    return (List<Integer>) this.fields.get(TcfCaV2Field.PURPOSES_IMPLIED_CONSENT).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getVendorExpressConsent() {
-    return (List<Integer>)this.fields.get(TcfCaV2Field.VENDOR_EXPRESS_CONSENT).getValue();
+    return (List<Integer>) this.fields.get(TcfCaV2Field.VENDOR_EXPRESS_CONSENT).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getVendorImpliedConsent() {
-    return (List<Integer>)this.fields.get(TcfCaV2Field.VENDOR_IMPLIED_CONSENT).getValue();
+    return (List<Integer>) this.fields.get(TcfCaV2Field.VENDOR_IMPLIED_CONSENT).getValue();
   }
-  
+
   public Integer getSegmentType() {
-    return (Integer)this.fields.get(TcfCaV2Field.SEGMENT_TYPE).getValue();
+    return (Integer) this.fields.get(TcfCaV2Field.SEGMENT_TYPE).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getPubPurposesExpressConsent() {
-    return (List<Integer>)this.fields.get(TcfCaV2Field.PUB_PURPOSES_EXPRESS_CONSENT).getValue();
+    return (List<Integer>) this.fields.get(TcfCaV2Field.PUB_PURPOSES_EXPRESS_CONSENT).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getPubPurposesImpliedConsent() {
-    return (List<Integer>)this.fields.get(TcfCaV2Field.PUB_PURPOSES_IMPLIED_CONSENT).getValue();
+    return (List<Integer>) this.fields.get(TcfCaV2Field.PUB_PURPOSES_IMPLIED_CONSENT).getValue();
   }
-  
+
   public Integer getNumCustomPurposes() {
-    return (Integer)this.fields.get(TcfCaV2Field.NUM_CUSTOM_PURPOSES).getValue();
+    return (Integer) this.fields.get(TcfCaV2Field.NUM_CUSTOM_PURPOSES).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getCustomPurposesExpressConsent() {
-    return (List<Integer>)this.fields.get(TcfCaV2Field.CUSTOM_PURPOSES_EXPRESS_CONSENT).getValue();
+    return (List<Integer>) this.fields.get(TcfCaV2Field.CUSTOM_PURPOSES_EXPRESS_CONSENT).getValue();
   }
-  
+
   @SuppressWarnings("unchecked")
   public List<Integer> getCustomPurposesImpliedConsent() {
-    return (List<Integer>)this.fields.get(TcfCaV2Field.CUSTOM_PURPOSES_IMPLIED_CONSENT).getValue();
+    return (List<Integer>) this.fields.get(TcfCaV2Field.CUSTOM_PURPOSES_IMPLIED_CONSENT).getValue();
   }
-  
+
 }

@@ -4,14 +4,14 @@ import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<Integer> {
-  
+
   private int bitStringLength;
-  
+
   public EncodableFixedInteger(int bitStringLength) {
     super();
     this.bitStringLength = bitStringLength;
   }
-  
+
   public EncodableFixedInteger(int bitStringLength, Integer value) {
     super(value);
     this.bitStringLength = bitStringLength;
@@ -26,7 +26,7 @@ public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<In
   }
 
   public String substring(String bitString, int fromIndex) {
-    //TODO: validate
+    // TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.bitStringLength);
   }
 }

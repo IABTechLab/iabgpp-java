@@ -8,7 +8,7 @@ import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.field.UspV1Field;
 
 public class UspV1 extends AbstractEncodableBitStringSection {
-  public static int ID = 7;
+  public static int ID = 6;
   public static int VERSION = 1;
   public static String NAME = "uspv1";
 
@@ -23,7 +23,7 @@ public class UspV1 extends AbstractEncodableBitStringSection {
       this.decode(encodedString);
     }
   }
-  
+
   private void initFields() {
     fields = new HashMap<>();
     fields.put(UspV1Field.VERSION, new EncodableFixedInteger(6, UspV1.VERSION));
@@ -63,19 +63,19 @@ public class UspV1 extends AbstractEncodableBitStringSection {
   public String getName() {
     return UspV1.NAME;
   }
-  
+
   public Integer getVersion() {
-    return (Integer)this.fields.get(UspV1Field.VERSION).getValue();
+    return (Integer) this.fields.get(UspV1Field.VERSION).getValue();
   }
-  
+
   public Integer getNotice() {
     return (Integer) fields.get(UspV1Field.NOTICE).getValue();
   }
-  
+
   public Integer getOptOutSale() {
     return (Integer) fields.get(UspV1Field.OPT_OUT_SALE).getValue();
   }
-  
+
   public Integer getLspaCovered() {
     return (Integer) fields.get(UspV1Field.LSPA_COVERED).getValue();
   }

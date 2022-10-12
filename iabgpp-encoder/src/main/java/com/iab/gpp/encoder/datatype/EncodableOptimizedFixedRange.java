@@ -9,19 +9,19 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<List<Integer>> {
-  
+
   public EncodableOptimizedFixedRange() {
     super();
   }
-  
+
   public EncodableOptimizedFixedRange(List<Integer> value) {
     super(value);
   }
 
   public String encode() throws EncodingException {
-    //TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
-    //to identify in advance which will be shorter based on the array length and values
-    int max = this.value.size() > 0 ? this.value.get(this.value.size()-1) : 0;
+    // TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
+    // to identify in advance which will be shorter based on the array length and values
+    int max = this.value.size() > 0 ? this.value.get(this.value.size() - 1) : 0;
     String rangeBitString = FixedIntegerRangeEncoder.encode(this.value);
     int rangeLength = rangeBitString.length();
     int bitFieldLength = max;

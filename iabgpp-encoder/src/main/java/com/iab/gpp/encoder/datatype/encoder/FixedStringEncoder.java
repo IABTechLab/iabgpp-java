@@ -15,12 +15,12 @@ public class FixedStringEncoder {
 
     String bitString = "";
     for (int i = 0; i < value.length(); i++) {
-      int code = (int)value.charAt(i);
+      int code = (int) value.charAt(i);
       if (code == 32) {
         // space
         bitString += FixedIntegerEncoder.encode(63, 6);
       } else if (code >= 65) {
-        bitString += FixedIntegerEncoder.encode(((int)value.charAt(i)) - 65, 6);
+        bitString += FixedIntegerEncoder.encode(((int) value.charAt(i)) - 65, 6);
       } else {
         throw new EncodingException("Unencodable FixedString '" + value + "'");
       }
@@ -41,7 +41,7 @@ public class FixedStringEncoder {
       if (code == 63) {
         value += " ";
       } else {
-        value += (char)(code+65);
+        value += (char) (code + 65);
       }
     }
 

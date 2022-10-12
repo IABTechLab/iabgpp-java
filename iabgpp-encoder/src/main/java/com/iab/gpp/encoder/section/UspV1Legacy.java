@@ -82,19 +82,19 @@ public class UspV1Legacy implements EncodableSection {
   public String getName() {
     return UspV1Legacy.NAME;
   }
-  
+
   public Integer getVersion() {
-    return (Integer)this.fields.get(UspV1LegacyField.VERSION);
+    return (Integer) this.fields.get(UspV1LegacyField.VERSION);
   }
-  
+
   public String getNotice() {
     return (String) fields.get(UspV1LegacyField.NOTICE);
   }
-  
+
   public String getOptOutSale() {
     return (String) fields.get(UspV1LegacyField.OPT_OUT_SALE);
   }
-  
+
   public String getLspaCovered() {
     return (String) fields.get(UspV1LegacyField.LSPA_COVERED);
   }

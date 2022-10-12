@@ -7,9 +7,9 @@ public abstract class AbstractEncodableBitStringDataType<T> {
   protected T value;
 
   public AbstractEncodableBitStringDataType() {
-    
+
   }
-  
+
   public AbstractEncodableBitStringDataType(T value) {
     this.value = value;
   }
@@ -24,10 +24,12 @@ public abstract class AbstractEncodableBitStringDataType<T> {
 
   @SuppressWarnings("unchecked")
   public void setValue(Object value) {
-    this.value = (T)value;
+    this.value = (T) value;
   }
 
   public abstract String encode() throws EncodingException;
+
   public abstract void decode(String bitString) throws DecodingException;
+
   public abstract String substring(String bitString, int fromIndex) throws DecodingException;
 }

@@ -9,18 +9,18 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<List<Integer>> {
-  
+
   public EncodableOptimizedFibonacciRange() {
     super();
   }
-  
+
   public EncodableOptimizedFibonacciRange(List<Integer> value) {
     super(value);
   }
 
   public String encode() throws EncodingException {
-    //TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
-    //to identify in advance which will be shorter based on the array length and values
+    // TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
+    // to identify in advance which will be shorter based on the array length and values
     int max = this.value.size() > 0 ? this.value.get(this.value.size() - 1) : 0;
     String rangeBitString = FibonacciIntegerRangeEncoder.encode(this.value);
     int rangeLength = rangeBitString.length();
@@ -61,9 +61,8 @@ public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitString
   public String substring(String bitString, int fromIndex) throws DecodingException {
     int max = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 16));
     if (bitString.charAt(fromIndex + 16) == '1') {
-      return (
-        bitString.substring(fromIndex, 17) + new EncodableFibonacciIntegerRange().substring(bitString, fromIndex + 17)
-      );
+      return (bitString.substring(fromIndex, 17)
+          + new EncodableFibonacciIntegerRange().substring(bitString, fromIndex + 17));
     } else {
       return bitString.substring(fromIndex, fromIndex + 17 + max);
     }

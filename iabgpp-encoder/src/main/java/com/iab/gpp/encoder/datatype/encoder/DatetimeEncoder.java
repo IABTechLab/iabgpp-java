@@ -10,7 +10,7 @@ public class DatetimeEncoder {
   private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
   public static String encode(ZonedDateTime value) {
-    if(value != null) {
+    if (value != null) {
       return FixedLongEncoder.encode(value.toInstant().toEpochMilli() / 100, 36);
     } else {
       return FixedLongEncoder.encode(0, 36);

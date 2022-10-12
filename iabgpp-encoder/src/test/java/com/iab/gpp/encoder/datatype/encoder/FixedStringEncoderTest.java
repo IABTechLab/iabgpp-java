@@ -11,12 +11,12 @@ class FixedStringEncoderTest {
   void testEncode1() throws EncodingException {
     Assertions.assertEquals("000000000001", FixedStringEncoder.encode("AB", 2));
   }
-  
+
   @Test
   void testEncode2() throws EncodingException {
     Assertions.assertEquals("100000111111", FixedStringEncoder.encode("a", 2));
   }
-  
+
   @Test
   void testEncode3() {
     try {
@@ -26,12 +26,12 @@ class FixedStringEncoderTest {
 
     }
   }
-  
+
   @Test
   void testDecode1() throws DecodingException {
     Assertions.assertEquals("AB", FixedStringEncoder.decode("000000000001"));
   }
-  
+
   @Test
   void testDecode2() throws DecodingException {
     Assertions.assertEquals("a", FixedStringEncoder.decode("100000111111"));

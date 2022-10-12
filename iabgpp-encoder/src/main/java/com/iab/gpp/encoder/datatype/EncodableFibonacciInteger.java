@@ -4,15 +4,15 @@ import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class EncodableFibonacciInteger extends AbstractEncodableBitStringDataType<Integer> {
-  
+
   public EncodableFibonacciInteger() {
     super();
   }
-  
+
   public EncodableFibonacciInteger(Integer value) {
     super(value);
   }
-  
+
   public String encode() {
     return FibonacciIntegerEncoder.encode(this.value);
   }
