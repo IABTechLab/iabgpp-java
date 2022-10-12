@@ -39,7 +39,8 @@ public class FibonacciIntegerEncoder {
   }
 
   public static int decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() < 2 || bitString.indexOf("11") != bitString.length() - 2) {
+    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() < 2
+        || bitString.indexOf("11") != bitString.length() - 2) {
       throw new DecodingException("Undecodable FibonacciInteger '" + bitString + "'");
     }
 

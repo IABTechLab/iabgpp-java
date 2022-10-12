@@ -10,7 +10,7 @@ public class FixedLongEncoder {
   public static String encode(long value, int bitStringLength) {
     String bitString = "";
     while (value > 0) {
-      if((value & 1) == 1) {
+      if ((value & 1) == 1) {
         bitString = "1" + bitString;
       } else {
         bitString = "0" + bitString;

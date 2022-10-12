@@ -5,11 +5,11 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
-  
+
   public EncodableBoolean() {
     super();
   }
-  
+
   public EncodableBoolean(Boolean value) {
     super(value);
   }
@@ -23,7 +23,7 @@ public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean
   }
 
   public String substring(String bitString, int fromIndex) {
-    //TODO: validate
+    // TODO: validate
     return bitString.substring(fromIndex, fromIndex + 1);
   }
 }

@@ -15,7 +15,7 @@ class HeaderV1Test {
     headerV1.setFieldValue("SectionIds", new ArrayList<>());
     Assertions.assertEquals("000011000001000000000000", headerV1.encodeToBitString());
   }
-  
+
   @Test
   public void testEncodeToBitString2() throws EncodingException {
     HeaderV1 headerV1 = new HeaderV1();
@@ -29,7 +29,7 @@ class HeaderV1Test {
     headerV1.setFieldValue("SectionIds", Arrays.asList(2, 6));
     Assertions.assertEquals("000011000001000000000010001101011", headerV1.encodeToBitString());
   }
-  
+
   @Test
   public void testDecodeFromBitString1() throws DecodingException {
     HeaderV1 headerV1 = new HeaderV1();
@@ -37,7 +37,7 @@ class HeaderV1Test {
     Assertions.assertEquals(new ArrayList<>(), headerV1.getFieldValue("SectionIds"));
     Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
   }
-  
+
   @Test
   public void testDecodeFromBitString2() throws DecodingException {
     HeaderV1 headerV1 = new HeaderV1();
@@ -45,7 +45,7 @@ class HeaderV1Test {
     Assertions.assertEquals(Arrays.asList(2), headerV1.getFieldValue("SectionIds"));
     Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
   }
-  
+
   @Test
   public void testDecodeFromBitString3() throws DecodingException {
     HeaderV1 headerV1 = new HeaderV1();
@@ -60,21 +60,21 @@ class HeaderV1Test {
     headerV1.setFieldValue("SectionIds", new ArrayList<>());
     Assertions.assertEquals("DBAA", headerV1.encode());
   }
-  
+
   @Test
   public void testEncode2() throws EncodingException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2));
     Assertions.assertEquals("DBABMA", headerV1.encode());
   }
-  
+
   @Test
   public void testEncode3() throws EncodingException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2, 7));
     Assertions.assertEquals("DBACMMA", headerV1.encode());
   }
-  
+
   @Test
   public void testDecode1() throws DecodingException {
     HeaderV1 headerV1 = new HeaderV1();
@@ -83,7 +83,7 @@ class HeaderV1Test {
     Assertions.assertEquals(headerV1.getFieldValue("Version"), headerV1.getVersion());
     Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
   }
-  
+
   @Test
   public void testDecode2() throws DecodingException {
     HeaderV1 headerV1 = new HeaderV1();
@@ -92,7 +92,7 @@ class HeaderV1Test {
     Assertions.assertEquals(headerV1.getFieldValue("Version"), headerV1.getVersion());
     Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
   }
-  
+
   @Test
   public void testDecode3() throws DecodingException {
     HeaderV1 headerV1 = new HeaderV1();
