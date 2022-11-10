@@ -58,7 +58,7 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(TcfCaV2Field.VENDOR_IMPLIED_CONSENT, new EncodableFixedIntegerRange(new ArrayList<>()));
 
     // publisher purposes segment
-    fields.put(TcfCaV2Field.SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
+    fields.put(TcfCaV2Field.PUB_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
     fields.put(TcfCaV2Field.PUB_PURPOSES_EXPRESS_CONSENT, new EncodableFixedBitfield(24, new ArrayList<>()));
     fields.put(TcfCaV2Field.PUB_PURPOSES_IMPLIED_CONSENT, new EncodableFixedBitfield(24, new ArrayList<>()));
 
@@ -100,7 +100,7 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
     };
 
     String[] publisherPurposesSegment = new String[] {
-      TcfCaV2Field.SEGMENT_TYPE,
+      TcfCaV2Field.PUB_PURPOSES_SEGMENT_TYPE,
       TcfCaV2Field.PUB_PURPOSES_EXPRESS_CONSENT,
       TcfCaV2Field.PUB_PURPOSES_IMPLIED_CONSENT,
       TcfCaV2Field.NUM_CUSTOM_PURPOSES,
@@ -136,8 +136,8 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
     String[] segmentBitStrings = new String[4];
     for (int i = 0; i < encodedSegments.length; i++) {
       /**
-       * first char will contain 6 bits, we only need the first 3. In version 1 and 2 of the TC string
-       * there is no segment type for the CORE string. Instead the first 6 bits are reserved for the
+       * first char will contain 6 bits, we only need the first 3. 
+       * There is no segment type for the CORE string. Instead the first 6 bits are reserved for the
        * encoding version, but because we're only on a maximum of encoding version 2 the first 3 bits in
        * the core segment will evaluate to 0.
        */
@@ -247,8 +247,8 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
     return (List<Integer>) this.fields.get(TcfCaV2Field.VENDOR_IMPLIED_CONSENT).getValue();
   }
 
-  public Integer getSegmentType() {
-    return (Integer) this.fields.get(TcfCaV2Field.SEGMENT_TYPE).getValue();
+  public Integer getPubPurposesSegmentType() {
+    return (Integer) this.fields.get(TcfCaV2Field.PUB_PURPOSES_SEGMENT_TYPE).getValue();
   }
 
   @SuppressWarnings("unchecked")

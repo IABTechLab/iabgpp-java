@@ -3,7 +3,7 @@ package com.iab.gpp.encoder.datatype;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class EncodableFixedBitfieldTest {
+class EncodableFixedIntegerListTest {
 
   @Test
   void testSubstring1() {
