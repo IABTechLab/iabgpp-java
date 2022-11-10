@@ -15,7 +15,7 @@ import com.iab.gpp.encoder.section.TcfCaV2;
 import com.iab.gpp.encoder.section.TcfEuV2;
 import com.iab.gpp.encoder.section.UspV1;
 
-class GppModelTest {
+public class GppModelTest {
 
   private ZonedDateTime utcDateTime = ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
 
