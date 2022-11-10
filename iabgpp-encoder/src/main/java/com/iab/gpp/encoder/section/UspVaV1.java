@@ -1,8 +1,10 @@
 package com.iab.gpp.encoder.section;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
+import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.datatype.encoder.Base64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -30,16 +32,16 @@ public class UspVaV1 extends AbstractEncodableBitStringSection {
     fields = new HashMap<>();
 
     fields.put(UspVaV1Field.VERSION, new EncodableFixedInteger(6, UspVaV1.VERSION));
-    fields.put(UspVaV1Field.SHARING_NOTICE, new EncodableFixedInteger(2));
-    fields.put(UspVaV1Field.SALE_OPT_OUT_NOTICE, new EncodableFixedInteger(2));
-    fields.put(UspVaV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE, new EncodableFixedInteger(2));
-    fields.put(UspVaV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2));
-    fields.put(UspVaV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2));
-    fields.put(UspVaV1Field.SENSITIVE_DATA_PROCESSING, new EncodableFixedInteger(8));
-    fields.put(UspVaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedInteger(2));
-    fields.put(UspVaV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2));
-    fields.put(UspVaV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2));
-    fields.put(UspVaV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2));
+    fields.put(UspVaV1Field.SHARING_NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UspVaV1Field.SALE_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UspVaV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UspVaV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2, 0));
+    fields.put(UspVaV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2, 0));
+    fields.put(UspVaV1Field.SENSITIVE_DATA_PROCESSING, new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0)));
+    fields.put(UspVaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedInteger(2, 0));
+    fields.put(UspVaV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 0));
+    fields.put(UspVaV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0));
+    fields.put(UspVaV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0));
 
     //@formatter:off
     fieldOrder = new String[] {
@@ -106,15 +108,15 @@ public class UspVaV1 extends AbstractEncodableBitStringSection {
   }
 
   @SuppressWarnings("unchecked")
-  public List<Boolean> getSensitiveDataProcessing() {
-    return (List<Boolean>) this.fields.get(UspVaV1Field.SENSITIVE_DATA_PROCESSING).getValue();
+  public List<Integer> getSensitiveDataProcessing() {
+    return (List<Integer>) this.fields.get(UspVaV1Field.SENSITIVE_DATA_PROCESSING).getValue();
   }
 
   public Integer getKnownChildSensitiveDataConsents() {
     return (Integer) this.fields.get(UspVaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS).getValue();
   }
 
-  public Integer getMspaCoveredtransaction() {
+  public Integer getMspaCoveredTransaction() {
     return (Integer) this.fields.get(UspVaV1Field.MSPA_COVERED_TRANSACTION).getValue();
   }
 

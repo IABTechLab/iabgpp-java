@@ -92,7 +92,7 @@ public class TcfCaV2Test {
 
     Assertions.assertEquals("EN", tcfCaV2.getConsentLanguage());
     Assertions.assertEquals(5, tcfCaV2.getId());
-    Assertions.assertEquals(3, tcfCaV2.getSegmentType());
+    Assertions.assertEquals(3, tcfCaV2.getPubPurposesSegmentType());
   }
 
   @Test
@@ -131,6 +131,6 @@ public class TcfCaV2Test {
 
     Assertions.assertEquals("EN", tcfCaV2.getConsentLanguage());
     Assertions.assertEquals(5, tcfCaV2.getId());
-    Assertions.assertEquals(3, tcfCaV2.getSegmentType());
+    Assertions.assertEquals(3, tcfCaV2.getPubPurposesSegmentType());
   }
 }

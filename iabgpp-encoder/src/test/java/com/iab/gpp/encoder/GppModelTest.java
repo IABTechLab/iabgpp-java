@@ -395,6 +395,6 @@ class GppModelTest {
 
     Assertions.assertEquals("EN", tcfCaV2Section.getConsentLanguage());
     Assertions.assertEquals(5, tcfCaV2Section.getId());
-    Assertions.assertEquals(3, tcfCaV2Section.getSegmentType());
+    Assertions.assertEquals(3, tcfCaV2Section.getPubPurposesSegmentType());
   }
 }
