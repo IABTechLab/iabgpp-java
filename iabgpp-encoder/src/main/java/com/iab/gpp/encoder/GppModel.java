@@ -11,11 +11,18 @@ import com.iab.gpp.encoder.section.EncodableSection;
 import com.iab.gpp.encoder.section.HeaderV1;
 import com.iab.gpp.encoder.section.TcfCaV2;
 import com.iab.gpp.encoder.section.TcfEuV2;
+import com.iab.gpp.encoder.section.UspCaV1;
+import com.iab.gpp.encoder.section.UspCoV1;
+import com.iab.gpp.encoder.section.UspCtV1;
+import com.iab.gpp.encoder.section.UspNatV1;
+import com.iab.gpp.encoder.section.UspUtV1;
 import com.iab.gpp.encoder.section.UspV1;
+import com.iab.gpp.encoder.section.UspVaV1;
 
 public class GppModel {
   private Map<String, EncodableSection> sections = new HashMap<>();
-  private String[] sectionOrder = new String[] {TcfEuV2.NAME, TcfCaV2.NAME, UspV1.NAME};
+  private String[] sectionOrder = new String[] {TcfEuV2.NAME, TcfCaV2.NAME, UspV1.NAME, UspNatV1.NAME, UspCaV1.NAME,
+      UspVaV1.NAME, UspCoV1.NAME, UspUtV1.NAME, UspCtV1.NAME};
 
   public GppModel() {
 
@@ -39,6 +46,24 @@ public class GppModel {
       } else if (sectionName.equals(UspV1.NAME)) {
         section = new UspV1();
         this.sections.put(UspV1.NAME, section);
+      } else if (sectionName.equals(UspNatV1.NAME)) {
+        section = new UspNatV1();
+        this.sections.put(UspNatV1.NAME, section);
+      } else if (sectionName.equals(UspCaV1.NAME)) {
+        section = new UspCaV1();
+        this.sections.put(UspCaV1.NAME, section);
+      } else if (sectionName.equals(UspVaV1.NAME)) {
+        section = new UspVaV1();
+        this.sections.put(UspVaV1.NAME, section);
+      } else if (sectionName.equals(UspCoV1.NAME)) {
+        section = new UspCoV1();
+        this.sections.put(UspCoV1.NAME, section);
+      } else if (sectionName.equals(UspUtV1.NAME)) {
+        section = new UspUtV1();
+        this.sections.put(UspUtV1.NAME, section);
+      } else if (sectionName.equals(UspCtV1.NAME)) {
+        section = new UspCtV1();
+        this.sections.put(UspCtV1.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
@@ -97,6 +122,30 @@ public class GppModel {
     return (UspV1) getSection(UspV1.NAME);
   }
 
+  public UspNatV1 getUspNatV1Section() {
+    return (UspNatV1) getSection(UspNatV1.NAME);
+  }
+
+  public UspCaV1 getUspCaV1Section() {
+    return (UspCaV1) getSection(UspCaV1.NAME);
+  }
+
+  public UspVaV1 getUspVaV1Section() {
+    return (UspVaV1) getSection(UspVaV1.NAME);
+  }
+
+  public UspCoV1 getUspCoV1Section() {
+    return (UspCoV1) getSection(UspCoV1.NAME);
+  }
+
+  public UspUtV1 getUspUtV1Section() {
+    return (UspUtV1) getSection(UspUtV1.NAME);
+  }
+
+  public UspCtV1 getUspCtV1Section() {
+    return (UspCtV1) getSection(UspCtV1.NAME);
+  }
+
   public List<Integer> getSectionIds() {
     List<Integer> sectionIds = new ArrayList<>();
     for (int i = 0; i < this.sectionOrder.length; i++) {
@@ -148,6 +197,24 @@ public class GppModel {
       } else if (sectionIds.get(i).equals(UspV1.ID)) {
         UspV1 section = new UspV1(encodedSections[i + 1]);
         this.sections.put(UspV1.NAME, section);
+      } else if (sectionIds.get(i).equals(UspCaV1.ID)) {
+        UspCaV1 section = new UspCaV1(encodedSections[i + 1]);
+        this.sections.put(UspCaV1.NAME, section);
+      } else if (sectionIds.get(i).equals(UspNatV1.ID)) {
+        UspNatV1 section = new UspNatV1(encodedSections[i + 1]);
+        this.sections.put(UspNatV1.NAME, section);
+      } else if (sectionIds.get(i).equals(UspVaV1.ID)) {
+        UspVaV1 section = new UspVaV1(encodedSections[i + 1]);
+        this.sections.put(UspVaV1.NAME, section);
+      } else if (sectionIds.get(i).equals(UspCoV1.ID)) {
+        UspCoV1 section = new UspCoV1(encodedSections[i + 1]);
+        this.sections.put(UspCoV1.NAME, section);
+      } else if (sectionIds.get(i).equals(UspUtV1.ID)) {
+        UspUtV1 section = new UspUtV1(encodedSections[i + 1]);
+        this.sections.put(UspUtV1.NAME, section);
+      } else if (sectionIds.get(i).equals(UspCtV1.ID)) {
+        UspCtV1 section = new UspCtV1(encodedSections[i + 1]);
+        this.sections.put(UspCtV1.NAME, section);
       }
     }
   }
@@ -172,6 +239,27 @@ public class GppModel {
       } else if (sectionName.equals(UspV1.NAME)) {
         section = new UspV1();
         this.sections.put(UspV1.NAME, section);
+      } else if (sectionName.equals(UspV1.NAME)) {
+        section = new UspV1();
+        this.sections.put(UspV1.NAME, section);
+      } else if (sectionName.equals(UspNatV1.NAME)) {
+        section = new UspNatV1();
+        this.sections.put(UspNatV1.NAME, section);
+      } else if (sectionName.equals(UspCaV1.NAME)) {
+        section = new UspCaV1();
+        this.sections.put(UspCaV1.NAME, section);
+      } else if (sectionName.equals(UspVaV1.NAME)) {
+        section = new UspVaV1();
+        this.sections.put(UspVaV1.NAME, section);
+      } else if (sectionName.equals(UspCoV1.NAME)) {
+        section = new UspCoV1();
+        this.sections.put(UspCoV1.NAME, section);
+      } else if (sectionName.equals(UspUtV1.NAME)) {
+        section = new UspUtV1();
+        this.sections.put(UspUtV1.NAME, section);
+      } else if (sectionName.equals(UspCtV1.NAME)) {
+        section = new UspCtV1();
+        this.sections.put(UspCtV1.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
