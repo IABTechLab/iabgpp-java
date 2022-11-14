@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-class HeaderV1Test {
+public class HeaderV1Test {
 
   @Test
   public void testEncodeToBitString1() throws EncodingException {

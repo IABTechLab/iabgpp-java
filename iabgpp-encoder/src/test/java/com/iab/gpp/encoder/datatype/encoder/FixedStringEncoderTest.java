@@ -5,20 +5,20 @@ import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-class FixedStringEncoderTest {
+public class FixedStringEncoderTest {
 
   @Test
-  void testEncode1() throws EncodingException {
+  public void testEncode1() throws EncodingException {
     Assertions.assertEquals("000000000001", FixedStringEncoder.encode("AB", 2));
   }
 
   @Test
-  void testEncode2() throws EncodingException {
+  public void testEncode2() throws EncodingException {
     Assertions.assertEquals("100000111111", FixedStringEncoder.encode("a", 2));
   }
 
   @Test
-  void testEncode3() {
+  public void testEncode3() {
     try {
       FixedStringEncoder.encode("1", 2);
       Assertions.fail("DecodingException expected");
@@ -28,17 +28,17 @@ class FixedStringEncoderTest {
   }
 
   @Test
-  void testDecode1() throws DecodingException {
+  public void testDecode1() throws DecodingException {
     Assertions.assertEquals("AB", FixedStringEncoder.decode("000000000001"));
   }
 
   @Test
-  void testDecode2() throws DecodingException {
+  public void testDecode2() throws DecodingException {
     Assertions.assertEquals("a", FixedStringEncoder.decode("100000111111"));
   }
 
   @Test
-  void testDecode3() {
+  public void testDecode3() {
     try {
       FixedStringEncoder.decode("2");
       Assertions.fail("DecodingException expected");
