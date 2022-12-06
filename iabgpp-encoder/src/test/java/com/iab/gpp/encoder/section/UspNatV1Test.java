@@ -14,7 +14,7 @@ public class UspNatV1Test {
   public void testEncode1() throws EncodingException {
 
     UspNatV1 uspNatV1 = new UspNatV1();
-    Assertions.assertEquals("BAAAAAAAAAA.IA", uspNatV1.encode());
+    Assertions.assertEquals("BAAAAAAAAA.Q", uspNatV1.encode());
   }
 
   @Test
@@ -32,18 +32,42 @@ public class UspNatV1Test {
     uspNatV1.setFieldValue(UspNatV1Field.TARGETED_ADVERTISING_OPT_OUT, 3);
     uspNatV1.setFieldValue(UspNatV1Field.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3));
     uspNatV1.setFieldValue(UspNatV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(0, 1));
-    uspNatV1.setFieldValue(UspNatV1Field.PERSONAL_DATA_CONSENTS, Arrays.asList(2, 3));
+    uspNatV1.setFieldValue(UspNatV1Field.PERSONAL_DATA_CONSENTS, 1);
     uspNatV1.setFieldValue(UspNatV1Field.MSPA_COVERED_TRANSACTION, 1);
     uspNatV1.setFieldValue(UspNatV1Field.MSPA_OPT_OUT_OPTION_MODE, 2);
     uspNatV1.setFieldValue(UspNatV1Field.MSPA_SERVICE_PROVIDER_MODE, 3);
     uspNatV1.setFieldValue(UspNatV1Field.GPC, true);
     
-    Assertions.assertEquals("BbbbGxsbG2w.MA", uspNatV1.encode());
+    Assertions.assertEquals("BbbbGxsbFb.Y", uspNatV1.encode());
+  }
+  
+  @Test
+  public void testEncode3() throws EncodingException {
+    UspNatV1 uspNatV1 = new UspNatV1();
+    
+    uspNatV1.setFieldValue(UspNatV1Field.SHARING_NOTICE, 1);
+    uspNatV1.setFieldValue(UspNatV1Field.SALE_OPT_OUT_NOTICE, 1);
+    uspNatV1.setFieldValue(UspNatV1Field.SHARING_OPT_OUT_NOTICE, 1);
+    uspNatV1.setFieldValue(UspNatV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 1);
+    uspNatV1.setFieldValue(UspNatV1Field.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE, 0);
+    uspNatV1.setFieldValue(UspNatV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE, 0);
+    uspNatV1.setFieldValue(UspNatV1Field.SALE_OPT_OUT, 1);
+    uspNatV1.setFieldValue(UspNatV1Field.SHARING_OPT_OUT, 1);
+    uspNatV1.setFieldValue(UspNatV1Field.TARGETED_ADVERTISING_OPT_OUT, 1);
+    uspNatV1.setFieldValue(UspNatV1Field.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+    uspNatV1.setFieldValue(UspNatV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(0, 0));
+    uspNatV1.setFieldValue(UspNatV1Field.PERSONAL_DATA_CONSENTS, 0);
+    uspNatV1.setFieldValue(UspNatV1Field.MSPA_COVERED_TRANSACTION, 1);
+    uspNatV1.setFieldValue(UspNatV1Field.MSPA_OPT_OUT_OPTION_MODE, 1);
+    uspNatV1.setFieldValue(UspNatV1Field.MSPA_SERVICE_PROVIDER_MODE, 0);
+    uspNatV1.setFieldValue(UspNatV1Field.GPC, true);
+    
+    Assertions.assertEquals("BVQVAAAAAU.Y", uspNatV1.encode());
   }
   
   @Test
   public void testDecodde1() throws DecodingException {
-    UspNatV1 uspNatV1 = new UspNatV1("BbbbGxsbG2w.MA");
+    UspNatV1 uspNatV1 = new UspNatV1("BbbbGxsbFb.Y");
     
     Assertions.assertEquals(1, uspNatV1.getSharingNotice());
     Assertions.assertEquals(2, uspNatV1.getSaleOptOutNotice());
@@ -56,7 +80,7 @@ public class UspNatV1Test {
     Assertions.assertEquals(3, uspNatV1.getTargetedAdvertisingOptOut());
     Assertions.assertEquals(Arrays.asList(0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3), uspNatV1.getSensitiveDataProcessing());
     Assertions.assertEquals(Arrays.asList(0, 1), uspNatV1.getKnownChildSensitiveDataConsents());
-    Assertions.assertEquals(Arrays.asList(2, 3), uspNatV1.getPersonalDataConsents());
+    Assertions.assertEquals(1, uspNatV1.getPersonalDataConsents());
     Assertions.assertEquals(1, uspNatV1.getMspaCoveredTransaction());
     Assertions.assertEquals(2, uspNatV1.getMspaOptOutOptionMode());
     Assertions.assertEquals(3, uspNatV1.getMspaServiceProviderMode());

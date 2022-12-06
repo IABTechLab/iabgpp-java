@@ -13,7 +13,7 @@ public class UspCtV1Test {
   @Test
   public void testEncode1() throws EncodingException {
     UspCtV1 uspCtV1 = new UspCtV1();
-    Assertions.assertEquals("BAAAAAAA.IA", uspCtV1.encode());
+    Assertions.assertEquals("BAAAAAAA.Q", uspCtV1.encode());
   }
 
   @Test
@@ -32,12 +32,12 @@ public class UspCtV1Test {
     uspCtV1.setFieldValue(UspCtV1Field.MSPA_SERVICE_PROVIDER_MODE, 3);
     uspCtV1.setFieldValue(UspCtV1Field.GPC, true);
     
-    Assertions.assertEquals("BbYbG22w.MA", uspCtV1.encode());    
+    Assertions.assertEquals("BbYbG22w.Y", uspCtV1.encode());    
   }
   
   @Test
   public void testDecode1() throws DecodingException {
-    UspCtV1 uspCtV1 = new UspCtV1("BbYbG22w.MA");
+    UspCtV1 uspCtV1 = new UspCtV1("BbYbG22w.Y");
     
     Assertions.assertEquals(1, uspCtV1.getSharingNotice()); 
     Assertions.assertEquals(2, uspCtV1.getSaleOptOutNotice()); 

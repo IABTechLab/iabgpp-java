@@ -9,12 +9,12 @@ public class Base64UrlEncoderTest {
 
   @Test
   public void testEncode1() throws EncodingException {
-    Assertions.assertEquals("DBABMA", Base64UrlEncoder.encode("0000110000010000000000010011"));
+    Assertions.assertEquals("DBABM", Base64UrlEncoder.encode("0000110000010000000000010011"));
   }
 
   @Test
   public void testEncode2() throws EncodingException {
-    Assertions.assertEquals("DBACNYA", Base64UrlEncoder.encode("000011000001000000000010001101011"));
+    Assertions.assertEquals("DBACNY", Base64UrlEncoder.encode("000011000001000000000010001101011"));
   }
 
   @Test
