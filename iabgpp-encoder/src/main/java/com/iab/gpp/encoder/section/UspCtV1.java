@@ -47,7 +47,7 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(UspCtV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0));
 
     // gpc segment
-    fields.put(UspCtV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
+    fields.put(UspCtV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
     fields.put(UspCtV1Field.GPC, new EncodableBoolean(false));
     
     //@formatter:off
@@ -98,18 +98,18 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
     String[] segmentBitStrings = new String[2];
     for (int i = 0; i < encodedSegments.length; i++) {
       /**
-       * first char will contain 6 bits, we only need the first 3. 
+       * first char will contain 6 bits, we only need the first 2. 
        * There is no segment type for the CORE string. Instead the first 6 bits are reserved for the
-       * encoding version, but because we're only on a maximum of encoding version 2 the first 3 bits in
+       * encoding version, but because we're only on a maximum of encoding version 2 the first 2 bits in
        * the core segment will evaluate to 0.
        */
       String segmentBitString = Base64UrlEncoder.decode(encodedSegments[i]);
-      switch (segmentBitString.substring(0, 3)) {
-        case "000": {
+      switch (segmentBitString.substring(0, 2)) {
+        case "00": {
           segmentBitStrings[0] = segmentBitString;
           break;
         }
-        case "001": {
+        case "01": {
           segmentBitStrings[1] = segmentBitString;
           break;
         }

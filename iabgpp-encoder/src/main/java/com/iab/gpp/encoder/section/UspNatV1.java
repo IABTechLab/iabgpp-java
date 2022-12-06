@@ -46,13 +46,13 @@ public class UspNatV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(UspNatV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2, 0));
     fields.put(UspNatV1Field.SENSITIVE_DATA_PROCESSING, new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)));
     fields.put(UspNatV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, Arrays.asList(0, 0)));
-    fields.put(UspNatV1Field.PERSONAL_DATA_CONSENTS, new EncodableFixedIntegerList(2, Arrays.asList(0, 0)));
+    fields.put(UspNatV1Field.PERSONAL_DATA_CONSENTS, new EncodableFixedInteger(2, 0));
     fields.put(UspNatV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 0));
     fields.put(UspNatV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0));
     fields.put(UspNatV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0));
 
     // gpc segment
-    fields.put(UspNatV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
+    fields.put(UspNatV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
     fields.put(UspNatV1Field.GPC, new EncodableBoolean(false));
 
 
@@ -109,17 +109,18 @@ public class UspNatV1 extends AbstractEncodableSegmentedBitStringSection {
     String[] segmentBitStrings = new String[2];
     for (int i = 0; i < encodedSegments.length; i++) {
       /**
-       * first char will contain 6 bits, we only need the first 3. There is no segment type for the CORE
-       * string. Instead the first 6 bits are reserved for the encoding version, but because we're only on
-       * a maximum of encoding version 2 the first 3 bits in the core segment will evaluate to 0.
+       * first char will contain 6 bits, we only need the first 2. 
+       * There is no segment type for the CORE string. Instead the first 6 bits are reserved for the
+       * encoding version, but because we're only on a maximum of encoding version 2 the first 2 bits in
+       * the core segment will evaluate to 0.
        */
       String segmentBitString = Base64UrlEncoder.decode(encodedSegments[i]);
-      switch (segmentBitString.substring(0, 3)) {
-        case "000": {
+      switch (segmentBitString.substring(0, 2)) {
+        case "00": {
           segmentBitStrings[0] = segmentBitString;
           break;
         }
-        case "001": {
+        case "01": {
           segmentBitStrings[1] = segmentBitString;
           break;
         }
@@ -191,9 +192,8 @@ public class UspNatV1 extends AbstractEncodableSegmentedBitStringSection {
     return (List<Integer>) this.fields.get(UspNatV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS).getValue();
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getPersonalDataConsents() {
-    return (List<Integer>) this.fields.get(UspNatV1Field.PERSONAL_DATA_CONSENTS).getValue();
+  public Integer getPersonalDataConsents() {
+    return (Integer) this.fields.get(UspNatV1Field.PERSONAL_DATA_CONSENTS).getValue();
   }
 
   public Integer getMspaCoveredTransaction() {

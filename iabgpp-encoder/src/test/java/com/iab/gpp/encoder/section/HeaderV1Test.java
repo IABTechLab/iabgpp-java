@@ -65,14 +65,14 @@ public class HeaderV1Test {
   public void testEncode2() throws EncodingException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2));
-    Assertions.assertEquals("DBABMA", headerV1.encode());
+    Assertions.assertEquals("DBABM", headerV1.encode());
   }
 
   @Test
   public void testEncode3() throws EncodingException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2, 7));
-    Assertions.assertEquals("DBACMMA", headerV1.encode());
+    Assertions.assertEquals("DBACMM", headerV1.encode());
   }
 
   @Test

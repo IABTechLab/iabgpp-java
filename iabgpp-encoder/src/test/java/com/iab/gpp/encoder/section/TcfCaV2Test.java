@@ -16,7 +16,7 @@ public class TcfCaV2Test {
   public void testEncode1() throws EncodingException {
 
     TcfCaV2 tcfCaV2 = new TcfCaV2();
-    Assertions.assertEquals("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA", tcfCaV2.encode());
+    Assertions.assertEquals("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAA", tcfCaV2.encode());
   }
 
   @Test

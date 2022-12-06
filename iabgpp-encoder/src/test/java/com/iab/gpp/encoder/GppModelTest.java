@@ -71,7 +71,7 @@ public class GppModelTest {
     
     
     String gppString = gppModel.encode();
-    Assertions.assertEquals("DBABTA~BbA", gppString);
+    Assertions.assertEquals("DBABT~Bb", gppString);
 
     Assertions.assertEquals(Arrays.asList(6), gppModel.getSectionIds());
     Assertions.assertEquals(true, gppModel.hasSection(UspV1.ID));
@@ -119,7 +119,7 @@ public class GppModelTest {
 
     
     String gppString = gppModel.encode();
-    Assertions.assertEquals("DBABMA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", gppString);
+    Assertions.assertEquals("DBABM~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", gppString);
 
     Assertions.assertEquals(2, gppString.split("~").length);
 
@@ -168,7 +168,7 @@ public class GppModelTest {
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV2.NAME));
 
     String gppString = gppModel.encode();
-    Assertions.assertEquals("DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BbA", gppString);
+    Assertions.assertEquals("DBACNY~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~Bb", gppString);
 
     Assertions.assertEquals(3, gppString.split("~").length);
 
@@ -266,7 +266,7 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgAMAAwADAAIACQAHg.fHHHA4444ao~BbA",
+        "DBACOe~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgAMAAwADAAIACQAHg.fHHHA4444ao~Bb",
         gppString);
 
     Assertions.assertEquals(4, gppString.split("~").length);
