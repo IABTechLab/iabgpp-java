@@ -24,7 +24,7 @@ public class UspV1Test {
     uspv1.setFieldValue("OptOutSale", 2);
     uspv1.setFieldValue("LspaCovered", 3);
 
-    Assertions.assertEquals("BbA", uspv1.encode());
+    Assertions.assertEquals("Bb", uspv1.encode());
   }
 
   @Test
