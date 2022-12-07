@@ -18,6 +18,25 @@
         </license>
     </licenses>
 
+    <scm>
+        <connection>scm:git:git@github.com:chuff/iabtcf-java.git</connection>
+        <developerConnection>scm:git:git@github.com:chuff/iabtcf-java.git</developerConnection>
+        <url>https://github.com/chuff/iabtcf-java</url>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <modules>
         <module>iabgpp-encoder</module>
         <module>iabgpp-extras</module>
