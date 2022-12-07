@@ -17,11 +17,10 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:chuff/iabgpp-java.git</connection>
-        <developerConnection>scm:git:git@github.com:chuff/iabgpp-java.git</developerConnection>
+        <connection>scm:git@github.com:chuff/iabgpp-java.git</connection>
+        <developerConnection>scm:git@github.com:chuff/iabgpp-java.git</developerConnection>
         <url>https://github.com/chuff/iabgpp-java</url>
-      <tag>iabgpp-core-3.0.0</tag>
-  </scm>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
