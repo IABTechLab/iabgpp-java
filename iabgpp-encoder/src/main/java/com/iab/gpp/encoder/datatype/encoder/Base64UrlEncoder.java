@@ -34,7 +34,7 @@ public class Base64UrlEncoder {
       throw new EncodingException("Unencodable Base64Url '" + bitString + "'");
     }
 
-    while (bitString.length() % 6 > 0) {
+    while (bitString.length() % 24 > 0) {
       bitString += "0";
     }
 
