@@ -14,7 +14,7 @@ public class UspCaV1Test {
   public void testEncode1() throws EncodingException {
 
     UspCaV1 uspCaV1 = new UspCaV1();
-    Assertions.assertEquals("BAAAAAAA.Q", uspCaV1.encode());
+    Assertions.assertEquals("BAAAAAAA.QAAA", uspCaV1.encode());
   }
 
   @Test
@@ -34,7 +34,7 @@ public class UspCaV1Test {
     uspCaV1.setFieldValue(UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE, 2);
     uspCaV1.setFieldValue(UspCaV1Field.GPC, true);
     
-    Assertions.assertEquals("BbYbGwXY.Y", uspCaV1.encode());
+    Assertions.assertEquals("BbYbGwXY.YAAA", uspCaV1.encode());
   }
   
   @Test
@@ -54,12 +54,12 @@ public class UspCaV1Test {
     uspCaV1.setFieldValue(UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE, 0);
     uspCaV1.setFieldValue(UspCaV1Field.GPC, true);
     
-    Assertions.assertEquals("BUoAAABQ.Y", uspCaV1.encode());
+    Assertions.assertEquals("BUoAAABQ.YAAA", uspCaV1.encode());
   }
   
   @Test
   public void testDecode1() throws DecodingException {
-    UspCaV1 uspCaV1 = new UspCaV1("BbYbGwXY.Y");
+    UspCaV1 uspCaV1 = new UspCaV1("BbYbGwXY.YAAA");
     
     Assertions.assertEquals(1, uspCaV1.getSaleOptOutNotice());
     Assertions.assertEquals(2, uspCaV1.getSharingOptOut());
