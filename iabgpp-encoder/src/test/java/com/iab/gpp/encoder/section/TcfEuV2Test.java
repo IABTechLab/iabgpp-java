@@ -15,7 +15,7 @@ public class TcfEuV2Test {
   @Test
   public void testEncode1() throws EncodingException {
     TcfEuV2 tcfEuV2 = new TcfEuV2();
-    Assertions.assertEquals("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
+    Assertions.assertEquals("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
   }
 
   @Test
@@ -24,12 +24,12 @@ public class TcfEuV2Test {
     tcfEuV2.setFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC, true);
     tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAA.YAAAAAAAAA", tcfEuV2.encode());
+    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA", tcfEuV2.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
-    TcfEuV2 tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
+    TcfEuV2 tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
 
     Assertions.assertEquals(2, tcfEuV2.getVersion());
     Assertions.assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getCreated());
@@ -75,7 +75,7 @@ public class TcfEuV2Test {
 
   @Test
   public void testDecode2() throws DecodingException {
-    TcfEuV2 tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    TcfEuV2 tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
 
     Assertions.assertEquals(2, tcfEuV2.getVersion());
     Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getCreated());

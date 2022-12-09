@@ -9,32 +9,32 @@ public class Base64UrlEncoderTest {
 
   @Test
   public void testEncode1() throws EncodingException {
-    Assertions.assertEquals("DBABM", Base64UrlEncoder.encode("0000110000010000000000010011"));
+    Assertions.assertEquals("DBABMAAA", Base64UrlEncoder.encode("0000110000010000000000010011"));
   }
 
   @Test
   public void testEncode2() throws EncodingException {
-    Assertions.assertEquals("DBACNY", Base64UrlEncoder.encode("000011000001000000000010001101011"));
+    Assertions.assertEquals("DBACNYAA", Base64UrlEncoder.encode("000011000001000000000010001101011"));
   }
 
   @Test
   public void testEncode3() throws EncodingException {
-    Assertions.assertEquals("DBABjw", Base64UrlEncoder.encode("00001100000100000000000110001111"));
+    Assertions.assertEquals("DBABjwAA", Base64UrlEncoder.encode("00001100000100000000000110001111"));
   }
 
   @Test
   public void testDecode1() throws DecodingException {
-    Assertions.assertEquals("000011000001000000000001001100000000", Base64UrlEncoder.decode("DBABMA"));
+    Assertions.assertEquals("000011000001000000000001001100000000000000000000", Base64UrlEncoder.decode("DBABMAAA"));
   }
 
   @Test
   public void testDecode2() throws DecodingException {
-    Assertions.assertEquals("000011000001000000000010001101011000000000", Base64UrlEncoder.decode("DBACNYA"));
+    Assertions.assertEquals("000011000001000000000010001101011000000000000000", Base64UrlEncoder.decode("DBACNYAA"));
   }
 
   @Test
   public void testDecode3() throws DecodingException {
-    Assertions.assertEquals("000011000001000000000001100011110000", Base64UrlEncoder.decode("DBABjw"));
+    Assertions.assertEquals("000011000001000000000001100011110000000000000000", Base64UrlEncoder.decode("DBABjwAA"));
   }
 
 }

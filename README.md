@@ -2,8 +2,6 @@
 
 Encode/decode consent information with the IAB GPP Framework
 
-https://iabtechlab.com/gpp/
-
 ### Usage
 
 #### Maven
@@ -25,7 +23,7 @@ import com.iab.gpp.encoder.GppModel;
 import com.iab.gpp.encoder.section.TcfEuV2;
 import com.iab.gpp.encoder.section.UspV1;
 
-String gppString = "DBACDMA~CPdBusAPdBusANwAAAENAwCAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BbA";
+String gppString = "DBACNYAA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BbAA";
 GppModel gppModel = new GppModel(gppString);
 
 TcfEuV2 tcfEuV2Section = (TcfEuV2)gppModel.getSection(TcfEuV2.NAME);

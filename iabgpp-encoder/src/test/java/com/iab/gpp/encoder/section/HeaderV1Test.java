@@ -65,14 +65,14 @@ public class HeaderV1Test {
   public void testEncode2() throws EncodingException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2));
-    Assertions.assertEquals("DBABM", headerV1.encode());
+    Assertions.assertEquals("DBABMAAA", headerV1.encode());
   }
 
   @Test
   public void testEncode3() throws EncodingException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2, 7));
-    Assertions.assertEquals("DBACMM", headerV1.encode());
+    Assertions.assertEquals("DBACMMAA", headerV1.encode());
   }
 
   @Test
@@ -87,7 +87,7 @@ public class HeaderV1Test {
   @Test
   public void testDecode2() throws DecodingException {
     HeaderV1 headerV1 = new HeaderV1();
-    headerV1.decode("DBABMA");
+    headerV1.decode("DBABMAAA");
     Assertions.assertEquals(Arrays.asList(2), headerV1.getFieldValue("SectionIds"));
     Assertions.assertEquals(headerV1.getFieldValue("Version"), headerV1.getVersion());
     Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
@@ -96,7 +96,7 @@ public class HeaderV1Test {
   @Test
   public void testDecode3() throws DecodingException {
     HeaderV1 headerV1 = new HeaderV1();
-    headerV1.decode("BDACNYA");
+    headerV1.decode("BDACNYAA");
     Assertions.assertEquals(Arrays.asList(2, 6), headerV1.getFieldValue("SectionIds"));
     Assertions.assertEquals(headerV1.getFieldValue("Version"), headerV1.getVersion());
     Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
