@@ -6,13 +6,13 @@ Encode/decode consent information with the IAB GPP Framework
 
 #### Maven
 
-The official iabgpp java library is distributed through maven central. Please [search maven central](https://search.maven.org/search?q=g:com.iab.gpp) for the current release version.
+The official iabgpp java library is distributed through maven central. Please [search maven central](https://search.maven.org/search?q=g:com.iabgpp) for the current release version.
 
 #### Decoding
 
 ```
 <dependency>
-  <groupId>com.iab.gpp</groupId>
+  <groupId>com.iabgpp</groupId>
   <artifactId>iabgpp-encoder</artifactId>
   <version>VERSION</version>
 </dependency>
@@ -39,7 +39,7 @@ Integer uspV1Notice = uspV1Section.getNotice();
 
 ```
 <dependency>
-  <groupId>com.iab.gpp</groupId>
+  <groupId>com.iabgpp</groupId>
   <artifactId>iabgpp-encoder</artifactId>
   <version>VERSION</version>
 </dependency>
@@ -78,13 +78,13 @@ List respectively. The `iabgpp-extras-jackson` library uses Jackson 2.10.3 to pa
 
 ```
 <dependency>
-  <groupId>com.iab.gpp</groupId>
+  <groupId>com.iabgpp</groupId>
   <artifactId>iabgpp-extras</artifactId>
   <version>VERSION</version>
 </dependency>
 
 <dependency>
-  <groupId>com.iab.gpp</groupId>
+  <groupId>com.iabgpp</groupId>
   <artifactId>iabgpp-extras-jackson</artifactId>
   <version>VERSION</version>
 </dependency>
