@@ -10,10 +10,22 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.TcfCaV2Field;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
+import com.iab.gpp.encoder.field.UspCaV1Field;
+import com.iab.gpp.encoder.field.UspCoV1Field;
+import com.iab.gpp.encoder.field.UspCtV1Field;
+import com.iab.gpp.encoder.field.UspNatV1Field;
+import com.iab.gpp.encoder.field.UspUtV1Field;
 import com.iab.gpp.encoder.field.UspV1Field;
+import com.iab.gpp.encoder.field.UspVaV1Field;
 import com.iab.gpp.encoder.section.TcfCaV2;
 import com.iab.gpp.encoder.section.TcfEuV2;
+import com.iab.gpp.encoder.section.UspCaV1;
+import com.iab.gpp.encoder.section.UspCoV1;
+import com.iab.gpp.encoder.section.UspCtV1;
+import com.iab.gpp.encoder.section.UspNatV1;
+import com.iab.gpp.encoder.section.UspUtV1;
 import com.iab.gpp.encoder.section.UspV1;
+import com.iab.gpp.encoder.section.UspVaV1;
 
 public class GppModelTest {
 
@@ -41,6 +53,51 @@ public class GppModelTest {
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV2.NAME));
+
+  }
+  
+  @Test
+  public void testEncodeDefaultAll() throws EncodingException {
+    GppModel gppModel = new GppModel();
+    
+    Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(TcfCaV2.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UspV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UspNatV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UspCaV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UspVaV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UspCoV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UspUtV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UspCtV1.NAME));
+    
+    gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VERSION, TcfEuV2.VERSION);
+    gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV2Field.CREATED, utcDateTime);
+    gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV2Field.LAST_UPDATED, utcDateTime);
+    gppModel.setFieldValue(TcfCaV2.NAME, TcfCaV2Field.VERSION, TcfCaV2.VERSION);
+    gppModel.setFieldValue(TcfCaV2.NAME, TcfCaV2Field.CREATED, utcDateTime);
+    gppModel.setFieldValue(TcfCaV2.NAME, TcfCaV2Field.LAST_UPDATED, utcDateTime);
+    gppModel.setFieldValue(UspV1.NAME, UspV1Field.VERSION, UspV1.VERSION);
+    gppModel.setFieldValue(UspNatV1.NAME, UspNatV1Field.VERSION, UspNatV1.VERSION);
+    gppModel.setFieldValue(UspCaV1.NAME, UspCaV1Field.VERSION, UspCaV1.VERSION);
+    gppModel.setFieldValue(UspVaV1.NAME, UspVaV1Field.VERSION, UspVaV1.VERSION);
+    gppModel.setFieldValue(UspCoV1.NAME, UspCoV1Field.VERSION, UspCoV1.VERSION);
+    gppModel.setFieldValue(UspUtV1.NAME, UspUtV1Field.VERSION, UspUtV1.VERSION);
+    gppModel.setFieldValue(UspCtV1.NAME, UspCtV1Field.VERSION, UspCtV1.VERSION);
+    
+    
+    
+    Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(TcfCaV2.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspNatV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspCaV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspVaV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspCoV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspUtV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspCtV1.NAME));
+
+    String gppString = gppModel.encode();
+    Assertions.assertEquals("DBACOawA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA~BAAA~BAAAAAAAAAAA.QAAA~BAAAAAAA.QAAA~BAAAAAAA~BAAAAAAA.QAAA~BAAAAAAA~BAAAAAAA.QAAA", gppString);
 
   }
 
@@ -295,6 +352,22 @@ public class GppModelTest {
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV2.NAME));
 
   }
+  
+  @Test
+  public void testDecodeDefaultsAll() throws DecodingException {
+    String gppString = "DBACOawA~CPj9xr_Pj9xr_AAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPj9xr_Pj9xr_AAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA~BAAA~BAAAAAAAAAAA.QAAA~BAAAAAAA.QAAA~BAAAAAAA~BAAAAAAA.QAAA~BAAAAAAA~BAAAAAAA.QAAA";
+    GppModel gppModel = new GppModel(gppString);
+
+    Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(TcfCaV2.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspNatV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspCaV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspVaV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspCoV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspUtV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UspCtV1.NAME));
+  }
 
   @Test
   public void testDecodeUspv1() throws DecodingException {
@@ -506,11 +579,5 @@ public class GppModelTest {
     Assertions.assertEquals(5, tcfCaV2Section.getId());
     Assertions.assertEquals(3, tcfCaV2Section.getPubPurposesSegmentType());
   }
-  
-  @Test
-  public void testFoo() throws DecodingException {
-    String gppString =
-        "DBACNYAA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BbAA";
-    GppModel gppModel = new GppModel(gppString);
-  }
+
 }

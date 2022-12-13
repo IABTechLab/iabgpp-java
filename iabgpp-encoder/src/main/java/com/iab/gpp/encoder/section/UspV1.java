@@ -27,9 +27,9 @@ public class UspV1 extends AbstractEncodableBitStringSection {
   private void initFields() {
     fields = new HashMap<>();
     fields.put(UspV1Field.VERSION, new EncodableFixedInteger(6, UspV1.VERSION));
-    fields.put(UspV1Field.NOTICE, new EncodableFixedInteger(2));
-    fields.put(UspV1Field.OPT_OUT_SALE, new EncodableFixedInteger(2));
-    fields.put(UspV1Field.LSPA_COVERED, new EncodableFixedInteger(2));
+    fields.put(UspV1Field.NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UspV1Field.OPT_OUT_SALE, new EncodableFixedInteger(2, 0));
+    fields.put(UspV1Field.LSPA_COVERED, new EncodableFixedInteger(2, 0));
 
     //@formatter:off
     fieldOrder = new String[] {

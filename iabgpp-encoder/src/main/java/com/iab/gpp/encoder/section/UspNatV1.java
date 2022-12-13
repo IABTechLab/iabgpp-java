@@ -17,7 +17,7 @@ import com.iab.gpp.encoder.field.UspV1Field;
 public class UspNatV1 extends AbstractEncodableSegmentedBitStringSection {
   public static int ID = 7;
   public static int VERSION = 1;
-  public static String NAME = "uspnat";
+  public static String NAME = "uspnatv1";
 
   public UspNatV1() {
     initFields();
