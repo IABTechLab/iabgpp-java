@@ -579,5 +579,5 @@ public class GppModelTest {
     Assertions.assertEquals(5, tcfCaV2Section.getId());
     Assertions.assertEquals(3, tcfCaV2Section.getPubPurposesSegmentType());
   }
-
+  
 }
