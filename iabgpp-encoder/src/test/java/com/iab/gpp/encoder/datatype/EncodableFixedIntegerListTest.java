@@ -7,12 +7,12 @@ public class EncodableFixedIntegerListTest {
 
   @Test
   public void testSubstring1() {
-    Assertions.assertEquals("000", new EncodableFixedBitfield(3).substring("10001", 1));
+    Assertions.assertEquals("1000", new EncodableFixedIntegerList(2, 2).substring("10001", 0));
   }
 
   @Test
   public void testSubstring2() {
-    Assertions.assertEquals("111", new EncodableFixedBitfield(3).substring("01110", 1));
+    Assertions.assertEquals("1110", new EncodableFixedIntegerList(2, 2).substring("01110", 1));
   }
 
 }

@@ -17,7 +17,7 @@ import com.iab.gpp.encoder.field.UspV1Field;
 public class UspCoV1 extends AbstractEncodableSegmentedBitStringSection {
   public static int ID = 10;
   public static int VERSION = 1;
-  public static String NAME = "uspco";
+  public static String NAME = "uspcov1";
 
   public UspCoV1() {
     initFields();
