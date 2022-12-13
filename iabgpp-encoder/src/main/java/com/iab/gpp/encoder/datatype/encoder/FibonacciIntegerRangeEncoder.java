@@ -27,7 +27,7 @@ public class FibonacciIntegerRangeEncoder {
 
       groupStartIndex = groupEndIndex + 1;
     }
-
+    
     String bitString = FixedIntegerEncoder.encode(groups.size(), 12);
     for (int i = 0; i < groups.size(); i++) {
       if (groups.get(i).size() == 1) {
