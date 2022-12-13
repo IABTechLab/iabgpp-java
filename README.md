@@ -12,7 +12,7 @@ The official iabgpp java library is distributed through maven central. Please [s
 
 ```
 <dependency>
-  <groupId>com.iab.gpp</groupId>
+  <groupId>com.iabgpp</groupId>
   <artifactId>iabgpp-encoder</artifactId>
   <version>VERSION</version>
 </dependency>
