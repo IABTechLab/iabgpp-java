@@ -128,7 +128,21 @@ public class GppModel {
       return null;
     }
   }
+  
+  public void deleteSection(int sectionId) {
+    deleteSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
+  }
+  
+  public void deleteSection(String sectionName) {
+    if (this.sections.containsKey(sectionName)) {
+      this.sections.remove(sectionName);
+    }
+  }
 
+  public void clear() {
+    this.sections.clear();
+  }
+  
   public TcfCaV2 getTcfCaV2Section() {
     return (TcfCaV2) getSection(TcfCaV2.NAME);
   }
