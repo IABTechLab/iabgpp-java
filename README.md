@@ -128,24 +128,24 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |tcfeuv2|2|PolicyVersion|6 bit int. Value is 2|
 |tcfeuv2|2|IsServiceSpecific|Boolean|
 |tcfeuv2|2|UseNonStandardStacks|Boolean|
-|tcfeuv2|2|SpecialFeatureOptins|Boolean array of size 12|
-|tcfeuv2|2|PurposeConsents|Boolean array of size 24|
-|tcfeuv2|2|PurposeLegitimateInterests|Boolean array of size 24|
+|tcfeuv2|2|SpecialFeatureOptins|Boolean list of size 12|
+|tcfeuv2|2|PurposeConsents|Boolean list of size 24|
+|tcfeuv2|2|PurposeLegitimateInterests|Boolean list of size 24|
 |tcfeuv2|2|PurposeOneTreatment|Boolean|
 |tcfeuv2|2|PublisherCountryCode|2 character country code|
-|tcfeuv2|2|VendorConsents|Integer array of variable size|
-|tcfeuv2|2|VendorLegitimateInterests|Integer array of variable size|
-|tcfeuv2|2|PublisherRestrictions|Integer array of variable size|
+|tcfeuv2|2|VendorConsents|Integer list of variable size|
+|tcfeuv2|2|VendorLegitimateInterests|Integer list of variable size|
+|tcfeuv2|2|PublisherRestrictions|Integer list of variable size|
 |tcfeuv2|2|PublisherPurposesSegmentType|3 bit int. Value is 3|
-|tcfeuv2|2|PublisherConsents|Boolean array of size 24|
-|tcfeuv2|2|PublisherLegitimateInterests|Boolean array of size 24|
+|tcfeuv2|2|PublisherConsents|Boolean list of size 24|
+|tcfeuv2|2|PublisherLegitimateInterests|Boolean list of size 24|
 |tcfeuv2|2|NumCustomPurposes|6 bit int|
-|tcfeuv2|2|PublisherCustomConsents|Boolean array where size is set by the NumCustomPurposes field|
-|tcfeuv2|2|PublisherCustomLegitimateInterests|Boolean array where size is set by the NumCustomPurposes field|
+|tcfeuv2|2|PublisherCustomConsents|Boolean list where size is set by the NumCustomPurposes field|
+|tcfeuv2|2|PublisherCustomLegitimateInterests|Boolean list where size is set by the NumCustomPurposes field|
 |tcfeuv2|2|VendorsAllowedSegmentType|3 bit int. Value is 2|
-|tcfeuv2|2|VendorsAllowed|Integer array of variable size|
+|tcfeuv2|2|VendorsAllowed|Integer list of variable size|
 |tcfeuv2|2|VendorsDisclosedSegmentType|3 bit int. Value is 1|
-|tcfeuv2|2|VendorsDisclosed|Integer array of variable size|
+|tcfeuv2|2|VendorsDisclosed|Integer list of variable size|
 |tcfcav2|5|Version|6 bit int. Value is 2.|
 |tcfcav2|5|Created|Datetime. Updated when any fields are set|
 |tcfcav2|5|LastUpdated|Datetime. Updated when any fields are set|
@@ -156,17 +156,17 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |tcfcav2|5|VendorListVersion|12 bit int|
 |tcfcav2|5|TcfPolicyVersion|6 bit int. Value is 2.|
 |tcfcav2|5|UseNonStandardStacks|Boolean|
-|tcfcav2|5|SpecialFeatureExpressConsent|Boolean array of size 12|
-|tcfcav2|5|PurposesExpressConsent|Boolean array of size 24|
-|tcfcav2|5|PurposesImpliedConsent|Boolean array of size 24|
-|tcfcav2|5|VendorExpressConsent|Integer array of variable size|
-|tcfcav2|5|VendorImpliedConsent|Integer array of variable size|
+|tcfcav2|5|SpecialFeatureExpressConsent|Boolean list of size 12|
+|tcfcav2|5|PurposesExpressConsent|Boolean list of size 24|
+|tcfcav2|5|PurposesImpliedConsent|Boolean list of size 24|
+|tcfcav2|5|VendorExpressConsent|Integer list of variable size|
+|tcfcav2|5|VendorImpliedConsent|Integer list of variable size|
 |tcfcav2|5|PubPurposesSegmentType|3 bit int. Value is 3|
-|tcfcav2|5|PubPurposesExpressConsent|Boolean array of size 24|
-|tcfcav2|5|PubPurposesImpliedConsent|Boolean array of size 24|
+|tcfcav2|5|PubPurposesExpressConsent|Boolean list of size 24|
+|tcfcav2|5|PubPurposesImpliedConsent|Boolean list of size 24|
 |tcfcav2|5|NumCustomPurposes|6 bit int|
-|tcfcav2|5|CustomPurposesExpressConsent|Boolean array where size is set by the NumCustomPurposes field|
-|tcfcav2|5|CustomPurposesImpliedConsent|Boolean array where size is set by the NumCustomPurposes field|
+|tcfcav2|5|CustomPurposesExpressConsent|Boolean list where size is set by the NumCustomPurposes field|
+|tcfcav2|5|CustomPurposesImpliedConsent|Boolean list where size is set by the NumCustomPurposes field|
 |uspv1|6|Version|6 bit int. Value is 1|
 |uspv1|6|Notice|2 bit int|
 |uspv1|6|OptOutSale|2 bit int|
@@ -181,8 +181,8 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |uspnatv1|7|SaleOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspnatv1|7|SharingOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspnatv1|7|TargetedAdvertisingOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
-|uspnatv1|7|SensitiveDataProcessing|2 bit int array of size 12. 0=Not applicable, 1=Yes, 2=No|
-|uspnatv1|7|KnownChildSensitiveDataConsents|2 bit int array of size 2. 0=Not applicable, 1=Yes, 2=No|
+|uspnatv1|7|SensitiveDataProcessing|2 bit int list of size 12. 0=Not applicable, 1=Yes, 2=No|
+|uspnatv1|7|KnownChildSensitiveDataConsents|2 bit int list of size 2. 0=Not applicable, 1=Yes, 2=No|
 |uspnatv1|7|PersonalDataConsents|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspnatv1|7|MspaCoveredTransaction|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspnatv1|7|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
@@ -195,8 +195,8 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |uspcav1|8|SensitiveDataLimitUseNotice|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcav1|8|SaleOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcav1|8|SharingOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
-|uspcav1|8|SensitiveDataProcessing|2 bit int array of size 9. 0=Not applicable, 1=Yes, 2=No|
-|uspcav1|8|KnownChildSensitiveDataConsents|2 bit int array of size 2. 0=Not applicable, 1=Yes, 2=No|
+|uspcav1|8|SensitiveDataProcessing|2 bit int list of size 9. 0=Not applicable, 1=Yes, 2=No|
+|uspcav1|8|KnownChildSensitiveDataConsents|2 bit int list of size 2. 0=Not applicable, 1=Yes, 2=No|
 |uspcav1|8|PersonalDataConsents|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcav1|8|MspaCoveredTransaction|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcav1|8|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
@@ -209,7 +209,7 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |uspvav1|9|TargetedAdvertisingOptOutNotice|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspvav1|9|SaleOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspvav1|9|TargetedAdvertisingOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
-|uspvav1|9|SensitiveDataProcessing|2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No|
+|uspvav1|9|SensitiveDataProcessing|2 bit int list of size 8. 0=Not applicable, 1=Yes, 2=No|
 |uspvav1|9|KnownChildSensitiveDataConsents|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspvav1|9|MspaCoveredTransaction|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspvav1|9|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
@@ -220,7 +220,7 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |uspcov1|10|TargetedAdvertisingOptOutNotice|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcov1|10|SaleOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcov1|10|TargetedAdvertisingOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
-|uspcov1|10|SensitiveDataProcessing|2 bit int array of size 7. 0=Not applicable, 1=Yes, 2=No|
+|uspcov1|10|SensitiveDataProcessing|2 bit int list of size 7. 0=Not applicable, 1=Yes, 2=No|
 |uspcov1|10|KnownChildSensitiveDataConsents|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcov1|10|MspaCoveredTransaction|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcov1|10|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
@@ -234,7 +234,7 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |usputv1|11|SensitiveDataProcessingOptOutNotice|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |usputv1|11|SaleOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |usputv1|11|TargetedAdvertisingOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
-|usputv1|11|SensitiveDataProcessing|2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No|
+|usputv1|11|SensitiveDataProcessing|2 bit int list of size 8. 0=Not applicable, 1=Yes, 2=No|
 |usputv1|11|KnownChildSensitiveDataConsents|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |usputv1|11|MspaCoveredTransaction|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |usputv1|11|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
@@ -245,8 +245,8 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |uspctv1|12|TargetedAdvertisingOptOutNotice|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspctv1|12|SaleOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspctv1|12|TargetedAdvertisingOptOut|2 bit int. 0=Not applicable, 1=Yes, 2=No|
-|uspctv1|12|SensitiveDataProcessing|2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No|
-|uspctv1|12|KnownChildSensitiveDataConsents|2 bit int array of size 3. 0=Not applicable, 1=Yes, 2=No|
+|uspctv1|12|SensitiveDataProcessing|2 bit int list of size 8. 0=Not applicable, 1=Yes, 2=No|
+|uspctv1|12|KnownChildSensitiveDataConsents|2 bit int list of size 3. 0=Not applicable, 1=Yes, 2=No|
 |uspctv1|12|MspaCoveredTransaction|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspctv1|12|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspctv1|12|MspaServiceProviderMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
