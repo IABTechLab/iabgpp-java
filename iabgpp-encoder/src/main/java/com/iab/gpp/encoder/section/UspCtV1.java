@@ -12,7 +12,10 @@ import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.UspCaV1Field;
+import com.iab.gpp.encoder.field.UspCoV1Field;
 import com.iab.gpp.encoder.field.UspCtV1Field;
+import com.iab.gpp.encoder.field.UspNatV1Field;
 import com.iab.gpp.encoder.field.UspV1Field;
 
 public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
@@ -51,6 +54,7 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
 
     // gpc segment
     fields.put(UspCtV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
+    fields.put(UspCtV1Field.GPC_SEGMENT_INCLUDED, new EncodableBoolean(true));
     fields.put(UspCtV1Field.GPC, new EncodableBoolean(false));
     
     //@formatter:off
@@ -88,7 +92,10 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
       encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
 
       if (segmentBitStrings.size() >= 2) {
-        encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
+        Boolean gpcSegmentIncluded = (Boolean)this.fields.get(UspCtV1Field.GPC_SEGMENT_INCLUDED).getValue();
+        if(gpcSegmentIncluded) {
+          encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
+        }
       }
     }
 
@@ -99,6 +106,7 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
   public void decode(String encodedSection) throws DecodingException {
     String[] encodedSegments = encodedSection.split("\\.");
     String[] segmentBitStrings = new String[2];
+    boolean gpcSegmentIncluded = false;
     for (int i = 0; i < encodedSegments.length; i++) {
       /**
        * first char will contain 6 bits, we only need the first 2. 
@@ -113,6 +121,7 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
           break;
         }
         case "01": {
+          gpcSegmentIncluded = true;
           segmentBitStrings[1] = segmentBitString;
           break;
         }
@@ -122,6 +131,7 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
       }
     }
     this.decodeSegmentsFromBitStrings(Arrays.asList(segmentBitStrings));
+    this.fields.get(UspCaV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
   }
   
   @Override
@@ -182,6 +192,10 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
 
   public Boolean getGpcSegmentType() {
     return (Boolean) this.fields.get(UspCtV1Field.GPC_SEGMENT_TYPE).getValue();
+  }
+  
+  public Boolean getGpcSegmentIncluded() {
+    return (Boolean) this.fields.get(UspCtV1Field.GPC_SEGMENT_INCLUDED).getValue();
   }
   
   public Boolean getGpc() {

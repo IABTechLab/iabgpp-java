@@ -36,6 +36,13 @@ public class UspCoV1Test {
   }
   
   @Test
+  public void testEncodeWithGpcSegmentExcluded() throws EncodingException {
+    UspCoV1 uspCoV1 = new UspCoV1();
+    uspCoV1.setFieldValue(UspCoV1Field.GPC_SEGMENT_INCLUDED, false);
+    Assertions.assertEquals("BAAAAAA", uspCoV1.encode());
+  }
+  
+  @Test
   public void testDecode1() throws DecodingException {
     UspCoV1 uspCoV1 = new UspCoV1("BbYbG2wA.YA");
     
@@ -50,5 +57,22 @@ public class UspCoV1Test {
     Assertions.assertEquals(2, uspCoV1.getMspaOptOutOptionMode()); 
     Assertions.assertEquals(3, uspCoV1.getMspaServiceProviderMode()); 
     Assertions.assertEquals(true, uspCoV1.getGpc()); 
+  }
+  
+  @Test
+  public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
+    UspCoV1 uspCoV1 = new UspCoV1("BbYbG2wA");
+    
+    Assertions.assertEquals(1, uspCoV1.getSharingNotice()); 
+    Assertions.assertEquals(2, uspCoV1.getSaleOptOutNotice()); 
+    Assertions.assertEquals(3, uspCoV1.getTargetedAdvertisingOptOutNotice()); 
+    Assertions.assertEquals(1, uspCoV1.getSaleOptOut()); 
+    Assertions.assertEquals(2, uspCoV1.getTargetedAdvertisingOptOut()); 
+    Assertions.assertEquals(Arrays.asList(0, 1, 2, 3, 0, 1, 2), uspCoV1.getSensitiveDataProcessing()); 
+    Assertions.assertEquals(3, uspCoV1.getKnownChildSensitiveDataConsents()); 
+    Assertions.assertEquals(1, uspCoV1.getMspaCoveredTransaction()); 
+    Assertions.assertEquals(2, uspCoV1.getMspaOptOutOptionMode()); 
+    Assertions.assertEquals(3, uspCoV1.getMspaServiceProviderMode()); 
+    Assertions.assertEquals(false, uspCoV1.getGpcSegmentIncluded()); 
   }
 }

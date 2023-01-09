@@ -58,6 +58,14 @@ public class UspCaV1Test {
   }
   
   @Test
+  public void testEncodeWithGpcSegmentExcluded() throws EncodingException {
+
+    UspCaV1 uspCaV1 = new UspCaV1();
+    uspCaV1.setFieldValue(UspCaV1Field.GPC_SEGMENT_INCLUDED, false);
+    Assertions.assertEquals("BAAAAAAA", uspCaV1.encode());
+  }
+  
+  @Test
   public void testDecode1() throws DecodingException {
     UspCaV1 uspCaV1 = new UspCaV1("BbYbGwXY.YA");
     
@@ -73,5 +81,23 @@ public class UspCaV1Test {
     Assertions.assertEquals(1, uspCaV1.getMspaOptOutOptionMode());
     Assertions.assertEquals(2, uspCaV1.getMspaServiceProviderMode());
     Assertions.assertEquals(true, uspCaV1.getGpc());
+  }
+  
+  @Test
+  public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
+    UspCaV1 uspCaV1 = new UspCaV1("BbYbGwXY");
+    
+    Assertions.assertEquals(1, uspCaV1.getSaleOptOutNotice());
+    Assertions.assertEquals(2, uspCaV1.getSharingOptOut());
+    Assertions.assertEquals(3, uspCaV1.getSensitiveDataLimitUseNotice());
+    Assertions.assertEquals(1, uspCaV1.getSaleOptOut());
+    Assertions.assertEquals(2, uspCaV1.getSharingOptOut());
+    Assertions.assertEquals(Arrays.asList(0, 1, 2, 3, 0, 1, 2, 3, 0), uspCaV1.getSensitiveDataProcessing());
+    Assertions.assertEquals(Arrays.asList(0, 1), uspCaV1.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, uspCaV1.getPersonalDataConsents());
+    Assertions.assertEquals(3, uspCaV1.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, uspCaV1.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, uspCaV1.getMspaServiceProviderMode());
+    Assertions.assertEquals(false, uspCaV1.getGpcSegmentIncluded());
   }
 }

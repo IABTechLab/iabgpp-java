@@ -66,6 +66,14 @@ public class UspNatV1Test {
   }
   
   @Test
+  public void testEncodeWithGpcSegmentIncluded() throws EncodingException {
+
+    UspNatV1 uspNatV1 = new UspNatV1();
+    uspNatV1.setFieldValue(UspNatV1Field.GPC_SEGMENT_INCLUDED, false);
+    Assertions.assertEquals("BAAAAAAAAAA", uspNatV1.encode());
+  }
+  
+  @Test
   public void testDecode1() throws DecodingException {
     UspNatV1 uspNatV1 = new UspNatV1("BbbbGxsbFbA.YA");
     
@@ -85,5 +93,27 @@ public class UspNatV1Test {
     Assertions.assertEquals(2, uspNatV1.getMspaOptOutOptionMode());
     Assertions.assertEquals(3, uspNatV1.getMspaServiceProviderMode());
     Assertions.assertEquals(true, uspNatV1.getGpc());
+  }
+  
+  @Test
+  public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
+    UspNatV1 uspNatV1 = new UspNatV1("BbbbGxsbFbA");
+    
+    Assertions.assertEquals(1, uspNatV1.getSharingNotice());
+    Assertions.assertEquals(2, uspNatV1.getSaleOptOutNotice());
+    Assertions.assertEquals(3, uspNatV1.getSharingOptOutNotice());
+    Assertions.assertEquals(1, uspNatV1.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(2, uspNatV1.getSensitiveDataProcessingOptOutNotice());
+    Assertions.assertEquals(3, uspNatV1.getSensitiveDataLimitUseNotice());
+    Assertions.assertEquals(1, uspNatV1.getSaleOptOut());
+    Assertions.assertEquals(2, uspNatV1.getSharingOptOut());
+    Assertions.assertEquals(3, uspNatV1.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3), uspNatV1.getSensitiveDataProcessing());
+    Assertions.assertEquals(Arrays.asList(0, 1), uspNatV1.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, uspNatV1.getPersonalDataConsents());
+    Assertions.assertEquals(1, uspNatV1.getMspaCoveredTransaction());
+    Assertions.assertEquals(2, uspNatV1.getMspaOptOutOptionMode());
+    Assertions.assertEquals(3, uspNatV1.getMspaServiceProviderMode());
+    Assertions.assertEquals(false, uspNatV1.getGpcSegmentIncluded());
   }
 }
