@@ -1,25 +1,21 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.HashMap;
-import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
-import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.field.UspV1Field;
+import java.util.Map;
+import com.iab.gpp.encoder.field.UspV1LegacyField;
 
-public class UspV1 extends AbstractEncodableBitStringSection {
+public class UspV1 implements EncodableSection {
   public static int ID = 6;
   public static int VERSION = 1;
   public static String NAME = "uspv1";
 
-  private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
-  
+  protected Map<String, Object> fields;
+
   public UspV1() {
     initFields();
   }
 
-  public UspV1(String encodedString) throws DecodingException {
+  public UspV1(String encodedString) {
     initFields();
 
     if (encodedString != null && encodedString.length() > 0) {
@@ -29,32 +25,52 @@ public class UspV1 extends AbstractEncodableBitStringSection {
 
   private void initFields() {
     fields = new HashMap<>();
-    fields.put(UspV1Field.VERSION, new EncodableFixedInteger(6, UspV1.VERSION));
-    fields.put(UspV1Field.NOTICE, new EncodableFixedInteger(2, 0));
-    fields.put(UspV1Field.OPT_OUT_SALE, new EncodableFixedInteger(2, 0));
-    fields.put(UspV1Field.LSPA_COVERED, new EncodableFixedInteger(2, 0));
-
-    //@formatter:off
-    fieldOrder = new String[] {
-        UspV1Field.VERSION,
-        UspV1Field.NOTICE,
-        UspV1Field.OPT_OUT_SALE,
-        UspV1Field.LSPA_COVERED,
-    };
-    //@formatter:on
+    fields.put(UspV1LegacyField.VERSION, UspV1.VERSION);
+    fields.put(UspV1LegacyField.NOTICE, "-");
+    fields.put(UspV1LegacyField.OPT_OUT_SALE, "-");
+    fields.put(UspV1LegacyField.LSPA_COVERED, "-");
   }
 
   @Override
-  public String encode() throws EncodingException {
-    String bitString = this.encodeToBitString();
-    String encodedString = base64UrlEncoder.encode(bitString);
-    return encodedString;
+  public boolean hasField(String fieldName) {
+    return this.fields.containsKey(fieldName);
   }
 
   @Override
-  public void decode(String encodedString) throws DecodingException {
-    String bitString = base64UrlEncoder.decode(encodedString);
-    this.decodeFromBitString(bitString);
+  public Object getFieldValue(String fieldName) {
+    if (this.fields.containsKey(fieldName)) {
+      return this.fields.get(fieldName);
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public void setFieldValue(String fieldName, Object value) {
+    if (this.fields.containsKey(fieldName)) {
+      this.fields.put(fieldName, value);
+    } else {
+      throw new Error(fieldName + " not found");
+    }
+  }
+
+  @Override
+  public String encode() {
+    String str = "";
+    str += this.getFieldValue(UspV1LegacyField.VERSION);
+    str += this.getFieldValue(UspV1LegacyField.NOTICE);
+    str += this.getFieldValue(UspV1LegacyField.OPT_OUT_SALE);
+    str += this.getFieldValue(UspV1LegacyField.LSPA_COVERED);
+    return str;
+  }
+
+  @Override
+  public void decode(String encodedString) {
+    // TODO: validate
+    this.setFieldValue(UspV1LegacyField.VERSION, Integer.parseInt(String.valueOf(encodedString.charAt(0))));
+    this.setFieldValue(UspV1LegacyField.NOTICE, String.valueOf(encodedString.charAt(1)));
+    this.setFieldValue(UspV1LegacyField.OPT_OUT_SALE, String.valueOf(encodedString.charAt(2)));
+    this.setFieldValue(UspV1LegacyField.LSPA_COVERED, String.valueOf(encodedString.charAt(3)));
   }
 
   @Override
@@ -68,18 +84,18 @@ public class UspV1 extends AbstractEncodableBitStringSection {
   }
 
   public Integer getVersion() {
-    return (Integer) this.fields.get(UspV1Field.VERSION).getValue();
+    return (Integer) this.fields.get(UspV1LegacyField.VERSION);
   }
 
-  public Integer getNotice() {
-    return (Integer) fields.get(UspV1Field.NOTICE).getValue();
+  public String getNotice() {
+    return (String) fields.get(UspV1LegacyField.NOTICE);
   }
 
-  public Integer getOptOutSale() {
-    return (Integer) fields.get(UspV1Field.OPT_OUT_SALE).getValue();
+  public String getOptOutSale() {
+    return (String) fields.get(UspV1LegacyField.OPT_OUT_SALE);
   }
 
-  public Integer getLspaCovered() {
-    return (Integer) fields.get(UspV1Field.LSPA_COVERED).getValue();
+  public String getLspaCovered() {
+    return (String) fields.get(UspV1LegacyField.LSPA_COVERED);
   }
 }
