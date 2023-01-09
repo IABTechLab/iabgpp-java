@@ -188,6 +188,7 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |uspnatv1|7|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspnatv1|7|MspaServiceProviderMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspnatv1|7|GpcSegmentType|2 bit int. Value is 1|
+|uspnatv1|7|GpcSegmentIncluded|Boolean. Default value is true|
 |uspnatv1|7|Gpc|Boolean|
 |uspcav1|8|Version|6 bit int. Value is 1|
 |uspcav1|8|SaleOptOutNotice|2 bit int. 0=Not applicable, 1=Yes, 2=No|
@@ -202,6 +203,7 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |uspcav1|8|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcav1|8|MspaServiceProviderMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcav1|8|GpcSegmentType|2 bit int. Value is 1|
+|uspcav1|8|GpcSegmentIncluded|Boolean. Default value is true|
 |uspcav1|8|Gpc|Boolean|
 |uspvav1|9|Version|6 bit int. Value is 1|
 |uspvav1|9|SharingNotice|2 bit int. 0=Not applicable, 1=Yes, 2=No|
@@ -226,6 +228,7 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |uspcov1|10|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcov1|10|MspaServiceProviderMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspcov1|10|GpcSegmentType|2 bit int. Value is 1|
+|uspcov1|10|GpcSegmentIncluded|Boolean. Default value is true|
 |uspcov1|10|Gpc|Boolean|
 |usputv1|11|Version|6 bit int. Value is 1|
 |usputv1|11|SharingNotice|2 bit int. 0=Not applicable, 1=Yes, 2=No|
@@ -251,5 +254,6 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |uspctv1|12|MspaOptOutOptionMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspctv1|12|MspaServiceProviderMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspctv1|12|GpcSegmentType|2 bit int. Value is 1|
+|uspctv1|12|GpcSegmentIncluded|Boolean. Default value is true|
 |uspctv1|12|Gpc|Boolean|
 
