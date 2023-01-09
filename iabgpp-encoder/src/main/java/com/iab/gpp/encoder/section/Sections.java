@@ -16,7 +16,7 @@ public class Sections {
     SECTION_ID_NAME_MAP = new HashMap<>();
 
     SECTION_ID_NAME_MAP.put(TcfEuV2.ID, TcfEuV2.NAME);
-    SECTION_ID_NAME_MAP.put(TcfCaV2.ID, TcfCaV2.NAME);
+    SECTION_ID_NAME_MAP.put(TcfCaV1.ID, TcfCaV1.NAME);
     SECTION_ID_NAME_MAP.put(UspV1.ID, UspV1.NAME);
     SECTION_ID_NAME_MAP.put(UspNatV1.ID, UspNatV1.NAME);
     SECTION_ID_NAME_MAP.put(UspCaV1.ID, UspCaV1.NAME);
