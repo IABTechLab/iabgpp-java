@@ -24,7 +24,7 @@ public class UspV1Test {
     uspv1.setFieldValue("OptOutSale", 2);
     uspv1.setFieldValue("LspaCovered", 3);
 
-    Assertions.assertEquals("BbAA", uspv1.encode());
+    Assertions.assertEquals("BbA", uspv1.encode());
   }
 
   @Test
@@ -44,7 +44,7 @@ public class UspV1Test {
 
   @Test
   public void testDecode2() throws DecodingException {
-    UspV1 uspv1 = new UspV1("BbAA");
+    UspV1 uspv1 = new UspV1("BbA");
     Assertions.assertEquals(1, uspv1.getFieldValue("Notice"));
     Assertions.assertEquals(2, uspv1.getFieldValue("OptOutSale"));
     Assertions.assertEquals(3, uspv1.getFieldValue("LspaCovered"));

@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
-import com.iab.gpp.encoder.datatype.encoder.Base64UrlEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
@@ -19,6 +16,10 @@ import com.iab.gpp.encoder.datatype.EncodableFixedIntegerRange;
 import com.iab.gpp.encoder.datatype.EncodableFixedString;
 import com.iab.gpp.encoder.datatype.EncodableFlexibleBitfield;
 import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
+import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
+import com.iab.gpp.encoder.datatype.encoder.TraditionalBase64UrlEncoder;
+import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
@@ -26,6 +27,8 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   public static int VERSION = 2;
   public static String NAME = "tcfeuv2";
 
+  private AbstractBase64UrlEncoder base64UrlEncoder = new TraditionalBase64UrlEncoder();
+  
   public TcfEuV2() {
     initFields();
   }
@@ -148,19 +151,19 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
     List<String> segmentBitStrings = this.encodeSegmentsToBitStrings();
     List<String> encodedSegments = new ArrayList<>();
     if (segmentBitStrings.size() >= 1) {
-      encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(0)));
+      encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
 
       Boolean isServiceSpecific = (Boolean) this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
       if (isServiceSpecific) {
         if (segmentBitStrings.size() >= 2) {
-          encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(1)));
+          encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
         }
       } else {
         if (segmentBitStrings.size() >= 2) {
-          encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(2)));
+          encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(2)));
 
           if (segmentBitStrings.size() >= 3) {
-            encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(3)));
+            encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(3)));
           }
         }
       }
@@ -180,7 +183,7 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
        * encoding version, but because we're only on a maximum of encoding version 2 the first 3 bits in
        * the core segment will evaluate to 0.
        */
-      String segmentBitString = Base64UrlEncoder.decode(encodedSegments[i]);
+      String segmentBitString = base64UrlEncoder.decode(encodedSegments[i]);
       switch (segmentBitString.substring(0, 3)) {
         // unfortunately, the segment ordering doesn't match the segment ids
         case "000": {

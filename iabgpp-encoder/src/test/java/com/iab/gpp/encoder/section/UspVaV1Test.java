@@ -13,7 +13,7 @@ public class UspVaV1Test {
   @Test
   public void testEncode1() throws EncodingException {
     UspVaV1 uspVaV1 = new UspVaV1();
-    Assertions.assertEquals("BAAAAAAA", uspVaV1.encode());
+    Assertions.assertEquals("BAAAAAA", uspVaV1.encode());
   }
 
   @Test
@@ -31,12 +31,12 @@ public class UspVaV1Test {
     uspVaV1.setFieldValue(UspVaV1Field.MSPA_OPT_OUT_OPTION_MODE, 2);
     uspVaV1.setFieldValue(UspVaV1Field.MSPA_SERVICE_PROVIDER_MODE, 3);
     
-    Assertions.assertEquals("BbYbG9sA", uspVaV1.encode());    
+    Assertions.assertEquals("BbYbG9s", uspVaV1.encode());    
   }
   
   @Test
   public void testDecode1() throws DecodingException {
-    UspVaV1 uspVaV1 = new UspVaV1("BbYbG9sA");
+    UspVaV1 uspVaV1 = new UspVaV1("BbYbG9s");
     
     Assertions.assertEquals(1, uspVaV1.getSharingNotice()); 
     Assertions.assertEquals(2, uspVaV1.getSaleOptOutNotice()); 

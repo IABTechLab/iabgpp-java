@@ -13,7 +13,7 @@ public class UspCtV1Test {
   @Test
   public void testEncode1() throws EncodingException {
     UspCtV1 uspCtV1 = new UspCtV1();
-    Assertions.assertEquals("BAAAAAAA.QAAA", uspCtV1.encode());
+    Assertions.assertEquals("BAAAAAAA.QA", uspCtV1.encode());
   }
 
   @Test
@@ -32,7 +32,7 @@ public class UspCtV1Test {
     uspCtV1.setFieldValue(UspCtV1Field.MSPA_SERVICE_PROVIDER_MODE, 3);
     uspCtV1.setFieldValue(UspCtV1Field.GPC, true);
     
-    Assertions.assertEquals("BbYbG22w.YAAA", uspCtV1.encode());    
+    Assertions.assertEquals("BbYbG22w.YA", uspCtV1.encode());    
   }
   
   @Test

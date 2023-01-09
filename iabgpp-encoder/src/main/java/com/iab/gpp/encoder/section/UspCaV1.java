@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
-import com.iab.gpp.encoder.datatype.encoder.Base64UrlEncoder;
+import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
+import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.UspCaV1Field;
@@ -19,6 +20,8 @@ public class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public static int VERSION = 1;
   public static String NAME = "uspcav1";
 
+  private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
+  
   public UspCaV1() {
     initFields();
   }
@@ -84,10 +87,10 @@ public class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
     List<String> segmentBitStrings = this.encodeSegmentsToBitStrings();
     List<String> encodedSegments = new ArrayList<>();
     if (segmentBitStrings.size() >= 1) {
-      encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(0)));
+      encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
 
       if (segmentBitStrings.size() >= 2) {
-        encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(1)));
+        encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
       }
     }
 
@@ -105,7 +108,7 @@ public class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
        * encoding version, but because we're only on a maximum of encoding version 2 the first 2 bits in
        * the core segment will evaluate to 0.
        */
-      String segmentBitString = Base64UrlEncoder.decode(encodedSegments[i]);
+      String segmentBitString = base64UrlEncoder.decode(encodedSegments[i]);
       switch (segmentBitString.substring(0, 2)) {
         case "00": {
           segmentBitStrings[0] = segmentBitString;

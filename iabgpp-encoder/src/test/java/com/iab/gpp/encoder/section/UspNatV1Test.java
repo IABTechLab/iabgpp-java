@@ -14,7 +14,7 @@ public class UspNatV1Test {
   public void testEncode1() throws EncodingException {
 
     UspNatV1 uspNatV1 = new UspNatV1();
-    Assertions.assertEquals("BAAAAAAAAAAA.QAAA", uspNatV1.encode());
+    Assertions.assertEquals("BAAAAAAAAAA.QA", uspNatV1.encode());
   }
 
   @Test
@@ -38,7 +38,7 @@ public class UspNatV1Test {
     uspNatV1.setFieldValue(UspNatV1Field.MSPA_SERVICE_PROVIDER_MODE, 3);
     uspNatV1.setFieldValue(UspNatV1Field.GPC, true);
     
-    Assertions.assertEquals("BbbbGxsbFbAA.YAAA", uspNatV1.encode());
+    Assertions.assertEquals("BbbbGxsbFbA.YA", uspNatV1.encode());
   }
   
   @Test
@@ -62,12 +62,12 @@ public class UspNatV1Test {
     uspNatV1.setFieldValue(UspNatV1Field.MSPA_SERVICE_PROVIDER_MODE, 0);
     uspNatV1.setFieldValue(UspNatV1Field.GPC, true);
     
-    Assertions.assertEquals("BVQVAAAAAUAA.YAAA", uspNatV1.encode());
+    Assertions.assertEquals("BVQVAAAAAUA.YA", uspNatV1.encode());
   }
   
   @Test
-  public void testDecodde1() throws DecodingException {
-    UspNatV1 uspNatV1 = new UspNatV1("BbbbGxsbFbAA.YAAA");
+  public void testDecode1() throws DecodingException {
+    UspNatV1 uspNatV1 = new UspNatV1("BbbbGxsbFbA.YA");
     
     Assertions.assertEquals(1, uspNatV1.getSharingNotice());
     Assertions.assertEquals(2, uspNatV1.getSaleOptOutNotice());

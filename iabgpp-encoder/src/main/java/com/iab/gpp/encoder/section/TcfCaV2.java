@@ -15,7 +15,8 @@ import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerRange;
 import com.iab.gpp.encoder.datatype.EncodableFixedString;
 import com.iab.gpp.encoder.datatype.EncodableFlexibleBitfield;
-import com.iab.gpp.encoder.datatype.encoder.Base64UrlEncoder;
+import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
+import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.TcfCaV2Field;
@@ -25,6 +26,8 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
   public static int VERSION = 2;
   public static String NAME = "tcfcav2";
 
+  private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
+  
   public TcfCaV2() {
     initFields();
   }
@@ -120,10 +123,10 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
     List<String> segmentBitStrings = this.encodeSegmentsToBitStrings();
     List<String> encodedSegments = new ArrayList<>();
     if (segmentBitStrings.size() >= 1) {
-      encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(0)));
+      encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
 
       if (segmentBitStrings.size() >= 2) {
-        encodedSegments.add(Base64UrlEncoder.encode(segmentBitStrings.get(1)));
+        encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
       }
     }
 
@@ -141,7 +144,7 @@ public class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
        * encoding version, but because we're only on a maximum of encoding version 2 the first 3 bits in
        * the core segment will evaluate to 0.
        */
-      String segmentBitString = Base64UrlEncoder.decode(encodedSegments[i]);
+      String segmentBitString = base64UrlEncoder.decode(encodedSegments[i]);
       switch (segmentBitString.substring(0, 3)) {
         // unfortunately, the segment ordering doesn't match the segment ids
         case "000": {
