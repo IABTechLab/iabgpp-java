@@ -61,8 +61,8 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS, new EncodableFixedBitfield(24, new ArrayList<>()));
     fields.put(TcfEuV2Field.PURPOSE_ONE_TREATMENT, new EncodableBoolean(false));
     fields.put(TcfEuV2Field.PUBLISHER_COUNTRY_CODE, new EncodableFixedString(2, "AA"));
-    fields.put(TcfEuV2Field.VENDOR_CONSENTS, new EncodableFixedIntegerRange(new ArrayList<>()));
-    fields.put(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS, new EncodableFixedIntegerRange(new ArrayList<>()));
+    fields.put(TcfEuV2Field.VENDOR_CONSENTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
+    fields.put(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
 
     fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS, new EncodableFixedIntegerRange(new ArrayList<>()));
 

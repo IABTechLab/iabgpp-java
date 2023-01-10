@@ -16,7 +16,7 @@ public class TcfCaV1Test {
   public void testEncode1() throws EncodingException {
 
     TcfCaV1 tcfCaV1 = new TcfCaV1();
-    Assertions.assertEquals("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA", tcfCaV1.encode());
+    Assertions.assertEquals("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", tcfCaV1.encode());
   }
 
   @Test
@@ -50,12 +50,12 @@ public class TcfCaV1Test {
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
 
-    Assertions.assertEquals("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgAMAAwADAAIACQAHg.fHHHA4444ao", tcfCaV1.encode());
+    Assertions.assertEquals("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao", tcfCaV1.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
 
     Assertions.assertEquals(0, tcfCaV1.getCmpId());
     Assertions.assertEquals(0, tcfCaV1.getCmpVersion());
@@ -97,7 +97,7 @@ public class TcfCaV1Test {
 
   @Test
   public void testDecode2() throws DecodingException {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgAMAAwADAAIACQAHg.fHHHA4444ao");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
 
     Assertions.assertEquals(50, tcfCaV1.getCmpId());
     Assertions.assertEquals(2, tcfCaV1.getCmpVersion());

@@ -12,9 +12,9 @@ import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.EncodableFixedIntegerRange;
 import com.iab.gpp.encoder.datatype.EncodableFixedString;
 import com.iab.gpp.encoder.datatype.EncodableFlexibleBitfield;
+import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
 import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -57,8 +57,8 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT, new EncodableFixedBitfield(12, new ArrayList<>()));
     fields.put(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT, new EncodableFixedBitfield(24, new ArrayList<>()));
     fields.put(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT, new EncodableFixedBitfield(24, new ArrayList<>()));
-    fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, new EncodableFixedIntegerRange(new ArrayList<>()));
-    fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, new EncodableFixedIntegerRange(new ArrayList<>()));
+    fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
+    fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
 
     // publisher purposes segment
     fields.put(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
@@ -124,7 +124,6 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     List<String> encodedSegments = new ArrayList<>();
     if (segmentBitStrings.size() >= 1) {
       encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
-
       if (segmentBitStrings.size() >= 2) {
         encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
       }

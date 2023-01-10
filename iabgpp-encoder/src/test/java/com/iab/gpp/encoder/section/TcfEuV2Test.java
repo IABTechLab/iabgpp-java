@@ -228,4 +228,114 @@ public class TcfEuV2Test {
         tcfEuV2.getVendorsDisclosedSegmentType());
     Assertions.assertEquals(tcfEuV2.getFieldValue("VendorsDisclosed"), tcfEuV2.getVendorsDisclosed());
   }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testDecode4() throws DecodingException {
+    TcfEuV2 tcfEuV2 = new TcfEuV2(
+        "CPi8wgAPi8wgAAOACBENCuCoAP_AAEfAACiQJHNd_H__bX9n-f7_6ft0eY1f9_r37uQzDhfNk-8F3L_W_LwX_2E7NF36tq4KmR4ku1LBIUNtHMnUDUmxaokVrzHsak2cpzNKJ_BkknsZe2dYGF9vm5tj-QKZ7_5_d3f52T_9_9v-39z33913v3d93-_13LjdV5_9H_v9fR_b8_Kf9_5-_4v8_____3_e______8AEEggCTDVuIAuxLHAm0DCKBECMKwkKoFABBQDC0QGADg4KdlYBPrCBAAgFAEYEQIcAUYEAgAAAgCQiACQIsEAAAIgEAAIAEQiEABAwCCgAsDAIAAQDQMUQoABAkIMiAiKUwICIEggJbKhBKC6Q0wgCrLACgkRsFAAiAAAUgACAsHAMESAlYsECTFG-QAjBCgFEqFaAGGgAwABBI4RABgACCRwqADAAEEjgA");
+
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("Version"));
+    Assertions.assertEquals(14, tcfEuV2.getFieldValue("CmpId"));
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("CmpVersion"));
+    Assertions.assertEquals(1, tcfEuV2.getFieldValue("ConsentScreen"));
+    Assertions.assertEquals("EN", tcfEuV2.getFieldValue("ConsentLanguage"));
+    Assertions.assertEquals(174, tcfEuV2.getFieldValue("VendorListVersion"));
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("PolicyVersion"));
+    Assertions.assertEquals(true, tcfEuV2.getFieldValue("IsServiceSpecific"));
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
+
+    Assertions.assertEquals(
+        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("SpecialFeatureOptins"));
+    Assertions
+        .assertEquals(
+            Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+                false, false, false, false, false, false, false, false, false),
+            tcfEuV2.getFieldValue("PurposeConsents"));
+    Assertions.assertEquals(
+        Arrays.asList(false, true, false, false, false, true, true, true, true, true, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
+
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
+    Assertions.assertEquals("US", tcfEuV2.getFieldValue("PublisherCountryCode"));
+
+    Assertions.assertEquals(772, ((List<Integer>) tcfEuV2.getFieldValue("VendorConsents")).size());
+
+    Assertions.assertEquals(280, ((List<Integer>) tcfEuV2.getFieldValue("VendorLegitimateInterests")).size());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testDecode5() throws DecodingException {
+    TcfEuV2 tcfEuV2 = new TcfEuV2(
+        "CPgA5EAPgA5EAAOACBENCuCoAP_AAEfAACiQI0Nd_H__bX9n-f7_6Pt0cY1f9_r3ruQzDhfFk-8F3L_W3LwX32E7NF36pq4KmR4ku1LBIQFtHMnUDUmxaokVrzHsak2cpyNKI7BkknsZe2dYGF9Pm5lD-QKZ7_5_d3f52T_9_9v-39z339V3v3d93-_12PjdV599H_v9fR_b8_Kf9_5-_4v8___4IQAAAAQQ_AJMNW4gC7EscCbQMIoAQIwrCQqAUAEFAMLRAYAODgpmVgEusIEACAUARgRAhxBRgQCAAACAJCIAJAiwQAIAiAQAAgARAIQAEDAIKACwMAgABANAxACgAECQgyICIpTAgIgSCAlsqEEoKpDTCAKssAKARGwUACIAABSAAICwcAwRICViwQJMUbwAw0AGAAIJHCIAMAAQSOFQAYAAgkcA");
+
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("Version"));
+    Assertions.assertEquals(14, tcfEuV2.getFieldValue("CmpId"));
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("CmpVersion"));
+    Assertions.assertEquals(1, tcfEuV2.getFieldValue("ConsentScreen"));
+    Assertions.assertEquals("EN", tcfEuV2.getFieldValue("ConsentLanguage"));
+    Assertions.assertEquals(174, tcfEuV2.getFieldValue("VendorListVersion"));
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("PolicyVersion"));
+    Assertions.assertEquals(true, tcfEuV2.getFieldValue("IsServiceSpecific"));
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
+
+    Assertions.assertEquals(
+        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("SpecialFeatureOptins"));
+    Assertions
+        .assertEquals(
+            Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+                false, false, false, false, false, false, false, false, false),
+            tcfEuV2.getFieldValue("PurposeConsents"));
+    Assertions.assertEquals(
+        Arrays.asList(false, true, false, false, false, true, true, true, true, true, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
+
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
+    Assertions.assertEquals("US", tcfEuV2.getFieldValue("PublisherCountryCode"));
+
+    Assertions.assertEquals(693, ((List<Integer>) tcfEuV2.getFieldValue("VendorConsents")).size());
+
+    Assertions.assertEquals(254, ((List<Integer>) tcfEuV2.getFieldValue("VendorLegitimateInterests")).size());
+  }
+
+  @Test
+  public void testDecode6() throws DecodingException {
+    TcfEuV2 tcfEuV2 = new TcfEuV2("COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA.YAAAAAAAAAAAAAAAAAA");
+
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("Version"));
+    Assertions.assertEquals(14, tcfEuV2.getFieldValue("CmpId"));
+    Assertions.assertEquals(3, tcfEuV2.getFieldValue("CmpVersion"));
+    Assertions.assertEquals(1, tcfEuV2.getFieldValue("ConsentScreen"));
+    Assertions.assertEquals("EN", tcfEuV2.getFieldValue("ConsentLanguage"));
+    Assertions.assertEquals(26, tcfEuV2.getFieldValue("VendorListVersion"));
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("PolicyVersion"));
+    Assertions.assertEquals(true, tcfEuV2.getFieldValue("IsServiceSpecific"));
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
+
+    Assertions.assertEquals(
+        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("SpecialFeatureOptins"));
+    Assertions
+        .assertEquals(
+            Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+                false, false, false, false, false, false, false, false, false),
+            tcfEuV2.getFieldValue("PurposeConsents"));
+    Assertions.assertEquals(
+        Arrays.asList(false, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
+
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
+    Assertions.assertEquals("US", tcfEuV2.getFieldValue("PublisherCountryCode"));
+
+    Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 25, 37, 42), tcfEuV2.getFieldValue("VendorConsents"));
+
+    Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 37, 42),
+        tcfEuV2.getFieldValue("VendorLegitimateInterests"));
+  }
 }

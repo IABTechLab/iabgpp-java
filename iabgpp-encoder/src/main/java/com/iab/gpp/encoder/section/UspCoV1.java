@@ -14,7 +14,6 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.UspCaV1Field;
 import com.iab.gpp.encoder.field.UspCoV1Field;
-import com.iab.gpp.encoder.field.UspCtV1Field;
 import com.iab.gpp.encoder.field.UspV1Field;
 
 public class UspCoV1 extends AbstractEncodableSegmentedBitStringSection {

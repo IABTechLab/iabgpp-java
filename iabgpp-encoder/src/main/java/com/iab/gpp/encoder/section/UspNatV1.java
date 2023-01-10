@@ -13,7 +13,6 @@ import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.UspCaV1Field;
-import com.iab.gpp.encoder.field.UspCoV1Field;
 import com.iab.gpp.encoder.field.UspNatV1Field;
 import com.iab.gpp.encoder.field.UspV1Field;
 
