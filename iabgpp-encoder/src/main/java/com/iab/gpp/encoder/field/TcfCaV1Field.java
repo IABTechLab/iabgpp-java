@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.field;
 
-public class TcfCaV2Field {
+public class TcfCaV1Field {
 
   public static String VERSION = "Version";
   public static String CREATED = "Created";
@@ -17,7 +17,7 @@ public class TcfCaV2Field {
   public static String PURPOSES_IMPLIED_CONSENT = "PurposesImpliedConsent";
   public static String VENDOR_EXPRESS_CONSENT = "VendorExpressConsent";
   public static String VENDOR_IMPLIED_CONSENT = "VendorImpliedConsent";
-  
+
   public static String PUB_PURPOSES_SEGMENT_TYPE = "PubPurposesSegmentType";
   public static String PUB_PURPOSES_EXPRESS_CONSENT = "PubPurposesExpressConsent";
   public static String PUB_PURPOSES_IMPLIED_CONSENT = "PubPurposesImpliedConsent";
