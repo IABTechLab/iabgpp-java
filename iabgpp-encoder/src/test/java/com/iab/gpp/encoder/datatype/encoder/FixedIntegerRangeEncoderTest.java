@@ -43,6 +43,25 @@ public class FixedIntegerRangeEncoderTest {
   }
 
   @Test
+  public void testEncode7() {
+    Assertions.assertEquals("000000000011000000000000011000000000000001100000000000000110000",
+        FixedIntegerRangeEncoder.encode(Arrays.asList(12, 24, 48)));
+  }
+
+  @Test
+  public void testEncode8() {
+    Assertions.assertEquals("0000000000110000000000000110000000000000011000100000000001100000000000000110001",
+        FixedIntegerRangeEncoder.encode(Arrays.asList(12, 24, 48, 49)));
+  }
+
+  @Test
+  public void testEncode9() {
+    Assertions.assertEquals(
+        "00000000100000000000000000010000000000000001100000000000000100000000000000001100000000000000100101000000000001011100000000000110010000000000010010100000000000101010",
+        FixedIntegerRangeEncoder.encode(Arrays.asList(2, 6, 8, 12, 18, 23, 24, 25, 37, 42)));
+  }
+
+  @Test
   public void testDecode1() throws DecodingException {
     Assertions.assertEquals(new ArrayList<>(), FixedIntegerRangeEncoder.decode("000000000000"));
   }
@@ -71,7 +90,25 @@ public class FixedIntegerRangeEncoderTest {
   }
 
   @Test
-  public void testDecode6() {
+  public void testDecode6() throws DecodingException {
+    Assertions.assertEquals(Arrays.asList(12, 24, 48),
+        FixedIntegerRangeEncoder.decode("000000000011000000000000011000000000000001100000000000000110000"));
+  }
+
+  @Test
+  public void testDecode7() throws DecodingException {
+    Assertions.assertEquals(Arrays.asList(12, 24, 48, 49), FixedIntegerRangeEncoder
+        .decode("0000000000110000000000000110000000000000011000100000000001100000000000000110001"));
+  }
+
+  @Test
+  public void testDecode8() throws DecodingException {
+    Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 24, 25, 37, 42), FixedIntegerRangeEncoder.decode(
+        "00000000100000000000000000010000000000000001100000000000000100000000000000001100000000000000100101000000000001011100000000000110010000000000010010100000000000101010"));
+  }
+
+  @Test
+  public void testDecode9() {
     try {
       FixedIntegerRangeEncoder.decode("0011");
       Assertions.fail("DecodingException expected");
@@ -81,7 +118,7 @@ public class FixedIntegerRangeEncoderTest {
   }
 
   @Test
-  public void testDecode7() {
+  public void testDecode10() {
     try {
       FixedIntegerRangeEncoder.decode("000000000002");
       Assertions.fail("DecodingException expected");

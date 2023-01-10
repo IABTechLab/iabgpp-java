@@ -45,8 +45,12 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
       for (int j = 0; j < this.segments[i].length; j++) {
         String fieldName = this.segments[i][j];
         if (this.fields.containsKey(fieldName)) {
-          AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
-          segmentBitString += field.encode();
+          try {
+            AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
+            segmentBitString += field.encode();
+          } catch (Exception e) {
+            throw new Error("Unable to encode " + fieldName, e);
+          }
         } else {
           throw new Error("Field not found: '" + fieldName + "'");
         }
@@ -65,10 +69,14 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
         for (int j = 0; j < this.segments[i].length; j++) {
           String fieldName = this.segments[i][j];
           if (this.fields.containsKey(fieldName)) {
-            AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
-            String substring = field.substring(segmentBitString, index);
-            field.decode(substring);
-            index += substring.length();
+            try {
+              AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
+              String substring = field.substring(segmentBitString, index);
+              field.decode(substring);
+              index += substring.length();
+            } catch (Exception e) {
+              throw new Error("Unable to decode " + fieldName, e);
+            }
           } else {
             throw new Error("Field not found: '" + fieldName + "'");
           }

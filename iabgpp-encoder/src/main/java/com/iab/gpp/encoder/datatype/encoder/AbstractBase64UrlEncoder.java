@@ -7,7 +7,10 @@ import java.util.stream.Stream;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class Base64UrlEncoder {
+public abstract class AbstractBase64UrlEncoder {
+
+  abstract protected String pad(String bitString);
+
   /**
    * Base 64 URL character set. Different from standard Base64 char set in that '+' and '/' are
    * replaced with '-' and '_'.
@@ -28,15 +31,13 @@ public class Base64UrlEncoder {
   private static Pattern BASE64URL_VERIFICATION_PATTERN =
       Pattern.compile("^[A-Za-z0-9\\-_]*$", Pattern.CASE_INSENSITIVE);
 
-  public static String encode(String bitString) throws EncodingException {
+  public String encode(String bitString) throws EncodingException {
     // should only be 0 or 1
     if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches()) {
       throw new EncodingException("Unencodable Base64Url '" + bitString + "'");
     }
 
-    while (bitString.length() % 24 > 0) {
-      bitString += "0";
-    }
+    bitString = pad(bitString);
 
     String str = "";
 
@@ -46,7 +47,7 @@ public class Base64UrlEncoder {
 
       try {
         int n = FixedIntegerEncoder.decode(s);
-        Character c = Base64UrlEncoder.DICT.charAt(n);
+        Character c = AbstractBase64UrlEncoder.DICT.charAt(n);
         str += c;
         index += 6;
       } catch (DecodingException e) {
@@ -57,7 +58,7 @@ public class Base64UrlEncoder {
     return str;
   }
 
-  public static String decode(String str) throws DecodingException {
+  public String decode(String str) throws DecodingException {
     // should contain only characters from the base64url set
     if (!BASE64URL_VERIFICATION_PATTERN.matcher(str).matches()) {
       throw new DecodingException("Undecodable Base64URL string");
@@ -67,7 +68,7 @@ public class Base64UrlEncoder {
 
     for (int i = 0; i < str.length(); i++) {
       char c = str.charAt(i);
-      Integer n = Base64UrlEncoder.REVERSE_DICT.get(c);
+      Integer n = AbstractBase64UrlEncoder.REVERSE_DICT.get(c);
       String s = FixedIntegerEncoder.encode(n, 6);
       bitString += s;
     }

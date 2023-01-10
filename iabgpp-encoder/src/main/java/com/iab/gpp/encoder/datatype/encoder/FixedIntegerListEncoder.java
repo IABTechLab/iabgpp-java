@@ -30,22 +30,22 @@ public class FixedIntegerListEncoder {
       throw new DecodingException("Undecodable FixedIntegerList '" + bitString + "'");
     }
 
-    if(bitString.length() > elementBitStringLength * numElements) {
+    if (bitString.length() > elementBitStringLength * numElements) {
       throw new DecodingException("Undecodable FixedIntegerList '" + bitString + "'");
     }
-    
-    if(bitString.length() % elementBitStringLength != 0) {
+
+    if (bitString.length() % elementBitStringLength != 0) {
       throw new DecodingException("Undecodable FixedIntegerList '" + bitString + "'");
     }
-    
+
     while (bitString.length() < elementBitStringLength * numElements) {
       bitString += "0";
     }
-    
-    if(bitString.length() > elementBitStringLength * numElements) {
+
+    if (bitString.length() > elementBitStringLength * numElements) {
       bitString = bitString.substring(0, elementBitStringLength * numElements);
     }
-    
+
     List<Integer> value = new ArrayList<>();
     for (int i = 0; i < bitString.length(); i += elementBitStringLength) {
       value.add(FixedIntegerEncoder.decode(bitString.substring(i, i + elementBitStringLength)));
