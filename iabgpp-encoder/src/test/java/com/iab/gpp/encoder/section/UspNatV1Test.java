@@ -20,7 +20,7 @@ public class UspNatV1Test {
   @Test
   public void testEncode2() throws EncodingException {
     UspNatV1 uspNatV1 = new UspNatV1();
-    
+
     uspNatV1.setFieldValue(UspNatV1Field.SHARING_NOTICE, 1);
     uspNatV1.setFieldValue(UspNatV1Field.SALE_OPT_OUT_NOTICE, 2);
     uspNatV1.setFieldValue(UspNatV1Field.SHARING_OPT_OUT_NOTICE, 3);
@@ -37,14 +37,14 @@ public class UspNatV1Test {
     uspNatV1.setFieldValue(UspNatV1Field.MSPA_OPT_OUT_OPTION_MODE, 2);
     uspNatV1.setFieldValue(UspNatV1Field.MSPA_SERVICE_PROVIDER_MODE, 3);
     uspNatV1.setFieldValue(UspNatV1Field.GPC, true);
-    
+
     Assertions.assertEquals("BbbbGxsbFbA.YA", uspNatV1.encode());
   }
-  
+
   @Test
   public void testEncode3() throws EncodingException {
     UspNatV1 uspNatV1 = new UspNatV1();
-    
+
     uspNatV1.setFieldValue(UspNatV1Field.SHARING_NOTICE, 1);
     uspNatV1.setFieldValue(UspNatV1Field.SALE_OPT_OUT_NOTICE, 1);
     uspNatV1.setFieldValue(UspNatV1Field.SHARING_OPT_OUT_NOTICE, 1);
@@ -61,10 +61,10 @@ public class UspNatV1Test {
     uspNatV1.setFieldValue(UspNatV1Field.MSPA_OPT_OUT_OPTION_MODE, 1);
     uspNatV1.setFieldValue(UspNatV1Field.MSPA_SERVICE_PROVIDER_MODE, 0);
     uspNatV1.setFieldValue(UspNatV1Field.GPC, true);
-    
+
     Assertions.assertEquals("BVQVAAAAAUA.YA", uspNatV1.encode());
   }
-  
+
   @Test
   public void testEncodeWithGpcSegmentIncluded() throws EncodingException {
 
@@ -72,11 +72,11 @@ public class UspNatV1Test {
     uspNatV1.setFieldValue(UspNatV1Field.GPC_SEGMENT_INCLUDED, false);
     Assertions.assertEquals("BAAAAAAAAAA", uspNatV1.encode());
   }
-  
+
   @Test
   public void testDecode1() throws DecodingException {
     UspNatV1 uspNatV1 = new UspNatV1("BbbbGxsbFbA.YA");
-    
+
     Assertions.assertEquals(1, uspNatV1.getSharingNotice());
     Assertions.assertEquals(2, uspNatV1.getSaleOptOutNotice());
     Assertions.assertEquals(3, uspNatV1.getSharingOptOutNotice());
@@ -94,11 +94,11 @@ public class UspNatV1Test {
     Assertions.assertEquals(3, uspNatV1.getMspaServiceProviderMode());
     Assertions.assertEquals(true, uspNatV1.getGpc());
   }
-  
+
   @Test
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
     UspNatV1 uspNatV1 = new UspNatV1("BbbbGxsbFbA");
-    
+
     Assertions.assertEquals(1, uspNatV1.getSharingNotice());
     Assertions.assertEquals(2, uspNatV1.getSaleOptOutNotice());
     Assertions.assertEquals(3, uspNatV1.getSharingOptOutNotice());

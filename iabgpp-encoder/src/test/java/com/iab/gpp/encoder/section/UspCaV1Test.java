@@ -20,7 +20,7 @@ public class UspCaV1Test {
   @Test
   public void testEncode2() throws EncodingException {
     UspCaV1 uspCaV1 = new UspCaV1();
-    
+
     uspCaV1.setFieldValue(UspCaV1Field.SALE_OPT_OUT_NOTICE, 1);
     uspCaV1.setFieldValue(UspCaV1Field.SHARING_OPT_OUT_NOTICE, 2);
     uspCaV1.setFieldValue(UspCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE, 3);
@@ -33,14 +33,14 @@ public class UspCaV1Test {
     uspCaV1.setFieldValue(UspCaV1Field.MSPA_OPT_OUT_OPTION_MODE, 1);
     uspCaV1.setFieldValue(UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE, 2);
     uspCaV1.setFieldValue(UspCaV1Field.GPC, true);
-    
+
     Assertions.assertEquals("BbYbGwXY.YA", uspCaV1.encode());
   }
-  
+
   @Test
   public void testEncode3() throws EncodingException {
     UspCaV1 uspCaV1 = new UspCaV1();
-    
+
     uspCaV1.setFieldValue(UspCaV1Field.SALE_OPT_OUT_NOTICE, 1);
     uspCaV1.setFieldValue(UspCaV1Field.SHARING_OPT_OUT_NOTICE, 1);
     uspCaV1.setFieldValue(UspCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE, 0);
@@ -53,10 +53,10 @@ public class UspCaV1Test {
     uspCaV1.setFieldValue(UspCaV1Field.MSPA_OPT_OUT_OPTION_MODE, 1);
     uspCaV1.setFieldValue(UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE, 0);
     uspCaV1.setFieldValue(UspCaV1Field.GPC, true);
-    
+
     Assertions.assertEquals("BUoAAABQ.YA", uspCaV1.encode());
   }
-  
+
   @Test
   public void testEncodeWithGpcSegmentExcluded() throws EncodingException {
 
@@ -64,11 +64,11 @@ public class UspCaV1Test {
     uspCaV1.setFieldValue(UspCaV1Field.GPC_SEGMENT_INCLUDED, false);
     Assertions.assertEquals("BAAAAAAA", uspCaV1.encode());
   }
-  
+
   @Test
   public void testDecode1() throws DecodingException {
     UspCaV1 uspCaV1 = new UspCaV1("BbYbGwXY.YA");
-    
+
     Assertions.assertEquals(1, uspCaV1.getSaleOptOutNotice());
     Assertions.assertEquals(2, uspCaV1.getSharingOptOut());
     Assertions.assertEquals(3, uspCaV1.getSensitiveDataLimitUseNotice());
@@ -82,11 +82,11 @@ public class UspCaV1Test {
     Assertions.assertEquals(2, uspCaV1.getMspaServiceProviderMode());
     Assertions.assertEquals(true, uspCaV1.getGpc());
   }
-  
+
   @Test
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
     UspCaV1 uspCaV1 = new UspCaV1("BbYbGwXY");
-    
+
     Assertions.assertEquals(1, uspCaV1.getSaleOptOutNotice());
     Assertions.assertEquals(2, uspCaV1.getSharingOptOut());
     Assertions.assertEquals(3, uspCaV1.getSensitiveDataLimitUseNotice());

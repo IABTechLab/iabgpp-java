@@ -27,7 +27,7 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public static String NAME = "tcfcav1";
 
   private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
-  
+
   public TcfCaV1() {
     initFields();
   }
@@ -138,10 +138,9 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     String[] segmentBitStrings = new String[4];
     for (int i = 0; i < encodedSegments.length; i++) {
       /**
-       * first char will contain 6 bits, we only need the first 3. 
-       * There is no segment type for the CORE string. Instead the first 6 bits are reserved for the
-       * encoding version, but because we're only on a maximum of encoding version 2 the first 3 bits in
-       * the core segment will evaluate to 0.
+       * first char will contain 6 bits, we only need the first 3. There is no segment type for the CORE
+       * string. Instead the first 6 bits are reserved for the encoding version, but because we're only on
+       * a maximum of encoding version 2 the first 3 bits in the core segment will evaluate to 0.
        */
       String segmentBitString = base64UrlEncoder.decode(encodedSegments[i]);
       switch (segmentBitString.substring(0, 3)) {

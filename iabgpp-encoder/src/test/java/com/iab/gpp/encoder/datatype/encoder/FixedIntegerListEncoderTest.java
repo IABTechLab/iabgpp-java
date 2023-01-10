@@ -193,7 +193,7 @@ public class FixedIntegerListEncoderTest {
 
     }
   }
-  
+
   @Test
   public void testDecode19() {
     try {
@@ -203,7 +203,7 @@ public class FixedIntegerListEncoderTest {
 
     }
   }
-  
+
   @Test
   public void testDecode20() {
     try {

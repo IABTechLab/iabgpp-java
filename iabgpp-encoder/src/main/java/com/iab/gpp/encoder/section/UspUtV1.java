@@ -18,7 +18,7 @@ public class UspUtV1 extends AbstractEncodableBitStringSection {
   public static String NAME = "usputv1";
 
   private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
-  
+
   public UspUtV1() {
     initFields();
   }
@@ -41,7 +41,8 @@ public class UspUtV1 extends AbstractEncodableBitStringSection {
     fields.put(UspUtV1Field.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
     fields.put(UspUtV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2, 0));
     fields.put(UspUtV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2, 0));
-    fields.put(UspUtV1Field.SENSITIVE_DATA_PROCESSING, new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0)));
+    fields.put(UspUtV1Field.SENSITIVE_DATA_PROCESSING,
+        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0)));
     fields.put(UspUtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedInteger(2, 0));
     fields.put(UspUtV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 0));
     fields.put(UspUtV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0));

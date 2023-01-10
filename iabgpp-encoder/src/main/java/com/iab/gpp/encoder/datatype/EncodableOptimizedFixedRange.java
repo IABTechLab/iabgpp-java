@@ -39,7 +39,7 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
           bits.add(false);
         }
       }
-      
+
       return FixedIntegerEncoder.encode(max, 16) + "0" + FixedBitfieldEncoder.encode(bits, bitFieldLength);
     }
   }

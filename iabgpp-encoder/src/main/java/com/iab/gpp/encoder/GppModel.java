@@ -22,7 +22,7 @@ import com.iab.gpp.encoder.section.UspVaV1;
 
 public class GppModel {
   private Map<String, EncodableSection> sections = new HashMap<>();
-  
+
   public GppModel() {
 
   }
@@ -36,7 +36,7 @@ public class GppModel {
   public void setFieldValue(int sectionId, String fieldName, Object value) {
     setFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName, value);
   }
-  
+
   public void setFieldValue(String sectionName, String fieldName, Object value) {
     EncodableSection section = null;
     if (!this.sections.containsKey(sectionName)) {
@@ -82,7 +82,7 @@ public class GppModel {
   public Object getFieldValue(int sectionId, String fieldName) {
     return getFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName);
   }
-  
+
   public Object getFieldValue(String sectionName, String fieldName) {
     if (this.sections.containsKey(sectionName)) {
       return this.sections.get(sectionName).getFieldValue(fieldName);
@@ -94,7 +94,7 @@ public class GppModel {
   public boolean hasField(int sectionId, String fieldName) {
     return hasField(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName);
   }
-  
+
   public boolean hasField(String sectionName, String fieldName) {
     if (this.sections.containsKey(sectionName)) {
       return this.sections.get(sectionName).hasField(fieldName);
@@ -106,7 +106,7 @@ public class GppModel {
   public boolean hasSection(int sectionId) {
     return hasSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
-  
+
   public boolean hasSection(String sectionName) {
     return this.sections.containsKey(sectionName);
   }
@@ -120,7 +120,7 @@ public class GppModel {
   public EncodableSection getSection(int sectionId) {
     return getSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
-  
+
   public EncodableSection getSection(String sectionName) {
     if (this.sections.containsKey(sectionName)) {
       return this.sections.get(sectionName);
@@ -128,11 +128,11 @@ public class GppModel {
       return null;
     }
   }
-  
+
   public void deleteSection(int sectionId) {
     deleteSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
-  
+
   public void deleteSection(String sectionName) {
     if (this.sections.containsKey(sectionName)) {
       this.sections.remove(sectionName);
@@ -142,7 +142,7 @@ public class GppModel {
   public void clear() {
     this.sections.clear();
   }
-  
+
   public TcfCaV1 getTcfCaV1Section() {
     return (TcfCaV1) getSection(TcfCaV1.NAME);
   }
@@ -255,7 +255,7 @@ public class GppModel {
   public String encodeSection(int sectionId) throws EncodingException {
     return encodeSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
-  
+
   public String encodeSection(String sectionName) throws EncodingException {
     if (this.sections.containsKey(sectionName)) {
       return this.sections.get(sectionName).encode();
@@ -267,7 +267,7 @@ public class GppModel {
   public void decodeSection(int sectionId, String encodedString) throws DecodingException {
     decodeSection(Sections.SECTION_ID_NAME_MAP.get(sectionId), encodedString);
   }
-  
+
   public void decodeSection(String sectionName, String encodedString) throws DecodingException {
     EncodableSection section = null;
     if (!this.sections.containsKey(sectionName)) {

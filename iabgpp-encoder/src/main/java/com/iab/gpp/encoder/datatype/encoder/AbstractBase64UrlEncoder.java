@@ -8,9 +8,9 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public abstract class AbstractBase64UrlEncoder {
-  
+
   abstract protected String pad(String bitString);
-  
+
   /**
    * Base 64 URL character set. Different from standard Base64 char set in that '+' and '/' are
    * replaced with '-' and '_'.

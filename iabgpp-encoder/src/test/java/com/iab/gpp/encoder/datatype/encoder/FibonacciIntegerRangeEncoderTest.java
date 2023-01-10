@@ -38,7 +38,7 @@ public class FibonacciIntegerRangeEncoderTest {
     Assertions.assertEquals("0000000000100001110110011",
         FibonacciIntegerRangeEncoder.encode(Arrays.asList(3, 5, 6, 7, 8)));
   }
-  
+
   @Test
   public void testEncode7() {
     Assertions.assertEquals("00000000001000111001101011",
@@ -70,7 +70,7 @@ public class FibonacciIntegerRangeEncoderTest {
     Assertions.assertEquals(Arrays.asList(3, 5, 6, 7, 8),
         FibonacciIntegerRangeEncoder.decode("0000000000100001110110011"));
   }
-  
+
   @Test
   public void testDecode6() throws DecodingException {
     Assertions.assertEquals(Arrays.asList(2, 5, 6, 7, 8, 9, 10, 11, 12),

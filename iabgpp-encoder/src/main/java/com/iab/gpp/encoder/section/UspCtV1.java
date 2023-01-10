@@ -22,7 +22,7 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
   public static String NAME = "uspctv1";
 
   private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
-  
+
   public UspCtV1() {
     initFields();
   }
@@ -44,8 +44,10 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(UspCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
     fields.put(UspCtV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2, 0));
     fields.put(UspCtV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2, 0));
-    fields.put(UspCtV1Field.SENSITIVE_DATA_PROCESSING, new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0)));
-    fields.put(UspCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0)));
+    fields.put(UspCtV1Field.SENSITIVE_DATA_PROCESSING,
+        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0)));
+    fields.put(UspCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0)));
     fields.put(UspCtV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 0));
     fields.put(UspCtV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0));
     fields.put(UspCtV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0));
@@ -54,7 +56,7 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(UspCtV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
     fields.put(UspCtV1Field.GPC_SEGMENT_INCLUDED, new EncodableBoolean(true));
     fields.put(UspCtV1Field.GPC, new EncodableBoolean(false));
-    
+
     //@formatter:off
     String[] coreSegment = new String[] {
         UspCtV1Field.VERSION,
@@ -90,8 +92,8 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
       encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
 
       if (segmentBitStrings.size() >= 2) {
-        Boolean gpcSegmentIncluded = (Boolean)this.fields.get(UspCtV1Field.GPC_SEGMENT_INCLUDED).getValue();
-        if(gpcSegmentIncluded) {
+        Boolean gpcSegmentIncluded = (Boolean) this.fields.get(UspCtV1Field.GPC_SEGMENT_INCLUDED).getValue();
+        if (gpcSegmentIncluded) {
           encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
         }
       }
@@ -107,10 +109,9 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
     boolean gpcSegmentIncluded = false;
     for (int i = 0; i < encodedSegments.length; i++) {
       /**
-       * first char will contain 6 bits, we only need the first 2. 
-       * There is no segment type for the CORE string. Instead the first 6 bits are reserved for the
-       * encoding version, but because we're only on a maximum of encoding version 2 the first 2 bits in
-       * the core segment will evaluate to 0.
+       * first char will contain 6 bits, we only need the first 2. There is no segment type for the CORE
+       * string. Instead the first 6 bits are reserved for the encoding version, but because we're only on
+       * a maximum of encoding version 2 the first 2 bits in the core segment will evaluate to 0.
        */
       String segmentBitString = base64UrlEncoder.decode(encodedSegments[i]);
       switch (segmentBitString.substring(0, 2)) {
@@ -131,7 +132,7 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
     this.decodeSegmentsFromBitStrings(Arrays.asList(segmentBitStrings));
     this.fields.get(UspCaV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
   }
-  
+
   @Override
   public int getId() {
     return UspCtV1.ID;
@@ -191,11 +192,11 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
   public Boolean getGpcSegmentType() {
     return (Boolean) this.fields.get(UspCtV1Field.GPC_SEGMENT_TYPE).getValue();
   }
-  
+
   public Boolean getGpcSegmentIncluded() {
     return (Boolean) this.fields.get(UspCtV1Field.GPC_SEGMENT_INCLUDED).getValue();
   }
-  
+
   public Boolean getGpc() {
     return (Boolean) this.fields.get(UspCtV1Field.GPC).getValue();
   }

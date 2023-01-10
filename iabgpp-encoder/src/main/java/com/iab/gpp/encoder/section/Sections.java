@@ -25,7 +25,7 @@ public class Sections {
     SECTION_ID_NAME_MAP.put(UspUtV1.ID, UspUtV1.NAME);
     SECTION_ID_NAME_MAP.put(UspCtV1.ID, UspCtV1.NAME);
 
-    SECTION_ORDER = new ArrayList<Integer>(SECTION_ID_NAME_MAP.keySet()).stream().sorted().map(id -> SECTION_ID_NAME_MAP.get(id))
-        .collect(Collectors.toList());
+    SECTION_ORDER = new ArrayList<Integer>(SECTION_ID_NAME_MAP.keySet()).stream().sorted()
+        .map(id -> SECTION_ID_NAME_MAP.get(id)).collect(Collectors.toList());
   }
 }

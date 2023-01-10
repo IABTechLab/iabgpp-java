@@ -17,7 +17,7 @@ public class HeaderV1 extends AbstractEncodableBitStringSection {
   public static String NAME = "header";
 
   private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
-  
+
   public HeaderV1() {
     initFields();
   }
