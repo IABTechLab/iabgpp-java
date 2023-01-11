@@ -224,18 +224,18 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getSpecialFeatureExpressConsent() {
-    return (List<Integer>) this.fields.get(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT).getValue();
+  public List<Boolean> getSpecialFeatureExpressConsent() {
+    return (List<Boolean>) this.fields.get(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT).getValue();
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPurposesExpressConsent() {
-    return (List<Integer>) this.fields.get(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT).getValue();
+  public List<Boolean> getPurposesExpressConsent() {
+    return (List<Boolean>) this.fields.get(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT).getValue();
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPurposesImpliedConsent() {
-    return (List<Integer>) this.fields.get(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT).getValue();
+  public List<Boolean> getPurposesImpliedConsent() {
+    return (List<Boolean>) this.fields.get(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT).getValue();
   }
 
   @SuppressWarnings("unchecked")
@@ -253,13 +253,13 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPubPurposesExpressConsent() {
-    return (List<Integer>) this.fields.get(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT).getValue();
+  public List<Boolean> getPubPurposesExpressConsent() {
+    return (List<Boolean>) this.fields.get(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT).getValue();
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPubPurposesImpliedConsent() {
-    return (List<Integer>) this.fields.get(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT).getValue();
+  public List<Boolean> getPubPurposesImpliedConsent() {
+    return (List<Boolean>) this.fields.get(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT).getValue();
   }
 
   public Integer getNumCustomPurposes() {

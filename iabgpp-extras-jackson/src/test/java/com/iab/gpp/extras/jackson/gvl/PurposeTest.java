@@ -22,21 +22,19 @@ package com.iab.gpp.extras.jackson.gvl;
 
 import java.io.IOException;
 import java.util.List;
-
-import com.iab.gpp.extras.jackson.TestUtil;
-import com.iab.gpp.extras.jackson.Loader;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import com.iab.gpp.extras.gvl.Purpose;
+import com.iab.gpp.extras.jackson.Loader;
+import com.iab.gpp.extras.jackson.TestUtil;
 
 public class PurposeTest {
 
     private static Purpose purposeTen;
     private static final int PURPOSE_SELECTED_FOR_TEST = 10;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws IOException {
         Loader loader = new Loader();
         List<Purpose> purposes = loader.globalVendorList(TestUtil.getGlobalVendorList()).getPurposes();
@@ -45,36 +43,36 @@ public class PurposeTest {
 
     @Test
     public void testGetId() {
-        Assert.assertEquals(10, purposeTen.getId());
+        Assertions.assertEquals(10, purposeTen.getId());
     }
 
     @Test
     public void testGetName() {
         String expectedName = "Develop and improve products";
-        Assert.assertEquals(expectedName, purposeTen.getName());
+        Assertions.assertEquals(expectedName, purposeTen.getName());
     }
 
     @Test
     public void testGetDescription() {
         String expectedDescription =
                 "Your data can be used to improve existing systems and software, and to develop new products";
-        Assert.assertEquals(expectedDescription, purposeTen.getDescription());
+        Assertions.assertEquals(expectedDescription, purposeTen.getDescription());
     }
 
     @Test
     public void testGetDescriptionLegal() {
         String expectedDescriptionLegal =
                 "To develop new products and improve products vendors can:\n* Use information to improve their existing products with new features and to develop new products\n* Create new models and algorithms through machine learning\nVendors cannot:\n* Conduct any other data processing operation allowed under a different purpose under this purpose";
-        Assert.assertEquals(expectedDescriptionLegal, purposeTen.getDescriptionLegal());
+        Assertions.assertEquals(expectedDescriptionLegal, purposeTen.getDescriptionLegal());
     }
 
     @Test
     public void testGetConsentable() {
-        Assert.assertTrue(purposeTen.getConsentable());
+        Assertions.assertTrue(purposeTen.getConsentable());
     }
 
     @Test
     public void testGetRightToObject() {
-        Assert.assertFalse(purposeTen.getRightToObject());
+        Assertions.assertFalse(purposeTen.getRightToObject());
     }
 }

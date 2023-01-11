@@ -1,5 +1,11 @@
 package com.iab.gpp.extras.jackson.gvl;
 
+import java.io.IOException;
+import java.util.List;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 /*-
  * #%L
  * IAB TCF Java GVL Jackson
@@ -21,21 +27,15 @@ package com.iab.gpp.extras.jackson.gvl;
  */
 
 import com.iab.gpp.extras.gvl.Feature;
-import com.iab.gpp.extras.jackson.TestUtil;
 import com.iab.gpp.extras.jackson.Loader;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.List;
+import com.iab.gpp.extras.jackson.TestUtil;
 
 public class FeatureTest {
 
     private static Feature featureTwo;
     private static final int FEATURE_ID_SELECTED_FOR_TEST = 2;
 
-    @BeforeClass
+    @BeforeAll
     public static void setupBeforeClass() throws IOException {
         Loader loader = new Loader();
         List<Feature> features = loader.globalVendorList(TestUtil.getGlobalVendorList()).getFeatures();
@@ -44,26 +44,26 @@ public class FeatureTest {
 
     @Test
     public void testGetId() {
-        Assert.assertEquals(2, featureTwo.getId());
+        Assertions.assertEquals(2, featureTwo.getId());
     }
 
     @Test
     public void testGetName() {
         String expectedName = "Link different devices";
-        Assert.assertEquals(expectedName, featureTwo.getName());
+        Assertions.assertEquals(expectedName, featureTwo.getName());
     }
 
     @Test
     public void testGetDescription() {
         String expectedDescription =
                 "Different devices can be determined as belonging to you or your household in support of one or more of purposes.";
-        Assert.assertEquals(expectedDescription, featureTwo.getDescription());
+        Assertions.assertEquals(expectedDescription, featureTwo.getDescription());
     }
 
     @Test
     public void testGetDescriptionLegal() {
         String expectedDescriptionLegal =
                 "Vendors can:\n* Deterministically determine that two or more devices belong to the same user or household\n* Probabilistically determine that two or more devices belong to the same user or household\n* Actively scan device characteristics for identification for probabilistic identification if users have allowed vendors to actively scan device characteristics for identification (Special Feature 2)";
-        Assert.assertEquals(expectedDescriptionLegal, featureTwo.getDescriptionLegal());
+        Assertions.assertEquals(expectedDescriptionLegal, featureTwo.getDescriptionLegal());
     }
 }

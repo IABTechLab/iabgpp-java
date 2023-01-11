@@ -25,19 +25,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-
-import com.iab.gpp.extras.jackson.TestUtil;
-import com.iab.gpp.extras.jackson.Loader;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import com.iab.gpp.extras.gvl.Gvl;
+import com.iab.gpp.extras.jackson.Loader;
+import com.iab.gpp.extras.jackson.TestUtil;
 
 public class GvlTest {
     private static Gvl gvl;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws IOException {
         Loader loader = new Loader();
         gvl = loader.globalVendorList(TestUtil.getGlobalVendorList());
@@ -45,17 +43,17 @@ public class GvlTest {
 
     @Test
     public void testGetGvlSpecificationVersion() {
-        Assert.assertEquals(2, gvl.getGvlSpecificationVersion());
+        Assertions.assertEquals(2, gvl.getGvlSpecificationVersion());
     }
 
     @Test
     public void testGetVendorListVersion() {
-        Assert.assertEquals(26, gvl.getVendorListVersion());
+        Assertions.assertEquals(26, gvl.getVendorListVersion());
     }
 
     @Test
     public void testGetTcfPolicyVersion() {
-        Assert.assertEquals(2, gvl.getTcfPolicyVersion());
+        Assertions.assertEquals(2, gvl.getTcfPolicyVersion());
     }
 
     @Test
@@ -63,36 +61,36 @@ public class GvlTest {
         SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         parser.setTimeZone(TimeZone.getTimeZone("GMT"));
         Date parsed = parser.parse("2020-02-20T16:05:20");
-        Assert.assertEquals(parsed.toInstant(), gvl.getLastUpdated());
+        Assertions.assertEquals(parsed.toInstant(), gvl.getLastUpdated());
     }
 
     @Test
     public void testGetPurposes() {
-        Assert.assertEquals(10, gvl.getPurposes().size());
+        Assertions.assertEquals(10, gvl.getPurposes().size());
     }
 
     @Test
     public void testGetSpecialPurposes() {
-        Assert.assertEquals(2, gvl.getSpecialPurposes().size());
+        Assertions.assertEquals(2, gvl.getSpecialPurposes().size());
     }
 
     @Test
     public void testGetFeatures() {
-        Assert.assertEquals(3, gvl.getFeatures().size());
+        Assertions.assertEquals(3, gvl.getFeatures().size());
     }
 
     @Test
     public void testGetSpecialFeatures() {
-        Assert.assertEquals(2, gvl.getSpecialFeatures().size());
+        Assertions.assertEquals(2, gvl.getSpecialFeatures().size());
     }
 
     @Test
     public void testGetStacks() {
-        Assert.assertEquals(37, gvl.getStacks().size());
+        Assertions.assertEquals(37, gvl.getStacks().size());
     }
 
     @Test
     public void testGetVendors() {
-        Assert.assertEquals(3, gvl.getVendors().size());
+        Assertions.assertEquals(3, gvl.getVendors().size());
     }
 }

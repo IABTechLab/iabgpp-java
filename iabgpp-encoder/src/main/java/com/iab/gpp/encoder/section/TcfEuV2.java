@@ -276,18 +276,18 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getSpecialFeatureOptins() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.SPECIAL_FEATURE_OPTINS).getValue();
+  public List<Boolean> getSpecialFeatureOptins() {
+    return (List<Boolean>) this.fields.get(TcfEuV2Field.SPECIAL_FEATURE_OPTINS).getValue();
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPurposeConsents() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.PURPOSE_CONSENTS).getValue();
+  public List<Boolean> getPurposeConsents() {
+    return (List<Boolean>) this.fields.get(TcfEuV2Field.PURPOSE_CONSENTS).getValue();
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPurposeLegitimateInterests() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS).getValue();
+  public List<Boolean> getPurposeLegitimateInterests() {
+    return (List<Boolean>) this.fields.get(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS).getValue();
   }
 
   public Boolean getPurposeOneTreatment() {
@@ -318,13 +318,13 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPublisherConsents() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.PUBLISHER_CONSENTS).getValue();
+  public List<Boolean> getPublisherConsents() {
+    return (List<Boolean>) this.fields.get(TcfEuV2Field.PUBLISHER_CONSENTS).getValue();
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPublisherLegitimateInterests() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS).getValue();
+  public List<Boolean> getPublisherLegitimateInterests() {
+    return (List<Boolean>) this.fields.get(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS).getValue();
   }
 
   public Integer getNumCustomPurposes() {
