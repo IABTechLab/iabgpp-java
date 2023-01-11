@@ -1,5 +1,11 @@
 package com.iab.gpp.extras.jackson.cmp;
 
+import java.io.IOException;
+import java.time.Instant;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 /*-
  * #%L
  * IAB TCF Java CMP List Jackson
@@ -21,20 +27,14 @@ package com.iab.gpp.extras.jackson.cmp;
  */
 
 import com.iab.gpp.extras.cmp.CmpList;
-import com.iab.gpp.extras.jackson.TestUtil;
 import com.iab.gpp.extras.jackson.Loader;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.time.Instant;
+import com.iab.gpp.extras.jackson.TestUtil;
 
 public class CmpListTest {
 
     private static CmpList cmpList;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws IOException {
         Loader loader = new Loader();
         cmpList = loader.cmpList(TestUtil.getCmpList());
@@ -42,11 +42,11 @@ public class CmpListTest {
 
     @Test
     public void getLastUpdated() {
-        Assert.assertEquals(Instant.parse("2020-04-09T17:03:06Z"), cmpList.getLastUpdated());
+        Assertions.assertEquals(Instant.parse("2020-04-09T17:03:06Z"), cmpList.getLastUpdated());
     }
 
     @Test
     public void getCmps() {
-        Assert.assertEquals(12, cmpList.getCmps().size());
+        Assertions.assertEquals(12, cmpList.getCmps().size());
     }
 }

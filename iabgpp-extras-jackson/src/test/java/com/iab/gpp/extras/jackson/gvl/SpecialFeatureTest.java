@@ -21,22 +21,20 @@ package com.iab.gpp.extras.jackson.gvl;
  */
 
 import java.util.List;
-
-import com.iab.gpp.extras.jackson.TestUtil;
-import com.iab.gpp.extras.jackson.Loader;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import com.iab.gpp.extras.gvl.SpecialFeature;
+import com.iab.gpp.extras.jackson.Loader;
+import com.iab.gpp.extras.jackson.TestUtil;
 
 public class SpecialFeatureTest {
 
     private static SpecialFeature specialFeatureOne;
     private final static int SPECIAL_FEAUTRE_ID_SELECTED_FOR_TEST = 1;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeAll
+    public static void setUp() throws Exception {
         Loader loader = new Loader();
         List<SpecialFeature> specialFeatures = loader.globalVendorList(TestUtil.getGlobalVendorList()).getSpecialFeatures();
         specialFeatureOne =
@@ -48,26 +46,26 @@ public class SpecialFeatureTest {
 
     @Test
     public void testGetId() {
-        Assert.assertEquals(1, specialFeatureOne.getId());
+        Assertions.assertEquals(1, specialFeatureOne.getId());
     }
 
     @Test
     public void testGetName() {
         String expectedName = "Use precise geolocation data";
-        Assert.assertEquals(expectedName, specialFeatureOne.getName());
+        Assertions.assertEquals(expectedName, specialFeatureOne.getName());
     }
 
     @Test
     public void testGetDescription() {
         String expectedDescription =
                 "Your precise geolocation data can be used in support of one or more purposes. This means your location can be accurate to within several meters.";
-        Assert.assertEquals(expectedDescription, specialFeatureOne.getDescription());
+        Assertions.assertEquals(expectedDescription, specialFeatureOne.getDescription());
     }
 
     @Test
     public void testGetDescriptionLegal() {
         String expectedDescriptionLegal =
                 "Vendors can:\n* Collect and process precise geolocation data in support of one or more purposes.\nN.B. Precise geolocation means that there are no restrictions on the precision of a user’s location; this can be accurate to within several meters.";
-        Assert.assertEquals(expectedDescriptionLegal, specialFeatureOne.getDescriptionLegal());
+        Assertions.assertEquals(expectedDescriptionLegal, specialFeatureOne.getDescriptionLegal());
     }
 }
