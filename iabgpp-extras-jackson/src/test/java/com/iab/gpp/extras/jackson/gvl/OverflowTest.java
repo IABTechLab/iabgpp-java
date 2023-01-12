@@ -21,22 +21,20 @@ package com.iab.gpp.extras.jackson.gvl;
  */
 
 import java.util.List;
-
-import com.iab.gpp.extras.jackson.TestUtil;
-import com.iab.gpp.extras.jackson.Loader;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import com.iab.gpp.extras.gvl.Overflow;
 import com.iab.gpp.extras.gvl.Vendor;
+import com.iab.gpp.extras.jackson.Loader;
+import com.iab.gpp.extras.jackson.TestUtil;
 
 public class OverflowTest {
 
     private static Overflow vendorEightOverflow;
     private static final int VENDOR_ID_SELECTED_FOR_TEST = 8;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws Exception {
         Loader loader = new Loader();
         List<Vendor> vendors = loader.globalVendorList(TestUtil.getGlobalVendorList()).getVendors();
@@ -47,6 +45,6 @@ public class OverflowTest {
 
     @Test
     public void getHttpGetLimit() {
-        Assert.assertEquals(32, vendorEightOverflow.getHttpGetLimit());
+        Assertions.assertEquals(32, vendorEightOverflow.getHttpGetLimit());
     }
 }

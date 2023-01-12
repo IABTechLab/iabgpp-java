@@ -22,11 +22,9 @@ package com.iab.gpp.extras.jackson.gvl;
 
 import java.time.Instant;
 import java.util.Arrays;
-
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import com.iab.gpp.extras.gvl.Gvl;
 import com.iab.gpp.extras.gvl.Vendor;
 import com.iab.gpp.extras.jackson.Loader;
@@ -38,7 +36,7 @@ public class VendorTest {
     private static Vendor vendorTwo;
     private static final int VENDOR_ID_SELECTED_FOR_TEST = 8;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws Exception {
         Loader loader = new Loader();
         Gvl gvl = loader.globalVendorList(TestUtil.getGlobalVendorList());
@@ -48,114 +46,114 @@ public class VendorTest {
 
     @Test
     public void testGetId() {
-        Assert.assertEquals(8, vendorEight.getId());
+        Assertions.assertEquals(8, vendorEight.getId());
     }
 
     @Test
     public void testGetName() {
         String expectedName = "Emerse Sverige AB";
-        Assert.assertEquals(expectedName, vendorEight.getName());
+        Assertions.assertEquals(expectedName, vendorEight.getName());
     }
 
     @Test
     public void testGetPurposes() {
-        Assert.assertNotNull(vendorEight.getPurposes());
-        Assert.assertEquals(3, vendorEight.getPurposes().size());
-        Assert.assertEquals(Arrays.asList(1, 3, 4), vendorEight.getPurposes());
+        Assertions.assertNotNull(vendorEight.getPurposes());
+        Assertions.assertEquals(3, vendorEight.getPurposes().size());
+        Assertions.assertEquals(Arrays.asList(1, 3, 4), vendorEight.getPurposes());
     }
 
     @Test
     public void testGetLegIntPurposes() {
-        Assert.assertNotNull(vendorEight.getLegIntPurposes());
-        Assert.assertEquals(4, vendorEight.getLegIntPurposes().size());
-        Assert.assertEquals(Arrays.asList(2, 7, 8, 9), vendorEight.getLegIntPurposes());
+        Assertions.assertNotNull(vendorEight.getLegIntPurposes());
+        Assertions.assertEquals(4, vendorEight.getLegIntPurposes().size());
+        Assertions.assertEquals(Arrays.asList(2, 7, 8, 9), vendorEight.getLegIntPurposes());
     }
 
     @Test
     public void testGetFlexiblePurposes() {
-        Assert.assertNotNull(vendorEight.getFlexiblePurposes());
-        Assert.assertEquals(2, vendorEight.getFlexiblePurposes().size());
-        Assert.assertEquals(Arrays.asList(2, 9), vendorEight.getFlexiblePurposes());
+        Assertions.assertNotNull(vendorEight.getFlexiblePurposes());
+        Assertions.assertEquals(2, vendorEight.getFlexiblePurposes().size());
+        Assertions.assertEquals(Arrays.asList(2, 9), vendorEight.getFlexiblePurposes());
     }
 
     @Test
     public void testGetSpecialPurposes() {
-        Assert.assertNotNull(vendorEight.getSpecialPurposes());
-        Assert.assertEquals(2, vendorEight.getSpecialPurposes().size());
-        Assert.assertEquals(Arrays.asList(1, 2), vendorEight.getSpecialPurposes());
+        Assertions.assertNotNull(vendorEight.getSpecialPurposes());
+        Assertions.assertEquals(2, vendorEight.getSpecialPurposes().size());
+        Assertions.assertEquals(Arrays.asList(1, 2), vendorEight.getSpecialPurposes());
     }
 
     @Test
     public void testGetFeatures() {
-        Assert.assertNotNull(vendorEight.getFeatures());
-        Assert.assertEquals(2, vendorEight.getFeatures().size());
-        Assert.assertEquals(Arrays.asList(1, 2), vendorEight.getFeatures());
+        Assertions.assertNotNull(vendorEight.getFeatures());
+        Assertions.assertEquals(2, vendorEight.getFeatures().size());
+        Assertions.assertEquals(Arrays.asList(1, 2), vendorEight.getFeatures());
     }
 
     @Test
     public void testGetSpecialFeatures() {
-        Assert.assertNotNull(vendorEight.getSpecialFeatures());
-        Assert.assertEquals(0, vendorEight.getSpecialFeatures().size());
+        Assertions.assertNotNull(vendorEight.getSpecialFeatures());
+        Assertions.assertEquals(0, vendorEight.getSpecialFeatures().size());
     }
 
     @Test
     public void testGetPolicyUrl() {
         String expectedPolicyUrl = "https://www.emerse.com/privacy-policy/";
-        Assert.assertEquals(expectedPolicyUrl, vendorEight.getPolicyUrl());
+        Assertions.assertEquals(expectedPolicyUrl, vendorEight.getPolicyUrl());
     }
 
     @Test
     public void testGetDeletedDate() {
-        Assert.assertEquals(Instant.parse("2020-06-28T00:00:00Z"), vendorEight.getDeletedDate().get());
+        Assertions.assertEquals(Instant.parse("2020-06-28T00:00:00Z"), vendorEight.getDeletedDate().get());
     }
 
     @Test
     public void testGetOverflow() {
-        Assert.assertNotNull(vendorEight.getOverflow());
+        Assertions.assertNotNull(vendorEight.getOverflow());
     }
 
     @Test
     public void testIsDeleted() {
-        Assert.assertTrue(vendorEight.isDeleted());
+        Assertions.assertTrue(vendorEight.isDeleted());
     }
 
     @Test
     public void testCookieMaxAgeSeconds() {
         long expectedCookieMaxAgeSeconds = 31557600000L;
-        Assert.assertTrue(vendorEight.getCookieMaxAgeSeconds().isPresent());
-        Assert.assertEquals(expectedCookieMaxAgeSeconds, vendorEight.getCookieMaxAgeSeconds().get().longValue());
+        Assertions.assertTrue(vendorEight.getCookieMaxAgeSeconds().isPresent());
+        Assertions.assertEquals(expectedCookieMaxAgeSeconds, vendorEight.getCookieMaxAgeSeconds().get().longValue());
     }
 
     @Test
     public void testUsesCookies() {
-        Assert.assertTrue(vendorEight.getUsesCookies());
+        Assertions.assertTrue(vendorEight.getUsesCookies());
     }
 
     @Test
     public void testCookieRefresh() {
-        Assert.assertFalse(vendorEight.getHasCookieRefresh());
+        Assertions.assertFalse(vendorEight.getHasCookieRefresh());
     }
 
     @Test
     public void testUsesNonCookieAccess() {
-        Assert.assertTrue(vendorEight.getUsesNonCookieAccess());
+        Assertions.assertTrue(vendorEight.getUsesNonCookieAccess());
     }
 
     @Test
     public void testNullDeviceStorageDisclosureUrl() {
-        Assert.assertFalse(vendorEight.getDeviceStorageDisclosureUrl().isPresent());
+        Assertions.assertFalse(vendorEight.getDeviceStorageDisclosureUrl().isPresent());
     }
 
     @Test
     public void testNullCookieMaxAgeSeconds() {
-        Assert.assertFalse(vendorTwo.getUsesCookies());
-        Assert.assertFalse(vendorTwo.getCookieMaxAgeSeconds().isPresent());
+        Assertions.assertFalse(vendorTwo.getUsesCookies());
+        Assertions.assertFalse(vendorTwo.getCookieMaxAgeSeconds().isPresent());
     }
 
     @Test
     public void testDeviceStorageDisclosureUrl() {
         String expectedDeviceStorageDisclosureUrl = "https://privacy.blismedia.com/.well-known/deviceStorage.json";
-        Assert.assertTrue(vendorTwo.getDeviceStorageDisclosureUrl().isPresent());
-        Assert.assertEquals(expectedDeviceStorageDisclosureUrl, vendorTwo.getDeviceStorageDisclosureUrl().get());
+        Assertions.assertTrue(vendorTwo.getDeviceStorageDisclosureUrl().isPresent());
+        Assertions.assertEquals(expectedDeviceStorageDisclosureUrl, vendorTwo.getDeviceStorageDisclosureUrl().get());
     }
 }

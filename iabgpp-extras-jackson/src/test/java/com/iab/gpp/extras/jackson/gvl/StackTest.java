@@ -1,5 +1,11 @@
 package com.iab.gpp.extras.jackson.gvl;
 
+import java.util.Arrays;
+import java.util.List;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 /*-
  * #%L
  * IAB TCF Java GVL Jackson
@@ -21,21 +27,15 @@ package com.iab.gpp.extras.jackson.gvl;
  */
 
 import com.iab.gpp.extras.gvl.Stack;
-import com.iab.gpp.extras.jackson.TestUtil;
 import com.iab.gpp.extras.jackson.Loader;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.List;
+import com.iab.gpp.extras.jackson.TestUtil;
 
 public class StackTest {
 
     private static Stack stackTwenty;
     private final static int STACK_ID_SELECTED_FOR_TEST = 20;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws Exception {
         Loader loader = new Loader();
         List<Stack> stacks = loader.globalVendorList(TestUtil.getGlobalVendorList()).getStacks();
@@ -44,32 +44,32 @@ public class StackTest {
 
     @Test
     public void testGetId() {
-        Assert.assertEquals(20, stackTwenty.getId());
+        Assertions.assertEquals(20, stackTwenty.getId());
     }
 
     @Test
     public void testGetSpecialFeatures() {
-        Assert.assertNotNull(stackTwenty.getSpecialFeatures());
-        Assert.assertEquals(0, stackTwenty.getSpecialFeatures().size());
+        Assertions.assertNotNull(stackTwenty.getSpecialFeatures());
+        Assertions.assertEquals(0, stackTwenty.getSpecialFeatures().size());
     }
 
     @Test
     public void testGetPurposes() {
-        Assert.assertNotNull(stackTwenty.getPurposes());
-        Assert.assertEquals(4, stackTwenty.getPurposes().size());
-        Assert.assertEquals(Arrays.asList(7, 8, 9, 10), stackTwenty.getPurposes());
+        Assertions.assertNotNull(stackTwenty.getPurposes());
+        Assertions.assertEquals(4, stackTwenty.getPurposes().size());
+        Assertions.assertEquals(Arrays.asList(7, 8, 9, 10), stackTwenty.getPurposes());
     }
 
     @Test
     public void testGetName() {
         String expectedName = "Ad and content measurement, audience insights, and product development";
-        Assert.assertEquals(expectedName, stackTwenty.getName());
+        Assertions.assertEquals(expectedName, stackTwenty.getName());
     }
 
     @Test
     public void testGetDescription() {
         String expectedDescription =
                 "Ad and content performance can be measured.  Insights about the audiences who saw the ads and content can be derived. Data can be used to build or improve user experience, systems, and software. Insights about the audiences who saw the ads and content can be derived.";
-        Assert.assertEquals(expectedDescription, stackTwenty.getDescription());
+        Assertions.assertEquals(expectedDescription, stackTwenty.getDescription());
     }
 }
