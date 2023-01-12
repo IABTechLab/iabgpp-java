@@ -1,5 +1,11 @@
 package com.iab.gpp.extras.jackson.cmp;
 
+import java.io.IOException;
+import java.util.List;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 /*-
  * #%L
  * IAB TCF Java CMP List Jackson
@@ -21,14 +27,8 @@ package com.iab.gpp.extras.jackson.cmp;
  */
 
 import com.iab.gpp.extras.cmp.Cmp;
-import com.iab.gpp.extras.jackson.TestUtil;
 import com.iab.gpp.extras.jackson.Loader;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.List;
+import com.iab.gpp.extras.jackson.TestUtil;
 
 public class CmpTest {
 
@@ -37,7 +37,7 @@ public class CmpTest {
     private static final int CMP_ID_SELECTED_FOR_TEST = 3;
     private static final int DELETED_CMP_ID_SELECTED_FOR_TEST = 23;
 
-    @BeforeClass
+    @BeforeAll
     public static void setupBeforeClass() throws IOException {
         Loader loader = new Loader();
         List<Cmp> cmps = loader.cmpList(TestUtil.getCmpList()).getCmps();
@@ -48,29 +48,29 @@ public class CmpTest {
 
     @Test
     public void getId() {
-        Assert.assertEquals(3, cmpThree.getId());
+        Assertions.assertEquals(3, cmpThree.getId());
     }
 
     @Test
     public void getName() {
         String name = "LiveRamp";
-        Assert.assertEquals(name, cmpThree.getName());
+        Assertions.assertEquals(name, cmpThree.getName());
     }
 
     @Test
     public void isCommercial() {
-        Assert.assertTrue(cmpThree.isCommercial());
+        Assertions.assertTrue(cmpThree.isCommercial());
     }
 
     @Test
     public void getDeletedDate() {
-        Assert.assertNull(cmpThree.getDeletedDate().orElse(null));
-        Assert.assertNotNull(cmpTwentyThree.getDeletedDate().orElse(null));
+        Assertions.assertNull(cmpThree.getDeletedDate().orElse(null));
+        Assertions.assertNotNull(cmpTwentyThree.getDeletedDate().orElse(null));
     }
 
     @Test
     public void isDeleted() {
-        Assert.assertFalse(cmpThree.isDeleted());
-        Assert.assertTrue(cmpTwentyThree.isDeleted());
+        Assertions.assertFalse(cmpThree.isDeleted());
+        Assertions.assertTrue(cmpTwentyThree.isDeleted());
     }
 }
