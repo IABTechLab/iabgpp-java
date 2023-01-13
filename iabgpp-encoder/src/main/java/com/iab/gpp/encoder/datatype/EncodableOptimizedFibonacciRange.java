@@ -61,7 +61,7 @@ public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitString
   public String substring(String bitString, int fromIndex) throws DecodingException {
     int max = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 16));
     if (bitString.charAt(fromIndex + 16) == '1') {
-      return (bitString.substring(fromIndex, 17)
+      return (bitString.substring(fromIndex, fromIndex + 17)
           + new EncodableFibonacciIntegerRange().substring(bitString, fromIndex + 17));
     } else {
       return bitString.substring(fromIndex, fromIndex + 17 + max);
