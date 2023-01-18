@@ -19,6 +19,7 @@ import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 
 public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
@@ -162,7 +163,7 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   @Override
-  public void setFieldValue(String fieldName, Object value) {
+  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfCaV1Field.CREATED) && !fieldName.equals(TcfCaV1Field.LAST_UPDATED)) {

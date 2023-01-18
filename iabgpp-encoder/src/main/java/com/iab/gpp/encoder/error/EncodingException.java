@@ -7,4 +7,12 @@ public class EncodingException extends Exception {
   public EncodingException(String msg) {
     super(msg);
   }
+
+  public EncodingException(Exception e) {
+    super(e);
+  }
+
+  public EncodingException(String msg, Exception e) {
+    super(msg, e);
+  }
 }

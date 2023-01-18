@@ -20,6 +20,7 @@ import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.encoder.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
@@ -210,7 +211,7 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   @Override
-  public void setFieldValue(String fieldName, Object value) {
+  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfEuV2Field.CREATED) && !fieldName.equals(TcfEuV2Field.LAST_UPDATED)) {

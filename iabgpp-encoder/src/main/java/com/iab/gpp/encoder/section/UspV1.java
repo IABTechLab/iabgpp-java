@@ -2,6 +2,9 @@ package com.iab.gpp.encoder.section;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.UspV1LegacyField;
 
 public class UspV1 implements EncodableSection {
@@ -15,7 +18,7 @@ public class UspV1 implements EncodableSection {
     initFields();
   }
 
-  public UspV1(String encodedString) {
+  public UspV1(String encodedString) throws DecodingException {
     initFields();
 
     if (encodedString != null && encodedString.length() > 0) {
@@ -46,16 +49,16 @@ public class UspV1 implements EncodableSection {
   }
 
   @Override
-  public void setFieldValue(String fieldName, Object value) {
+  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
     if (this.fields.containsKey(fieldName)) {
       this.fields.put(fieldName, value);
     } else {
-      throw new Error(fieldName + " not found");
+      throw new InvalidFieldException(fieldName + " not found");
     }
   }
 
   @Override
-  public String encode() {
+  public String encode() throws EncodingException {
     String str = "";
     str += this.getFieldValue(UspV1LegacyField.VERSION);
     str += this.getFieldValue(UspV1LegacyField.NOTICE);
@@ -65,12 +68,15 @@ public class UspV1 implements EncodableSection {
   }
 
   @Override
-  public void decode(String encodedString) {
-    // TODO: validate
-    this.setFieldValue(UspV1LegacyField.VERSION, Integer.parseInt(String.valueOf(encodedString.charAt(0))));
-    this.setFieldValue(UspV1LegacyField.NOTICE, String.valueOf(encodedString.charAt(1)));
-    this.setFieldValue(UspV1LegacyField.OPT_OUT_SALE, String.valueOf(encodedString.charAt(2)));
-    this.setFieldValue(UspV1LegacyField.LSPA_COVERED, String.valueOf(encodedString.charAt(3)));
+  public void decode(String encodedString) throws DecodingException {
+    try {
+      this.setFieldValue(UspV1LegacyField.VERSION, Integer.parseInt(String.valueOf(encodedString.charAt(0))));
+      this.setFieldValue(UspV1LegacyField.NOTICE, String.valueOf(encodedString.charAt(1)));
+      this.setFieldValue(UspV1LegacyField.OPT_OUT_SALE, String.valueOf(encodedString.charAt(2)));
+      this.setFieldValue(UspV1LegacyField.LSPA_COVERED, String.valueOf(encodedString.charAt(3)));
+    } catch (InvalidFieldException e) {
+      throw new DecodingException(e);
+    }
   }
 
   @Override

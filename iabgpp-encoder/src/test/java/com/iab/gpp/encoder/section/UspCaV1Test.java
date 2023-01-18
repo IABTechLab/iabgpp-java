@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.UspCaV1Field;
 
 public class UspCaV1Test {
@@ -18,7 +19,7 @@ public class UspCaV1Test {
   }
 
   @Test
-  public void testEncode2() throws EncodingException {
+  public void testEncode2() throws EncodingException, InvalidFieldException {
     UspCaV1 uspCaV1 = new UspCaV1();
 
     uspCaV1.setFieldValue(UspCaV1Field.SALE_OPT_OUT_NOTICE, 1);
@@ -38,7 +39,7 @@ public class UspCaV1Test {
   }
 
   @Test
-  public void testEncode3() throws EncodingException {
+  public void testEncode3() throws EncodingException, InvalidFieldException {
     UspCaV1 uspCaV1 = new UspCaV1();
 
     uspCaV1.setFieldValue(UspCaV1Field.SALE_OPT_OUT_NOTICE, 1);
@@ -58,7 +59,7 @@ public class UspCaV1Test {
   }
 
   @Test
-  public void testEncodeWithGpcSegmentExcluded() throws EncodingException {
+  public void testEncodeWithGpcSegmentExcluded() throws EncodingException, InvalidFieldException {
 
     UspCaV1 uspCaV1 = new UspCaV1();
     uspCaV1.setFieldValue(UspCaV1Field.GPC_SEGMENT_INCLUDED, false);
