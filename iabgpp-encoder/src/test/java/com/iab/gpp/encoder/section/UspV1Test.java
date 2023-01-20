@@ -2,7 +2,9 @@ package com.iab.gpp.encoder.section;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 
 public class UspV1Test {
 
@@ -13,7 +15,7 @@ public class UspV1Test {
   }
 
   @Test
-  public void testEncode2() throws EncodingException {
+  public void testEncode2() throws EncodingException, InvalidFieldException {
     UspV1 uspv1 = new UspV1();
     uspv1.setFieldValue("Notice", "Y");
     uspv1.setFieldValue("OptOutSale", "N");
@@ -23,7 +25,7 @@ public class UspV1Test {
   }
 
   @Test
-  public void testEncode3() throws EncodingException {
+  public void testEncode3() throws EncodingException, InvalidFieldException {
     UspV1 uspv1 = new UspV1();
     uspv1.setFieldValue("Version", 2);
     uspv1.setFieldValue("Notice", "N");
@@ -34,7 +36,7 @@ public class UspV1Test {
   }
 
   @Test
-  public void testDecode1() throws EncodingException {
+  public void testDecode1() throws DecodingException, InvalidFieldException {
     UspV1 uspv1 = new UspV1("1NYN");
     Assertions.assertEquals(1, uspv1.getFieldValue("Version"));
     Assertions.assertEquals("N", uspv1.getFieldValue("Notice"));
@@ -48,7 +50,7 @@ public class UspV1Test {
   }
 
   @Test
-  public void testDecode2() throws EncodingException {
+  public void testDecode2() throws DecodingException, InvalidFieldException {
     UspV1 uspv1 = new UspV1("2YNY");
     Assertions.assertEquals(2, uspv1.getFieldValue("Version"));
     Assertions.assertEquals("Y", uspv1.getFieldValue("Notice"));

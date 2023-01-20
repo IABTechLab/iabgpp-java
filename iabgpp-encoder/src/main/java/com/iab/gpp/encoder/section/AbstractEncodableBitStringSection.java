@@ -1,9 +1,10 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.Map;
+import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 
 public abstract class AbstractEncodableBitStringSection implements EncodableSection {
   protected Map<String, AbstractEncodableBitStringDataType<?>> fields;
@@ -24,11 +25,11 @@ public abstract class AbstractEncodableBitStringSection implements EncodableSect
   }
 
   @Override
-  public void setFieldValue(String fieldName, Object value) {
+  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
     if (this.fields.containsKey(fieldName)) {
       this.fields.get(fieldName).setValue(value);
     } else {
-      throw new Error(fieldName + " not found");
+      throw new InvalidFieldException(fieldName + " not found");
     }
   }
 
@@ -44,7 +45,7 @@ public abstract class AbstractEncodableBitStringSection implements EncodableSect
         AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
         bitString += field.encode();
       } else {
-        throw new Error("Field not found: '" + fieldName + "'");
+        throw new EncodingException("Field not found: '" + fieldName + "'");
       }
     }
 
@@ -61,7 +62,7 @@ public abstract class AbstractEncodableBitStringSection implements EncodableSect
         field.decode(substring);
         index += substring.length();
       } else {
-        throw new Error("Field not found: '" + fieldName + "'");
+        throw new DecodingException("Field not found: '" + fieldName + "'");
       }
     }
   }

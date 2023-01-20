@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -10,16 +11,17 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
   private int elementBitStringLength;
   private int numElements;
 
-  public EncodableFixedIntegerList(int elementBitStringLength, int size) {
+  protected EncodableFixedIntegerList(int elementBitStringLength, int numElements) {
     super();
     this.elementBitStringLength = elementBitStringLength;
-    this.numElements = size;
+    this.numElements = numElements;
   }
 
   public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value) {
-    super(value);
+    super();
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = value.size();
+    setValue(value);
   }
 
   public String encode() throws EncodingException {
@@ -33,5 +35,23 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
   public String substring(String bitString, int fromIndex) {
     // TODO: validate
     return bitString.substring(fromIndex, fromIndex + (this.elementBitStringLength * numElements));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public void setValue(Object value) {
+    List<Integer> v = new ArrayList<>((List<Integer>) value);
+    for (int i = v.size(); i < numElements; i++) {
+      v.add(0);
+    }
+    if (v.size() > numElements) {
+      v = v.subList(0, numElements);
+    }
+    super.setValue(v);
+  }
+
+  @Override
+  public List<Integer> getValue() {
+    return new ArrayList<>(super.getValue());
   }
 }

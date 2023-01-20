@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.section.EncodableSection;
 import com.iab.gpp.encoder.section.HeaderV1;
 import com.iab.gpp.encoder.section.Sections;
@@ -33,11 +34,11 @@ public class GppModel {
     }
   }
 
-  public void setFieldValue(int sectionId, String fieldName, Object value) {
+  public void setFieldValue(int sectionId, String fieldName, Object value) throws InvalidFieldException {
     setFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName, value);
   }
 
-  public void setFieldValue(String sectionName, String fieldName, Object value) {
+  public void setFieldValue(String sectionName, String fieldName, Object value) throws InvalidFieldException {
     EncodableSection section = null;
     if (!this.sections.containsKey(sectionName)) {
       if (sectionName.equals(TcfCaV1.NAME)) {
@@ -75,7 +76,7 @@ public class GppModel {
     if (section != null) {
       section.setFieldValue(fieldName, value);
     } else {
-      throw new Error(sectionName + " not found");
+      throw new InvalidFieldException(sectionName + "." + fieldName + " not found");
     }
   }
 
@@ -113,7 +114,11 @@ public class GppModel {
 
   public HeaderV1 getHeader() {
     HeaderV1 header = new HeaderV1();
-    header.setFieldValue("SectionIds", this.getSectionIds());
+    try {
+      header.setFieldValue("SectionIds", this.getSectionIds());
+    } catch (InvalidFieldException e) {
+
+    }
     return header;
   }
 
@@ -204,7 +209,11 @@ public class GppModel {
     }
 
     HeaderV1 header = new HeaderV1();
-    header.setFieldValue("SectionIds", this.getSectionIds());
+    try {
+      header.setFieldValue("SectionIds", this.getSectionIds());
+    } catch (InvalidFieldException e) {
+      throw new EncodingException(e);
+    }
     encodedSections.add(0, header.encode());
 
     String encodedString = encodedSections.stream().collect(Collectors.joining("~"));

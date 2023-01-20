@@ -3,9 +3,10 @@ package com.iab.gpp.encoder.section;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 
 public abstract class AbstractEncodableSegmentedBitStringSection implements EncodableSection {
   protected Map<String, AbstractEncodableBitStringDataType<?>> fields;
@@ -26,11 +27,11 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
   }
 
   @Override
-  public void setFieldValue(String fieldName, Object value) {
+  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
     if (this.fields.containsKey(fieldName)) {
       this.fields.get(fieldName).setValue(value);
     } else {
-      throw new Error(fieldName + " not found");
+      throw new InvalidFieldException(fieldName + " not found");
     }
   }
 
@@ -49,10 +50,10 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
             AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
             segmentBitString += field.encode();
           } catch (Exception e) {
-            throw new Error("Unable to encode " + fieldName, e);
+            throw new EncodingException("Unable to encode " + fieldName, e);
           }
         } else {
-          throw new Error("Field not found: '" + fieldName + "'");
+          throw new EncodingException("Field not found: '" + fieldName + "'");
         }
       }
       segmentBitStrings.add(segmentBitString);
@@ -75,10 +76,10 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
               field.decode(substring);
               index += substring.length();
             } catch (Exception e) {
-              throw new Error("Unable to decode " + fieldName, e);
+              throw new DecodingException("Unable to decode " + fieldName, e);
             }
           } else {
-            throw new Error("Field not found: '" + fieldName + "'");
+            throw new DecodingException("Field not found: '" + fieldName + "'");
           }
         }
       }

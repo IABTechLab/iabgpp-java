@@ -8,19 +8,22 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 
 public class TcfCaV1Test {
 
   @Test
-  public void testEncode1() throws EncodingException {
+  public void testEncode1() throws EncodingException, InvalidFieldException {
 
     TcfCaV1 tcfCaV1 = new TcfCaV1();
-    Assertions.assertEquals("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", tcfCaV1.encode());
+    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", tcfCaV1.encode());
   }
 
   @Test
-  public void testEncode2() throws EncodingException {
+  public void testEncode2() throws EncodingException, InvalidFieldException {
 
     TcfCaV1 tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.CMP_ID, 50);

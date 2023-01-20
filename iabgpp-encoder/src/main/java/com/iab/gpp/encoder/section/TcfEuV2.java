@@ -20,6 +20,7 @@ import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.encoder.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
@@ -44,10 +45,12 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   private void initFields() {
     fields = new HashMap<>();
 
+    ZonedDateTime date = ZonedDateTime.now();
+
     // core section
     fields.put(TcfEuV2Field.VERSION, new EncodableFixedInteger(6, TcfEuV2.VERSION));
-    fields.put(TcfEuV2Field.CREATED, new EncodableDatetime());
-    fields.put(TcfEuV2Field.LAST_UPDATED, new EncodableDatetime());
+    fields.put(TcfEuV2Field.CREATED, new EncodableDatetime(date));
+    fields.put(TcfEuV2Field.LAST_UPDATED, new EncodableDatetime(date));
     fields.put(TcfEuV2Field.CMP_ID, new EncodableFixedInteger(12, 0));
     fields.put(TcfEuV2Field.CMP_VERSION, new EncodableFixedInteger(12, 0));
     fields.put(TcfEuV2Field.CONSENT_SCREEN, new EncodableFixedInteger(6, 0));
@@ -56,9 +59,14 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(TcfEuV2Field.POLICY_VERSION, new EncodableFixedInteger(6, 2));
     fields.put(TcfEuV2Field.IS_SERVICE_SPECIFIC, new EncodableBoolean(false));
     fields.put(TcfEuV2Field.USE_NON_STANDARD_STACKS, new EncodableBoolean(false));
-    fields.put(TcfEuV2Field.SPECIAL_FEATURE_OPTINS, new EncodableFixedBitfield(12, new ArrayList<>()));
-    fields.put(TcfEuV2Field.PURPOSE_CONSENTS, new EncodableFixedBitfield(24, new ArrayList<>()));
-    fields.put(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS, new EncodableFixedBitfield(24, new ArrayList<>()));
+    fields.put(TcfEuV2Field.SPECIAL_FEATURE_OPTINS, new EncodableFixedBitfield(
+        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false)));
+    fields.put(TcfEuV2Field.PURPOSE_CONSENTS,
+        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
+    fields.put(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS,
+        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
     fields.put(TcfEuV2Field.PURPOSE_ONE_TREATMENT, new EncodableBoolean(false));
     fields.put(TcfEuV2Field.PUBLISHER_COUNTRY_CODE, new EncodableFixedString(2, "AA"));
     fields.put(TcfEuV2Field.VENDOR_CONSENTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
@@ -68,8 +76,12 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
 
     // publisher purposes segment
     fields.put(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
-    fields.put(TcfEuV2Field.PUBLISHER_CONSENTS, new EncodableFixedBitfield(24, new ArrayList<>()));
-    fields.put(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS, new EncodableFixedBitfield(24, new ArrayList<>()));
+    fields.put(TcfEuV2Field.PUBLISHER_CONSENTS,
+        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
+    fields.put(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS,
+        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
 
     EncodableFixedInteger numCustomPurposes = new EncodableFixedInteger(6, 0);
     fields.put(TcfEuV2Field.NUM_CUSTOM_PURPOSES, numCustomPurposes);
@@ -210,7 +222,7 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   @Override
-  public void setFieldValue(String fieldName, Object value) {
+  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfEuV2Field.CREATED) && !fieldName.equals(TcfEuV2Field.LAST_UPDATED)) {

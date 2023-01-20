@@ -8,14 +8,15 @@ public class EncodableFixedString extends AbstractEncodableBitStringDataType<Str
 
   private int stringLength;
 
-  public EncodableFixedString(int stringLength) {
+  protected EncodableFixedString(int stringLength) {
     super();
     this.stringLength = stringLength;
   }
 
   public EncodableFixedString(int stringLength, String value) {
-    super(value);
+    super();
     this.stringLength = stringLength;
+    setValue(value);
   }
 
   public String encode() throws EncodingException {
