@@ -18,7 +18,7 @@ public class TcfEuV2Test {
     TcfEuV2 tcfEuV2 = new TcfEuV2();
     tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-   Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
+    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
   }
 
   @Test
@@ -63,10 +63,15 @@ public class TcfEuV2Test {
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorLegitimateInterests());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherRestrictions());
     Assertions.assertEquals(3, tcfEuV2.getPublisherPurposesSegmentType());
-    Assertions.assertEquals(Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-        false, false, false, false, false, false, false, false, false, false), tcfEuV2.getPublisherConsents());
-    Assertions.assertEquals(Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-        false, false, false, false, false, false, false, false, false, false), tcfEuV2.getPublisherLegitimateInterests());
+    Assertions
+        .assertEquals(
+            Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false,
+                false, false, false, false, false, false, false, false, false, false, false),
+            tcfEuV2.getPublisherConsents());
+    Assertions.assertEquals(
+        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getPublisherLegitimateInterests());
     Assertions.assertEquals(0, tcfEuV2.getNumCustomPurposes());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomConsents());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomLegitimateInterests());
