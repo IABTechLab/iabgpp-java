@@ -5,12 +5,13 @@ import com.iab.gpp.encoder.error.DecodingException;
 
 public class EncodableFibonacciInteger extends AbstractEncodableBitStringDataType<Integer> {
 
-  public EncodableFibonacciInteger() {
+  protected EncodableFibonacciInteger() {
     super();
   }
 
   public EncodableFibonacciInteger(Integer value) {
-    super(value);
+    super();
+    setValue(value);
   }
 
   public String encode() {

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.UspCoV1Field;
 
 public class UspCoV1Test {
@@ -17,7 +18,7 @@ public class UspCoV1Test {
   }
 
   @Test
-  public void testEncode2() throws EncodingException {
+  public void testEncode2() throws EncodingException, InvalidFieldException {
     UspCoV1 uspCoV1 = new UspCoV1();
 
     uspCoV1.setFieldValue(UspCoV1Field.SHARING_NOTICE, 1);
@@ -36,7 +37,7 @@ public class UspCoV1Test {
   }
 
   @Test
-  public void testEncodeWithGpcSegmentExcluded() throws EncodingException {
+  public void testEncodeWithGpcSegmentExcluded() throws EncodingException, InvalidFieldException {
     UspCoV1 uspCoV1 = new UspCoV1();
     uspCoV1.setFieldValue(UspCoV1Field.GPC_SEGMENT_INCLUDED, false);
     Assertions.assertEquals("BAAAAAA", uspCoV1.encode());

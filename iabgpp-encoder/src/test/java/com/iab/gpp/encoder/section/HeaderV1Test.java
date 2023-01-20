@@ -6,25 +6,26 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 
 public class HeaderV1Test {
 
   @Test
-  public void testEncodeToBitString1() throws EncodingException {
+  public void testEncodeToBitString1() throws EncodingException, InvalidFieldException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", new ArrayList<>());
     Assertions.assertEquals("000011000001000000000000", headerV1.encodeToBitString());
   }
 
   @Test
-  public void testEncodeToBitString2() throws EncodingException {
+  public void testEncodeToBitString2() throws EncodingException, InvalidFieldException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2));
     Assertions.assertEquals("0000110000010000000000010011", headerV1.encodeToBitString());
   }
 
   @Test
-  public void testEncodeToBitString3() throws EncodingException {
+  public void testEncodeToBitString3() throws EncodingException, InvalidFieldException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2, 6));
     Assertions.assertEquals("000011000001000000000010001101011", headerV1.encodeToBitString());
@@ -55,21 +56,21 @@ public class HeaderV1Test {
   }
 
   @Test
-  public void testEncode1() throws EncodingException {
+  public void testEncode1() throws EncodingException, InvalidFieldException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", new ArrayList<>());
     Assertions.assertEquals("DBAA", headerV1.encode());
   }
 
   @Test
-  public void testEncode2() throws EncodingException {
+  public void testEncode2() throws EncodingException, InvalidFieldException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2));
     Assertions.assertEquals("DBABMA", headerV1.encode());
   }
 
   @Test
-  public void testEncode3() throws EncodingException {
+  public void testEncode3() throws EncodingException, InvalidFieldException {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2, 6));
     Assertions.assertEquals("DBACNYA", headerV1.encode());

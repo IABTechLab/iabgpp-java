@@ -8,18 +8,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfEuV2Test {
 
   @Test
-  public void testEncode1() throws EncodingException {
+  public void testEncode1() throws EncodingException, InvalidFieldException {
     TcfEuV2 tcfEuV2 = new TcfEuV2();
-    Assertions.assertEquals("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
+    tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
   }
 
   @Test
-  public void testEncode2() throws EncodingException {
+  public void testEncode2() throws EncodingException, InvalidFieldException {
     TcfEuV2 tcfEuV2 = new TcfEuV2();
     tcfEuV2.setFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC, true);
     tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
@@ -60,8 +63,15 @@ public class TcfEuV2Test {
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorLegitimateInterests());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherRestrictions());
     Assertions.assertEquals(3, tcfEuV2.getPublisherPurposesSegmentType());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherConsents());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherLegitimateInterests());
+    Assertions
+        .assertEquals(
+            Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false,
+                false, false, false, false, false, false, false, false, false, false, false),
+            tcfEuV2.getPublisherConsents());
+    Assertions.assertEquals(
+        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getPublisherLegitimateInterests());
     Assertions.assertEquals(0, tcfEuV2.getNumCustomPurposes());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomConsents());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomLegitimateInterests());

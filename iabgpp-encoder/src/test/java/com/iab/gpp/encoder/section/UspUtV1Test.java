@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.UspUtV1Field;
 
 public class UspUtV1Test {
@@ -17,7 +18,7 @@ public class UspUtV1Test {
   }
 
   @Test
-  public void testEncode2() throws EncodingException {
+  public void testEncode2() throws EncodingException, InvalidFieldException {
     UspUtV1 uspUtV1 = new UspUtV1();
 
     uspUtV1.setFieldValue(UspUtV1Field.SHARING_NOTICE, 1);
