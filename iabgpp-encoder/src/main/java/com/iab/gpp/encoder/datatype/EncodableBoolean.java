@@ -6,12 +6,13 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
 
-  public EncodableBoolean() {
+  protected EncodableBoolean() {
     super();
   }
 
   public EncodableBoolean(Boolean value) {
-    super(value);
+    super();
+    setValue(value);
   }
 
   public String encode() throws EncodingException {

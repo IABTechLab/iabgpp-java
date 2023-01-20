@@ -6,12 +6,13 @@ import com.iab.gpp.encoder.error.DecodingException;
 
 public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedDateTime> {
 
-  public EncodableDatetime() {
+  protected EncodableDatetime() {
     super();
   }
 
   public EncodableDatetime(ZonedDateTime value) {
-    super(value);
+    super();
+    setValue(value);
   }
 
   public String encode() {

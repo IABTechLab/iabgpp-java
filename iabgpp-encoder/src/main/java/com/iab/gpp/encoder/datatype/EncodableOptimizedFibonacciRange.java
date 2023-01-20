@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
@@ -10,12 +11,13 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<List<Integer>> {
 
-  public EncodableOptimizedFibonacciRange() {
+  protected EncodableOptimizedFibonacciRange() {
     super();
   }
 
   public EncodableOptimizedFibonacciRange(List<Integer> value) {
-    super(value);
+    super();
+    setValue(value);
   }
 
   public String encode() throws EncodingException {
@@ -66,5 +68,16 @@ public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitString
     } else {
       return bitString.substring(fromIndex, fromIndex + 17 + max);
     }
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public void setValue(Object value) {
+    super.setValue(new ArrayList<>(new TreeSet<>((List<Integer>) value)));
+  }
+
+  @Override
+  public List<Integer> getValue() {
+    return new ArrayList<>(super.getValue());
   }
 }

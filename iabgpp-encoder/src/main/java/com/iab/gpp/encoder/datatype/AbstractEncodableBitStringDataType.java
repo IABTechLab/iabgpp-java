@@ -6,12 +6,8 @@ import com.iab.gpp.encoder.error.EncodingException;
 public abstract class AbstractEncodableBitStringDataType<T> {
   protected T value;
 
-  public AbstractEncodableBitStringDataType() {
+  protected AbstractEncodableBitStringDataType() {
 
-  }
-
-  public AbstractEncodableBitStringDataType(T value) {
-    this.value = value;
   }
 
   public boolean hasValue() {

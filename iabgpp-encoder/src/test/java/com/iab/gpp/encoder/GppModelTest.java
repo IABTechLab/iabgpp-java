@@ -4,6 +4,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -591,10 +592,10 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(28));
     gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV1Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV1Field.LAST_UPDATED, utcDateTime);
-    
+
     Assertions.assertEquals("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOAAAABAAAAA.QAAA.IAAA", gppModel.encode());
   }
-  
+
   @Test
   public void testEncode2() throws EncodingException, InvalidFieldException {
     GppModel gppModel = new GppModel();
@@ -602,10 +603,10 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(29));
     gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV1Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV1Field.LAST_UPDATED, utcDateTime);
-    
+
     Assertions.assertEquals("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOwAQAOgAAAA.QAAA.IAAA", gppModel.encode());
   }
-  
+
   @Test
   public void testEncode3() throws EncodingException, InvalidFieldException {
     GppModel gppModel = new GppModel();
@@ -613,26 +614,51 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(1, 173, 722));
     gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV1Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV1Field.LAST_UPDATED, utcDateTime);
-    
-    Assertions.assertEquals("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA", gppModel.encode());
+
+    Assertions.assertEquals("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA",
+        gppModel.encode());
   }
-  
+
   @Test
   public void testDecode1() throws DecodingException {
     GppModel gppModel = new GppModel("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOAAAABAAAAA.QAAA.IAAA");
     Assertions.assertEquals(Arrays.asList(28), gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
   }
-  
+
   @Test
   public void testDecode2() throws DecodingException {
     GppModel gppModel = new GppModel("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOwAQAOgAAAA.QAAA.IAAA");
     Assertions.assertEquals(Arrays.asList(29), gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
   }
-  
+
   @Test
   public void testDecode3() throws DecodingException {
     GppModel gppModel = new GppModel("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA");
-    Assertions.assertEquals(Arrays.asList(1, 173, 722), gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
+    Assertions.assertEquals(Arrays.asList(1, 173, 722),
+        gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
   }
-  
+
+  @Test
+  public void testConsistency() throws InvalidFieldException, EncodingException, DecodingException {
+    GppModel fromObjectModel = new GppModel();
+
+    fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS,
+        new ArrayList<>(List.of(true, true, true, true, true, true, true, true, true, true)));
+    fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS,
+        new ArrayList<>(List.of(32, 128, 81, 210, 755, 21, 173, 238)));
+
+    Assertions.assertEquals(fromObjectModel.getSection(TcfEuV2.NAME).encode(),
+        fromObjectModel.getSection(TcfEuV2.NAME).encode());
+    Assertions.assertEquals(fromObjectModel.encode(), fromObjectModel.encode());
+
+    GppModel decodedModel = new GppModel(fromObjectModel.encode());
+
+    Assertions.assertEquals(
+        new ArrayList<>(List.of(true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false)),
+        decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS));
+    Assertions.assertEquals(new ArrayList<>(List.of(21, 32, 81, 128, 173, 210, 238, 755)),
+        decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
+
+  }
 }

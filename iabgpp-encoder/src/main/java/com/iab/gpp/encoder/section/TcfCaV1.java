@@ -44,10 +44,12 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   private void initFields() {
     fields = new HashMap<>();
 
+    ZonedDateTime date = ZonedDateTime.now();
+
     // core section
     fields.put(TcfCaV1Field.VERSION, new EncodableFixedInteger(6, TcfCaV1.VERSION));
-    fields.put(TcfCaV1Field.CREATED, new EncodableDatetime());
-    fields.put(TcfCaV1Field.LAST_UPDATED, new EncodableDatetime());
+    fields.put(TcfCaV1Field.CREATED, new EncodableDatetime(date));
+    fields.put(TcfCaV1Field.LAST_UPDATED, new EncodableDatetime(date));
     fields.put(TcfCaV1Field.CMP_ID, new EncodableFixedInteger(12, 0));
     fields.put(TcfCaV1Field.CMP_VERSION, new EncodableFixedInteger(12, 0));
     fields.put(TcfCaV1Field.CONSENT_SCREEN, new EncodableFixedInteger(6, 0));
@@ -55,16 +57,25 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(TcfCaV1Field.VENDOR_LIST_VERSION, new EncodableFixedInteger(12, 0));
     fields.put(TcfCaV1Field.TCF_POLICY_VERSION, new EncodableFixedInteger(6, 2));
     fields.put(TcfCaV1Field.USE_NON_STANDARD_STACKS, new EncodableBoolean(false));
-    fields.put(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT, new EncodableFixedBitfield(12, new ArrayList<>()));
-    fields.put(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT, new EncodableFixedBitfield(24, new ArrayList<>()));
-    fields.put(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT, new EncodableFixedBitfield(24, new ArrayList<>()));
+    fields.put(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT, new EncodableFixedBitfield(
+        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false)));
+    fields.put(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
+        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
+    fields.put(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
+        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
     fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
     fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
 
     // publisher purposes segment
     fields.put(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
-    fields.put(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT, new EncodableFixedBitfield(24, new ArrayList<>()));
-    fields.put(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT, new EncodableFixedBitfield(24, new ArrayList<>()));
+    fields.put(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
+        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
+    fields.put(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
+        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
 
     EncodableFixedInteger numCustomPurposes = new EncodableFixedInteger(6, 0);
     fields.put(TcfCaV1Field.NUM_CUSTOM_PURPOSES, numCustomPurposes);

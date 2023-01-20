@@ -7,14 +7,15 @@ public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<In
 
   private int bitStringLength;
 
-  public EncodableFixedInteger(int bitStringLength) {
+  protected EncodableFixedInteger(int bitStringLength) {
     super();
     this.bitStringLength = bitStringLength;
   }
 
   public EncodableFixedInteger(int bitStringLength, Integer value) {
-    super(value);
+    super();
     this.bitStringLength = bitStringLength;
+    setValue(value);
   }
 
   public String encode() {

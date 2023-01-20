@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -7,20 +8,21 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<List<Boolean>> {
 
-  private int bitStringLength;
+  private int numElements;
 
-  public EncodableFixedBitfield(int bitStringLength) {
+  protected EncodableFixedBitfield(int numElements) {
     super();
-    this.bitStringLength = bitStringLength;
+    this.numElements = numElements;
   }
 
-  public EncodableFixedBitfield(int bitStringLength, List<Boolean> value) {
-    super(value);
-    this.bitStringLength = bitStringLength;
+  public EncodableFixedBitfield(List<Boolean> value) {
+    super();
+    this.numElements = value.size();
+    setValue(value);
   }
 
   public String encode() throws EncodingException {
-    return FixedBitfieldEncoder.encode(this.value, this.bitStringLength);
+    return FixedBitfieldEncoder.encode(this.value, this.numElements);
   }
 
   public void decode(String bitString) throws DecodingException {
@@ -29,6 +31,24 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
 
   public String substring(String bitString, int fromIndex) {
     // TODO: validate
-    return bitString.substring(fromIndex, fromIndex + this.bitStringLength);
+    return bitString.substring(fromIndex, fromIndex + this.numElements);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public void setValue(Object value) {
+    List<Boolean> v = new ArrayList<>((List<Boolean>) value);
+    for (int i = v.size(); i < numElements; i++) {
+      v.add(false);
+    }
+    if (v.size() > numElements) {
+      v = v.subList(0, numElements);
+    }
+    super.setValue(v);
+  }
+
+  @Override
+  public List<Boolean> getValue() {
+    return new ArrayList<>(super.getValue());
   }
 }
