@@ -189,8 +189,8 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
     return (Integer) this.fields.get(UspCtV1Field.MSPA_SERVICE_PROVIDER_MODE).getValue();
   }
 
-  public Boolean getGpcSegmentType() {
-    return (Boolean) this.fields.get(UspCtV1Field.GPC_SEGMENT_TYPE).getValue();
+  public Integer getGpcSegmentType() {
+    return (Integer) this.fields.get(UspCtV1Field.GPC_SEGMENT_TYPE).getValue();
   }
 
   public Boolean getGpcSegmentIncluded() {

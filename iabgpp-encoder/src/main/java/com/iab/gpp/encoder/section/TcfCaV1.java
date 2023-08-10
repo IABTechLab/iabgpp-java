@@ -24,7 +24,7 @@ import com.iab.gpp.encoder.field.TcfCaV1Field;
 
 public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public static int ID = 5;
-  public static int VERSION = 2;
+  public static int VERSION = 1;
   public static String NAME = "tcfcav1";
 
   private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
