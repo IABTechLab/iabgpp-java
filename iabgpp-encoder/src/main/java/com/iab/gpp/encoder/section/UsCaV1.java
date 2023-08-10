@@ -12,21 +12,21 @@ import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.field.UspCaV1Field;
+import com.iab.gpp.encoder.field.UsCaV1Field;
 import com.iab.gpp.encoder.field.UspV1Field;
 
-public class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
+public class UsCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public static int ID = 8;
   public static int VERSION = 1;
-  public static String NAME = "uspcav1";
+  public static String NAME = "uscav1";
 
   private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
 
-  public UspCaV1() {
+  public UsCaV1() {
     initFields();
   }
 
-  public UspCaV1(String encodedString) throws DecodingException {
+  public UsCaV1(String encodedString) throws DecodingException {
     initFields();
 
     if (encodedString != null && encodedString.length() > 0) {
@@ -37,44 +37,44 @@ public class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
   private void initFields() {
     fields = new HashMap<>();
 
-    fields.put(UspCaV1Field.VERSION, new EncodableFixedInteger(6, UspCaV1.VERSION));
-    fields.put(UspCaV1Field.SALE_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
-    fields.put(UspCaV1Field.SHARING_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
-    fields.put(UspCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE, new EncodableFixedInteger(2, 0));
-    fields.put(UspCaV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2, 0));
-    fields.put(UspCaV1Field.SHARING_OPT_OUT, new EncodableFixedInteger(2, 0));
-    fields.put(UspCaV1Field.SENSITIVE_DATA_PROCESSING,
+    fields.put(UsCaV1Field.VERSION, new EncodableFixedInteger(6, UsCaV1.VERSION));
+    fields.put(UsCaV1Field.SALE_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCaV1Field.SHARING_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCaV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2, 0));
+    fields.put(UsCaV1Field.SHARING_OPT_OUT, new EncodableFixedInteger(2, 0));
+    fields.put(UsCaV1Field.SENSITIVE_DATA_PROCESSING,
         new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0)));
-    fields.put(UspCaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, Arrays.asList(0, 0)));
-    fields.put(UspCaV1Field.PERSONAL_DATA_CONSENTS, new EncodableFixedInteger(2, 0));
-    fields.put(UspCaV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 0));
-    fields.put(UspCaV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0));
-    fields.put(UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, Arrays.asList(0, 0)));
+    fields.put(UsCaV1Field.PERSONAL_DATA_CONSENTS, new EncodableFixedInteger(2, 0));
+    fields.put(UsCaV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 0));
+    fields.put(UsCaV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCaV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0));
 
     // gpc segment
-    fields.put(UspCaV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    fields.put(UspCaV1Field.GPC_SEGMENT_INCLUDED, new EncodableBoolean(true));
-    fields.put(UspCaV1Field.GPC, new EncodableBoolean(false));
+    fields.put(UsCaV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
+    fields.put(UsCaV1Field.GPC_SEGMENT_INCLUDED, new EncodableBoolean(true));
+    fields.put(UsCaV1Field.GPC, new EncodableBoolean(false));
 
     //@formatter:off
     String[] coreSegment = new String[] {
-        UspCaV1Field.VERSION,
-        UspCaV1Field.SALE_OPT_OUT_NOTICE,
-        UspCaV1Field.SHARING_OPT_OUT_NOTICE,
-        UspCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE,
-        UspCaV1Field.SALE_OPT_OUT,
-        UspCaV1Field.SHARING_OPT_OUT,
-        UspCaV1Field.SENSITIVE_DATA_PROCESSING,
-        UspCaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-        UspCaV1Field.PERSONAL_DATA_CONSENTS,
-        UspCaV1Field.MSPA_COVERED_TRANSACTION,
-        UspCaV1Field.MSPA_OPT_OUT_OPTION_MODE,
-        UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE
+        UsCaV1Field.VERSION,
+        UsCaV1Field.SALE_OPT_OUT_NOTICE,
+        UsCaV1Field.SHARING_OPT_OUT_NOTICE,
+        UsCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE,
+        UsCaV1Field.SALE_OPT_OUT,
+        UsCaV1Field.SHARING_OPT_OUT,
+        UsCaV1Field.SENSITIVE_DATA_PROCESSING,
+        UsCaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+        UsCaV1Field.PERSONAL_DATA_CONSENTS,
+        UsCaV1Field.MSPA_COVERED_TRANSACTION,
+        UsCaV1Field.MSPA_OPT_OUT_OPTION_MODE,
+        UsCaV1Field.MSPA_SERVICE_PROVIDER_MODE
     };
     
     String[] gpcSegment = new String[] {
-        UspCaV1Field.GPC_SEGMENT_TYPE,
-        UspCaV1Field.GPC
+        UsCaV1Field.GPC_SEGMENT_TYPE,
+        UsCaV1Field.GPC
     };
     
     segments = new String[][] {
@@ -92,7 +92,7 @@ public class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
       encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
 
       if (segmentBitStrings.size() >= 2) {
-        Boolean gpcSegmentIncluded = (Boolean) this.fields.get(UspCaV1Field.GPC_SEGMENT_INCLUDED).getValue();
+        Boolean gpcSegmentIncluded = (Boolean) this.fields.get(UsCaV1Field.GPC_SEGMENT_INCLUDED).getValue();
         if (gpcSegmentIncluded) {
           encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
         }
@@ -131,17 +131,17 @@ public class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
       }
     }
     this.decodeSegmentsFromBitStrings(Arrays.asList(segmentBitStrings));
-    this.fields.get(UspCaV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
+    this.fields.get(UsCaV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
   }
 
   @Override
   public int getId() {
-    return UspCaV1.ID;
+    return UsCaV1.ID;
   }
 
   @Override
   public String getName() {
-    return UspCaV1.NAME;
+    return UsCaV1.NAME;
   }
 
   public Integer getVersion() {
@@ -149,60 +149,60 @@ public class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   public Integer getSaleOptOutNotice() {
-    return (Integer) this.fields.get(UspCaV1Field.SALE_OPT_OUT_NOTICE).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.SALE_OPT_OUT_NOTICE).getValue();
   }
 
   public Integer getSensitiveDataLimitUseNotice() {
-    return (Integer) this.fields.get(UspCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE).getValue();
   }
 
   public Integer getSharingOptOutNotice() {
-    return (Integer) this.fields.get(UspCaV1Field.SHARING_OPT_OUT_NOTICE).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.SHARING_OPT_OUT_NOTICE).getValue();
   }
 
   public Integer getSaleOptOut() {
-    return (Integer) this.fields.get(UspCaV1Field.SALE_OPT_OUT).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.SALE_OPT_OUT).getValue();
   }
 
   public Integer getSharingOptOut() {
-    return (Integer) this.fields.get(UspCaV1Field.SHARING_OPT_OUT).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.SHARING_OPT_OUT).getValue();
   }
 
   @SuppressWarnings("unchecked")
   public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.fields.get(UspCaV1Field.SENSITIVE_DATA_PROCESSING).getValue();
+    return (List<Integer>) this.fields.get(UsCaV1Field.SENSITIVE_DATA_PROCESSING).getValue();
   }
 
   @SuppressWarnings("unchecked")
   public List<Integer> getKnownChildSensitiveDataConsents() {
-    return (List<Integer>) this.fields.get(UspCaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS).getValue();
+    return (List<Integer>) this.fields.get(UsCaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS).getValue();
   }
 
   public Integer getPersonalDataConsents() {
-    return (Integer) this.fields.get(UspCaV1Field.PERSONAL_DATA_CONSENTS).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.PERSONAL_DATA_CONSENTS).getValue();
   }
 
   public Integer getMspaCoveredTransaction() {
-    return (Integer) this.fields.get(UspCaV1Field.MSPA_COVERED_TRANSACTION).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.MSPA_COVERED_TRANSACTION).getValue();
   }
 
   public Integer getMspaOptOutOptionMode() {
-    return (Integer) this.fields.get(UspCaV1Field.MSPA_OPT_OUT_OPTION_MODE).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.MSPA_OPT_OUT_OPTION_MODE).getValue();
   }
 
   public Integer getMspaServiceProviderMode() {
-    return (Integer) this.fields.get(UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.MSPA_SERVICE_PROVIDER_MODE).getValue();
   }
 
   public Integer getGpcSegmentType() {
-    return (Integer) this.fields.get(UspCaV1Field.GPC_SEGMENT_TYPE).getValue();
+    return (Integer) this.fields.get(UsCaV1Field.GPC_SEGMENT_TYPE).getValue();
   }
 
   public Boolean getGpcSegmentIncluded() {
-    return (Boolean) this.fields.get(UspCaV1Field.GPC_SEGMENT_INCLUDED).getValue();
+    return (Boolean) this.fields.get(UsCaV1Field.GPC_SEGMENT_INCLUDED).getValue();
   }
 
   public Boolean getGpc() {
-    return (Boolean) this.fields.get(UspCaV1Field.GPC).getValue();
+    return (Boolean) this.fields.get(UsCaV1Field.GPC).getValue();
   }
 }
