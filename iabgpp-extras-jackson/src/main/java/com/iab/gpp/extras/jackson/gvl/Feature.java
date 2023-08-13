@@ -1,5 +1,8 @@
 package com.iab.gpp.extras.jackson.gvl;
 
+import java.util.List;
+import java.util.Optional;
+
 /*-
  * #%L
  * IAB TCF Java GVL Jackson
@@ -25,48 +28,59 @@ package com.iab.gpp.extras.jackson.gvl;
  */
 public class Feature implements com.iab.gpp.extras.gvl.Feature {
 
-    private int id;
-    private String name;
-    private String description;
-    private String descriptionLegal;
+  private int id;
+  private String name;
+  private String description;
+  private String descriptionLegal;
+  private List<String> illustrations;
 
-    /**
-     * A feature id
-     *
-     * @return feature id
-     */
-    @Override
-    public int getId() {
-        return id;
-    }
+  /**
+   * A feature id
+   *
+   * @return feature id
+   */
+  @Override
+  public int getId() {
+    return id;
+  }
 
-    /**
-     * Name of the feature
-     *
-     * @return feature name string
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
+  /**
+   * Name of the feature
+   *
+   * @return feature name string
+   */
+  @Override
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * Description of the feature
-     *
-     * @return feature description string
-     */
-    @Override
-    public String getDescription() {
-        return description;
-    }
+  /**
+   * Description of the feature
+   *
+   * @return feature description string
+   */
+  @Override
+  public String getDescription() {
+    return description;
+  }
 
-    /**
-     * Legal description of the feature
-     *
-     * @return legal description string
-     */
-    @Override
-    public String getDescriptionLegal() {
-        return descriptionLegal;
-    }
+  /**
+   * Legal description of the feature
+   *
+   * @return legal description string
+   */
+  @Override
+  public Optional<String> getDescriptionLegal() {
+    return Optional.ofNullable(descriptionLegal);
+  }
+
+  /**
+   * illustrations
+   *
+   * @return illustrations
+   */
+  @Override
+  public Optional<List<String>> getIllustrations() {
+    return Optional.ofNullable(illustrations);
+  }
 }

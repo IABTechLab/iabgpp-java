@@ -28,38 +28,38 @@ import java.util.List;
  */
 public interface Stack {
 
-    /**
-     * Stack id
-     *
-     * @return stack id
-     */
-    int getId();
+  /**
+   * Stack id
+   *
+   * @return stack id
+   */
+  int getId();
 
-    /**
-     * A list of special features
-     *
-     * @return A {@link List} of special feature ids
-     */
-    List<Integer> getSpecialFeatures();
+  /**
+   * A list of special features
+   *
+   * @return A {@link List} of special feature ids
+   */
+  List<Integer> getSpecialFeatures();
 
-    /**
-     * A list of purposes
-     *
-     * @return A {@link List} of purpose ids
-     */
-    List<Integer> getPurposes();
+  /**
+   * A list of purposes
+   *
+   * @return A {@link List} of purpose ids
+   */
+  List<Integer> getPurposes();
 
-    /**
-     * Name of the stack
-     *
-     * @return stack name string
-     */
-    String getName();
+  /**
+   * Name of the stack
+   *
+   * @return stack name string
+   */
+  String getName();
 
-    /**
-     * Description of the stack
-     *
-     * @return stack description string
-     */
-    String getDescription();
+  /**
+   * Description of the stack
+   *
+   * @return stack description string
+   */
+  String getDescription();
 }

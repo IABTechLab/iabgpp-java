@@ -1,5 +1,8 @@
 package com.iab.gpp.extras.jackson.gvl;
 
+import java.util.List;
+import java.util.Optional;
+
 /*-
  * #%L
  * IAB TCF Java GVL Jackson
@@ -25,72 +28,83 @@ package com.iab.gpp.extras.jackson.gvl;
  */
 public class Purpose implements com.iab.gpp.extras.gvl.Purpose {
 
-    private int id;
-    private String name;
-    private String description;
-    private String descriptionLegal;
-    private boolean consentable = true;
-    private boolean rightToObject = true;
+  private int id;
+  private String name;
+  private String description;
+  private String descriptionLegal;
+  private List<String> illustrations;
+  private boolean consentable = true;
+  private boolean rightToObject = true;
 
-    /**
-     * A purpose id
-     *
-     * @return purpose id
-     */
-    @Override
-    public int getId() {
-        return id;
-    }
+  /**
+   * A purpose id
+   *
+   * @return purpose id
+   */
+  @Override
+  public int getId() {
+    return id;
+  }
 
-    /**
-     * Name of the purpose
-     *
-     * @return purpose name string
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
+  /**
+   * Name of the purpose
+   *
+   * @return purpose name string
+   */
+  @Override
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * Description of the purpose
-     *
-     * @return purpose description string
-     */
-    @Override
-    public String getDescription() {
-        return description;
-    }
+  /**
+   * Description of the purpose
+   *
+   * @return purpose description string
+   */
+  @Override
+  public String getDescription() {
+    return description;
+  }
 
-    /**
-     * Legal description of the purpose
-     *
-     * @return legal description string
-     */
-    @Override
-    public String getDescriptionLegal() {
-        return descriptionLegal;
-    }
+  /**
+   * Legal description of the purpose
+   *
+   * @return legal description string
+   */
+  @Override
+  public Optional<String> getDescriptionLegal() {
+    return Optional.ofNullable(descriptionLegal);
+  }
 
-    /**
-     * An optional flag where false means CMPs should never afford users the means to provide an
-     * opt-in consent choice
-     *
-     * @return consentable boolean
-     */
-    @Override
-    public boolean getConsentable() {
-        return consentable;
-    }
+  /**
+   * illustrations
+   *
+   * @return illustrations
+   */
+  @Override
+  public Optional<List<String>> getIllustrations() {
+    return Optional.ofNullable(illustrations);
+  }
 
-    /**
-     * An optional flag where false means CMPs should never afford users the means to exercise a
-     * right to object
-     *
-     * @return right to object boolean
-     */
-    @Override
-    public boolean getRightToObject() {
-        return rightToObject;
-    }
+  /**
+   * An optional flag where false means CMPs should never afford users the means to provide an opt-in
+   * consent choice
+   *
+   * @return consentable boolean
+   */
+  @Override
+  public boolean getConsentable() {
+    return consentable;
+  }
+
+  /**
+   * An optional flag where false means CMPs should never afford users the means to exercise a right
+   * to object
+   *
+   * @return right to object boolean
+   */
+  @Override
+  public boolean getRightToObject() {
+    return rightToObject;
+  }
 }

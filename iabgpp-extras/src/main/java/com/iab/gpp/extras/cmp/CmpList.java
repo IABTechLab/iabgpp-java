@@ -25,26 +25,26 @@ import java.util.List;
 
 public interface CmpList {
 
-    /**
-     * Last Updated Date
-     *
-     * @return {@link Instant} time when the record was last updated
-     */
-    Instant getLastUpdated();
+  /**
+   * Last Updated Date
+   *
+   * @return {@link Instant} time when the record was last updated
+   */
+  Instant getLastUpdated();
 
-    /**
-     * List of CMPs
-     *
-     * @return {@link List} of {@link Cmp} objects
-     */
-    List<Cmp> getCmps();
+  /**
+   * List of CMPs
+   *
+   * @return {@link List} of {@link Cmp} objects
+   */
+  List<Cmp> getCmps();
 
-    /**
-     * Get the CMP object for a give CMP id
-     *
-     * @param cmpId CMP id
-     * @return {@link Cmp} object
-     */
-    Cmp getCmp(int cmpId);
+  /**
+   * Get the CMP object for a give CMP id
+   *
+   * @param cmpId CMP id
+   * @return {@link Cmp} object
+   */
+  Cmp getCmp(int cmpId);
 
 }

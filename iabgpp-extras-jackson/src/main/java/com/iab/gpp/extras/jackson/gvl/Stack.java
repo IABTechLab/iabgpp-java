@@ -28,59 +28,59 @@ import java.util.List;
  */
 public class Stack implements com.iab.gpp.extras.gvl.Stack {
 
-    private int id;
-    private List<Integer> specialFeatures;
-    private List<Integer> purposes;
-    private String name;
-    private String description;
+  private int id;
+  private List<Integer> specialFeatures;
+  private List<Integer> purposes;
+  private String name;
+  private String description;
 
-    /**
-     * Stack id
-     *
-     * @return stack id
-     */
-    @Override
-    public int getId() {
-        return id;
-    }
+  /**
+   * Stack id
+   *
+   * @return stack id
+   */
+  @Override
+  public int getId() {
+    return id;
+  }
 
-    /**
-     * A list of special features
-     *
-     * @return A {@link List} of special feature ids
-     */
-    @Override
-    public List<Integer> getSpecialFeatures() {
-        return specialFeatures;
-    }
+  /**
+   * A list of special features
+   *
+   * @return A {@link List} of special feature ids
+   */
+  @Override
+  public List<Integer> getSpecialFeatures() {
+    return specialFeatures;
+  }
 
-    /**
-     * A list of purposes
-     *
-     * @return A {@link List} of purpose ids
-     */
-    @Override
-    public List<Integer> getPurposes() {
-        return purposes;
-    }
+  /**
+   * A list of purposes
+   *
+   * @return A {@link List} of purpose ids
+   */
+  @Override
+  public List<Integer> getPurposes() {
+    return purposes;
+  }
 
-    /**
-     * Name of the stack
-     *
-     * @return stack name string
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
+  /**
+   * Name of the stack
+   *
+   * @return stack name string
+   */
+  @Override
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * Description of the stack
-     *
-     * @return stack description string
-     */
-    @Override
-    public String getDescription() {
-        return description;
-    }
+  /**
+   * Description of the stack
+   *
+   * @return stack description string
+   */
+  @Override
+  public String getDescription() {
+    return description;
+  }
 }

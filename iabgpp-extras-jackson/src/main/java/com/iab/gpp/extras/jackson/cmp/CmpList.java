@@ -27,37 +27,37 @@ import java.util.Map;
 
 public class CmpList implements com.iab.gpp.extras.cmp.CmpList {
 
-    private Instant lastUpdated;
-    private Map<Integer, Cmp> cmps;
+  private Instant lastUpdated;
+  private Map<Integer, Cmp> cmps;
 
-    /**
-     * Last Updated Date
-     *
-     * @return {@link Instant} time when the record was last updated
-     */
-    @Override
-    public Instant getLastUpdated() {
-        return lastUpdated;
-    }
+  /**
+   * Last Updated Date
+   *
+   * @return {@link Instant} time when the record was last updated
+   */
+  @Override
+  public Instant getLastUpdated() {
+    return lastUpdated;
+  }
 
-    /**
-     * List of CMPs
-     *
-     * @return {@link List} of {@link com.iab.gpp.extras.cmp.Cmp} objects
-     */
-    @Override
-    public List<com.iab.gpp.extras.cmp.Cmp> getCmps() {
-        return new ArrayList<>(cmps.values());
-    }
+  /**
+   * List of CMPs
+   *
+   * @return {@link List} of {@link com.iab.gpp.extras.cmp.Cmp} objects
+   */
+  @Override
+  public List<com.iab.gpp.extras.cmp.Cmp> getCmps() {
+    return new ArrayList<>(cmps.values());
+  }
 
-    /**
-     * Get the CMP object for a give CMP id
-     *
-     * @param cmpId CMP id
-     * @return {@link com.iab.gpp.extras.cmp.Cmp} object
-     */
-    @Override
-    public com.iab.gpp.extras.cmp.Cmp getCmp(int cmpId) {
-        return cmps.get(cmpId);
-    }
+  /**
+   * Get the CMP object for a give CMP id
+   *
+   * @param cmpId CMP id
+   * @return {@link com.iab.gpp.extras.cmp.Cmp} object
+   */
+  @Override
+  public com.iab.gpp.extras.cmp.Cmp getCmp(int cmpId) {
+    return cmps.get(cmpId);
+  }
 }

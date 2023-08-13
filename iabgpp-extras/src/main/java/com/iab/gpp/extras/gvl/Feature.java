@@ -1,5 +1,8 @@
 package com.iab.gpp.extras.gvl;
 
+import java.util.List;
+import java.util.Optional;
+
 /*-
  * #%L
  * IAB TCF Java GVL and CMP List
@@ -25,31 +28,38 @@ package com.iab.gpp.extras.gvl;
  */
 public interface Feature {
 
-    /**
-     * A feature id
-     *
-     * @return feature id
-     */
-    int getId();
+  /**
+   * A feature id
+   *
+   * @return feature id
+   */
+  int getId();
 
-    /**
-     * Name of the feature
-     *
-     * @return feature name string
-     */
-    String getName();
+  /**
+   * Name of the feature
+   *
+   * @return feature name string
+   */
+  String getName();
 
-    /**
-     * Description of the feature
-     *
-     * @return feature description string
-     */
-    String getDescription();
+  /**
+   * Description of the feature
+   *
+   * @return feature description string
+   */
+  String getDescription();
 
-    /**
-     * Legal description of the feature
-     *
-     * @return legal description string
-     */
-    String getDescriptionLegal();
+  /**
+   * Legal description of the feature
+   *
+   * @return legal description string
+   */
+  Optional<String> getDescriptionLegal();
+
+  /**
+   * A list of illustrations
+   *
+   * @return A {@link List} of strings
+   */
+  Optional<List<String>> getIllustrations();
 }

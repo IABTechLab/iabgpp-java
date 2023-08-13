@@ -50,8 +50,7 @@ public class UsNatV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(UsNatV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2, 0));
     fields.put(UsNatV1Field.SENSITIVE_DATA_PROCESSING,
         new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)));
-    fields.put(UsNatV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0)));
+    fields.put(UsNatV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, Arrays.asList(0, 0)));
     fields.put(UsNatV1Field.PERSONAL_DATA_CONSENTS, new EncodableFixedInteger(2, 0));
     fields.put(UsNatV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 0));
     fields.put(UsNatV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0));

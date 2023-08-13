@@ -23,15 +23,15 @@ package com.iab.gpp.extras.jackson.gvl;
 
 public class Overflow implements com.iab.gpp.extras.gvl.Overflow {
 
-    private int httpGetLimit;
+  private int httpGetLimit;
 
-    /**
-     * The vendor's http GET request length limit; 32 or 128 are the only supported options
-     *
-     * @return vendor's http GET request length limit
-     */
-    @Override
-    public int getHttpGetLimit() {
-        return httpGetLimit;
-    }
+  /**
+   * The vendor's http GET request length limit; 32 or 128 are the only supported options
+   *
+   * @return vendor's http GET request length limit
+   */
+  @Override
+  public int getHttpGetLimit() {
+    return httpGetLimit;
+  }
 }

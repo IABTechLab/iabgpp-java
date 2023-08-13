@@ -23,10 +23,10 @@ package com.iab.gpp.extras.gvl;
 
 public interface Overflow {
 
-    /**
-     * The vendor's http GET request length limit; 32 or 128 are the only supported options
-     *
-     * @return vendor's http GET request length limit
-     */
-    int getHttpGetLimit();
+  /**
+   * The vendor's http GET request length limit; 32 or 128 are the only supported options
+   *
+   * @return vendor's http GET request length limit
+   */
+  int getHttpGetLimit();
 }
