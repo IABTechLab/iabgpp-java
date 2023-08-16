@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
+import com.iab.gpp.encoder.error.LazyDecodingException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 import com.iab.gpp.encoder.field.UsCaV1Field;
@@ -34,7 +35,7 @@ public class GppModelTest {
   private ZonedDateTime utcDateTime = ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
 
   @Test
-  public void testEncodeDefault() throws EncodingException {
+  public void testEncodeDefault() throws EncodingException, LazyDecodingException {
     GppModel gppModel = new GppModel();
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
@@ -59,7 +60,18 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncodeDefaultAll() throws EncodingException, InvalidFieldException {
+  public void testLazyDecodingException() {
+    GppModel gppModel = new GppModel("invalid gpp string");
+    try {
+      gppModel.getHeader();
+      Assertions.fail("Expected LazyDecodingException");
+    } catch (LazyDecodingException e) {
+      
+    }
+  }
+  
+  @Test
+  public void testEncodeDefaultAll() throws EncodingException, InvalidFieldException, LazyDecodingException {
     GppModel gppModel = new GppModel();
 
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.NAME));
@@ -106,7 +118,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncodeUspv1() throws EncodingException, InvalidFieldException {
+  public void testEncodeUspv1() throws EncodingException, InvalidFieldException, LazyDecodingException {
     GppModel gppModel = new GppModel();
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
@@ -146,7 +158,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncodeTcfEuV2() throws EncodingException, InvalidFieldException {
+  public void testEncodeTcfEuV2() throws EncodingException, InvalidFieldException, LazyDecodingException {
     GppModel gppModel = new GppModel();
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
@@ -196,7 +208,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncodeUspV1AndTcfEuV2() throws EncodingException, InvalidFieldException {
+  public void testEncodeUspV1AndTcfEuV2() throws EncodingException, InvalidFieldException, LazyDecodingException {
     GppModel gppModel = new GppModel();
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.NAME));
@@ -241,7 +253,8 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncodeUspV1AndTcfEuV2AndTcfCaV1() throws EncodingException, InvalidFieldException {
+  public void testEncodeUspV1AndTcfEuV2AndTcfCaV1()
+      throws EncodingException, InvalidFieldException, LazyDecodingException {
     GppModel gppModel = new GppModel();
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
@@ -586,7 +599,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncode1() throws EncodingException, InvalidFieldException {
+  public void testEncode1() throws EncodingException, InvalidFieldException, LazyDecodingException {
     GppModel gppModel = new GppModel();
 
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(28));
@@ -597,7 +610,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncode2() throws EncodingException, InvalidFieldException {
+  public void testEncode2() throws EncodingException, InvalidFieldException, LazyDecodingException {
     GppModel gppModel = new GppModel();
 
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(29));
@@ -608,7 +621,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncode3() throws EncodingException, InvalidFieldException {
+  public void testEncode3() throws EncodingException, InvalidFieldException, LazyDecodingException {
     GppModel gppModel = new GppModel();
 
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(1, 173, 722));
