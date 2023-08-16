@@ -25,29 +25,24 @@ import com.iab.gpp.encoder.section.UspV1;
 public class GppModel {
   private Map<String, EncodableSection> sections = new HashMap<>();
 
-  private String encodedString = "DBAA";
-  private boolean decoded = false;
-  private boolean dirty = false;
+  private String encodedString;
+  private boolean decoded;
+  private boolean dirty;
 
   public GppModel() {
-
+    this.encodedString = "DBAA";
+    this.decoded = false;
+    this.dirty = false;
   }
 
   public GppModel(String encodedString) {
     this.encodedString = encodedString;
+    this.decoded = false;
+    this.dirty = false;
   }
 
   public void setFieldValue(int sectionId, String fieldName, Object value)
       throws InvalidFieldException, LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     setFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName, value);
     this.dirty = true;
   }
@@ -106,15 +101,6 @@ public class GppModel {
   }
 
   public Object getFieldValue(int sectionId, String fieldName) throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return getFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName);
   }
 
@@ -136,15 +122,6 @@ public class GppModel {
   }
 
   public boolean hasField(int sectionId, String fieldName) throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return hasField(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName);
   }
 
@@ -166,15 +143,6 @@ public class GppModel {
   }
 
   public boolean hasSection(int sectionId) throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return hasSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
 
@@ -211,15 +179,6 @@ public class GppModel {
   }
 
   public EncodableSection getSection(int sectionId) throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return getSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
 
@@ -241,17 +200,7 @@ public class GppModel {
   }
 
   public void deleteSection(int sectionId) throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     deleteSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
-    this.dirty = true;
   }
 
   public void deleteSection(String sectionName) throws LazyDecodingException {
@@ -272,125 +221,44 @@ public class GppModel {
 
   public void clear() {
     this.sections.clear();
-    this.encodedString = null;
+    this.encodedString = "DBAA";
     this.decoded = false;
     this.dirty = false;
   }
 
   public TcfCaV1 getTcfCaV1Section() throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return (TcfCaV1) getSection(TcfCaV1.NAME);
   }
 
   public TcfEuV2 getTcfEuV2Section() throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return (TcfEuV2) getSection(TcfEuV2.NAME);
   }
 
   public UspV1 getUspV1Section() throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return (UspV1) getSection(UspV1.NAME);
   }
 
   public UsNatV1 getUsNatV1Section() throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return (UsNatV1) getSection(UsNatV1.NAME);
   }
 
   public UsCaV1 getUsCaV1Section() throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return (UsCaV1) getSection(UsCaV1.NAME);
   }
 
   public UsVaV1 getUsVaV1Section() throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return (UsVaV1) getSection(UsVaV1.NAME);
   }
 
   public UsCoV1 getUsCoV1Section() throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return (UsCoV1) getSection(UsCoV1.NAME);
   }
 
   public UsUtV1 getUsUtV1Section() throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return (UsUtV1) getSection(UsUtV1.NAME);
   }
 
   public UsCtV1 getUsCtV1Section() throws LazyDecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-    }
-
     return (UsCtV1) getSection(UsCtV1.NAME);
   }
 
@@ -522,18 +390,7 @@ public class GppModel {
   }
 
   public void decodeSection(int sectionId, String encodedString) throws DecodingException {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length() > 0) {
-      try {
-        this.decode(this.encodedString);
-      } catch (DecodingException e) {
-        throw new LazyDecodingException(e);
-      }
-
-    }
-
     decodeSection(Sections.SECTION_ID_NAME_MAP.get(sectionId), encodedString);
-    this.dirty = true;
   }
 
   public void decodeSection(String sectionName, String encodedString) throws DecodingException {
