@@ -289,9 +289,6 @@ public class GppModel {
       } else if (sectionName.equals(UspV1.NAME)) {
         section = new UspV1();
         this.sections.put(UspV1.NAME, section);
-      } else if (sectionName.equals(UspV1.NAME)) {
-        section = new UspV1();
-        this.sections.put(UspV1.NAME, section);
       } else if (sectionName.equals(UspNatV1.NAME)) {
         section = new UspNatV1();
         this.sections.put(UspNatV1.NAME, section);
