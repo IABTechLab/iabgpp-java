@@ -21,6 +21,7 @@ package com.iab.gpp.extras.jackson.gvl;
  */
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ public class GvlV2Test {
   public void test() throws IOException {
     Gvl gvl = new Loader()
         .globalVendorList(GvlV2Test.class.getClassLoader().getResourceAsStream("vendorlist/v2/vendor-list.json"));
-    Assertions.assertTrue(gvl.getDataCategories().isEmpty());
+    Assertions.assertFalse(gvl.getDataCategories().isPresent());
     Assertions.assertEquals(3, gvl.getFeatures().size());
     Assertions.assertEquals(2, gvl.getGvlSpecificationVersion());
     Assertions.assertNotNull(gvl.getLastUpdated());
@@ -54,7 +55,7 @@ public class GvlV2Test {
     Assertions.assertEquals(
         "Vendors can:\n* Store and access information on the device such as cookies and device identifiers presented to a user.",
         gvl.getPurposes().get(0).getDescriptionLegal().get());
-    Assertions.assertTrue(gvl.getPurposes().get(0).getIllustrations().isEmpty());
+    Assertions.assertFalse(gvl.getPurposes().get(0).getIllustrations().isPresent());
 
     Assertions.assertEquals(1, gvl.getSpecialPurposes().get(0).getId());
     Assertions.assertEquals("Ensure security, prevent fraud, and debug", gvl.getSpecialPurposes().get(0).getName());
@@ -65,7 +66,7 @@ public class GvlV2Test {
     Assertions.assertEquals(
         "To ensure security, prevent fraud and debug vendors can:\n* Ensure data are securely transmitted\n* Detect and prevent malicious, fraudulent, invalid, or illegal activity.\n* Ensure correct and efficient operation of systems and processes, including to monitor and enhance the performance of systems and processes engaged in permitted purposes\nVendors cannot:\n* Conduct any other data processing operation allowed under a different purpose under this purpose.",
         gvl.getSpecialPurposes().get(0).getDescriptionLegal().get());
-    Assertions.assertTrue(gvl.getSpecialPurposes().get(0).getIllustrations().isEmpty());
+    Assertions.assertFalse(gvl.getSpecialPurposes().get(0).getIllustrations().isPresent());
 
     Assertions.assertEquals(1, gvl.getFeatures().get(0).getId());
     Assertions.assertEquals("Match and combine offline data sources", gvl.getFeatures().get(0).getName());
@@ -76,7 +77,7 @@ public class GvlV2Test {
     Assertions.assertEquals(
         "Vendors can:\n* Combine data obtained offline with data collected online in support of one or more Purposes or Special Purposes.",
         gvl.getFeatures().get(0).getDescriptionLegal().get());
-    Assertions.assertTrue(gvl.getFeatures().get(0).getIllustrations().isEmpty());
+    Assertions.assertFalse(gvl.getFeatures().get(0).getIllustrations().isPresent());
 
     Assertions.assertEquals(1, gvl.getSpecialFeatures().get(0).getId());
     Assertions.assertEquals("Use precise geolocation data", gvl.getSpecialFeatures().get(0).getName());
@@ -87,28 +88,28 @@ public class GvlV2Test {
     Assertions.assertEquals(
         "Vendors can:\n* Collect and process precise geolocation data in support of one or more purposes.\nN.B. Precise geolocation means that there are no restrictions on the precision of a user’s location; this can be accurate to within several meters.",
         gvl.getSpecialFeatures().get(0).getDescriptionLegal().get());
-    Assertions.assertTrue(gvl.getSpecialFeatures().get(0).getIllustrations().isEmpty());
+    Assertions.assertFalse(gvl.getSpecialFeatures().get(0).getIllustrations().isPresent());
 
     Assertions.assertEquals(1, gvl.getStacks().get(0).getId());
     Assertions.assertEquals("Precise geolocation data, and identification through device scanning", gvl.getStacks().get(0).getName());
     Assertions.assertEquals("Precise geolocation and information about device characteristics can be used.", gvl.getStacks().get(0).getDescription());
     Assertions.assertTrue(gvl.getStacks().get(0).getPurposes().isEmpty());
-    Assertions.assertEquals(List.of(1, 2), gvl.getStacks().get(0).getSpecialFeatures());
+    Assertions.assertEquals(Arrays.asList(1, 2), gvl.getStacks().get(0).getSpecialFeatures());
    
     Assertions.assertEquals(2, gvl.getStacks().get(1).getId());
     Assertions.assertEquals("Basic ads, and ad measurement", gvl.getStacks().get(1).getName());
     Assertions.assertEquals("Basic ads can be served. Ad performance can be measured.", gvl.getStacks().get(1).getDescription());
-    Assertions.assertEquals(List.of(2, 7), gvl.getStacks().get(1).getPurposes());
+    Assertions.assertEquals(Arrays.asList(2, 7), gvl.getStacks().get(1).getPurposes());
     Assertions.assertTrue(gvl.getStacks().get(1).getSpecialFeatures().isEmpty());
     
     Assertions.assertEquals(8,  gvl.getVendors().get(0).getId());
     Assertions.assertFalse(gvl.getVendors().get(0).getDeletedDate().isPresent());
     Assertions.assertEquals("Emerse Sverige AB", gvl.getVendors().get(0).getName());
-    Assertions.assertEquals(List.of(1, 3, 4),  gvl.getVendors().get(0).getPurposes());
-    Assertions.assertEquals(List.of(2, 7, 8, 9),  gvl.getVendors().get(0).getLegIntPurposes());
-    Assertions.assertEquals(List.of(2, 9),  gvl.getVendors().get(0).getFlexiblePurposes());
-    Assertions.assertEquals(List.of(1, 2),  gvl.getVendors().get(0).getSpecialPurposes());
-    Assertions.assertEquals(List.of(1, 2),  gvl.getVendors().get(0).getFeatures());
+    Assertions.assertEquals(Arrays.asList(1, 3, 4), gvl.getVendors().get(0).getPurposes());
+    Assertions.assertEquals(Arrays.asList(2, 7, 8, 9),  gvl.getVendors().get(0).getLegIntPurposes());
+    Assertions.assertEquals(Arrays.asList(2, 9),  gvl.getVendors().get(0).getFlexiblePurposes());
+    Assertions.assertEquals(Arrays.asList(1, 2),  gvl.getVendors().get(0).getSpecialPurposes());
+    Assertions.assertEquals(Arrays.asList(1, 2),  gvl.getVendors().get(0).getFeatures());
     Assertions.assertTrue(gvl.getVendors().get(0).getSpecialFeatures().isEmpty());
     Assertions.assertTrue(gvl.getVendors().get(0).getPolicyUrl().isPresent());
     Assertions.assertEquals("https://www.emerse.com/privacy-policy/",  gvl.getVendors().get(0).getPolicyUrl().get());

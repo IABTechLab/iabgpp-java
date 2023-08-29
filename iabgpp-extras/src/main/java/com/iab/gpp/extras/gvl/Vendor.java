@@ -89,7 +89,7 @@ public interface Vendor {
 
   /**
    * GDPR/privacy policy page URL
-   *
+   * @deprecated since 3.0
    * @return policy url string
    */
   Optional<String> getPolicyUrl();
@@ -163,23 +163,26 @@ public interface Vendor {
   Optional<String> getDeviceStorageDisclosureUrl();
 
   /**
-   * dataRetention
+   * This object indicates how long vendors retain user's data for each declared purpose
+   * @since 3.0
    * 
-   * @return dataRetention
+   * @return {@link DataRetention} object
    */
   Optional<DataRetention> getDataRetention();
 
   /**
-   * urls
-   * 
-   * @return urls
+   * This list indicates unique urls to privacy policies by language and link to an
+   * explanation of their legitimate interests at stake
+   * @since 3.0
+   * @return A {@link List} of {@link VendorUrl} objects
    */
   Optional<List<VendorUrl>> getUrls();
 
   /**
-   * dataDeclarations
-   * 
-   * @return dataDeclarations
+   * This list of integers indicates data categories {@link DataCategory} that vendors collect and process
+   * @since 3.0
+   *
+   * @return A {@link List} of integers
    */
   Optional<List<Integer>> getDataDeclaration();
 }
