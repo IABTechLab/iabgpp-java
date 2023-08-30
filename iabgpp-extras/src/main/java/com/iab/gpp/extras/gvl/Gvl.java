@@ -22,84 +22,93 @@ package com.iab.gpp.extras.gvl;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 public interface Gvl {
 
-    /**
-     * A Global Vendor List Specification Version
-     *
-     * @return global vendor list specification version
-     */
-    int getGvlSpecificationVersion();
+  /**
+   * A Global Vendor List Specification Version
+   *
+   * @return global vendor list specification version
+   */
+  int getGvlSpecificationVersion();
 
-    /**
-     * A Global Vendor List version incremented with each published file change
-     *
-     * @return global vendor list version
-     */
-    int getVendorListVersion();
+  /**
+   * A Global Vendor List version incremented with each published file change
+   *
+   * @return global vendor list version
+   */
+  int getVendorListVersion();
 
-    /**
-     * A TCF Policy Version.
-     *
-     * @return tcf policy version
-     */
-    int getTcfPolicyVersion();
+  /**
+   * A TCF Policy Version.
+   *
+   * @return tcf policy version
+   */
+  int getTcfPolicyVersion();
 
-    /**
-     * Last Updated Date
-     *
-     * @return timestamp when the record was last updated
-     */
-    Instant getLastUpdated();
+  /**
+   * Last Updated Date
+   *
+   * @return timestamp when the record was last updated
+   */
+  Instant getLastUpdated();
 
-    /**
-     * A list of standard purposes
-     *
-     * @return A {@link List} of standard {@link Purpose} objects
-     */
-    List<Purpose> getPurposes();
+  /**
+   * A list of standard purposes
+   *
+   * @return A {@link List} of standard {@link Purpose} objects
+   */
+  List<Purpose> getPurposes();
 
-    /**
-     * A list of special purposes
-     *
-     * @return A {@link List} of {@link SpecialPurpose} objects
-     */
-    List<SpecialPurpose> getSpecialPurposes();
+  /**
+   * A list of special purposes
+   *
+   * @return A {@link List} of {@link SpecialPurpose} objects
+   */
+  List<SpecialPurpose> getSpecialPurposes();
 
-    /**
-     * A list of standard features
-     *
-     * @return A {@link List} of standard {@link Feature} objects
-     */
-    List<Feature> getFeatures();
+  /**
+   * A list of standard features
+   *
+   * @return A {@link List} of standard {@link Feature} objects
+   */
+  List<Feature> getFeatures();
 
-    /**
-     * A list of special features
-     *
-     * @return A {@link List} of special {@link SpecialFeature} objects
-     */
-    List<SpecialFeature> getSpecialFeatures();
+  /**
+   * A list of special features
+   *
+   * @return A {@link List} of special {@link SpecialFeature} objects
+   */
+  List<SpecialFeature> getSpecialFeatures();
 
-    /**
-     * A list of stacks
-     *
-     * @return A {@link List} of {@link Stack} objects
-     */
-    List<Stack> getStacks();
+  /**
+   * A list of stacks
+   *
+   * @return A {@link List} of {@link Stack} objects
+   */
+  List<Stack> getStacks();
 
-    /**
-     * A list of vendors
-     *
-     * @return A {@link List} of {@link Vendor} objects
-     */
-    List<Vendor> getVendors();
+  /**
+   * A list of vendors
+   *
+   * @return A {@link List} of {@link Vendor} objects
+   */
+  List<Vendor> getVendors();
 
-    /**
-     * Return the vendor object for a given id
-     *
-     * @param vendorId vendor id
-     * @return A {@link Vendor} object
-     */
-    Vendor getVendor(int vendorId);
+  /**
+   * Return the vendor object for a given id
+   *
+   * @param vendorId vendor id
+   * @return A {@link Vendor} object
+   */
+  Vendor getVendor(int vendorId);
+
+  /**
+   * A list of data categories
+   * @since 3.0
+   *
+   * @return A {@link List} of {@link DataCategory} objects
+   */
+  Optional<List<DataCategory>> getDataCategories();
 }

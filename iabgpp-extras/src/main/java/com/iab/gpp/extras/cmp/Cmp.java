@@ -25,38 +25,39 @@ import java.util.Optional;
 
 public interface Cmp {
 
-    /**
-     * A CMP id: a numeric ID which is incrementally assigned and never re-used – inactive CMPs are marked as deleted
-     *
-     * @return CMP id
-     */
-    int getId();
+  /**
+   * A CMP id: a numeric ID which is incrementally assigned and never re-used – inactive CMPs are
+   * marked as deleted
+   *
+   * @return CMP id
+   */
+  int getId();
 
-    /**
-     * Name of the CMP
-     *
-     * @return CMP name
-     */
-    String getName();
+  /**
+   * Name of the CMP
+   *
+   * @return CMP name
+   */
+  String getName();
 
-    /**
-     * Whether or not the CMP is a commercial service
-     *
-     * @return true, if the CMP is available as a commercial service
-     */
-    boolean isCommercial();
+  /**
+   * Whether or not the CMP is a commercial service
+   *
+   * @return true, if the CMP is available as a commercial service
+   */
+  boolean isCommercial();
 
-    /**
-     * If available, the date/time after which CMP is considered inactive
-     *
-     * @return {@link Optional<Instant>} time after which CMP is inactive
-     */
-    Optional<Instant> getDeletedDate();
+  /**
+   * If available, the date/time after which CMP is considered inactive
+   *
+   * @return {@link Optional<Instant>} time after which CMP is inactive
+   */
+  Optional<Instant> getDeletedDate();
 
-    /**
-     * Check whether the CMP is deleted
-     *
-     * @return true, if the CMP is considered deleted
-     */
-    boolean isDeleted();
+  /**
+   * Check whether the CMP is deleted
+   *
+   * @return true, if the CMP is considered deleted
+   */
+  boolean isDeleted();
 }

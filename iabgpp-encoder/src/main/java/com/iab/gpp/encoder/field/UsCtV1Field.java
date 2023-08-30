@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.field;
 
-public class UspVaV1Field {
+public class UsCtV1Field {
 
   public static String VERSION = "Version";
   public static String SHARING_NOTICE = "SharingNotice";
@@ -14,4 +14,7 @@ public class UspVaV1Field {
   public static String MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode";
   public static String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
 
+  public static String GPC_SEGMENT_TYPE = "GpcSegmentType";
+  public static String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
+  public static String GPC = "Gpc";
 }

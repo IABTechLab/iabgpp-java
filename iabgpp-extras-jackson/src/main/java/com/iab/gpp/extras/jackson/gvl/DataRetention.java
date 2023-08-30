@@ -1,11 +1,11 @@
-package com.iab.gpp.extras.gvl;
+package com.iab.gpp.extras.jackson.gvl;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /*-
  * #%L
- * IAB TCF Java GVL and CMP List
+ * IAB TCF Java GVL Jackson
  * %%
  * Copyright (C) 2020 IAB Technology Laboratory, Inc
  * %%
@@ -24,42 +24,41 @@ import java.util.Optional;
  */
 
 /*
- * List of Features the Vendor may utilize when performing some declared Purposes processing
+ * DataRetention
  */
-public interface Feature {
+public class DataRetention implements com.iab.gpp.extras.gvl.DataRetention {
+
+  private Integer stdRetention;
+  private Map<Integer, Integer> purposes;
+  private Map<Integer, Integer> specialPurposes;
 
   /**
-   * A feature id
+   * stdRetention
    *
-   * @return feature id
+   * @return stdRetention
    */
-  int getId();
+  @Override
+  public Optional<Integer> getStdRetention() {
+    return Optional.ofNullable(stdRetention);
+  }
 
   /**
-   * Name of the feature
+   * purposes
    *
-   * @return feature name string
+   * @return purposes
    */
-  String getName();
+  @Override
+  public Map<Integer, Integer> getPurposes() {
+    return purposes;
+  }
 
   /**
-   * Description of the feature
+   * specialPurposes
    *
-   * @return feature description string
+   * @return specialPurposes
    */
-  String getDescription();
-
-  /**
-   * Legal description of the feature
-   *
-   * @return legal description string
-   */
-  Optional<String> getDescriptionLegal();
-
-  /**
-   * A list of illustrations
-   *
-   * @return A {@link List} of strings
-   */
-  Optional<List<String>> getIllustrations();
+  @Override
+  public Map<Integer, Integer> getSpecialPurposes() {
+    return specialPurposes;
+  }
 }

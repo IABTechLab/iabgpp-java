@@ -1,8 +1,5 @@
 package com.iab.gpp.extras.jackson.gvl;
 
-import java.util.List;
-import java.util.Optional;
-
 /*-
  * #%L
  * IAB TCF Java GVL Jackson
@@ -24,30 +21,28 @@ import java.util.Optional;
  */
 
 /*
- * List of Features the Vendor may utilize when performing some declared Purposes processing
+ * DataCategory
  */
-public class Feature implements com.iab.gpp.extras.gvl.Feature {
+public class DataCategory implements com.iab.gpp.extras.gvl.DataCategory {
 
   private int id;
   private String name;
   private String description;
-  private String descriptionLegal;
-  private List<String> illustrations;
 
   /**
-   * A feature id
+   * A id
    *
-   * @return feature id
+   * @return id
    */
   @Override
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
   /**
-   * Name of the feature
+   * Name
    *
-   * @return feature name string
+   * @return name
    */
   @Override
   public String getName() {
@@ -55,32 +50,14 @@ public class Feature implements com.iab.gpp.extras.gvl.Feature {
   }
 
   /**
-   * Description of the feature
+   * Description
    *
-   * @return feature description string
+   * @return description
    */
   @Override
   public String getDescription() {
     return description;
   }
 
-  /**
-   * Legal description of the feature
-   *
-   * @return legal description string
-   */
-  @Override
-  public Optional<String> getDescriptionLegal() {
-    return Optional.ofNullable(descriptionLegal);
-  }
 
-  /**
-   * illustrations
-   *
-   * @return illustrations
-   */
-  @Override
-  public Optional<List<String>> getIllustrations() {
-    return Optional.ofNullable(illustrations);
-  }
 }
