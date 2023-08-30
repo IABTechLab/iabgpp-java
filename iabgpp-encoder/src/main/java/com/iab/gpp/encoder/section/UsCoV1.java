@@ -12,22 +12,22 @@ import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.field.UspCaV1Field;
-import com.iab.gpp.encoder.field.UspCtV1Field;
+import com.iab.gpp.encoder.field.UsCaV1Field;
+import com.iab.gpp.encoder.field.UsCoV1Field;
 import com.iab.gpp.encoder.field.UspV1Field;
 
-public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
-  public static int ID = 12;
+public class UsCoV1 extends AbstractEncodableSegmentedBitStringSection {
+  public static int ID = 10;
   public static int VERSION = 1;
-  public static String NAME = "uspctv1";
+  public static String NAME = "uscov1";
 
   private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
 
-  public UspCtV1() {
+  public UsCoV1() {
     initFields();
   }
 
-  public UspCtV1(String encodedString) throws DecodingException {
+  public UsCoV1(String encodedString) throws DecodingException {
     initFields();
 
     if (encodedString != null && encodedString.length() > 0) {
@@ -38,43 +38,43 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
   private void initFields() {
     fields = new HashMap<>();
 
-    fields.put(UspCtV1Field.VERSION, new EncodableFixedInteger(6, UspCtV1.VERSION));
-    fields.put(UspCtV1Field.SHARING_NOTICE, new EncodableFixedInteger(2, 0));
-    fields.put(UspCtV1Field.SALE_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
-    fields.put(UspCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
-    fields.put(UspCtV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2, 0));
-    fields.put(UspCtV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2, 0));
-    fields.put(UspCtV1Field.SENSITIVE_DATA_PROCESSING,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0)));
-    fields.put(UspCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0)));
-    fields.put(UspCtV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 0));
-    fields.put(UspCtV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0));
-    fields.put(UspCtV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCoV1Field.VERSION, new EncodableFixedInteger(6, UsCoV1.VERSION));
+    fields.put(UsCoV1Field.SHARING_NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCoV1Field.SALE_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCoV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2, 0));
+    fields.put(UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2, 0));
+    fields.put(UsCoV1Field.SENSITIVE_DATA_PROCESSING,
+        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0)));
+    fields.put(UsCoV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedInteger(2, 0));
+    fields.put(UsCoV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 0));
+    fields.put(UsCoV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0));
+    fields.put(UsCoV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0));
 
     // gpc segment
-    fields.put(UspCtV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    fields.put(UspCtV1Field.GPC_SEGMENT_INCLUDED, new EncodableBoolean(true));
-    fields.put(UspCtV1Field.GPC, new EncodableBoolean(false));
+    fields.put(UsCoV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
+    fields.put(UsCoV1Field.GPC_SEGMENT_INCLUDED, new EncodableBoolean(true));
+    fields.put(UsCoV1Field.GPC, new EncodableBoolean(false));
+
 
     //@formatter:off
     String[] coreSegment = new String[] {
-        UspCtV1Field.VERSION,
-        UspCtV1Field.SHARING_NOTICE,
-        UspCtV1Field.SALE_OPT_OUT_NOTICE,
-        UspCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-        UspCtV1Field.SALE_OPT_OUT,
-        UspCtV1Field.TARGETED_ADVERTISING_OPT_OUT,
-        UspCtV1Field.SENSITIVE_DATA_PROCESSING,
-        UspCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-        UspCtV1Field.MSPA_COVERED_TRANSACTION,
-        UspCtV1Field.MSPA_OPT_OUT_OPTION_MODE,
-        UspCtV1Field.MSPA_SERVICE_PROVIDER_MODE
+        UsCoV1Field.VERSION,
+        UsCoV1Field.SHARING_NOTICE,
+        UsCoV1Field.SALE_OPT_OUT_NOTICE,
+        UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+        UsCoV1Field.SALE_OPT_OUT,
+        UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT,
+        UsCoV1Field.SENSITIVE_DATA_PROCESSING,
+        UsCoV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+        UsCoV1Field.MSPA_COVERED_TRANSACTION,
+        UsCoV1Field.MSPA_OPT_OUT_OPTION_MODE,
+        UsCoV1Field.MSPA_SERVICE_PROVIDER_MODE
     };
     
     String[] gpcSegment = new String[] {
-        UspCtV1Field.GPC_SEGMENT_TYPE,
-        UspCtV1Field.GPC
+        UsCoV1Field.GPC_SEGMENT_TYPE,
+        UsCoV1Field.GPC
     };
     
     segments = new String[][] {
@@ -92,7 +92,7 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
       encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
 
       if (segmentBitStrings.size() >= 2) {
-        Boolean gpcSegmentIncluded = (Boolean) this.fields.get(UspCtV1Field.GPC_SEGMENT_INCLUDED).getValue();
+        Boolean gpcSegmentIncluded = (Boolean) this.fields.get(UsCoV1Field.GPC_SEGMENT_INCLUDED).getValue();
         if (gpcSegmentIncluded) {
           encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
         }
@@ -130,17 +130,17 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
       }
     }
     this.decodeSegmentsFromBitStrings(Arrays.asList(segmentBitStrings));
-    this.fields.get(UspCaV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
+    this.fields.get(UsCaV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
   }
 
   @Override
   public int getId() {
-    return UspCtV1.ID;
+    return UsCoV1.ID;
   }
 
   @Override
   public String getName() {
-    return UspCtV1.NAME;
+    return UsCoV1.NAME;
   }
 
   public Integer getVersion() {
@@ -148,56 +148,55 @@ public class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   public Integer getSharingNotice() {
-    return (Integer) this.fields.get(UspCtV1Field.SHARING_NOTICE).getValue();
+    return (Integer) this.fields.get(UsCoV1Field.SHARING_NOTICE).getValue();
   }
 
   public Integer getSaleOptOutNotice() {
-    return (Integer) this.fields.get(UspCtV1Field.SALE_OPT_OUT_NOTICE).getValue();
+    return (Integer) this.fields.get(UsCoV1Field.SALE_OPT_OUT_NOTICE).getValue();
   }
 
   public Integer getTargetedAdvertisingOptOutNotice() {
-    return (Integer) this.fields.get(UspCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE).getValue();
+    return (Integer) this.fields.get(UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE).getValue();
   }
 
   public Integer getSaleOptOut() {
-    return (Integer) this.fields.get(UspCtV1Field.SALE_OPT_OUT).getValue();
+    return (Integer) this.fields.get(UsCoV1Field.SALE_OPT_OUT).getValue();
   }
 
   public Integer getTargetedAdvertisingOptOut() {
-    return (Integer) this.fields.get(UspCtV1Field.TARGETED_ADVERTISING_OPT_OUT).getValue();
+    return (Integer) this.fields.get(UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT).getValue();
   }
 
   @SuppressWarnings("unchecked")
   public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.fields.get(UspCtV1Field.SENSITIVE_DATA_PROCESSING).getValue();
+    return (List<Integer>) this.fields.get(UsCoV1Field.SENSITIVE_DATA_PROCESSING).getValue();
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getKnownChildSensitiveDataConsents() {
-    return (List<Integer>) this.fields.get(UspCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS).getValue();
+  public Integer getKnownChildSensitiveDataConsents() {
+    return (Integer) this.fields.get(UsCoV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS).getValue();
   }
 
   public Integer getMspaCoveredTransaction() {
-    return (Integer) this.fields.get(UspCtV1Field.MSPA_COVERED_TRANSACTION).getValue();
+    return (Integer) this.fields.get(UsCoV1Field.MSPA_COVERED_TRANSACTION).getValue();
   }
 
   public Integer getMspaOptOutOptionMode() {
-    return (Integer) this.fields.get(UspCtV1Field.MSPA_OPT_OUT_OPTION_MODE).getValue();
+    return (Integer) this.fields.get(UsCoV1Field.MSPA_OPT_OUT_OPTION_MODE).getValue();
   }
 
   public Integer getMspaServiceProviderMode() {
-    return (Integer) this.fields.get(UspCtV1Field.MSPA_SERVICE_PROVIDER_MODE).getValue();
+    return (Integer) this.fields.get(UsCoV1Field.MSPA_SERVICE_PROVIDER_MODE).getValue();
   }
 
-  public Boolean getGpcSegmentType() {
-    return (Boolean) this.fields.get(UspCtV1Field.GPC_SEGMENT_TYPE).getValue();
+  public Integer getGpcSegmentType() {
+    return (Integer) this.fields.get(UsCoV1Field.GPC_SEGMENT_TYPE).getValue();
   }
 
   public Boolean getGpcSegmentIncluded() {
-    return (Boolean) this.fields.get(UspCtV1Field.GPC_SEGMENT_INCLUDED).getValue();
+    return (Boolean) this.fields.get(UsCoV1Field.GPC_SEGMENT_INCLUDED).getValue();
   }
 
   public Boolean getGpc() {
-    return (Boolean) this.fields.get(UspCtV1Field.GPC).getValue();
+    return (Boolean) this.fields.get(UsCoV1Field.GPC).getValue();
   }
 }

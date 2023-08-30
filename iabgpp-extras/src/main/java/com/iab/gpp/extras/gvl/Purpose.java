@@ -1,5 +1,8 @@
 package com.iab.gpp.extras.gvl;
 
+import java.util.List;
+import java.util.Optional;
+
 /*-
  * #%L
  * IAB TCF Java GVL and CMP List
@@ -25,47 +28,54 @@ package com.iab.gpp.extras.gvl;
  */
 public interface Purpose {
 
-    /**
-     * A purpose id
-     *
-     * @return purpose id
-     */
-    int getId();
+  /**
+   * A purpose id
+   *
+   * @return purpose id
+   */
+  int getId();
 
-    /**
-     * Name of the purpose
-     *
-     * @return purpose name string
-     */
-    String getName();
+  /**
+   * Name of the purpose
+   *
+   * @return purpose name string
+   */
+  String getName();
 
-    /**
-     * Description of the purpose
-     *
-     * @return purpose description string
-     */
-    String getDescription();
+  /**
+   * Description of the purpose
+   *
+   * @return purpose description string
+   */
+  String getDescription();
 
-    /**
-     * Legal description of the purpose
-     *
-     * @return legal description string
-     */
-    String getDescriptionLegal();
+  /**
+   * Legal description of the purpose
+   * @deprecated since 3.0
+   * @return legal description string
+   */
+  Optional<String> getDescriptionLegal();
 
-    /**
-     * An optional flag where false means CMPs should never afford users the means to provide an
-     * opt-in consent choice
-     *
-     * @return consentable boolean
-     */
-    boolean getConsentable();
+  /**
+   * A list of illustrations
+   * @since 3.0
+   * @return A {@link List} of strings
+   */
+  Optional<List<String>> getIllustrations();
 
-    /**
-     * An optional flag where false means CMPs should never afford users the means to exercise a
-     * right to object
-     *
-     * @return consentable boolean
-     */
-    boolean getRightToObject();
+  /**
+   * An optional flag where false means CMPs should never afford users the means to provide an opt-in
+   * consent choice
+   *
+   * @return consentable boolean
+   */
+  boolean getConsentable();
+
+  /**
+   * An optional flag where false means CMPs should never afford users the means to exercise a right
+   * to object
+   *
+   * @return consentable boolean
+   */
+  boolean getRightToObject();
 }

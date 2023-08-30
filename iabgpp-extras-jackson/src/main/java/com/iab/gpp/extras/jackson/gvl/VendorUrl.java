@@ -1,17 +1,19 @@
-package com.iab.gpp.extras.gvl;
+package com.iab.gpp.extras.jackson.gvl;
+
+import java.util.Optional;
 
 /*-
  * #%L
- * IAB TCF Java GVL and CMP List
+ * IAB TCF Java GVL Jackson
  * %%
  * Copyright (C) 2020 IAB Technology Laboratory, Inc
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,13 +22,43 @@ package com.iab.gpp.extras.gvl;
  * #L%
  */
 
+/*
+ * DataCategory
+ */
+public class VendorUrl implements com.iab.gpp.extras.gvl.VendorUrl {
 
-public interface Overflow {
+  private String langId;
+  private String privacy;
+  private String legIntClaim;
 
   /**
-   * The vendor's http GET request length limit; 32 or 128 are the only supported options
+   * langId
    *
-   * @return vendor's http GET request length limit
+   * @return lang id
    */
-  int getHttpGetLimit();
+  @Override
+  public String getLangId() {
+    return langId;
+  }
+
+  /**
+   * privacy
+   *
+   * @return privacy
+   */
+  @Override
+  public String getPrivacy() {
+    return privacy;
+  }
+
+  /**
+   * legIntClaim
+   *
+   * @return legIntClaim
+   */
+  @Override
+  public Optional<String> getLegIntClaim() {
+    return Optional.ofNullable(legIntClaim);
+  }
+
 }

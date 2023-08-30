@@ -1,17 +1,21 @@
-package com.iab.gpp.extras.jackson;
+package com.iab.gpp.extras.gvl;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /*-
  * #%L
- * IAB TCF Java GVL and CMP List Jackson
+ * IAB TCF Java GVL and CMP List
  * %%
  * Copyright (C) 2020 IAB Technology Laboratory, Inc
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,20 +24,30 @@ package com.iab.gpp.extras.jackson;
  * #L%
  */
 
-import com.iab.gpp.extras.jackson.gvl.GvlTest;
+/*
+ * DataRetention
+ */
+public interface DataRetention {
 
-import java.io.IOException;
-import java.io.InputStream;
+  /**
+   * stdRetention
+   *
+   * @return stdRetention
+   */
+  Optional<Integer> getStdRetention();
 
-public class TestUtil {
+  /**
+   * purposes
+   *
+   * @return purposes
+   */
+  Map<Integer, Integer> getPurposes();
 
-    public static InputStream getCmpList() throws IOException {
-        ClassLoader loader = GvlTest.class.getClassLoader();
-        return loader.getResourceAsStream("cmpList.json");
-    }
+  /**
+   * specialPurposes
+   *
+   * @return specialPurposes
+   */
+  Map<Integer, Integer> getSpecialPurposes();
 
-    public static InputStream getGlobalVendorList() throws IOException {
-        ClassLoader loader = GvlTest.class.getClassLoader();
-        return loader.getResourceAsStream("gvl.json");
-    }
 }
