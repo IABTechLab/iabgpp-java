@@ -60,12 +60,11 @@ public class GppModelTest {
   }
 
   @Test
-  public void testLazyDecodingException() {
-    GppModel gppModel = new GppModel("invalid gpp string");
+  public void testDecodingException() {
     try {
-      gppModel.getHeader();
+      GppModel gppModel = new GppModel("invalid gpp string");
       Assertions.fail("Expected LazyDecodingException");
-    } catch (LazyDecodingException e) {
+    } catch (DecodingException e) {
       
     }
   }
@@ -112,7 +111,7 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAABAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA",
+        "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA",
         gppString);
 
   }
@@ -340,7 +339,7 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN",
+        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN",
         gppString);
 
     Assertions.assertEquals(4, gppString.split("~").length);
@@ -656,9 +655,9 @@ public class GppModelTest {
     GppModel fromObjectModel = new GppModel();
 
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS,
-        new ArrayList<>(List.of(true, true, true, true, true, true, true, true, true, true)));
+        Arrays.asList(true, true, true, true, true, true, true, true, true, true));
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS,
-        new ArrayList<>(List.of(32, 128, 81, 210, 755, 21, 173, 238)));
+        Arrays.asList(32, 128, 81, 210, 755, 21, 173, 238));
 
     Assertions.assertEquals(fromObjectModel.getSection(TcfEuV2.NAME).encode(),
         fromObjectModel.getSection(TcfEuV2.NAME).encode());
@@ -667,10 +666,10 @@ public class GppModelTest {
     GppModel decodedModel = new GppModel(fromObjectModel.encode());
 
     Assertions.assertEquals(
-        new ArrayList<>(List.of(true, true, true, true, true, true, true, true, true, true, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false)),
+        Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS));
-    Assertions.assertEquals(new ArrayList<>(List.of(21, 32, 81, 128, 173, 210, 238, 755)),
+    Assertions.assertEquals(Arrays.asList(21, 32, 81, 128, 173, 210, 238, 755),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
 
   }

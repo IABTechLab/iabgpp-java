@@ -51,14 +51,14 @@ public interface Purpose {
 
   /**
    * Legal description of the purpose
-   *
+   * @deprecated since 3.0
    * @return legal description string
    */
   Optional<String> getDescriptionLegal();
 
   /**
    * A list of illustrations
-   *
+   * @since 3.0
    * @return A {@link List} of strings
    */
   Optional<List<String>> getIllustrations();
