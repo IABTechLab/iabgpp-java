@@ -100,7 +100,7 @@ public class TcfCaV1Test {
 
   @Test
   public void testDecode2() throws DecodingException {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
 
     Assertions.assertEquals(50, tcfCaV1.getCmpId());
     Assertions.assertEquals(2, tcfCaV1.getCmpVersion());

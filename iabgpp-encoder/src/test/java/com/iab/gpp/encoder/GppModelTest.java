@@ -60,11 +60,12 @@ public class GppModelTest {
   }
 
   @Test
-  public void testDecodingException() {
+  public void testLazyDecodingException() {
+    GppModel gppModel = new GppModel("invalid gpp string");
     try {
-      GppModel gppModel = new GppModel("invalid gpp string");
+      gppModel.getHeader();
       Assertions.fail("Expected LazyDecodingException");
-    } catch (DecodingException e) {
+    } catch (LazyDecodingException e) {
       
     }
   }
@@ -655,9 +656,9 @@ public class GppModelTest {
     GppModel fromObjectModel = new GppModel();
 
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS,
-        Arrays.asList(true, true, true, true, true, true, true, true, true, true));
+        new ArrayList<>(List.of(true, true, true, true, true, true, true, true, true, true)));
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS,
-        Arrays.asList(32, 128, 81, 210, 755, 21, 173, 238));
+        new ArrayList<>(List.of(32, 128, 81, 210, 755, 21, 173, 238)));
 
     Assertions.assertEquals(fromObjectModel.getSection(TcfEuV2.NAME).encode(),
         fromObjectModel.getSection(TcfEuV2.NAME).encode());
@@ -666,10 +667,10 @@ public class GppModelTest {
     GppModel decodedModel = new GppModel(fromObjectModel.encode());
 
     Assertions.assertEquals(
-        Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        new ArrayList<>(List.of(true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false)),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS));
-    Assertions.assertEquals(Arrays.asList(21, 32, 81, 128, 173, 210, 238, 755),
+    Assertions.assertEquals(new ArrayList<>(List.of(21, 32, 81, 128, 173, 210, 238, 755)),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
 
   }
