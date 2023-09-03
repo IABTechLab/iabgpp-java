@@ -160,27 +160,27 @@ public class GppModel {
     return (UspV1) getSection(UspV1.NAME);
   }
 
-  public UsNatV1 getUspNatV1Section() {
+  public UsNatV1 getUsNatV1Section() {
     return (UsNatV1) getSection(UsNatV1.NAME);
   }
 
-  public UsCaV1 getUspCaV1Section() {
+  public UsCaV1 getUsCaV1Section() {
     return (UsCaV1) getSection(UsCaV1.NAME);
   }
 
-  public UsVaV1 getUspVaV1Section() {
+  public UsVaV1 getUsVaV1Section() {
     return (UsVaV1) getSection(UsVaV1.NAME);
   }
 
-  public UsCoV1 getUspCoV1Section() {
+  public UsCoV1 getUsCoV1Section() {
     return (UsCoV1) getSection(UsCoV1.NAME);
   }
 
-  public UsUtV1 getUspUtV1Section() {
+  public UsUtV1 getUsUtV1Section() {
     return (UsUtV1) getSection(UsUtV1.NAME);
   }
 
-  public UsCtV1 getUspCtV1Section() {
+  public UsCtV1 getUsCtV1Section() {
     return (UsCtV1) getSection(UsCtV1.NAME);
   }
 
