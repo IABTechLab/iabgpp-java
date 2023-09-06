@@ -672,6 +672,24 @@ public class GppModelTest {
   }
   
   @Test
+  public void testNullConstructor() {
+    GppModel gppModel = new GppModel(null);
+    Assertions.assertEquals("DBAA", gppModel.encode());
+    
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
+    Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
+  }
+  
+  @Test
+  public void testEmptyStringConstructor() {
+    GppModel gppModel = new GppModel("");
+    Assertions.assertEquals("DBAA", gppModel.encode());
+    
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
+    Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
+  }
+  
+  @Test
   public void testDecodingNull() {
     GppModel gppModel = new GppModel("DBABTA~1---");
     Assertions.assertEquals("DBABTA~1---", gppModel.encode());
