@@ -12,13 +12,13 @@ import com.iab.gpp.encoder.field.UsVaV1Field;
 public class UsVaV1Test {
 
   @Test
-  public void testEncode1() throws EncodingException {
+  public void testEncode1() {
     UsVaV1 usVaV1 = new UsVaV1();
     Assertions.assertEquals("BAAAAAA", usVaV1.encode());
   }
 
   @Test
-  public void testEncode2() throws EncodingException {
+  public void testEncode2() {
     UsVaV1 usVaV1 = new UsVaV1();
 
     try {

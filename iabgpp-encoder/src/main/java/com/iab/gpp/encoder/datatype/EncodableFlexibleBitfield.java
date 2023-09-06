@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntSupplier;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<List<Boolean>> {
 
@@ -22,11 +20,11 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
     this.setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     return FixedBitfieldEncoder.encode(this.value, this.getLengthSupplier.getAsInt());
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     this.value = FixedBitfieldEncoder.decode(bitString);
   }
 

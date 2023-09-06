@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.TreeSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
 
 public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataType<List<Integer>> {
 
@@ -22,11 +21,11 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
     return FixedIntegerRangeEncoder.encode(this.value);
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     this.value = FixedIntegerRangeEncoder.decode(bitString);
   }
 
-  public String substring(String bitString, int fromIndex) throws DecodingException {
+  public String substring(String bitString, int fromIndex) {
     // TODO: add some validation
     int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
     int index = fromIndex + 12;
