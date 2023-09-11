@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 
 public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<List<Integer>> {
@@ -22,6 +23,19 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
     setValue(value);
   }
 
+  protected EncodableFixedIntegerList(int elementBitStringLength, int numElements, Predicate<List<Integer>> validator) {
+    super(validator);
+    this.elementBitStringLength = elementBitStringLength;
+    this.numElements = numElements;
+  }
+
+  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value, Predicate<List<Integer>> validator) {
+    super(validator);
+    this.elementBitStringLength = elementBitStringLength;
+    this.numElements = value.size();
+    setValue(value);
+  }
+
   public String encode() {
     return FixedIntegerListEncoder.encode(this.value, this.elementBitStringLength, this.numElements);
   }
@@ -31,7 +45,6 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
   }
 
   public String substring(String bitString, int fromIndex) {
-    // TODO: validate
     return bitString.substring(fromIndex, fromIndex + (this.elementBitStringLength * numElements));
   }
 

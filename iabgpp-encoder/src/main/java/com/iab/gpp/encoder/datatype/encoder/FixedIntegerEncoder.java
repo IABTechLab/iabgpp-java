@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.regex.Pattern;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedIntegerEncoder {
 
@@ -20,6 +21,11 @@ public class FixedIntegerEncoder {
       value = value >> 1;
     }
 
+    if (bitString.length() > bitStringLength) {
+      throw new EncodingException(
+          "Numberic value '" + value + "' is too large for a bit string length of '" + bitStringLength + "'");
+    }
+    
     while (bitString.length() < bitStringLength) {
       bitString = "0" + bitString;
     }
@@ -31,9 +37,6 @@ public class FixedIntegerEncoder {
     if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches()) {
       throw new DecodingException("Undecodable FixedInteger '" + bitString + "'");
     }
-
-    // return parseInt(bitString, 2);
-
     int value = 0;
 
     for (int i = 0; i < bitString.length(); i++) {

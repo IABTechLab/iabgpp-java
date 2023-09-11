@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
@@ -15,6 +16,11 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
 
   public EncodableOptimizedFixedRange(List<Integer> value) {
     super();
+    setValue(value);
+  }
+
+  public EncodableOptimizedFixedRange(List<Integer> value, Predicate<List<Integer>> validator) {
+    super(validator);
     setValue(value);
   }
 

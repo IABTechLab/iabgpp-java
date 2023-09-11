@@ -41,6 +41,7 @@ public class HeaderV1CoreSegment extends AbstractLazilyEncodableSegment<Encodabl
 
   @Override
   protected String encodeSegment(EncodableBitStringFields fields) {
+    validate();
     String bitString = bitStringEncoder.encode(fields, getFieldNames());
     String encodedString = base64UrlEncoder.encode(bitString);
     return encodedString;

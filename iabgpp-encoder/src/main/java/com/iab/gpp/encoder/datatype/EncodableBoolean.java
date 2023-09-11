@@ -22,7 +22,6 @@ public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean
   }
 
   public String substring(String bitString, int fromIndex) {
-    // TODO: validate
     return bitString.substring(fromIndex, fromIndex + 1);
   }
 }

@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 
@@ -17,6 +18,11 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
     setValue(value);
   }
 
+  public EncodableFixedIntegerRange(List<Integer> value, Predicate<List<Integer>> validator) {
+    super(validator);
+    setValue(value);
+  }
+
   public String encode() {
     return FixedIntegerRangeEncoder.encode(this.value);
   }
@@ -26,7 +32,6 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
   }
 
   public String substring(String bitString, int fromIndex) {
-    // TODO: add some validation
     int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
     int index = fromIndex + 12;
     for (int i = 0; i < count; i++) {

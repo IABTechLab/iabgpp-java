@@ -1,12 +1,26 @@
 package com.iab.gpp.encoder.datatype;
 
+import java.util.Collection;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import com.iab.gpp.encoder.error.ValidationException;
+
 public abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
+  protected Predicate<T> validator;
   protected T value;
 
   protected AbstractEncodableBitStringDataType() {
-
+    this.validator = v -> true;
+  }
+  
+  protected AbstractEncodableBitStringDataType(Predicate<T> validator) {
+    this.validator = validator;
   }
 
+  public void setValidator(Predicate<T> validator) {
+    this.validator = validator;
+  }
+  
   public boolean hasValue() {
     return this.value != null;
   }
@@ -17,7 +31,18 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
 
   @SuppressWarnings("unchecked")
   public void setValue(Object value) {
-    this.value = (T) value;
+    T v = (T) value;
+    if (validator.test(v)) {
+      this.value = v;
+    } else {
+      if (v instanceof Collection) {
+        throw new ValidationException("Invalid value '"
+            + ((Collection<?>) v).stream().map(i -> i.toString()).collect(Collectors.joining(",")) + "'");
+      } else {
+        throw new ValidationException("Invalid value '" + v + "'");
+      }
+    }
+
   }
 
   public abstract String substring(String str, int fromIndex);
