@@ -76,7 +76,6 @@ public class UsCoV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
   
   @Override
   public void validate() {
-    super.validate();
     Integer saleOptOutNotice = ((EncodableFixedInteger) fields.get(UsCoV1Field.SALE_OPT_OUT_NOTICE)).getValue();
     Integer saleOptOut = ((EncodableFixedInteger) fields.get(UsCoV1Field.SALE_OPT_OUT)).getValue();
     Integer targetedAdvertisingOptOutNotice = ((EncodableFixedInteger) fields.get(UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE)).getValue();

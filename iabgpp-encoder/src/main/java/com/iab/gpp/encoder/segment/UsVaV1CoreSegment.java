@@ -76,7 +76,6 @@ public class UsVaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
   
   @Override
   public void validate() {
-    super.validate();
     Integer saleOptOutNotice = ((EncodableFixedInteger) fields.get(UsVaV1Field.SALE_OPT_OUT_NOTICE)).getValue();
     Integer saleOptOut = ((EncodableFixedInteger) fields.get(UsVaV1Field.SALE_OPT_OUT)).getValue();
     Integer targetedAdvertisingOptOutNotice =

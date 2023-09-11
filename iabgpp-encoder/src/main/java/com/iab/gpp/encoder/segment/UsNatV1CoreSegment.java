@@ -89,7 +89,6 @@ public class UsNatV1CoreSegment extends AbstractLazilyEncodableSegment<Encodable
   
   @Override
   public void validate() {
-    super.validate();
     Integer sharingNotice = ((EncodableFixedInteger) fields.get(UsNatV1Field.SHARING_NOTICE)).getValue();
     Integer sharingOptOutNotice = ((EncodableFixedInteger) fields.get(UsNatV1Field.SHARING_OPT_OUT_NOTICE)).getValue();
     Integer sharingOptOut = ((EncodableFixedInteger) fields.get(UsNatV1Field.SHARING_OPT_OUT)).getValue();

@@ -82,7 +82,6 @@ public class UsCaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
   
   @Override
   public void validate() {
-    super.validate();
     Integer sharingOptOutNotice = ((EncodableFixedInteger) fields.get(UsCaV1Field.SHARING_OPT_OUT_NOTICE)).getValue();
     Integer sharingOptOut = ((EncodableFixedInteger) fields.get(UsCaV1Field.SHARING_OPT_OUT)).getValue();
     Integer saleOptOutNotice = ((EncodableFixedInteger) fields.get(UsCaV1Field.SALE_OPT_OUT_NOTICE)).getValue();

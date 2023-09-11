@@ -16,5 +16,5 @@ public interface EncodableSegment {
 
   void decode(String encodedString);
 
-  void validate();
+  default void validate() {};
 }

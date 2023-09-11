@@ -22,11 +22,6 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   protected abstract void decodeSegment(String encodedString, T Fields);
 
-  @Override
-  public void validate() {
-
-  }
-
   public boolean hasField(String fieldName) {
     return this.fields.containsKey(fieldName);
   }
