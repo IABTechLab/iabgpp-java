@@ -54,9 +54,5 @@ public class HeaderV1CoreSegment extends AbstractLazilyEncodableSegment<Encodabl
     String bitString = base64UrlEncoder.decode(encodedString);
     bitStringEncoder.decode(bitString, getFieldNames(), fields);
   }
-  
-  @Override
-  public void validate() {
 
-  }
 }
