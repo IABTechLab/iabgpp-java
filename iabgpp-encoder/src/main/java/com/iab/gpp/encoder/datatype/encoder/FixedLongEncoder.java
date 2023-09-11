@@ -21,7 +21,7 @@ public class FixedLongEncoder {
 
     if (bitString.length() > bitStringLength) {
       throw new EncodingException(
-          "Numberic value '" + value + "' is too large for a bit string length of '" + bitStringLength + "'");
+          "Numeric value '" + value + "' is too large for a bit string length of '" + bitStringLength + "'");
     }
 
     while (bitString.length() < bitStringLength) {
