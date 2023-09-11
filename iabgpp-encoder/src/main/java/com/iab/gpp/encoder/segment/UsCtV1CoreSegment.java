@@ -9,7 +9,6 @@ import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
-import com.iab.gpp.encoder.field.UsCoV1Field;
 import com.iab.gpp.encoder.field.UsCtV1Field;
 import com.iab.gpp.encoder.section.UsCtV1;
 
@@ -84,12 +83,12 @@ public class UsCtV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
   
   @Override
   public void validate() {
-    Integer saleOptOutNotice = ((EncodableFixedInteger) fields.get(UsCoV1Field.SALE_OPT_OUT_NOTICE)).getValue();
-    Integer saleOptOut = ((EncodableFixedInteger) fields.get(UsCoV1Field.SALE_OPT_OUT)).getValue();
-    Integer targetedAdvertisingOptOutNotice = ((EncodableFixedInteger) fields.get(UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE)).getValue();
-    Integer targetedAdvertisingOptOut = ((EncodableFixedInteger) fields.get(UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT)).getValue();
-    Integer mspaServiceProviderMode = ((EncodableFixedInteger) fields.get(UsCoV1Field.MSPA_SERVICE_PROVIDER_MODE)).getValue();
-    Integer mspaOptOutOptionMode = ((EncodableFixedInteger) fields.get(UsCoV1Field.MSPA_OPT_OUT_OPTION_MODE)).getValue();
+    Integer saleOptOutNotice = ((EncodableFixedInteger) fields.get(UsCtV1Field.SALE_OPT_OUT_NOTICE)).getValue();
+    Integer saleOptOut = ((EncodableFixedInteger) fields.get(UsCtV1Field.SALE_OPT_OUT)).getValue();
+    Integer targetedAdvertisingOptOutNotice = ((EncodableFixedInteger) fields.get(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE)).getValue();
+    Integer targetedAdvertisingOptOut = ((EncodableFixedInteger) fields.get(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT)).getValue();
+    Integer mspaServiceProviderMode = ((EncodableFixedInteger) fields.get(UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE)).getValue();
+    Integer mspaOptOutOptionMode = ((EncodableFixedInteger) fields.get(UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE)).getValue();
     
     if (saleOptOutNotice == 0) {
       if (saleOptOut != 0) {
