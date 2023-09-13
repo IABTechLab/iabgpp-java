@@ -106,7 +106,8 @@ public class GvlV2Test {
     Assertions.assertFalse(gvl.getVendors().get(0).getDeletedDate().isPresent());
     Assertions.assertEquals("Emerse Sverige AB", gvl.getVendors().get(0).getName());
     Assertions.assertEquals(Arrays.asList(1, 3, 4), gvl.getVendors().get(0).getPurposes());
-    Assertions.assertEquals(Arrays.asList(2, 7, 8, 9),  gvl.getVendors().get(0).getLegIntPurposes());
+    Assertions.assertTrue(gvl.getVendors().get(0).getLegIntPurposes().isPresent());
+    Assertions.assertEquals(Arrays.asList(2, 7, 8, 9),  gvl.getVendors().get(0).getLegIntPurposes().get());
     Assertions.assertEquals(Arrays.asList(2, 9),  gvl.getVendors().get(0).getFlexiblePurposes());
     Assertions.assertEquals(Arrays.asList(1, 2),  gvl.getVendors().get(0).getSpecialPurposes());
     Assertions.assertEquals(Arrays.asList(1, 2),  gvl.getVendors().get(0).getFeatures());
