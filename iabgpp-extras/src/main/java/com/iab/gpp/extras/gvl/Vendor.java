@@ -54,7 +54,15 @@ public interface Vendor {
    *
    * @return A {@link List} of purpose ids disclosed as legitimate interests
    */
-  List<Integer> getLegIntPurposes();
+  Optional<List<Integer>> getLegIntPurposes();
+
+  /**
+   * List of Purposes for which the vendor requires to be transparently disclosed as implied Consent
+   * This is not applicable for EU, but for Canada
+   *
+   * @return A {@link List} of purpose ids disclosed as legitimate interests
+   */
+  Optional<List<Integer>> getImpConsPurposes();
 
   /**
    * List of purposes where the vendor is flexible regarding the legal basis; they will perform the
