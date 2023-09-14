@@ -33,6 +33,7 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
   private String name;
   private List<Integer> purposes;
   private List<Integer> legIntPurposes;
+  private List<Integer> impConsPurposes;
   private List<Integer> flexiblePurposes;
   private List<Integer> specialPurposes;
   private List<Integer> features;
@@ -87,8 +88,18 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
    * @return A {@link List} of purpose ids disclosed as legitimate interests
    */
   @Override
-  public List<Integer> getLegIntPurposes() {
-    return legIntPurposes;
+  public Optional<List<Integer>> getLegIntPurposes() {
+    return Optional.ofNullable(legIntPurposes);
+  }
+
+  /**
+   * List of Purposes for which the vendor requires to be transparently disclosed as implied Consent
+   *
+   * @return A {@link List} of purpose ids disclosed as legitimate interests
+   */
+  @Override
+  public Optional<List<Integer>> getImpConsPurposes() {
+    return Optional.ofNullable(impConsPurposes);
   }
 
   /**
