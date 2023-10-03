@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
+import com.iab.gpp.encoder.datatype.EncodableArrayOfRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
@@ -67,6 +68,7 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
             false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
     fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
     fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
+    fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfRanges(6, 2, new ArrayList<>()));
 
     // publisher purposes segment
     fields.put(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
@@ -95,6 +97,12 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
         new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>()));
 
+    
+    // disclosed vendors segment
+    fields.put(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
+    fields.put(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFixedRange(new ArrayList<>()));
+    
+    
     //@formatter:off
     String[] coreSegment = new String[] {
       TcfCaV1Field.VERSION,
@@ -111,7 +119,8 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
       TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
       TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
       TcfCaV1Field.VENDOR_EXPRESS_CONSENT,
-      TcfCaV1Field.VENDOR_IMPLIED_CONSENT
+      TcfCaV1Field.VENDOR_IMPLIED_CONSENT,
+      TcfCaV1Field.PUB_RESTRICTIONS
     };
 
     String[] publisherPurposesSegment = new String[] {
@@ -123,9 +132,15 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
       TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
     };
 
+    String[] disclosedVendorsSegment = new String[] {
+      TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE,
+      TcfCaV1Field.DISCLOSED_VENDORS
+    };
+    
     segments = new String[][] {
       coreSegment, 
-      publisherPurposesSegment
+      publisherPurposesSegment,
+      disclosedVendorsSegment
     };
     //@formatter:on
   }
@@ -138,6 +153,9 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
       encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
       if (segmentBitStrings.size() >= 2) {
         encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
+        if (segmentBitStrings.size() >= 3 && !this.getDisclosedVendors().isEmpty()) {
+          encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(2)));
+        }
       }
     }
 
@@ -159,6 +177,10 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
         // unfortunately, the segment ordering doesn't match the segment ids
         case "000": {
           segmentBitStrings[0] = segmentBitString;
+          break;
+        }
+        case "001": {
+          segmentBitStrings[2] = segmentBitString;
           break;
         }
         case "011": {
@@ -288,4 +310,12 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     return (List<Integer>) this.fields.get(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT).getValue();
   }
 
+  public Integer getDisclosedVendorsSegmentType() {
+    return (Integer) this.fields.get(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE).getValue();
+  }
+  
+  @SuppressWarnings("unchecked")
+  public List<Integer> getDisclosedVendors() {
+    return (List<Integer>) this.fields.get(TcfCaV1Field.DISCLOSED_VENDORS).getValue();
+  }
 }

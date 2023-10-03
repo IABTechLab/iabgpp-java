@@ -17,6 +17,7 @@ public class TcfCaV1Field {
   public static String PURPOSES_IMPLIED_CONSENT = "PurposesImpliedConsent";
   public static String VENDOR_EXPRESS_CONSENT = "VendorExpressConsent";
   public static String VENDOR_IMPLIED_CONSENT = "VendorImpliedConsent";
+  public static String PUB_RESTRICTIONS = "PubRestrictions";
 
   public static String PUB_PURPOSES_SEGMENT_TYPE = "PubPurposesSegmentType";
   public static String PUB_PURPOSES_EXPRESS_CONSENT = "PubPurposesExpressConsent";
@@ -25,4 +26,6 @@ public class TcfCaV1Field {
   public static String CUSTOM_PURPOSES_EXPRESS_CONSENT = "CustomPurposesExpressConsent";
   public static String CUSTOM_PURPOSES_IMPLIED_CONSENT = "CustomPurposesImpliedConsent";
 
+  public static String DISCLOSED_VENDORS_SEGMENT_TYPE = "DisclosedVendorsSegmentType";
+  public static String DISCLOSED_VENDORS = "DisclosedVendors";
 }

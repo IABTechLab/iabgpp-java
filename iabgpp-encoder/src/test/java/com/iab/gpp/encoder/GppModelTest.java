@@ -4,7 +4,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -18,8 +17,8 @@ import com.iab.gpp.encoder.field.UsCoV1Field;
 import com.iab.gpp.encoder.field.UsCtV1Field;
 import com.iab.gpp.encoder.field.UsNatV1Field;
 import com.iab.gpp.encoder.field.UsUtV1Field;
-import com.iab.gpp.encoder.field.UspV1Field;
 import com.iab.gpp.encoder.field.UsVaV1Field;
+import com.iab.gpp.encoder.field.UspV1Field;
 import com.iab.gpp.encoder.section.TcfCaV1;
 import com.iab.gpp.encoder.section.TcfEuV2;
 import com.iab.gpp.encoder.section.UsCaV1;
@@ -27,8 +26,8 @@ import com.iab.gpp.encoder.section.UsCoV1;
 import com.iab.gpp.encoder.section.UsCtV1;
 import com.iab.gpp.encoder.section.UsNatV1;
 import com.iab.gpp.encoder.section.UsUtV1;
-import com.iab.gpp.encoder.section.UspV1;
 import com.iab.gpp.encoder.section.UsVaV1;
+import com.iab.gpp.encoder.section.UspV1;
 
 public class GppModelTest {
 
@@ -111,7 +110,7 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA",
+        "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA",
         gppString);
 
   }
@@ -339,7 +338,7 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN",
+        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN",
         gppString);
 
     Assertions.assertEquals(4, gppString.split("~").length);

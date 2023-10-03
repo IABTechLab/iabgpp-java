@@ -75,6 +75,8 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
               String substring = field.substring(segmentBitString, index);
               field.decode(substring);
               index += substring.length();
+            } catch (StringIndexOutOfBoundsException e) {
+              continue;
             } catch (Exception e) {
               throw new DecodingException("Unable to decode " + fieldName, e);
             }

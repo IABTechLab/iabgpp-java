@@ -57,10 +57,14 @@ public abstract class AbstractEncodableBitStringSection implements EncodableSect
     for (int i = 0; i < this.fieldOrder.length; i++) {
       String fieldName = this.fieldOrder[i];
       if (this.fields.containsKey(fieldName)) {
-        AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
-        String substring = field.substring(bitString, index);
-        field.decode(substring);
-        index += substring.length();
+        try {
+          AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
+          String substring = field.substring(bitString, index);
+          field.decode(substring);
+          index += substring.length();
+        } catch (StringIndexOutOfBoundsException e) {
+          continue;
+        }
       } else {
         throw new DecodingException("Field not found: '" + fieldName + "'");
       }
