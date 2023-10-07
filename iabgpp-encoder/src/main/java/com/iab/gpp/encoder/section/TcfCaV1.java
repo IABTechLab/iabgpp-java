@@ -68,7 +68,7 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
             false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
     fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
     fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
-    fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfRanges(6, 2, new ArrayList<>()));
+    fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfRanges(6, 2, new ArrayList<>(), false));
 
     // publisher purposes segment
     fields.put(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));

@@ -348,4 +348,11 @@ public class TcfEuV2Test {
     Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 37, 42),
         tcfEuV2.getFieldValue("VendorLegitimateInterests"));
   }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new TcfEuV2("z");
+    });
+  }
 }

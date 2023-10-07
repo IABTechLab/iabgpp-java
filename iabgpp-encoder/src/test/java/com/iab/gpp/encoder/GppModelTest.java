@@ -60,12 +60,16 @@ public class GppModelTest {
 
   @Test
   public void testDecodingException() {
-    try {
-      GppModel gppModel = new GppModel("invalid gpp string");
-      Assertions.fail("Expected LazyDecodingException");
-    } catch (DecodingException e) {
-      
-    }
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("invalid gpp string");
+    });
+  }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("z");
+    });
   }
   
   @Test
@@ -672,4 +676,5 @@ public class GppModelTest {
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
 
   }
+  
 }

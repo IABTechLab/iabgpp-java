@@ -117,4 +117,11 @@ public class UsNatV1Test {
     Assertions.assertEquals(3, usNatV1.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usNatV1.getGpcSegmentIncluded());
   }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new UsNatV1("z");
+    });
+  }
 }

@@ -174,4 +174,11 @@ public class TcfCaV1Test {
     Assertions.assertEquals(1,  tcfCaV1.getDisclosedVendorsSegmentType());
     Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 10, 11, 12),  tcfCaV1.getDisclosedVendors());
   }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new TcfCaV1("z");
+    });
+  }
 }

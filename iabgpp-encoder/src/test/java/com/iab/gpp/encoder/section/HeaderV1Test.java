@@ -102,4 +102,11 @@ public class HeaderV1Test {
     Assertions.assertEquals(headerV1.getFieldValue("Version"), headerV1.getVersion());
     Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
   }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new HeaderV1("z");
+    });
+  }
 }
