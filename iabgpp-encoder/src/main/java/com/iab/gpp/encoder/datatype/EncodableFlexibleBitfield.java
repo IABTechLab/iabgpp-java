@@ -4,32 +4,52 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntSupplier;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
+import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<List<Boolean>> {
 
   private IntSupplier getLengthSupplier;
 
   protected EncodableFlexibleBitfield(IntSupplier getLengthSupplier) {
-    super();
+    super(true);
     this.getLengthSupplier = getLengthSupplier;
   }
 
   public EncodableFlexibleBitfield(IntSupplier getLengthSupplier, List<Boolean> value) {
-    super();
+    super(true);
+    this.getLengthSupplier = getLengthSupplier;
+    this.setValue(value);
+  }
+
+  public EncodableFlexibleBitfield(IntSupplier getLengthSupplier, List<Boolean> value, boolean hardFailIfMissing) {
+    super(hardFailIfMissing);
     this.getLengthSupplier = getLengthSupplier;
     this.setValue(value);
   }
 
   public String encode() {
-    return FixedBitfieldEncoder.encode(this.value, this.getLengthSupplier.getAsInt());
+    try {
+      return FixedBitfieldEncoder.encode(this.value, this.getLengthSupplier.getAsInt());
+    } catch (Exception e) {
+      throw new EncodingException(e);
+    }
   }
 
   public void decode(String bitString) {
-    this.value = FixedBitfieldEncoder.decode(bitString);
+    try {
+      this.value = FixedBitfieldEncoder.decode(bitString);
+    } catch (Exception e) {
+      throw new DecodingException(e);
+    }
   }
 
-  public String substring(String bitString, int fromIndex) {
-    return bitString.substring(fromIndex, fromIndex + this.getLengthSupplier.getAsInt());
+  public String substring(String bitString, int fromIndex) throws SubstringException {
+    try {
+      return bitString.substring(fromIndex, fromIndex + this.getLengthSupplier.getAsInt());
+    } catch (Exception e) {
+      throw new SubstringException(e);
+    }
   }
 
   @SuppressWarnings("unchecked")

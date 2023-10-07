@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
+import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -80,6 +81,8 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
             segments.get(2).decode(encodedSegments[i]);
           } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
             segments.get(1).decode(encodedSegments[i]);
+          } else {
+            throw new DecodingException("Invalid segment '" + encodedSegment + "'");
           }
         }
       }

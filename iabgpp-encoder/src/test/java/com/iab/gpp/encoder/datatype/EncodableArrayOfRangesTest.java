@@ -126,13 +126,13 @@ public class EncodableArrayOfRangesTest {
   }
   
   @Test
-  public void testSubstring1() throws DecodingException {
+  public void testSubstring1() throws DecodingException, SubstringException {
     Assertions.assertEquals("000000000000", new EncodableArrayOfRanges(6, 2).substring(
         "01010100000000000011111111000000000001110000000000000000000000000000001000000000000000000000000000000", 6));
   }
 
   @Test
-  public void testSubstring2() throws DecodingException {
+  public void testSubstring2() throws DecodingException, SubstringException {
     Assertions.assertEquals("00000000000111111111000000000001110000000000000000000000000000001",
         new EncodableArrayOfRanges(6, 2).substring(
             "01010100000000000111111111000000000001110000000000000000000000000000001000000000000000000000000000000",
@@ -140,7 +140,7 @@ public class EncodableArrayOfRangesTest {
   }
 
   @Test
-  public void testSubstring3() throws DecodingException {
+  public void testSubstring3() throws DecodingException, SubstringException {
     Assertions.assertEquals("000000000001111111110000000000011101100000000000100000000000011101",
         new EncodableArrayOfRanges(6, 2).substring(
             "01010100000000000111111111000000000001110110000000000010000000000001110100000000000000000000000000000",
@@ -148,7 +148,7 @@ public class EncodableArrayOfRangesTest {
   }
 
   @Test
-  public void testSubstring4() throws DecodingException {
+  public void testSubstring4() throws DecodingException, SubstringException {
     Assertions.assertEquals(
         "0000000001000001011100000000001100000000000000001000000000001000000000000000000000001000101110000000000011110000000000000000000100000000000100010111000000000001110000000000000000000000000000001000101110000000000011101100000000000100000000000011101",
         new EncodableArrayOfRanges(6, 2).substring(

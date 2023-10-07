@@ -56,14 +56,17 @@ public class GppModelTest {
   }
 
   @Test
-  public void testLazyDecodingException() {
-    GppModel gppModel = new GppModel("invalid gpp string");
-    try {
-      gppModel.getHeader();
-      Assertions.fail("Expected DecodingException");
-    } catch (DecodingException e) {
-
-    }
+  public void testDecodingException() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("invalid gpp string").getHeader();
+    });
+  }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("z").getUsCtV1Section();
+    });
   }
 
   @Test

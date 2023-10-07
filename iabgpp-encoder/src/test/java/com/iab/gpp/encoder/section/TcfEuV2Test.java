@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfEuV2Test {
@@ -358,5 +359,19 @@ public class TcfEuV2Test {
 
     Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 37, 42),
         tcfEuV2.getFieldValue("VendorLegitimateInterests"));
+  }
+  
+  @Test()
+  public void testDecodeGarbage1() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new TcfEuV2("A").getCreated();
+    });
+  }
+  
+  @Test()
+  public void testDecodeGarbage2() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new TcfEuV2("z").getCreated();
+    });
   }
 }

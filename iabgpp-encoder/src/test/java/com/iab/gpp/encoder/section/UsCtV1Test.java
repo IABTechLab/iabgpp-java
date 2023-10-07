@@ -408,4 +408,11 @@ public class UsCtV1Test {
     Assertions.assertEquals(2, usCtV1.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usCtV1.getGpcSegmentIncluded());
   }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new UsCtV1("z").getSharingNotice();
+    });
+  }
 }

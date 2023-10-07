@@ -185,4 +185,18 @@ public class TcfCaV1Test {
     Assertions.assertEquals(1, pubRestictions.get(0).getType());
     Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 9), pubRestictions.get(0).getIds());
   }
+  
+  @Test()
+  public void testDecodeGarbage1() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new TcfCaV1("A").getPubRestrictions();
+    });
+  }
+  
+  @Test()
+  public void testDecodeGarbage2() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new TcfCaV1("z").getPubRestrictions();
+    });
+  }
 }

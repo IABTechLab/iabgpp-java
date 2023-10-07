@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.error.DecodingException;
 
 public class HeaderV1Test {
 
@@ -53,5 +54,12 @@ public class HeaderV1Test {
     Assertions.assertEquals(Arrays.asList(2, 6), headerV1.getFieldValue("SectionIds"));
     Assertions.assertEquals(headerV1.getFieldValue("Version"), headerV1.getVersion());
     Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
+  }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new HeaderV1("z").getSectionsIds();
+    });
   }
 }

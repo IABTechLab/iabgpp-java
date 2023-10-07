@@ -62,7 +62,7 @@ public class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<Encodable
             false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
     fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
     fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
-    fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfRanges(6, 2, new ArrayList<>()));
+    fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfRanges(6, 2, new ArrayList<>(), false));
     return fields;
   }
 
