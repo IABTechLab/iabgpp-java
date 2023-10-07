@@ -51,7 +51,6 @@ public interface Purpose {
 
   /**
    * Legal description of the purpose
-   * @deprecated since 3.0
    * @return legal description string
    */
   Optional<String> getDescriptionLegal();
