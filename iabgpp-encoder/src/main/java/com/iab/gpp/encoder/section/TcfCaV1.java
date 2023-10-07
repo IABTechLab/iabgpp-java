@@ -4,10 +4,12 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1CoreSegment;
+import com.iab.gpp.encoder.segment.TcfCaV1DisclosedVendorsSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1PublisherPurposesSegment;
 
 public class TcfCaV1 extends AbstractLazilyEncodableSection {
@@ -45,6 +47,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
     List<EncodableSegment> segments = new ArrayList<>();
     segments.add(new TcfCaV1CoreSegment());
     segments.add(new TcfCaV1PublisherPurposesSegment());
+    segments.add(new TcfCaV1DisclosedVendorsSegment());
     return segments;
   }
   
@@ -60,6 +63,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
          * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
          * 
          * A-H     = '000' = 0
+         * I-P     = '001' = 1
          * Y-Z,a-f = '011' = 3
          * 
          * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved 
@@ -72,6 +76,8 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
           
           if(firstChar >= 'A' && firstChar <= 'H') {
             segments.get(0).decode(encodedSegments[i]);
+          } else if(firstChar >= 'I' && firstChar <= 'P') {
+            segments.get(2).decode(encodedSegments[i]);
           } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
             segments.get(1).decode(encodedSegments[i]);
           }
@@ -85,9 +91,13 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   @Override
   public String encodeSection(List<EncodableSegment> segments) {
     List<String> encodedSegments = new ArrayList<>();
-    for(EncodableSegment segment : segments) {
-      encodedSegments.add(segment.encode());
+
+    encodedSegments.add(segments.get(0).encode());
+    encodedSegments.add(segments.get(1).encode());
+    if(!this.getDisclosedVendors().isEmpty()) {
+      encodedSegments.add(segments.get(2).encode());
     }
+    
     return String.join(".", encodedSegments);
   }
 
@@ -165,6 +175,11 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
     return (List<Integer>) this.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT);
   }
 
+  @SuppressWarnings("unchecked")
+  public List<RangeEntry> getPubRestrictions() {
+    return (List<RangeEntry>) this.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS);
+  }
+  
   public Integer getPubPurposesSegmentType() {
     return (Integer) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE);
   }
@@ -192,4 +207,14 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   public List<Integer> getCustomPurposesImpliedConsent() {
     return (List<Integer>) this.getFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT);
   }
+
+  public Integer getDisclosedVendorsSegmentType() {
+    return (Integer) this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE);
+  }
+  
+  @SuppressWarnings("unchecked")
+  public List<Integer> getDisclosedVendors() {
+    return (List<Integer>) this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS);
+  }
+
 }

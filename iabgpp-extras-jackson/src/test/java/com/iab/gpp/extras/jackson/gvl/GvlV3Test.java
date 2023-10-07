@@ -95,7 +95,8 @@ public class GvlV3Test {
     Assertions.assertFalse(gvl.getVendors().get(0).getDeletedDate().isPresent());
     Assertions.assertEquals("Exponential Interactive, Inc d/b/a VDX.tv", gvl.getVendors().get(0).getName());
     Assertions.assertEquals(Arrays.asList(1, 2, 3, 4, 7, 8, 9, 10),  gvl.getVendors().get(0).getPurposes());
-    Assertions.assertEquals(Collections.emptyList(), gvl.getVendors().get(0).getLegIntPurposes());
+    Assertions.assertTrue(gvl.getVendors().get(0).getLegIntPurposes().isPresent());
+    Assertions.assertEquals(Collections.emptyList(), gvl.getVendors().get(0).getLegIntPurposes().get());
     Assertions.assertEquals(Arrays.asList(7, 8, 9, 10),  gvl.getVendors().get(0).getFlexiblePurposes());
     Assertions.assertEquals(Arrays.asList(1, 2),  gvl.getVendors().get(0).getSpecialPurposes());
     Assertions.assertEquals(Arrays.asList(1, 2, 3),  gvl.getVendors().get(0).getFeatures());
@@ -129,7 +130,8 @@ public class GvlV3Test {
     Assertions.assertFalse(gvl.getVendors().get(4).getDeletedDate().isPresent());
     Assertions.assertEquals("BeeswaxIO Corporation", gvl.getVendors().get(4).getName());
     Assertions.assertEquals(Arrays.asList(1, 2, 3, 4, 7),  gvl.getVendors().get(4).getPurposes());
-    Assertions.assertEquals(Collections.emptyList(),  gvl.getVendors().get(4).getLegIntPurposes());
+    Assertions.assertTrue(gvl.getVendors().get(4).getLegIntPurposes().isPresent());
+    Assertions.assertEquals(Collections.emptyList(),  gvl.getVendors().get(4).getLegIntPurposes().get());
     Assertions.assertEquals(Collections.emptyList(),  gvl.getVendors().get(4).getFlexiblePurposes());
     Assertions.assertEquals(Arrays.asList(1, 2),  gvl.getVendors().get(4).getSpecialPurposes());
     Assertions.assertEquals(Arrays.asList(1, 3),  gvl.getVendors().get(4).getFeatures());

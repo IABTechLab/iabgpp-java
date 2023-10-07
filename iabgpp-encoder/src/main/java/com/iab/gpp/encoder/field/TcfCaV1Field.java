@@ -20,6 +20,7 @@ public class TcfCaV1Field {
   public static String PURPOSES_IMPLIED_CONSENT = "PurposesImpliedConsent";
   public static String VENDOR_EXPRESS_CONSENT = "VendorExpressConsent";
   public static String VENDOR_IMPLIED_CONSENT = "VendorImpliedConsent";
+  public static String PUB_RESTRICTIONS = "PubRestrictions";
 
   public static String PUB_PURPOSES_SEGMENT_TYPE = "PubPurposesSegmentType";
   public static String PUB_PURPOSES_EXPRESS_CONSENT = "PubPurposesExpressConsent";
@@ -28,6 +29,9 @@ public class TcfCaV1Field {
   public static String CUSTOM_PURPOSES_EXPRESS_CONSENT = "CustomPurposesExpressConsent";
   public static String CUSTOM_PURPOSES_IMPLIED_CONSENT = "CustomPurposesImpliedConsent";
 
+  public static String DISCLOSED_VENDORS_SEGMENT_TYPE = "DisclosedVendorsSegmentType";
+  public static String DISCLOSED_VENDORS = "DisclosedVendors";
+  
   //@formatter:off
   public static List<String> TCFCAV1_CORE_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
       TcfCaV1Field.VERSION,
@@ -44,7 +48,8 @@ public class TcfCaV1Field {
       TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
       TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
       TcfCaV1Field.VENDOR_EXPRESS_CONSENT,
-      TcfCaV1Field.VENDOR_IMPLIED_CONSENT
+      TcfCaV1Field.VENDOR_IMPLIED_CONSENT,
+      TcfCaV1Field.PUB_RESTRICTIONS
   });
   //@formatter:on
 
@@ -56,6 +61,13 @@ public class TcfCaV1Field {
     TcfCaV1Field.NUM_CUSTOM_PURPOSES,
     TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
     TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
+  });
+  //@formatter:on
+  
+  //@formatter:off
+  public static List<String> TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+    TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE,
+    TcfCaV1Field.DISCLOSED_VENDORS,
   });
   //@formatter:on
 }
