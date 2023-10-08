@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -22,17 +21,6 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
 
   public EncodableFixedIntegerRange(List<Integer> value, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
-    setValue(value);
-  }
-
-  public EncodableFixedIntegerRange(List<Integer> value, Predicate<List<Integer>> validator) {
-    super(validator);
-    setValue(value);
-  }
-
-  public EncodableFixedIntegerRange(List<Integer> value, boolean hardFailIfMissing,
-      Predicate<List<Integer>> validator) {
-    super(hardFailIfMissing, validator);
     setValue(value);
   }
 

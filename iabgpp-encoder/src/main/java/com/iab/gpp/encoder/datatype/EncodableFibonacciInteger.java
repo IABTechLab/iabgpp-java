@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -18,16 +17,6 @@ public class EncodableFibonacciInteger extends AbstractEncodableBitStringDataTyp
 
   public EncodableFibonacciInteger(Integer value, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
-    setValue(value);
-  }
-
-  public EncodableFibonacciInteger(Integer value, Predicate<Integer> validator) {
-    super(validator);
-    setValue(value);
-  }
-
-  public EncodableFibonacciInteger(Integer value, boolean hardFailIfMissing, Predicate<Integer> validator) {
-    super(hardFailIfMissing, validator);
     setValue(value);
   }
 

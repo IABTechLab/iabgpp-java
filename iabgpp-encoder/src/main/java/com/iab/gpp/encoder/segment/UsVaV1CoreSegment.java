@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.segment;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
@@ -33,28 +34,40 @@ public class UsVaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
 
   @Override
   protected EncodableBitStringFields initializeFields() {
+    Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
+    Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
+    Predicate<List<Integer>> nullableBooleanAsTwoBitIntegerListValidator = (l -> {
+      for (int n : l) {
+        if (n < 0 || n > 2) {
+          return false;
+        }
+      }
+      return true;
+    });
+
     EncodableBitStringFields fields = new EncodableBitStringFields();
     fields.put(UsVaV1Field.VERSION, new EncodableFixedInteger(6, UsVaV1.VERSION));
-    fields.put(UsVaV1Field.SHARING_NOTICE, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
-    fields.put(UsVaV1Field.SALE_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
+    fields.put(UsVaV1Field.SHARING_NOTICE,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsVaV1Field.SALE_OPT_OUT_NOTICE,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsVaV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-        new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
-    fields.put(UsVaV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
-    fields.put(UsVaV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsVaV1Field.SALE_OPT_OUT,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsVaV1Field.TARGETED_ADVERTISING_OPT_OUT,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsVaV1Field.SENSITIVE_DATA_PROCESSING,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0), v -> {
-          for (Integer i : v) {
-            if (i < 0 || i > 2) {
-              return false;
-            }
-          }
-          return true;
-        }));
+        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))
+            .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
     fields.put(UsVaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-        new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
-    fields.put(UsVaV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 1, (v -> v >= 1 && v <= 2)));
-    fields.put(UsVaV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
-    fields.put(UsVaV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsVaV1Field.MSPA_COVERED_TRANSACTION,
+        new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsVaV1Field.MSPA_OPT_OUT_OPTION_MODE,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsVaV1Field.MSPA_SERVICE_PROVIDER_MODE,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     return fields;
   }
 
@@ -73,7 +86,7 @@ public class UsVaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
     String bitString = base64UrlEncoder.decode(encodedString);
     bitStringEncoder.decode(bitString, getFieldNames(), fields);
   }
-  
+
   @Override
   public void validate() {
     Integer saleOptOutNotice = ((EncodableFixedInteger) fields.get(UsVaV1Field.SALE_OPT_OUT_NOTICE)).getValue();
@@ -144,5 +157,5 @@ public class UsVaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
     }
   }
 
-  
+
 }

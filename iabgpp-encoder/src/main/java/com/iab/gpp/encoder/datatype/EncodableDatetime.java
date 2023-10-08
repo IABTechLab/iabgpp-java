@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.time.ZonedDateTime;
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -14,11 +13,6 @@ public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedD
 
   public EncodableDatetime(ZonedDateTime value) {
     super(true);
-    setValue(value);
-  }
-
-  public EncodableDatetime(ZonedDateTime value, Predicate<ZonedDateTime> validator) {
-    super(validator);
     setValue(value);
   }
 

@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -25,16 +24,6 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     setValue(value);
   }
   
-  public EncodableFibonacciIntegerRange(List<Integer> value, Predicate<List<Integer>> validator) {
-    super(validator);
-    setValue(value);
-  }
-  
-  public EncodableFibonacciIntegerRange(List<Integer> value, boolean hardFailIfMissing, Predicate<List<Integer>> validator) {
-    super(hardFailIfMissing, validator);
-    setValue(value);
-  }
-
   public String encode() {
     try {
       return FibonacciIntegerRangeEncoder.encode(this.value);

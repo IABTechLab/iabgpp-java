@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.FixedStringEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -22,18 +21,6 @@ public class EncodableFixedString extends AbstractEncodableBitStringDataType<Str
 
   public EncodableFixedString(int stringLength, String value, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
-    this.stringLength = stringLength;
-    setValue(value);
-  }
-
-  public EncodableFixedString(int stringLength, String value, Predicate<String> validator) {
-    super(validator);
-    this.stringLength = stringLength;
-    setValue(value);
-  }
-
-  public EncodableFixedString(int stringLength, String value, boolean hardFailIfMissing, Predicate<String> validator) {
-    super(hardFailIfMissing, validator);
     this.stringLength = stringLength;
     setValue(value);
   }

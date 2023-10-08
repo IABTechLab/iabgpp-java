@@ -2,7 +2,6 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -27,22 +26,6 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
 
   public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
-    this.elementBitStringLength = elementBitStringLength;
-    this.numElements = value.size();
-    setValue(value);
-  }
-
-  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value,
-      Predicate<List<Integer>> validator) {
-    super(validator);
-    this.elementBitStringLength = elementBitStringLength;
-    this.numElements = value.size();
-    setValue(value);
-  }
-
-  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value, boolean hardFailIfMissing,
-      Predicate<List<Integer>> validator) {
-    super(hardFailIfMissing, validator);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = value.size();
     setValue(value);
