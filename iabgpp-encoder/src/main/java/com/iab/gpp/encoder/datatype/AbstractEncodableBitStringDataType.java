@@ -10,15 +10,12 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
   protected T value;
 
   protected AbstractEncodableBitStringDataType() {
-    this.validator = v -> true;
+    
   }
   
-  protected AbstractEncodableBitStringDataType(Predicate<T> validator) {
+  public AbstractEncodableBitStringDataType<T> withValidator(Predicate<T> validator) {
     this.validator = validator;
-  }
-
-  public void setValidator(Predicate<T> validator) {
-    this.validator = validator;
+    return this;
   }
   
   public boolean hasValue() {
@@ -32,7 +29,7 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
   @SuppressWarnings("unchecked")
   public void setValue(Object value) {
     T v = (T) value;
-    if (validator.test(v)) {
+    if (validator == null || validator.test(v)) {
       this.value = v;
     } else {
       if (v instanceof Collection) {

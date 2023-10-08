@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 
 public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<Integer> {
@@ -14,17 +13,6 @@ public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<In
 
   public EncodableFixedInteger(int bitStringLength, Integer value) {
     super();
-    this.bitStringLength = bitStringLength;
-    setValue(value);
-  }
-
-  protected EncodableFixedInteger(int bitStringLength, Predicate<Integer> validator) {
-    super(validator);
-    this.bitStringLength = bitStringLength;
-  }
-
-  public EncodableFixedInteger(int bitStringLength, Integer value, Predicate<Integer> validator) {
-    super(validator);
     this.bitStringLength = bitStringLength;
     setValue(value);
   }

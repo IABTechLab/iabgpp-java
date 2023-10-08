@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.segment;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
@@ -33,35 +34,40 @@ public class UsCtV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
 
   @Override
   protected EncodableBitStringFields initializeFields() {
+    Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
+    Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
+    Predicate<List<Integer>> nullableBooleanAsTwoBitIntegerListValidator = (l -> {
+      for (int n : l) {
+        if (n < 0 || n > 2) {
+          return false;
+        }
+      }
+      return true;
+    });
+
     EncodableBitStringFields fields = new EncodableBitStringFields();
     fields.put(UsCtV1Field.VERSION, new EncodableFixedInteger(6, UsCtV1.VERSION));
-    fields.put(UsCtV1Field.SHARING_NOTICE, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
-    fields.put(UsCtV1Field.SALE_OPT_OUT_NOTICE, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
+    fields.put(UsCtV1Field.SHARING_NOTICE,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsCtV1Field.SALE_OPT_OUT_NOTICE,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-        new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
-    fields.put(UsCtV1Field.SALE_OPT_OUT, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
-    fields.put(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsCtV1Field.SALE_OPT_OUT,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsCtV1Field.SENSITIVE_DATA_PROCESSING,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0), v -> {
-          for(Integer i : v) {
-            if(i < 0 || i > 2) {
-              return false;
-            }
-          }
-          return true;
-        }));
-    fields.put(UsCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0), v -> {
-          for(Integer i : v) {
-            if(i < 0 || i > 2) {
-              return false;
-            }
-          }
-          return true;
-        }));
-    fields.put(UsCtV1Field.MSPA_COVERED_TRANSACTION, new EncodableFixedInteger(2, 1, (v -> v >= 1 && v <= 2)));
-    fields.put(UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
-    fields.put(UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE, new EncodableFixedInteger(2, 0, (v -> v >= 0 && v <= 2)));
+        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))
+            .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
+    fields.put(UsCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0))
+        .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
+    fields.put(UsCtV1Field.MSPA_COVERED_TRANSACTION,
+        new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     return fields;
   }
 
@@ -80,33 +86,37 @@ public class UsCtV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
     String bitString = base64UrlEncoder.decode(encodedString);
     bitStringEncoder.decode(bitString, getFieldNames(), fields);
   }
-  
+
   @Override
   public void validate() {
     Integer saleOptOutNotice = ((EncodableFixedInteger) fields.get(UsCtV1Field.SALE_OPT_OUT_NOTICE)).getValue();
     Integer saleOptOut = ((EncodableFixedInteger) fields.get(UsCtV1Field.SALE_OPT_OUT)).getValue();
-    Integer targetedAdvertisingOptOutNotice = ((EncodableFixedInteger) fields.get(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE)).getValue();
-    Integer targetedAdvertisingOptOut = ((EncodableFixedInteger) fields.get(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT)).getValue();
-    Integer mspaServiceProviderMode = ((EncodableFixedInteger) fields.get(UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE)).getValue();
-    Integer mspaOptOutOptionMode = ((EncodableFixedInteger) fields.get(UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE)).getValue();
-    
+    Integer targetedAdvertisingOptOutNotice =
+        ((EncodableFixedInteger) fields.get(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE)).getValue();
+    Integer targetedAdvertisingOptOut =
+        ((EncodableFixedInteger) fields.get(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT)).getValue();
+    Integer mspaServiceProviderMode =
+        ((EncodableFixedInteger) fields.get(UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE)).getValue();
+    Integer mspaOptOutOptionMode =
+        ((EncodableFixedInteger) fields.get(UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE)).getValue();
+
     if (saleOptOutNotice == 0) {
       if (saleOptOut != 0) {
-        throw new ValidationException("Invalid usct sale notice / opt out combination: {"
-            + saleOptOutNotice + " / " + saleOptOut + "}");
+        throw new ValidationException(
+            "Invalid usct sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
       }
     } else if (saleOptOutNotice == 1) {
       if (saleOptOut != 1 && saleOptOut != 2) {
-        throw new ValidationException("Invalid usct sale notice / opt out combination: {"
-            + saleOptOutNotice + " / " + saleOptOut + "}");
+        throw new ValidationException(
+            "Invalid usct sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
       }
     } else if (saleOptOutNotice == 2) {
       if (saleOptOut != 1) {
-        throw new ValidationException("Invalid usct sale notice / opt out combination: {"
-            + saleOptOutNotice + " / " + saleOptOut + "}");
+        throw new ValidationException(
+            "Invalid usct sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
       }
     }
-    
+
     if (targetedAdvertisingOptOutNotice == 0) {
       if (targetedAdvertisingOptOut != 0) {
         throw new ValidationException("Invalid usct targeted advertising notice / opt out combination: {"
@@ -123,9 +133,9 @@ public class UsCtV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
             + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
       }
     }
-    
+
     if (mspaServiceProviderMode == 0) {
-      if(saleOptOutNotice != 0) {
+      if (saleOptOutNotice != 0) {
         throw new ValidationException("Invalid usct mspa service provider mode / sale opt out notice combination: {"
             + mspaServiceProviderMode + " / " + saleOptOutNotice + "}");
       }
@@ -134,8 +144,8 @@ public class UsCtV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
         throw new ValidationException("Invalid usct mspa service provider / opt out option modes combination: {"
             + mspaServiceProviderMode + " / " + mspaServiceProviderMode + "}");
       }
-      
-      if(saleOptOutNotice != 0) {
+
+      if (saleOptOutNotice != 0) {
         throw new ValidationException("Invalid usct mspa service provider mode / sale opt out notice combination: {"
             + mspaServiceProviderMode + " / " + saleOptOutNotice + "}");
       }
@@ -146,6 +156,6 @@ public class UsCtV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
       }
     }
   }
-  
-  
+
+
 }
