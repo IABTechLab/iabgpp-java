@@ -1,12 +1,15 @@
 package com.iab.gpp.encoder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
+import com.iab.gpp.encoder.field.HeaderV1Field;
 import com.iab.gpp.encoder.section.EncodableSection;
 import com.iab.gpp.encoder.section.HeaderV1;
 import com.iab.gpp.encoder.section.Sections;
@@ -276,48 +279,64 @@ public class GppModel {
   }
 
   protected Map<String, EncodableSection> decodeModel(String str) {
-    Map<String, EncodableSection> sections = new HashMap<>();
-    
-    if(str != null && !str.isEmpty()) {
-      String[] encodedSections = str.split("~");
-      HeaderV1 header = new HeaderV1(encodedSections[0]);
-      sections.put(HeaderV1.NAME, header);
-
-      @SuppressWarnings("unchecked")
-      List<Integer> sectionIds = (List<Integer>) header.getFieldValue("SectionIds");
-      for (int i = 0; i < sectionIds.size(); i++) {
-        if (sectionIds.get(i).equals(TcfEuV2.ID)) {
-          TcfEuV2 section = new TcfEuV2(encodedSections[i + 1]);
-          sections.put(TcfEuV2.NAME, section);
-        } else if (sectionIds.get(i).equals(TcfCaV1.ID)) {
-          TcfCaV1 section = new TcfCaV1(encodedSections[i + 1]);
-          sections.put(TcfCaV1.NAME, section);
-        } else if (sectionIds.get(i).equals(UspV1.ID)) {
-          UspV1 section = new UspV1(encodedSections[i + 1]);
-          sections.put(UspV1.NAME, section);
-        } else if (sectionIds.get(i).equals(UsCaV1.ID)) {
-          UsCaV1 section = new UsCaV1(encodedSections[i + 1]);
-          sections.put(UsCaV1.NAME, section);
-        } else if (sectionIds.get(i).equals(UsNatV1.ID)) {
-          UsNatV1 section = new UsNatV1(encodedSections[i + 1]);
-          sections.put(UsNatV1.NAME, section);
-        } else if (sectionIds.get(i).equals(UsVaV1.ID)) {
-          UsVaV1 section = new UsVaV1(encodedSections[i + 1]);
-          sections.put(UsVaV1.NAME, section);
-        } else if (sectionIds.get(i).equals(UsCoV1.ID)) {
-          UsCoV1 section = new UsCoV1(encodedSections[i + 1]);
-          sections.put(UsCoV1.NAME, section);
-        } else if (sectionIds.get(i).equals(UsUtV1.ID)) {
-          UsUtV1 section = new UsUtV1(encodedSections[i + 1]);
-          sections.put(UsUtV1.NAME, section);
-        } else if (sectionIds.get(i).equals(UsCtV1.ID)) {
-          UsCtV1 section = new UsCtV1(encodedSections[i + 1]);
-          sections.put(UsCtV1.NAME, section);
+    if(str == null || str.isEmpty() ||  str.startsWith("D")) {
+      Map<String, EncodableSection> sections = new HashMap<>();
+      
+      if(str != null && !str.isEmpty()) {
+        String[] encodedSections = str.split("~");
+        HeaderV1 header = new HeaderV1(encodedSections[0]);
+        sections.put(HeaderV1.NAME, header);
+  
+        @SuppressWarnings("unchecked")
+        List<Integer> sectionIds = (List<Integer>) header.getFieldValue("SectionIds");
+        for (int i = 0; i < sectionIds.size(); i++) {
+          if (sectionIds.get(i).equals(TcfEuV2.ID)) {
+            TcfEuV2 section = new TcfEuV2(encodedSections[i + 1]);
+            sections.put(TcfEuV2.NAME, section);
+          } else if (sectionIds.get(i).equals(TcfCaV1.ID)) {
+            TcfCaV1 section = new TcfCaV1(encodedSections[i + 1]);
+            sections.put(TcfCaV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UspV1.ID)) {
+            UspV1 section = new UspV1(encodedSections[i + 1]);
+            sections.put(UspV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsCaV1.ID)) {
+            UsCaV1 section = new UsCaV1(encodedSections[i + 1]);
+            sections.put(UsCaV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsNatV1.ID)) {
+            UsNatV1 section = new UsNatV1(encodedSections[i + 1]);
+            sections.put(UsNatV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsVaV1.ID)) {
+            UsVaV1 section = new UsVaV1(encodedSections[i + 1]);
+            sections.put(UsVaV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsCoV1.ID)) {
+            UsCoV1 section = new UsCoV1(encodedSections[i + 1]);
+            sections.put(UsCoV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsUtV1.ID)) {
+            UsUtV1 section = new UsUtV1(encodedSections[i + 1]);
+            sections.put(UsUtV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsCtV1.ID)) {
+            UsCtV1 section = new UsCtV1(encodedSections[i + 1]);
+            sections.put(UsCtV1.NAME, section);
+          }
         }
       }
+      
+      return sections;
+    } else if(str.startsWith("C")) {
+      // old tcfeu only string
+      Map<String, EncodableSection> sections = new HashMap<>();
+
+      TcfEuV2 section = new TcfEuV2(str);
+      sections.put(TcfEuV2.NAME, section);
+
+      HeaderV1 header = new HeaderV1();
+      header.setFieldValue(HeaderV1Field.SECTION_IDS, Arrays.asList(2));
+      sections.put(HeaderV1.NAME, section);
+
+      return sections;
+    } else {
+      throw new DecodingException("Unable to decode '" + str + "'");
     }
-    
-    return sections;
   }
 
   public String encodeSection(int sectionId) {
