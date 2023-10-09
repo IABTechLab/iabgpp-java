@@ -325,6 +325,12 @@ public class GppModel {
   }
 
   public String encodeSection(String sectionName) {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     if (this.sections.containsKey(sectionName)) {
       return this.sections.get(sectionName).encode();
     } else {
