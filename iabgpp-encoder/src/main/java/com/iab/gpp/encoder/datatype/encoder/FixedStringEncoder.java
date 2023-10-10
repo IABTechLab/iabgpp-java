@@ -8,7 +8,7 @@ public class FixedStringEncoder {
 
   private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
-  public static String encode(String value, int stringLength) throws EncodingException {
+  public static String encode(String value, int stringLength) {
     while (value.length() < stringLength) {
       value += " ";
     }
@@ -29,7 +29,7 @@ public class FixedStringEncoder {
     return bitString;
   }
 
-  public static String decode(String bitString) throws DecodingException {
+  public static String decode(String bitString) {
     if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() % 6 != 0) {
       throw new DecodingException("Undecodable FixedString '" + bitString + "'");
     }

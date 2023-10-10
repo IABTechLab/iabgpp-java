@@ -6,8 +6,6 @@ import java.util.TreeSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<List<Integer>> {
 
@@ -20,7 +18,7 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     // TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
     // to identify in advance which will be shorter based on the array length and values
     int max = this.value.size() > 0 ? this.value.get(this.value.size() - 1) : 0;
@@ -46,7 +44,7 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     if (bitString.charAt(16) == '1') {
       this.value = FixedIntegerRangeEncoder.decode(bitString.substring(17));
     } else {
@@ -61,7 +59,7 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws DecodingException {
+  public String substring(String bitString, int fromIndex) {
     int max = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 16));
     if (bitString.charAt(fromIndex + 16) == '1') {
       return bitString.substring(fromIndex, fromIndex + 17)

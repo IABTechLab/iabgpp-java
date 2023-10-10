@@ -22,12 +22,11 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     return FibonacciIntegerRangeEncoder.encode(this.value);
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     this.value = FibonacciIntegerRangeEncoder.decode(bitString);
   }
 
   public String substring(String bitString, int fromIndex) throws DecodingException {
-    // TODO: add some validation
     int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
     int index = fromIndex + 12;
     for (int i = 0; i < count; i++) {
