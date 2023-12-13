@@ -4,6 +4,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
@@ -208,8 +209,8 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPublisherRestrictions() {
-    return (List<Integer>) this.getFieldValue(TcfEuV2Field.PUBLISHER_RESTRICTIONS);
+  public List<RangeEntry> getPublisherRestrictions() {
+    return (List<RangeEntry>) this.getFieldValue(TcfEuV2Field.PUBLISHER_RESTRICTIONS);
   }
 
   public Integer getPublisherPurposesSegmentType() {
