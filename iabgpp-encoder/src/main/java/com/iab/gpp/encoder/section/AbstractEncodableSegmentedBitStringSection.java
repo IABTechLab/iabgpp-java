@@ -78,7 +78,6 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
         if (this.fields.containsKey(fieldName)) {
           try {
             String substring = field.substring(segmentBitString, index);
-            System.out.println(fieldName + ": " + substring + " (" + index + "/" + segmentBitString.length() + ")");
             field.decode(substring);
             index += substring.length();
           } catch (SubstringException e) {
