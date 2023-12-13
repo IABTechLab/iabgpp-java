@@ -7,11 +7,11 @@ import java.util.List;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
+import com.iab.gpp.encoder.datatype.EncodableArrayOfRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.EncodableFixedIntegerRange;
 import com.iab.gpp.encoder.datatype.EncodableFixedString;
 import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -67,7 +67,7 @@ public class TcfEuV2CoreSegment extends AbstractLazilyEncodableSegment<Encodable
     fields.put(TcfEuV2Field.VENDOR_CONSENTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
     fields.put(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
 
-    fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS, new EncodableFixedIntegerRange(new ArrayList<>()));
+    fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS, new EncodableArrayOfRanges(6, 2, new ArrayList<>(), false));
     return fields;
   }
 
