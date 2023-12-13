@@ -7,7 +7,7 @@ import java.util.List;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
-import com.iab.gpp.encoder.datatype.EncodableArrayOfRanges;
+import com.iab.gpp.encoder.datatype.EncodableArrayOfOptimizedRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
@@ -63,7 +63,7 @@ public class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<Encodable
             false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
     fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
     fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
-    fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfRanges(6, 2, new ArrayList<>(), false));
+    fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfOptimizedRanges(6, 2, new ArrayList<>(), false));
     return fields;
   }
 

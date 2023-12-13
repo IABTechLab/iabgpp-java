@@ -3,29 +3,30 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
+import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFixedRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<List<RangeEntry>> {
+public class EncodableOptimizedArrayOfRanges extends AbstractEncodableBitStringDataType<List<RangeEntry>> {
 
   private int keyBitStringLength;
   private int typeBitStringLength;
 
-  protected EncodableArrayOfRanges(int keyBitStringLength, int typeBitStringLength) {
+  protected EncodableOptimizedArrayOfRanges(int keyBitStringLength, int typeBitStringLength) {
     super(true);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
   }
 
-  public EncodableArrayOfRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value) {
+  public EncodableOptimizedArrayOfRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value) {
     super(true);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
     setValue(value);
   }
   
-  public EncodableArrayOfRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value, boolean hardFailIfMissing) {
+  public EncodableOptimizedArrayOfRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
@@ -33,7 +34,7 @@ public class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<L
   }
 
   @Override
-  public String encode() {
+  public String encode() throws EncodingException {
     try {
       List<RangeEntry> entries = this.value;
   
@@ -52,7 +53,7 @@ public class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<L
   }
 
   @Override
-  public void decode(String bitString) {
+  public void decode(String bitString) throws DecodingException {
     try {
       List<RangeEntry> entries = new ArrayList<>();
   
@@ -66,7 +67,7 @@ public class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<L
         index += typeBitStringLength;
   
         String substring = new EncodableOptimizedFixedRange().substring(bitString, index);
-        List<Integer> ids = OptimizedFixedRangeEncoder.decode(substring);
+        List<Integer> ids = FixedIntegerRangeEncoder.decode(substring);
         index += substring.length();
   
         entries.add(new RangeEntry(key, type, ids));
