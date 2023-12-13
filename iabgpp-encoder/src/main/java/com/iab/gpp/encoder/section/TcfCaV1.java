@@ -16,12 +16,14 @@ import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedString;
 import com.iab.gpp.encoder.datatype.EncodableFlexibleBitfield;
 import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
+import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
+import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public static int ID = 5;
@@ -280,6 +282,11 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   @SuppressWarnings("unchecked")
   public List<Integer> getVendorImpliedConsent() {
     return (List<Integer>) this.fields.get(TcfCaV1Field.VENDOR_IMPLIED_CONSENT).getValue();
+  }
+  
+  @SuppressWarnings("unchecked")
+  public List<RangeEntry> getPubRestrictions() {
+    return (List<RangeEntry>) this.fields.get(TcfCaV1Field.PUB_RESTRICTIONS).getValue();
   }
 
   public Integer getPubPurposesSegmentType() {
