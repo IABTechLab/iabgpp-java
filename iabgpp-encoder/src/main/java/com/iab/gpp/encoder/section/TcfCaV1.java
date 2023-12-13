@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
-import com.iab.gpp.encoder.datatype.EncodableArrayOfOptimizedRanges;
+import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
@@ -69,7 +69,7 @@ public class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
             false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
     fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
     fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, new EncodableOptimizedFixedRange(new ArrayList<>()));
-    fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfOptimizedRanges(6, 2, new ArrayList<>(), false));
+    fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfFixedIntegerRanges(6, 2, new ArrayList<>(), false));
 
     // publisher purposes segment
     fields.put(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
