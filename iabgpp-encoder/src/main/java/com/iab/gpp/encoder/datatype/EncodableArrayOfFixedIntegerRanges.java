@@ -7,25 +7,25 @@ import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableArrayOfFixedRanges extends AbstractEncodableBitStringDataType<List<RangeEntry>> {
+public class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStringDataType<List<RangeEntry>> {
 
   private int keyBitStringLength;
   private int typeBitStringLength;
 
-  protected EncodableArrayOfFixedRanges(int keyBitStringLength, int typeBitStringLength) {
+  protected EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength) {
     super(true);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
   }
 
-  public EncodableArrayOfFixedRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value) {
+  public EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value) {
     super(true);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
     setValue(value);
   }
   
-  public EncodableArrayOfFixedRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value, boolean hardFailIfMissing) {
+  public EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
@@ -33,7 +33,7 @@ public class EncodableArrayOfFixedRanges extends AbstractEncodableBitStringDataT
   }
 
   @Override
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       List<RangeEntry> entries = this.value;
   
@@ -52,7 +52,7 @@ public class EncodableArrayOfFixedRanges extends AbstractEncodableBitStringDataT
   }
 
   @Override
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       List<RangeEntry> entries = new ArrayList<>();
   
@@ -88,20 +88,17 @@ public class EncodableArrayOfFixedRanges extends AbstractEncodableBitStringDataT
   
       int index = fromIndex + sb.length();
       for (int i = 0; i < size; i++) {
-        sb.append(bitString.substring(index, index + 8));
-        index += 8;
+        String keySubstring = bitString.substring(index, index + keyBitStringLength);
+        index += keySubstring.length();
+        sb.append(keySubstring);
         
-        String substring = null;
-        int max = FixedIntegerEncoder.decode(bitString.substring(index, index + 16));
-        if (bitString.charAt(index + 16) == '1') {
-          substring = bitString.substring(index, index + 17)
-              + new EncodableFixedIntegerRange().substring(bitString, index + 17);
-        } else {
-          substring = bitString.substring(index, index + 17 + max);
-        }
-        index += substring.length();
+        String typeSubstring = bitString.substring(index, index + typeBitStringLength);
+        index += typeSubstring.length();
+        sb.append(typeSubstring);
         
-        sb.append(substring);
+        String rangeSubstring = new EncodableFixedIntegerRange().substring(bitString, index);
+        index += rangeSubstring.length();
+        sb.append(rangeSubstring);
       }
   
       return sb.toString();
