@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
@@ -347,6 +348,49 @@ public class TcfEuV2Test {
 
     Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 37, 42),
         tcfEuV2.getFieldValue("VendorLegitimateInterests"));
+  }
+  
+  @Test
+  public void testDecode7() throws DecodingException {
+    TcfEuV2 tcfEuV2 = new TcfEuV2("COoC-kUOoC-kUAHABAENAwCoAIAAAELAAAwIF5wAoAAgAGAvMACX_ABBAAQAFA");
+
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("Version"));
+    Assertions.assertEquals("2019-10-07T05:17:54Z[UTC]", tcfEuV2.getFieldValue("Created").toString());
+    Assertions.assertEquals("2019-10-07T05:17:54Z[UTC]", tcfEuV2.getFieldValue("LastUpdated").toString());
+    Assertions.assertEquals(7, tcfEuV2.getFieldValue("CmpId"));
+    Assertions.assertEquals(1, tcfEuV2.getFieldValue("CmpVersion"));
+    Assertions.assertEquals(0, tcfEuV2.getFieldValue("ConsentScreen"));
+    Assertions.assertEquals("EN", tcfEuV2.getFieldValue("ConsentLanguage"));
+    Assertions.assertEquals(48, tcfEuV2.getFieldValue("VendorListVersion"));
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("PolicyVersion"));
+    Assertions.assertEquals(true, tcfEuV2.getFieldValue("IsServiceSpecific"));
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
+
+    Assertions.assertEquals(
+        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("SpecialFeatureOptins"));
+    Assertions.assertEquals(
+        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("PurposeConsents"));
+    Assertions.assertEquals(
+        Arrays.asList(false, true, false, false, false, false, true, false, true, true, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
+
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
+    Assertions.assertEquals("GB", tcfEuV2.getFieldValue("PublisherCountryCode"));
+
+    Assertions.assertEquals(Arrays.asList(1, 2, 3, 755), tcfEuV2.getFieldValue("VendorConsents"));
+
+    Assertions.assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
+        tcfEuV2.getFieldValue("VendorLegitimateInterests"));
+    
+    Assertions.assertEquals(1, ((List<RangeEntry>)tcfEuV2.getFieldValue("PublisherRestrictions")).size());
+    RangeEntry rangeEntry = ((List<RangeEntry>)tcfEuV2.getFieldValue("PublisherRestrictions")).get(0);
+    Assertions.assertEquals(1, rangeEntry.getKey());
+    Assertions.assertEquals(0, rangeEntry.getType());
+    Assertions.assertEquals(Arrays.asList(10), rangeEntry.getIds());
   }
   
   @Test()
