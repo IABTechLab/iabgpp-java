@@ -161,12 +161,15 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |tcfcav1|5|PurposesImpliedConsent|Boolean list of size 24|
 |tcfcav1|5|VendorExpressConsent|Integer list of variable size|
 |tcfcav1|5|VendorImpliedConsent|Integer list of variable size|
+|tcfcav1|5|PubRestrictions|RangeEntry list of variable size|
 |tcfcav1|5|PubPurposesSegmentType|3 bit int. Value is 3|
 |tcfcav1|5|PubPurposesExpressConsent|Boolean list of size 24|
 |tcfcav1|5|PubPurposesImpliedConsent|Boolean list of size 24|
 |tcfcav1|5|NumCustomPurposes|6 bit int|
 |tcfcav1|5|CustomPurposesExpressConsent|Boolean list where size is set by the NumCustomPurposes field|
 |tcfcav1|5|CustomPurposesImpliedConsent|Boolean list where size is set by the NumCustomPurposes field|
+|tcfcav1|5|DisclosedVendorsSegmentType|3 bit int. Value is 1|
+|tcfcav1|5|DisclosedVendors|Integer list of variable size|
 |uspv1|6|Version|6 bit int. Value is 1|
 |uspv1|6|Notice|2 bit int|
 |uspv1|6|OptOutSale|2 bit int|

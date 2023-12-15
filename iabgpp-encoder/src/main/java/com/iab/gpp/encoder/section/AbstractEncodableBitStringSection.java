@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.section;
 
 import java.util.Map;
 import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
+import com.iab.gpp.encoder.datatype.SubstringException;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
@@ -58,9 +59,19 @@ public abstract class AbstractEncodableBitStringSection implements EncodableSect
       String fieldName = this.fieldOrder[i];
       if (this.fields.containsKey(fieldName)) {
         AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
-        String substring = field.substring(bitString, index);
-        field.decode(substring);
-        index += substring.length();
+        try {
+          String substring = field.substring(bitString, index);
+          field.decode(substring);
+          index += substring.length();
+        } catch (SubstringException e) {
+          if(field.getHardFailIfMissing()) {
+            throw new DecodingException("Unable to decode " + fieldName, e);
+          } else {
+            return;
+          }
+        } catch (Exception e) {
+          throw new DecodingException("Unable to decode " + fieldName, e);
+        }
       } else {
         throw new DecodingException("Field not found: '" + fieldName + "'");
       }

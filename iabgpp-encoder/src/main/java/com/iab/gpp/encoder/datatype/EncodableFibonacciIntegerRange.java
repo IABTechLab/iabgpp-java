@@ -6,38 +6,56 @@ import java.util.TreeSet;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDataType<List<Integer>> {
 
   protected EncodableFibonacciIntegerRange() {
-    super();
+    super(true);
   }
 
   public EncodableFibonacciIntegerRange(List<Integer> value) {
-    super();
+    super(true);
     setValue(value);
   }
 
-  public String encode() {
-    return FibonacciIntegerRangeEncoder.encode(this.value);
+  public EncodableFibonacciIntegerRange(List<Integer> value, boolean hardFailIfMissing) {
+    super(hardFailIfMissing);
+    setValue(value);
+  }
+
+  public String encode() throws EncodingException {
+    try {
+      return FibonacciIntegerRangeEncoder.encode(this.value);
+    } catch (Exception e) {
+      throw new EncodingException(e);
+    }
   }
 
   public void decode(String bitString) throws DecodingException {
-    this.value = FibonacciIntegerRangeEncoder.decode(bitString);
+    try {
+      this.value = FibonacciIntegerRangeEncoder.decode(bitString);
+    } catch (Exception e) {
+      throw new DecodingException(e);
+    }
   }
 
-  public String substring(String bitString, int fromIndex) throws DecodingException {
+  public String substring(String bitString, int fromIndex) throws SubstringException {
     // TODO: add some validation
-    int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
-    int index = fromIndex + 12;
-    for (int i = 0; i < count; i++) {
-      if (bitString.charAt(index) == '1') {
-        index = bitString.indexOf("11", bitString.indexOf("11", index + 1) + 2) + 2;
-      } else {
-        index = bitString.indexOf("11", index + 1) + 2;
+    try {
+      int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
+      int index = fromIndex + 12;
+      for (int i = 0; i < count; i++) {
+        if (bitString.charAt(index) == '1') {
+          index = bitString.indexOf("11", bitString.indexOf("11", index + 1) + 2) + 2;
+        } else {
+          index = bitString.indexOf("11", index + 1) + 2;
+        }
       }
+      return bitString.substring(fromIndex, index);
+    } catch (Exception e) {
+      throw new SubstringException(e);
     }
-    return bitString.substring(fromIndex, index);
   }
 
   @SuppressWarnings("unchecked")

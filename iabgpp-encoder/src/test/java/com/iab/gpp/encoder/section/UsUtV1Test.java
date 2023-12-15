@@ -51,4 +51,11 @@ public class UsUtV1Test {
     Assertions.assertEquals(2, usUtV1.getMspaOptOutOptionMode());
     Assertions.assertEquals(3, usUtV1.getMspaServiceProviderMode());
   }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new UsUtV1("z");
+    });
+  }
 }

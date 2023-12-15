@@ -11,27 +11,50 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
   private int numElements;
 
   protected EncodableFixedBitfield(int numElements) {
-    super();
+    super(true);
+    this.numElements = numElements;
+  }
+
+  protected EncodableFixedBitfield(int numElements, boolean hardFailIfMissing) {
+    super(hardFailIfMissing);
     this.numElements = numElements;
   }
 
   public EncodableFixedBitfield(List<Boolean> value) {
-    super();
+    super(true);
+    this.numElements = value.size();
+    setValue(value);
+  }
+
+  public EncodableFixedBitfield(List<Boolean> value, boolean hardFailIfMissing) {
+    super(hardFailIfMissing);
     this.numElements = value.size();
     setValue(value);
   }
 
   public String encode() throws EncodingException {
-    return FixedBitfieldEncoder.encode(this.value, this.numElements);
+    try {
+      return FixedBitfieldEncoder.encode(this.value, this.numElements);
+    } catch (Exception e) {
+      throw new EncodingException(e);
+    }
   }
 
   public void decode(String bitString) throws DecodingException {
-    this.value = FixedBitfieldEncoder.decode(bitString);
+    try {
+      this.value = FixedBitfieldEncoder.decode(bitString);
+    } catch (Exception e) {
+      throw new DecodingException(e);
+    }
   }
 
-  public String substring(String bitString, int fromIndex) {
+  public String substring(String bitString, int fromIndex) throws SubstringException {
     // TODO: validate
-    return bitString.substring(fromIndex, fromIndex + this.numElements);
+    try {
+      return bitString.substring(fromIndex, fromIndex + this.numElements);
+    } catch (Exception e) {
+      throw new SubstringException(e);
+    }
   }
 
   @SuppressWarnings("unchecked")

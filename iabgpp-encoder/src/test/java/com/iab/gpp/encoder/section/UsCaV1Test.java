@@ -101,4 +101,11 @@ public class UsCaV1Test {
     Assertions.assertEquals(2, usCaV1.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usCaV1.getGpcSegmentIncluded());
   }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new UsCaV1("z");
+    });
+  }
 }

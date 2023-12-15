@@ -18,8 +18,8 @@ import com.iab.gpp.encoder.section.UsCoV1;
 import com.iab.gpp.encoder.section.UsCtV1;
 import com.iab.gpp.encoder.section.UsNatV1;
 import com.iab.gpp.encoder.section.UsUtV1;
-import com.iab.gpp.encoder.section.UspV1;
 import com.iab.gpp.encoder.section.UsVaV1;
+import com.iab.gpp.encoder.section.UspV1;
 
 public class GppModel {
   private Map<String, EncodableSection> sections = new HashMap<>();

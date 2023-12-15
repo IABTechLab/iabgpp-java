@@ -8,14 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
+import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.EncodableFixedIntegerRange;
 import com.iab.gpp.encoder.datatype.EncodableFixedString;
 import com.iab.gpp.encoder.datatype.EncodableFlexibleBitfield;
 import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
+import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.encoder.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -72,7 +73,7 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
     fields.put(TcfEuV2Field.VENDOR_CONSENTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
     fields.put(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
 
-    fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS, new EncodableFixedIntegerRange(new ArrayList<>()));
+    fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS, new EncodableArrayOfFixedIntegerRanges(6, 2, new ArrayList<>(), false));
 
     // publisher purposes segment
     fields.put(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
@@ -321,8 +322,8 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getPublisherRestrictions() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.PUBLISHER_RESTRICTIONS).getValue();
+  public List<RangeEntry> getPublisherRestrictions() {
+    return (List<RangeEntry>) this.fields.get(TcfEuV2Field.PUBLISHER_RESTRICTIONS).getValue();
   }
 
   public Integer getPublisherPurposesSegmentType() {

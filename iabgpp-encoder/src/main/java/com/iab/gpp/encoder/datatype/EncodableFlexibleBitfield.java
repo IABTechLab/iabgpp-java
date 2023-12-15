@@ -12,27 +12,45 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
   private IntSupplier getLengthSupplier;
 
   protected EncodableFlexibleBitfield(IntSupplier getLengthSupplier) {
-    super();
+    super(true);
     this.getLengthSupplier = getLengthSupplier;
   }
 
   public EncodableFlexibleBitfield(IntSupplier getLengthSupplier, List<Boolean> value) {
-    super();
+    super(true);
+    this.getLengthSupplier = getLengthSupplier;
+    this.setValue(value);
+  }
+
+  public EncodableFlexibleBitfield(IntSupplier getLengthSupplier, List<Boolean> value, boolean hardFailIfMissing) {
+    super(hardFailIfMissing);
     this.getLengthSupplier = getLengthSupplier;
     this.setValue(value);
   }
 
   public String encode() throws EncodingException {
-    return FixedBitfieldEncoder.encode(this.value, this.getLengthSupplier.getAsInt());
+    try {
+      return FixedBitfieldEncoder.encode(this.value, this.getLengthSupplier.getAsInt());
+    } catch (Exception e) {
+      throw new EncodingException(e);
+    }
   }
 
   public void decode(String bitString) throws DecodingException {
-    this.value = FixedBitfieldEncoder.decode(bitString);
+    try {
+      this.value = FixedBitfieldEncoder.decode(bitString);
+    } catch (Exception e) {
+      throw new DecodingException(e);
+    }
   }
 
-  public String substring(String bitString, int fromIndex) {
+  public String substring(String bitString, int fromIndex) throws SubstringException {
     // TODO: validate
-    return bitString.substring(fromIndex, fromIndex + this.getLengthSupplier.getAsInt());
+    try {
+      return bitString.substring(fromIndex, fromIndex + this.getLengthSupplier.getAsInt());
+    } catch (Exception e) {
+      throw new SubstringException(e);
+    }
   }
 
   @SuppressWarnings("unchecked")

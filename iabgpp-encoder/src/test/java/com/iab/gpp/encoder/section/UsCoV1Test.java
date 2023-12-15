@@ -76,4 +76,11 @@ public class UsCoV1Test {
     Assertions.assertEquals(3, usCoV1.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usCoV1.getGpcSegmentIncluded());
   }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new UsCoV1("z");
+    });
+  }
 }

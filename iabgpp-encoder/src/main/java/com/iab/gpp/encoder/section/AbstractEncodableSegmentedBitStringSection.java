@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
+import com.iab.gpp.encoder.datatype.SubstringException;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
@@ -64,28 +65,37 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
 
   public void decodeSegmentsFromBitStrings(List<String> segmentBitStrings) throws DecodingException {
     for (int i = 0; i < this.segments.length && i < segmentBitStrings.size(); i++) {
-      String segmentBitString = segmentBitStrings.get(i);
-      if (segmentBitString != null && segmentBitString.length() > 0) {
-        int index = 0;
-        for (int j = 0; j < this.segments[i].length; j++) {
-          String fieldName = this.segments[i][j];
-          if (this.fields.containsKey(fieldName)) {
-            try {
-              AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
-              String substring = field.substring(segmentBitString, index);
-              field.decode(substring);
-              index += substring.length();
-            } catch (Exception e) {
+      decodeSegmentFromBitString(segments[i], segmentBitStrings.get(i));
+    }
+  }
+
+  private void decodeSegmentFromBitString(String[] segment, String segmentBitString) throws DecodingException {
+    if (segmentBitString != null && segmentBitString.length() > 0) {
+      int index = 0;
+      for (int j = 0; j < segment.length; j++) {
+        String fieldName = segment[j];
+        AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
+        if (this.fields.containsKey(fieldName)) {
+          try {
+            String substring = field.substring(segmentBitString, index);
+            field.decode(substring);
+            index += substring.length();
+          } catch (SubstringException e) {
+            if(field.getHardFailIfMissing()) {
               throw new DecodingException("Unable to decode " + fieldName, e);
+            } else {
+              return;
             }
-          } else {
-            throw new DecodingException("Field not found: '" + fieldName + "'");
+          } catch (Exception e) {
+            throw new DecodingException("Unable to decode " + fieldName, e);
           }
+        } else {
+          throw new DecodingException("Field not found: '" + fieldName + "'");
         }
       }
     }
   }
-
+  
   @Override
   public abstract String encode() throws EncodingException;
 
