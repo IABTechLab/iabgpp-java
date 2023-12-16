@@ -1,9 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-
-public abstract class AbstractEncodableBitStringDataType<T> {
+public abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
   protected T value;
 
   protected AbstractEncodableBitStringDataType() {
@@ -23,9 +20,5 @@ public abstract class AbstractEncodableBitStringDataType<T> {
     this.value = (T) value;
   }
 
-  public abstract String encode() throws EncodingException;
-
-  public abstract void decode(String bitString) throws DecodingException;
-
-  public abstract String substring(String bitString, int fromIndex) throws DecodingException;
+  public abstract String substring(String str, int fromIndex);
 }

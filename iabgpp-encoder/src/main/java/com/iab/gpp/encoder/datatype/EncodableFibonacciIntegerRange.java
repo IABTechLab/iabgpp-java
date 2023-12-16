@@ -22,7 +22,7 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     return FibonacciIntegerRangeEncoder.encode(this.value);
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     this.value = FibonacciIntegerRangeEncoder.decode(bitString);
   }
 

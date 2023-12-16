@@ -1,61 +1,24 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import com.iab.gpp.encoder.datatype.EncodableFibonacciIntegerRange;
-import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
-import com.iab.gpp.encoder.datatype.encoder.CompressedBase64UrlEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.HeaderV1Field;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import com.iab.gpp.encoder.segment.HeaderV1CoreSegment;
 
-public class HeaderV1 extends AbstractEncodableBitStringSection {
+public class HeaderV1 extends AbstractLazilyEncodableSection {
+  
   public static int ID = 3;
   public static int VERSION = 1;
   public static String NAME = "header";
 
-  private AbstractBase64UrlEncoder base64UrlEncoder = new CompressedBase64UrlEncoder();
-
   public HeaderV1() {
-    initFields();
+    super();
   }
 
-  public HeaderV1(String encodedString) throws DecodingException {
-    initFields();
-
-    if (encodedString != null && encodedString.length() > 0) {
-      this.decode(encodedString);
-    }
-  }
-
-  private void initFields() {
-    fields = new HashMap<>();
-    fields.put(HeaderV1Field.ID, new EncodableFixedInteger(6, HeaderV1.ID));
-    fields.put(HeaderV1Field.VERSION, new EncodableFixedInteger(6, HeaderV1.VERSION));
-    fields.put(HeaderV1Field.SECTION_IDS, new EncodableFibonacciIntegerRange(new ArrayList<>()));
-
-    //@formatter:off
-    fieldOrder = new String[] {
-        HeaderV1Field.ID, 
-        HeaderV1Field.VERSION,
-        HeaderV1Field.SECTION_IDS
-    };
-    //@formatter:on
-  }
-
-  @Override
-  public String encode() throws EncodingException {
-    String bitString = this.encodeToBitString();
-    String encodedString = base64UrlEncoder.encode(bitString);
-    return encodedString;
-  }
-
-  @Override
-  public void decode(String encodedString) throws DecodingException {
-    String bitString = base64UrlEncoder.decode(encodedString);
-    this.decodeFromBitString(bitString);
+  public HeaderV1(String encodedString) {
+    super();
+    decode(encodedString);
   }
 
   @Override
@@ -68,12 +31,49 @@ public class HeaderV1 extends AbstractEncodableBitStringSection {
     return HeaderV1.NAME;
   }
 
-  public Integer getVersion() {
-    return (Integer) this.fields.get(HeaderV1Field.VERSION).getValue();
+  @Override
+  public int getVersion() {
+    return HeaderV1.VERSION;
   }
 
+  @Override
+  protected List<EncodableSegment> initializeSegments() {
+    List<EncodableSegment> segments = new ArrayList<>();
+    segments.add(new HeaderV1CoreSegment());
+    return segments;
+  }
+  
+  @Override
+  protected List<EncodableSegment> decodeSection(String encodedString) {
+    List<EncodableSegment> segments = initializeSegments();
+    
+    if(encodedString != null && !encodedString.isEmpty()) {
+      String[] encodedSegments = encodedString.split("\\.");
+      
+      for(int i=0; i<segments.size(); i++) {
+        if(encodedSegments.length > i) {
+          segments.get(i).decode(encodedSegments[i]);
+        }
+      }
+    }
+    
+    return segments;
+  }
+
+  @Override
+  protected String encodeSection(List<EncodableSegment> segments) {
+    List<String> encodedSegments = new ArrayList<>();
+    for(EncodableSegment segment : segments) {
+      encodedSegments.add(segment.encode());
+    }
+    return String.join(".", encodedSegments);
+  }
+
+  
   @SuppressWarnings("unchecked")
   public List<Integer> getSectionsIds() {
-    return (List<Integer>) this.fields.get(HeaderV1Field.SECTION_IDS).getValue();
+    return (List<Integer>) this.getFieldValue(HeaderV1Field.SECTION_IDS);
   }
+  
+  
 }

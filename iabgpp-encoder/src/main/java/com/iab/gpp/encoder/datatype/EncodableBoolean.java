@@ -1,8 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
 import com.iab.gpp.encoder.datatype.encoder.BooleanEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
 
@@ -15,11 +13,11 @@ public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     return BooleanEncoder.encode(this.value);
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     this.value = BooleanEncoder.decode(bitString);
   }
 

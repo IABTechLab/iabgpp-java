@@ -3,8 +3,6 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<List<Boolean>> {
 
@@ -21,11 +19,11 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     return FixedBitfieldEncoder.encode(this.value, this.numElements);
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     this.value = FixedBitfieldEncoder.decode(bitString);
   }
 

@@ -5,20 +5,18 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.UsUtV1Field;
 
 public class UsUtV1Test {
 
   @Test
-  public void testEncode1() throws EncodingException {
+  public void testEncode1() {
     UsUtV1 usUtV1 = new UsUtV1();
     Assertions.assertEquals("BAAAAAAA", usUtV1.encode());
   }
 
   @Test
-  public void testEncode2() throws EncodingException, InvalidFieldException {
+  public void testEncode2() {
     UsUtV1 usUtV1 = new UsUtV1();
 
     usUtV1.setFieldValue(UsUtV1Field.SHARING_NOTICE, 1);

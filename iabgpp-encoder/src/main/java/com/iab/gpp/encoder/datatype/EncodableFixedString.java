@@ -1,8 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
 import com.iab.gpp.encoder.datatype.encoder.FixedStringEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableFixedString extends AbstractEncodableBitStringDataType<String> {
 
@@ -19,11 +17,11 @@ public class EncodableFixedString extends AbstractEncodableBitStringDataType<Str
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     return FixedStringEncoder.encode(this.value, this.stringLength);
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     this.value = FixedStringEncoder.decode(bitString);
   }
 

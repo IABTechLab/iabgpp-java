@@ -4,7 +4,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class BooleanEncoder {
-  public static String encode(Boolean value) throws EncodingException {
+  public static String encode(Boolean value) {
     if (value == true) {
       return "1";
     } else if (value == false) {
@@ -14,7 +14,7 @@ public class BooleanEncoder {
     }
   }
 
-  public static boolean decode(String bitString) throws DecodingException {
+  public static boolean decode(String bitString) {
     if (bitString.equals("1")) {
       return true;
     } else if (bitString.equals("0")) {

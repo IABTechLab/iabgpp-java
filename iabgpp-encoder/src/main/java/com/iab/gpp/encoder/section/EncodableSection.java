@@ -1,22 +1,20 @@
 package com.iab.gpp.encoder.section;
 
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
-
 public interface EncodableSection {
 
   int getId();
 
   String getName();
 
+  int getVersion();
+
   boolean hasField(String fieldName);
 
   Object getFieldValue(String fieldName);
 
-  void setFieldValue(String fieldName, Object value) throws InvalidFieldException;
+  void setFieldValue(String fieldName, Object value);
 
-  String encode() throws EncodingException;
+  String encode();
 
-  void decode(String encodedString) throws DecodingException;
+  void decode(String encodedString);
 }
