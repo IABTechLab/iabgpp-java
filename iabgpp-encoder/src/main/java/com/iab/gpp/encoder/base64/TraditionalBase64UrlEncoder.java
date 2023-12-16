@@ -1,5 +1,7 @@
 package com.iab.gpp.encoder.base64;
 
+import java.util.Arrays;
+
 public class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder {
 
   private static TraditionalBase64UrlEncoder instance = new TraditionalBase64UrlEncoder();
@@ -14,10 +16,13 @@ public class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder {
   
   @Override
   protected String pad(String bitString) {
-    while (bitString.length() % 24 > 0) {
-      bitString += "0";
+    if(bitString.length() % 24 > 0) {
+      char[] chars = new char[24 - (bitString.length() % 24)];
+      Arrays.fill(chars, '0');
+      return bitString + new String(chars);
+    } else {
+      return bitString;
     }
-    return bitString;
   }
 
 }
