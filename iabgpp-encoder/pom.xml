@@ -20,6 +20,11 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>it.unimi.dsi</groupId>
+            <artifactId>fastutil</artifactId>
+            <version>8.5.12</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -53,4 +58,3 @@
         </profile>
     </profiles>
 </project>
-
