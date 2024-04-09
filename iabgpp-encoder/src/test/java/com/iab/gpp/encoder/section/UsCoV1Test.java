@@ -4,21 +4,18 @@ package com.iab.gpp.encoder.section;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.UsCoV1Field;
 
 public class UsCoV1Test {
 
   @Test
-  public void testEncode1() throws EncodingException {
+  public void testEncode1() {
     UsCoV1 usCoV1 = new UsCoV1();
     Assertions.assertEquals("BAAAAAA.QA", usCoV1.encode());
   }
 
   @Test
-  public void testEncode2() throws EncodingException, InvalidFieldException {
+  public void testEncode2() {
     UsCoV1 usCoV1 = new UsCoV1();
 
     usCoV1.setFieldValue(UsCoV1Field.SHARING_NOTICE, 1);
@@ -37,14 +34,14 @@ public class UsCoV1Test {
   }
 
   @Test
-  public void testEncodeWithGpcSegmentExcluded() throws EncodingException, InvalidFieldException {
+  public void testEncodeWithGpcSegmentExcluded() {
     UsCoV1 usCoV1 = new UsCoV1();
     usCoV1.setFieldValue(UsCoV1Field.GPC_SEGMENT_INCLUDED, false);
     Assertions.assertEquals("BAAAAAA", usCoV1.encode());
   }
 
   @Test
-  public void testDecode1() throws DecodingException {
+  public void testDecode1() {
     UsCoV1 usCoV1 = new UsCoV1("BbYbG2wA.YA");
 
     Assertions.assertEquals(1, usCoV1.getSharingNotice());
@@ -61,7 +58,7 @@ public class UsCoV1Test {
   }
 
   @Test
-  public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
+  public void testDecodeWithGpcSegmentExcluded() {
     UsCoV1 usCoV1 = new UsCoV1("BbYbG2wA");
 
     Assertions.assertEquals(1, usCoV1.getSharingNotice());

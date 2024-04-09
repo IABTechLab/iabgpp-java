@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
 
 public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<Integer> {
 
@@ -22,7 +21,7 @@ public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<In
     return FixedIntegerEncoder.encode(this.value, this.bitStringLength);
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     this.value = FixedIntegerEncoder.decode(bitString);
   }
 
