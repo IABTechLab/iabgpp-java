@@ -4,22 +4,19 @@ package com.iab.gpp.encoder.section;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.UsCaV1Field;
 
 public class UsCaV1Test {
 
   @Test
-  public void testEncode1() throws EncodingException {
+  public void testEncode1() {
 
     UsCaV1 usCaV1 = new UsCaV1();
     Assertions.assertEquals("BAAAAAAA.QA", usCaV1.encode());
   }
 
   @Test
-  public void testEncode2() throws EncodingException, InvalidFieldException {
+  public void testEncode2() {
     UsCaV1 usCaV1 = new UsCaV1();
 
     usCaV1.setFieldValue(UsCaV1Field.SALE_OPT_OUT_NOTICE, 1);
@@ -39,7 +36,7 @@ public class UsCaV1Test {
   }
 
   @Test
-  public void testEncode3() throws EncodingException, InvalidFieldException {
+  public void testEncode3() {
     UsCaV1 usCaV1 = new UsCaV1();
 
     usCaV1.setFieldValue(UsCaV1Field.SALE_OPT_OUT_NOTICE, 1);
@@ -59,7 +56,7 @@ public class UsCaV1Test {
   }
 
   @Test
-  public void testEncodeWithGpcSegmentExcluded() throws EncodingException, InvalidFieldException {
+  public void testEncodeWithGpcSegmentExcluded() {
 
     UsCaV1 usCaV1 = new UsCaV1();
     usCaV1.setFieldValue(UsCaV1Field.GPC_SEGMENT_INCLUDED, false);
@@ -67,7 +64,7 @@ public class UsCaV1Test {
   }
 
   @Test
-  public void testDecode1() throws DecodingException {
+  public void testDecode1() {
     UsCaV1 usCaV1 = new UsCaV1("BbYbGwXY.YA");
 
     Assertions.assertEquals(1, usCaV1.getSaleOptOutNotice());
@@ -85,7 +82,7 @@ public class UsCaV1Test {
   }
 
   @Test
-  public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
+  public void testDecodeWithGpcSegmentExcluded() {
     UsCaV1 usCaV1 = new UsCaV1("BbYbGwXY");
 
     Assertions.assertEquals(1, usCaV1.getSaleOptOutNotice());

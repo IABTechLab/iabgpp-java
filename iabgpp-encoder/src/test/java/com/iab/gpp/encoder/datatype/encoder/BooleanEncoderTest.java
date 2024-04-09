@@ -3,27 +3,26 @@ package com.iab.gpp.encoder.datatype.encoder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 
 public class BooleanEncoderTest {
 
   @Test
-  public void testEncode1() throws EncodingException {
+  public void testEncode1() {
     Assertions.assertEquals("0", BooleanEncoder.encode(false));
   }
 
   @Test
-  public void testEncode2() throws EncodingException {
+  public void testEncode2() {
     Assertions.assertEquals("1", BooleanEncoder.encode(true));
   }
 
   @Test
-  public void testDecode1() throws DecodingException {
+  public void testDecode1() {
     Assertions.assertEquals(false, BooleanEncoder.decode("0"));
   }
 
   @Test
-  public void testDecode2() throws DecodingException {
+  public void testDecode2() {
     Assertions.assertEquals(true, BooleanEncoder.decode("1"));
   }
 

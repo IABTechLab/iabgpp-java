@@ -6,15 +6,12 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 
 public class TcfCaV1Test {
 
   @Test
-  public void testEncode1() throws EncodingException, InvalidFieldException {
+  public void testEncode1() {
 
     TcfCaV1 tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
@@ -23,7 +20,7 @@ public class TcfCaV1Test {
   }
 
   @Test
-  public void testEncode2() throws EncodingException, InvalidFieldException {
+  public void testEncode2() {
 
     TcfCaV1 tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.CMP_ID, 50);
@@ -57,7 +54,7 @@ public class TcfCaV1Test {
   }
 
   @Test
-  public void testDecode1() throws DecodingException {
+  public void testDecode1() {
     TcfCaV1 tcfCaV1 = new TcfCaV1("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
 
     Assertions.assertEquals(0, tcfCaV1.getCmpId());
@@ -99,8 +96,8 @@ public class TcfCaV1Test {
   }
 
   @Test
-  public void testDecode2() throws DecodingException {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
+  public void testDecode2() {
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
 
     Assertions.assertEquals(50, tcfCaV1.getCmpId());
     Assertions.assertEquals(2, tcfCaV1.getCmpVersion());

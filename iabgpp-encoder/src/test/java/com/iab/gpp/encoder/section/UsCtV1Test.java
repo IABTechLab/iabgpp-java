@@ -5,20 +5,18 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.UsCtV1Field;
 
 public class UsCtV1Test {
 
   @Test
-  public void testEncode1() throws EncodingException {
+  public void testEncode1() {
     UsCtV1 usCtV1 = new UsCtV1();
     Assertions.assertEquals("BAAAAAAA.QA", usCtV1.encode());
   }
 
   @Test
-  public void testEncode2() throws EncodingException, InvalidFieldException {
+  public void testEncode2() {
     UsCtV1 usCtV1 = new UsCtV1();
 
     usCtV1.setFieldValue(UsCtV1Field.SHARING_NOTICE, 1);
@@ -37,7 +35,7 @@ public class UsCtV1Test {
   }
 
   @Test
-  public void testEncodeWithGpcSegmentExcluded() throws EncodingException, InvalidFieldException {
+  public void testEncodeWithGpcSegmentExcluded() {
     UsCtV1 usCtV1 = new UsCtV1();
     usCtV1.setFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED, false);
     Assertions.assertEquals("BAAAAAAA", usCtV1.encode());

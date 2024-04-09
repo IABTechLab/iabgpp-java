@@ -1,9 +1,10 @@
-package com.iab.gpp.encoder.datatype.encoder;
+package com.iab.gpp.encoder.base64;
 
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -31,7 +32,7 @@ public abstract class AbstractBase64UrlEncoder {
   private static Pattern BASE64URL_VERIFICATION_PATTERN =
       Pattern.compile("^[A-Za-z0-9\\-_]*$", Pattern.CASE_INSENSITIVE);
 
-  public String encode(String bitString) throws EncodingException {
+  public String encode(String bitString) {
     // should only be 0 or 1
     if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches()) {
       throw new EncodingException("Unencodable Base64Url '" + bitString + "'");
@@ -58,7 +59,7 @@ public abstract class AbstractBase64UrlEncoder {
     return str;
   }
 
-  public String decode(String str) throws DecodingException {
+  public String decode(String str) {
     // should contain only characters from the base64url set
     if (!BASE64URL_VERIFICATION_PATTERN.matcher(str).matches()) {
       throw new DecodingException("Undecodable Base64URL string");
