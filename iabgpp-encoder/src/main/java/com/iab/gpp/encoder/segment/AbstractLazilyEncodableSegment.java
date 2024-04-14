@@ -72,5 +72,4 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
     this.decoded = false;
   }
 
-
 }
