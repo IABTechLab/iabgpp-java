@@ -23,7 +23,6 @@ public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedD
   }
 
   public String substring(String bitString, int fromIndex) {
-    // TODO: validate
     return bitString.substring(fromIndex, fromIndex + 36);
   }
 }

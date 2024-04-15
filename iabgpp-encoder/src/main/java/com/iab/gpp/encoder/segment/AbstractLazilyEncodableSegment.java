@@ -21,7 +21,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
   protected abstract String encodeSegment(T fields);
 
   protected abstract void decodeSegment(String encodedString, T Fields);
-  
+
   public boolean hasField(String fieldName) {
     return this.fields.containsKey(fieldName);
   }
@@ -57,6 +57,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   public String encode() {
     if (this.encodedString == null || this.encodedString.isEmpty() || this.dirty) {
+      this.validate();
       this.encodedString = encodeSegment(this.fields);
       this.dirty = false;
       this.decoded = true;
@@ -71,5 +72,4 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
     this.decoded = false;
   }
 
-  
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedIntegerListEncoderTest {
 
@@ -98,6 +99,16 @@ public class FixedIntegerListEncoderTest {
     Assertions.assertEquals("1111", FixedIntegerListEncoder.encode(Arrays.asList(3, 3), 2, 2));
   }
 
+  @Test
+  public void testEncode19() {
+    try {
+      FixedIntegerListEncoder.encode(Arrays.asList(3, 3), 1, 1);
+      Assertions.fail("EncodingException expected");
+    } catch (EncodingException e) {
+
+    }
+  }
+  
   @Test
   public void testDecode1() {
     Assertions.assertEquals(Arrays.asList(0, 0), FixedIntegerListEncoder.decode("", 2, 2));
