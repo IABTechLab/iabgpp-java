@@ -7,13 +7,14 @@ import java.util.List;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
+import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.EncodableFixedIntegerRange;
 import com.iab.gpp.encoder.datatype.EncodableFixedString;
 import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
+import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 import com.iab.gpp.encoder.section.TcfEuV2;
@@ -66,7 +67,7 @@ public class TcfEuV2CoreSegment extends AbstractLazilyEncodableSegment<Encodable
     fields.put(TcfEuV2Field.VENDOR_CONSENTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
     fields.put(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
 
-    fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS, new EncodableFixedIntegerRange(new ArrayList<>()));
+    fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS, new EncodableArrayOfFixedIntegerRanges(6, 2, new ArrayList<>(), false));
     return fields;
   }
 
@@ -82,7 +83,11 @@ public class TcfEuV2CoreSegment extends AbstractLazilyEncodableSegment<Encodable
     if(encodedString == null || encodedString.isEmpty()) {
       this.fields.reset(fields);
     }
-    String bitString = base64UrlEncoder.decode(encodedString);
-    bitStringEncoder.decode(bitString, getFieldNames(), fields);
+    try {
+      String bitString = base64UrlEncoder.decode(encodedString);
+      bitStringEncoder.decode(bitString, getFieldNames(), fields);
+    } catch (Exception e) {
+      throw new DecodingException("Unable to decode TcfEuV2CoreSegment '" + encodedString + "'", e);
+    }
   }
 }

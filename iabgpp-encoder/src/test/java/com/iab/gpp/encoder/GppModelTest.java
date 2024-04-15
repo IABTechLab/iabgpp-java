@@ -56,18 +56,21 @@ public class GppModelTest {
   }
 
   @Test
-  public void testLazyDecodingException() {
-    GppModel gppModel = new GppModel("invalid gpp string");
-    try {
-      gppModel.getHeader();
-      Assertions.fail("Expected DecodingException");
-    } catch (DecodingException e) {
-      
-    }
+  public void testDecodingException() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("invalid gpp string").getHeader();
+    });
   }
   
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("z").getUsCtV1Section();
+    });
+  }
+
   @Test
-  public void testEncodeDefaultAll()  {
+  public void testEncodeDefaultAll() {
     GppModel gppModel = new GppModel();
 
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.NAME));
@@ -108,13 +111,13 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA",
+        "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA",
         gppString);
 
   }
 
   @Test
-  public void testEncodeUspv1()  {
+  public void testEncodeUspv1() {
     GppModel gppModel = new GppModel();
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
@@ -154,7 +157,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncodeTcfEuV2()  {
+  public void testEncodeTcfEuV2() {
     GppModel gppModel = new GppModel();
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
@@ -204,7 +207,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncodeUspV1AndTcfEuV2()  {
+  public void testEncodeUspV1AndTcfEuV2() {
     GppModel gppModel = new GppModel();
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.NAME));
@@ -249,8 +252,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncodeUspV1AndTcfEuV2AndTcfCaV1()
-       {
+  public void testEncodeUspV1AndTcfEuV2AndTcfCaV1() {
     GppModel gppModel = new GppModel();
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
@@ -336,7 +338,7 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN",
+        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN",
         gppString);
 
     Assertions.assertEquals(4, gppString.split("~").length);
@@ -516,7 +518,7 @@ public class GppModelTest {
   @Test
   public void testDecodeUspv1AndTcfEuV2AndTcfCaV1() {
     String gppString =
-        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN";
+        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN";
     GppModel gppModel = new GppModel(gppString);
 
     Assertions.assertEquals(Arrays.asList(2, 5, 6), gppModel.getSectionIds());
@@ -595,7 +597,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncode1()  {
+  public void testEncode1() {
     GppModel gppModel = new GppModel();
 
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(28));
@@ -606,7 +608,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncode2()  {
+  public void testEncode2() {
     GppModel gppModel = new GppModel();
 
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(29));
@@ -617,7 +619,7 @@ public class GppModelTest {
   }
 
   @Test
-  public void testEncode3()  {
+  public void testEncode3() {
     GppModel gppModel = new GppModel();
 
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(1, 173, 722));
@@ -646,6 +648,13 @@ public class GppModelTest {
     Assertions.assertEquals(Arrays.asList(1, 173, 722),
         gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
   }
+  
+  @Test
+  public void testDecode4() {
+    GppModel gppModel = new GppModel("DBABTA~1YYN");
+    gppModel.getFieldValue(UspV1.NAME, UspV1Field.VERSION);
+    
+  }
 
   @Test
   public void testConsistency() {
@@ -663,52 +672,52 @@ public class GppModelTest {
     GppModel decodedModel = new GppModel(fromObjectModel.encode());
 
     Assertions.assertEquals(
-        Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS));
     Assertions.assertEquals(Arrays.asList(21, 32, 81, 128, 173, 210, 238, 755),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
 
   }
-  
+
   @Test
   public void testNullConstructor() {
     GppModel gppModel = new GppModel(null);
     Assertions.assertEquals("DBAA", gppModel.encode());
-    
+
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
     Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
   }
-  
+
   @Test
   public void testEmptyStringConstructor() {
     GppModel gppModel = new GppModel("");
     Assertions.assertEquals("DBAA", gppModel.encode());
-    
+
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
     Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
   }
-  
+
   @Test
   public void testDecodingNull() {
     GppModel gppModel = new GppModel("DBABTA~1---");
     Assertions.assertEquals("DBABTA~1---", gppModel.encode());
-    
+
     gppModel.decode(null);
     Assertions.assertEquals("DBAA", gppModel.encode());
-    
+
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
     Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
   }
-  
+
   @Test
   public void testDecodingEmptyString() {
     GppModel gppModel = new GppModel("DBABTA~1---");
     Assertions.assertEquals("DBABTA~1---", gppModel.encode());
-    
+
     gppModel.decode(null);
     Assertions.assertEquals("DBAA", gppModel.encode());
-    
+
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
     Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
   }

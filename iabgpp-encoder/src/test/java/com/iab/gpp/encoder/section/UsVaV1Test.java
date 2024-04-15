@@ -388,4 +388,11 @@ public class UsVaV1Test {
     Assertions.assertEquals(1, usVaV1.getMspaOptOutOptionMode());
     Assertions.assertEquals(2, usVaV1.getMspaServiceProviderMode());
   }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new UsVaV1("z").getMspaCoveredTransaction();
+    });
+  }
 }

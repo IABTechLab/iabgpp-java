@@ -7,6 +7,7 @@ import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
+import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
@@ -49,7 +50,11 @@ public class TcfEuV2VendorsDisclosedSegment extends AbstractLazilyEncodableSegme
     if(encodedString == null || encodedString.isEmpty()) {
       this.fields.reset(fields);
     }
-    String bitString = base64UrlEncoder.decode(encodedString);
-    bitStringEncoder.decode(bitString, getFieldNames(), fields);
+    try {
+      String bitString = base64UrlEncoder.decode(encodedString);
+      bitStringEncoder.decode(bitString, getFieldNames(), fields);
+    } catch (Exception e) {
+      throw new DecodingException("Unable to decode TcfEuV2VendorsDisclosedSegment '" + encodedString + "'", e);
+    }
   }
 }

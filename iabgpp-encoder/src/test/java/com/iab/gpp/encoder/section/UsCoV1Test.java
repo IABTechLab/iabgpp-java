@@ -4,6 +4,7 @@ package com.iab.gpp.encoder.section;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.UsCoV1Field;
 
@@ -408,5 +409,12 @@ public class UsCoV1Test {
     Assertions.assertEquals(1, usCoV1.getMspaOptOutOptionMode());
     Assertions.assertEquals(2, usCoV1.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usCoV1.getGpcSegmentIncluded());
+  }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new UsCoV1("z").getTargetedAdvertisingOptOut();
+    });
   }
 }

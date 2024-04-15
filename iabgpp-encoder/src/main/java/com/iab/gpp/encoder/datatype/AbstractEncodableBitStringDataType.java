@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 import com.iab.gpp.encoder.error.ValidationException;
 
 public abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
-  protected Predicate<T> validator;
+  //this if for backwards compatibility with the newer fields
+  protected boolean hardFailIfMissing = true;
+  protected Predicate<T> validator = null;
   protected T value;
 
-  protected AbstractEncodableBitStringDataType() {
-    
+  protected AbstractEncodableBitStringDataType(boolean hardFailIfMissing) {
+    this.hardFailIfMissing = hardFailIfMissing;
   }
   
   public AbstractEncodableBitStringDataType<T> withValidator(Predicate<T> validator) {
@@ -42,5 +44,14 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
 
   }
 
-  public abstract String substring(String str, int fromIndex);
+  public boolean getHardFailIfMissing() {
+    return this.hardFailIfMissing;
+  }
+
+  public abstract String encode();
+
+  public abstract void decode(String bitString);
+
+  public abstract String substring(String bitString, int fromIndex) throws SubstringException;
+
 }
