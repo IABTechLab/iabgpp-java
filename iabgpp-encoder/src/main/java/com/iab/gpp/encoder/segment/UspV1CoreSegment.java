@@ -28,9 +28,9 @@ public class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFiel
   protected GenericFields initializeFields() {
     GenericFields fields = new GenericFields();
     fields.put(UspV1Field.VERSION, new UnencodableInteger(UspV1.VERSION));
-    fields.put(UspV1Field.NOTICE, new UnencodableCharacter('-'));
-    fields.put(UspV1Field.OPT_OUT_SALE, new UnencodableCharacter('-'));
-    fields.put(UspV1Field.LSPA_COVERED, new UnencodableCharacter('-'));
+    fields.put(UspV1Field.NOTICE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
+    fields.put(UspV1Field.OPT_OUT_SALE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
+    fields.put(UspV1Field.LSPA_COVERED, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
     return fields;
   }
 
@@ -49,7 +49,7 @@ public class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFiel
     if (encodedString == null || encodedString.length() != 4) {
       throw new DecodingException("Invalid uspv1 string: '" + encodedString + "'");
     }
-    
+
     fields.get(UspV1Field.VERSION).setValue(Integer.parseInt(encodedString.substring(0, 1)));
     fields.get(UspV1Field.NOTICE).setValue(encodedString.charAt(1));
     fields.get(UspV1Field.OPT_OUT_SALE).setValue(encodedString.charAt(2));

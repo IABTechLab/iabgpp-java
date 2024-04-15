@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedIntegerListEncoder {
 
   private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
   public static String encode(List<Integer> value, int elementBitStringLength, int numElements) {
+    if(value.size() > numElements) {
+      throw new EncodingException("Too many values '" + value.size() + "'");
+    }
+    
     String bitString = "";
     for (int i = 0; i < value.size(); i++) {
       bitString += FixedIntegerEncoder.encode(value.get(i), elementBitStringLength);

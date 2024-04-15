@@ -5,7 +5,7 @@ import java.util.List;
 public interface EncodableSegment {
 
   List<String> getFieldNames();
-  
+
   boolean hasField(String fieldName);
 
   Object getFieldValue(String fieldName);
@@ -15,4 +15,7 @@ public interface EncodableSegment {
   String encode();
 
   void decode(String encodedString);
+
+  default void validate() {};
+
 }

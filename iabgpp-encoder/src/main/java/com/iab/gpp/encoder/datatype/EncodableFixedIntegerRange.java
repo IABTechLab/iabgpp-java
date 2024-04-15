@@ -26,7 +26,6 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
   }
 
   public String substring(String bitString, int fromIndex) {
-    // TODO: add some validation
     int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
     int index = fromIndex + 12;
     for (int i = 0; i < count; i++) {

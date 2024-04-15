@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedBitfieldEncoderTest {
 
@@ -43,6 +44,16 @@ public class FixedBitfieldEncoderTest {
     Assertions.assertEquals("11", FixedBitfieldEncoder.encode(Arrays.asList(true, true), 2));
   }
 
+  @Test
+  public void testEncode8() {
+    try {
+      FixedBitfieldEncoder.encode(Arrays.asList(true, true, true), 2);
+      Assertions.fail("EncodingException expected");
+    } catch (EncodingException e) {
+
+    }
+  }
+  
   @Test
   public void testDecode1() {
     Assertions.assertEquals(new ArrayList<>(), FixedBitfieldEncoder.decode(""));

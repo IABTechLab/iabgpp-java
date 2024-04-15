@@ -29,7 +29,6 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
   }
 
   public String substring(String bitString, int fromIndex) {
-    // TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.getLengthSupplier.getAsInt());
   }
 

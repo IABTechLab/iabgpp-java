@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.datatype.encoder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedLongEncoderTest {
 
@@ -31,9 +32,20 @@ public class FixedLongEncoderTest {
     Assertions.assertEquals("00000111", FixedLongEncoder.encode(7, 8));
   }
 
+  
   @Test
   public void testEncode6() {
     Assertions.assertEquals("001111011111010001110101111011110101", FixedLongEncoder.encode(16630898421L, 36));
+  }
+  
+  @Test
+  public void testEncode7() {
+    try {
+      FixedIntegerEncoder.encode(8, 1);
+      Assertions.fail("EncodingException expected");
+    } catch (EncodingException e) {
+
+    }
   }
 
   @Test

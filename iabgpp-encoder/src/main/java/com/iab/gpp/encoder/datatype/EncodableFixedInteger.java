@@ -26,7 +26,6 @@ public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<In
   }
 
   public String substring(String bitString, int fromIndex) {
-    // TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.bitStringLength);
   }
 }
