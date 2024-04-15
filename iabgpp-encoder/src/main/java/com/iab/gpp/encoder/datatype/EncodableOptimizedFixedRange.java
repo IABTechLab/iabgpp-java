@@ -8,6 +8,7 @@ import com.iab.gpp.encoder.datatype.encoder.OptimizedFixedRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
+
 public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<List<Integer>> {
 
   protected EncodableOptimizedFixedRange() {
@@ -24,7 +25,7 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       return OptimizedFixedRangeEncoder.encode(this.value);
     } catch (Exception e) {
@@ -32,7 +33,7 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = OptimizedFixedRangeEncoder.decode(bitString);
     } catch (Exception e) {

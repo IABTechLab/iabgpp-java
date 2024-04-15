@@ -21,7 +21,7 @@ public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedD
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       return DatetimeEncoder.encode(this.value);
     } catch (Exception e) {
@@ -29,7 +29,7 @@ public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedD
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = DatetimeEncoder.decode(bitString);
     } catch (Exception e) {
@@ -38,7 +38,6 @@ public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedD
   }
 
   public String substring(String bitString, int fromIndex) throws SubstringException {
-    // TODO: validate
     try {
       return bitString.substring(fromIndex, fromIndex + 36);
     } catch (Exception e) {

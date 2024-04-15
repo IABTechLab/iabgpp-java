@@ -20,7 +20,7 @@ public class EncodableFibonacciInteger extends AbstractEncodableBitStringDataTyp
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       return FibonacciIntegerEncoder.encode(this.value);
     } catch (Exception e) {
@@ -28,7 +28,7 @@ public class EncodableFibonacciInteger extends AbstractEncodableBitStringDataTyp
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = FibonacciIntegerEncoder.decode(bitString);
     } catch (Exception e) {

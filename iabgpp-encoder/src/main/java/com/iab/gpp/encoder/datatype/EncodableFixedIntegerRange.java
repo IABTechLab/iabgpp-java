@@ -24,7 +24,7 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       return FixedIntegerRangeEncoder.encode(this.value);
     } catch (Exception e) {
@@ -32,7 +32,7 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = FixedIntegerRangeEncoder.decode(bitString);
     } catch (Exception e) {
@@ -41,7 +41,6 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
   }
 
   public String substring(String bitString, int fromIndex) throws SubstringException {
-    // TODO: add some validation
     try {
       int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
       int index = fromIndex + 12;

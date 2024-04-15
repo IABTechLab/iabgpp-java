@@ -1,82 +1,24 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
-import com.iab.gpp.encoder.field.UspV1LegacyField;
+import java.util.ArrayList;
+import java.util.List;
+import com.iab.gpp.encoder.field.UspV1Field;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import com.iab.gpp.encoder.segment.UspV1CoreSegment;
 
-public class UspV1 implements EncodableSection {
+public class UspV1 extends AbstractLazilyEncodableSection {
+  
   public static int ID = 6;
   public static int VERSION = 1;
   public static String NAME = "uspv1";
 
-  protected Map<String, Object> fields;
-
   public UspV1() {
-    initFields();
+    super();
   }
 
-  public UspV1(String encodedString) throws DecodingException {
-    initFields();
-
-    if (encodedString != null && encodedString.length() > 0) {
-      this.decode(encodedString);
-    }
-  }
-
-  private void initFields() {
-    fields = new HashMap<>();
-    fields.put(UspV1LegacyField.VERSION, UspV1.VERSION);
-    fields.put(UspV1LegacyField.NOTICE, "-");
-    fields.put(UspV1LegacyField.OPT_OUT_SALE, "-");
-    fields.put(UspV1LegacyField.LSPA_COVERED, "-");
-  }
-
-  @Override
-  public boolean hasField(String fieldName) {
-    return this.fields.containsKey(fieldName);
-  }
-
-  @Override
-  public Object getFieldValue(String fieldName) {
-    if (this.fields.containsKey(fieldName)) {
-      return this.fields.get(fieldName);
-    } else {
-      return null;
-    }
-  }
-
-  @Override
-  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
-    if (this.fields.containsKey(fieldName)) {
-      this.fields.put(fieldName, value);
-    } else {
-      throw new InvalidFieldException(fieldName + " not found");
-    }
-  }
-
-  @Override
-  public String encode() throws EncodingException {
-    String str = "";
-    str += this.getFieldValue(UspV1LegacyField.VERSION);
-    str += this.getFieldValue(UspV1LegacyField.NOTICE);
-    str += this.getFieldValue(UspV1LegacyField.OPT_OUT_SALE);
-    str += this.getFieldValue(UspV1LegacyField.LSPA_COVERED);
-    return str;
-  }
-
-  @Override
-  public void decode(String encodedString) throws DecodingException {
-    try {
-      this.setFieldValue(UspV1LegacyField.VERSION, Integer.parseInt(String.valueOf(encodedString.charAt(0))));
-      this.setFieldValue(UspV1LegacyField.NOTICE, String.valueOf(encodedString.charAt(1)));
-      this.setFieldValue(UspV1LegacyField.OPT_OUT_SALE, String.valueOf(encodedString.charAt(2)));
-      this.setFieldValue(UspV1LegacyField.LSPA_COVERED, String.valueOf(encodedString.charAt(3)));
-    } catch (InvalidFieldException e) {
-      throw new DecodingException(e);
-    }
+  public UspV1(String encodedString) {
+    super();
+    decode(encodedString);
   }
 
   @Override
@@ -89,19 +31,54 @@ public class UspV1 implements EncodableSection {
     return UspV1.NAME;
   }
 
-  public Integer getVersion() {
-    return (Integer) this.fields.get(UspV1LegacyField.VERSION);
+  @Override
+  public int getVersion() {
+    return UspV1.VERSION;
   }
 
-  public String getNotice() {
-    return (String) fields.get(UspV1LegacyField.NOTICE);
+  @Override
+  protected List<EncodableSegment> initializeSegments() {
+    List<EncodableSegment> segments = new ArrayList<>();
+    segments.add(new UspV1CoreSegment());
+    return segments;
+  }
+  
+  @Override
+  protected List<EncodableSegment> decodeSection(String encodedString) {
+    List<EncodableSegment> segments = initializeSegments();
+    
+    if(encodedString != null && !encodedString.isEmpty()) {
+      String[] encodedSegments = encodedString.split("\\.");
+      
+      for(int i=0; i<segments.size(); i++) {
+        if(encodedSegments.length > i) {
+          segments.get(i).decode(encodedSegments[i]);
+        }
+      }
+    }
+    
+    return segments;
   }
 
-  public String getOptOutSale() {
-    return (String) fields.get(UspV1LegacyField.OPT_OUT_SALE);
+  @Override
+  protected String encodeSection(List<EncodableSegment> segments) {
+    List<String> encodedSegments = new ArrayList<>();
+    for(EncodableSegment segment : segments) {
+      encodedSegments.add(segment.encode());
+    }
+    return String.join(".", encodedSegments);
   }
 
-  public String getLspaCovered() {
-    return (String) fields.get(UspV1LegacyField.LSPA_COVERED);
+  
+  public Character getNotice() {
+    return (Character) this.getFieldValue(UspV1Field.NOTICE);
+  }
+
+  public Character getOptOutSale() {
+    return (Character) this.getFieldValue(UspV1Field.OPT_OUT_SALE);
+  }
+
+  public Character getLspaCovered() {
+    return (Character) this.getFieldValue(UspV1Field.LSPA_COVERED);
   }
 }

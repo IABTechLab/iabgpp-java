@@ -14,13 +14,13 @@ public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean
     super(true);
     setValue(value);
   }
-  
+
   public EncodableBoolean(Boolean value, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       return BooleanEncoder.encode(this.value);
     } catch (Exception e) {
@@ -28,7 +28,7 @@ public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = BooleanEncoder.decode(bitString);
     } catch (Exception e) {
@@ -37,7 +37,6 @@ public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean
   }
 
   public String substring(String bitString, int fromIndex) throws SubstringException {
-    // TODO: validate
     try {
       return bitString.substring(fromIndex, fromIndex + 1);
     } catch (Exception e) {

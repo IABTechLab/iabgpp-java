@@ -23,8 +23,8 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     super(hardFailIfMissing);
     setValue(value);
   }
-
-  public String encode() throws EncodingException {
+  
+  public String encode() {
     try {
       return FibonacciIntegerRangeEncoder.encode(this.value);
     } catch (Exception e) {
@@ -32,7 +32,7 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = FibonacciIntegerRangeEncoder.decode(bitString);
     } catch (Exception e) {
@@ -41,7 +41,6 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
   }
 
   public String substring(String bitString, int fromIndex) throws SubstringException {
-    // TODO: add some validation
     try {
       int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
       int index = fromIndex + 12;

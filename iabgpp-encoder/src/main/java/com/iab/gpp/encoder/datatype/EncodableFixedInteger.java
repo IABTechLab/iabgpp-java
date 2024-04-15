@@ -25,7 +25,7 @@ public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<In
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       return FixedIntegerEncoder.encode(this.value, this.bitStringLength);
     } catch (Exception e) {
@@ -33,7 +33,7 @@ public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<In
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = FixedIntegerEncoder.decode(bitString);
     } catch (Exception e) {
@@ -42,7 +42,6 @@ public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<In
   }
 
   public String substring(String bitString, int fromIndex) throws SubstringException {
-    // TODO: validate
     try {
       return bitString.substring(fromIndex, fromIndex + this.bitStringLength);
     } catch (Exception e) {

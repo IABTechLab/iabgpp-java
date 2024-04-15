@@ -24,7 +24,7 @@ public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitString
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       return OptimizedFibonacciRangeEncoder.encode(this.value);
     } catch (Exception e) {
@@ -32,7 +32,7 @@ public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitString
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = OptimizedFibonacciRangeEncoder.decode(bitString);
     } catch (Exception e) {

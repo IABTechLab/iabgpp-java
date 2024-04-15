@@ -32,7 +32,7 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       return FixedBitfieldEncoder.encode(this.value, this.numElements);
     } catch (Exception e) {
@@ -40,7 +40,7 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = FixedBitfieldEncoder.decode(bitString);
     } catch (Exception e) {
@@ -49,7 +49,6 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
   }
 
   public String substring(String bitString, int fromIndex) throws SubstringException {
-    // TODO: validate
     try {
       return bitString.substring(fromIndex, fromIndex + this.numElements);
     } catch (Exception e) {

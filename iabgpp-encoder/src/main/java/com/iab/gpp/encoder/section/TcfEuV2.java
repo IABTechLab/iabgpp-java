@@ -3,223 +3,123 @@ package com.iab.gpp.encoder.section;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.function.IntSupplier;
-import java.util.stream.Collectors;
-import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
-import com.iab.gpp.encoder.datatype.EncodableBoolean;
-import com.iab.gpp.encoder.datatype.EncodableDatetime;
-import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
-import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.EncodableFixedString;
-import com.iab.gpp.encoder.datatype.EncodableFlexibleBitfield;
-import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
 import com.iab.gpp.encoder.datatype.RangeEntry;
-import com.iab.gpp.encoder.datatype.encoder.AbstractBase64UrlEncoder;
-import com.iab.gpp.encoder.datatype.encoder.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import com.iab.gpp.encoder.segment.TcfEuV2CoreSegment;
+import com.iab.gpp.encoder.segment.TcfEuV2PublisherPurposesSegment;
+import com.iab.gpp.encoder.segment.TcfEuV2VendorsAllowedSegment;
+import com.iab.gpp.encoder.segment.TcfEuV2VendorsDisclosedSegment;
 
-public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
+public class TcfEuV2 extends AbstractLazilyEncodableSection {
+  
   public static int ID = 2;
   public static int VERSION = 2;
   public static String NAME = "tcfeuv2";
 
-  private AbstractBase64UrlEncoder base64UrlEncoder = new TraditionalBase64UrlEncoder();
-
   public TcfEuV2() {
-    initFields();
+    super();
   }
 
-  public TcfEuV2(String encodedString) throws DecodingException {
-    initFields();
-
-    if (encodedString != null && encodedString.length() > 0) {
-      this.decode(encodedString);
-    }
-  }
-
-  private void initFields() {
-    fields = new HashMap<>();
-
-    ZonedDateTime date = ZonedDateTime.now();
-
-    // core section
-    fields.put(TcfEuV2Field.VERSION, new EncodableFixedInteger(6, TcfEuV2.VERSION));
-    fields.put(TcfEuV2Field.CREATED, new EncodableDatetime(date));
-    fields.put(TcfEuV2Field.LAST_UPDATED, new EncodableDatetime(date));
-    fields.put(TcfEuV2Field.CMP_ID, new EncodableFixedInteger(12, 0));
-    fields.put(TcfEuV2Field.CMP_VERSION, new EncodableFixedInteger(12, 0));
-    fields.put(TcfEuV2Field.CONSENT_SCREEN, new EncodableFixedInteger(6, 0));
-    fields.put(TcfEuV2Field.CONSENT_LANGUAGE, new EncodableFixedString(2, "EN"));
-    fields.put(TcfEuV2Field.VENDOR_LIST_VERSION, new EncodableFixedInteger(12, 0));
-    fields.put(TcfEuV2Field.POLICY_VERSION, new EncodableFixedInteger(6, 2));
-    fields.put(TcfEuV2Field.IS_SERVICE_SPECIFIC, new EncodableBoolean(false));
-    fields.put(TcfEuV2Field.USE_NON_STANDARD_STACKS, new EncodableBoolean(false));
-    fields.put(TcfEuV2Field.SPECIAL_FEATURE_OPTINS, new EncodableFixedBitfield(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false)));
-    fields.put(TcfEuV2Field.PURPOSE_CONSENTS,
-        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
-    fields.put(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS,
-        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
-    fields.put(TcfEuV2Field.PURPOSE_ONE_TREATMENT, new EncodableBoolean(false));
-    fields.put(TcfEuV2Field.PUBLISHER_COUNTRY_CODE, new EncodableFixedString(2, "AA"));
-    fields.put(TcfEuV2Field.VENDOR_CONSENTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
-    fields.put(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS, new EncodableOptimizedFixedRange(new ArrayList<>()));
-
-    fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS, new EncodableArrayOfFixedIntegerRanges(6, 2, new ArrayList<>(), false));
-
-    // publisher purposes segment
-    fields.put(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
-    fields.put(TcfEuV2Field.PUBLISHER_CONSENTS,
-        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
-    fields.put(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS,
-        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
-
-    EncodableFixedInteger numCustomPurposes = new EncodableFixedInteger(6, 0);
-    fields.put(TcfEuV2Field.NUM_CUSTOM_PURPOSES, numCustomPurposes);
-
-    IntSupplier getLengthSupplier = new IntSupplier() {
-
-      @Override
-      public int getAsInt() {
-        return numCustomPurposes.getValue();
-      }
-
-    };
-
-    fields.put(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS,
-        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>()));
-
-    fields.put(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS,
-        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>()));
-
-    fields.put(TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE, new EncodableFixedInteger(3, 2));
-    fields.put(TcfEuV2Field.VENDORS_ALLOWED, new EncodableOptimizedFixedRange(new ArrayList<>()));
-
-    fields.put(TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
-    fields.put(TcfEuV2Field.VENDORS_DISCLOSED, new EncodableOptimizedFixedRange(new ArrayList<>()));
-
-    //@formatter:off
-    String[] coreSegment = new String[] {
-      TcfEuV2Field.VERSION,
-      TcfEuV2Field.CREATED,
-      TcfEuV2Field.LAST_UPDATED,
-      TcfEuV2Field.CMP_ID,
-      TcfEuV2Field.CMP_VERSION,
-      TcfEuV2Field.CONSENT_SCREEN,
-      TcfEuV2Field.CONSENT_LANGUAGE,
-      TcfEuV2Field.VENDOR_LIST_VERSION,
-      TcfEuV2Field.POLICY_VERSION,
-      TcfEuV2Field.IS_SERVICE_SPECIFIC,
-      TcfEuV2Field.USE_NON_STANDARD_STACKS,
-      TcfEuV2Field.SPECIAL_FEATURE_OPTINS,
-      TcfEuV2Field.PURPOSE_CONSENTS,
-      TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS,
-      TcfEuV2Field.PURPOSE_ONE_TREATMENT,
-      TcfEuV2Field.PUBLISHER_COUNTRY_CODE,
-      TcfEuV2Field.VENDOR_CONSENTS,
-      TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS,
-      TcfEuV2Field.PUBLISHER_RESTRICTIONS
-    };
-
-    String[] publisherPurposesSegment = new String[] {
-      TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE,
-      TcfEuV2Field.PUBLISHER_CONSENTS,
-      TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS,
-      TcfEuV2Field.NUM_CUSTOM_PURPOSES,
-      TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS,
-      TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS,
-    };
-
-    String[] vendorsAllowedSegment = new String[] {
-      TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE,
-      TcfEuV2Field.VENDORS_ALLOWED,
-    };
-
-    String[] vendorsDisclosedSegment = new String[] {
-      TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE,
-      TcfEuV2Field.VENDORS_DISCLOSED,
-    };
-
-    segments = new String[][] {
-      coreSegment, 
-      publisherPurposesSegment, 
-      vendorsAllowedSegment, 
-      vendorsDisclosedSegment
-    };
-    //@formatter:on
+  public TcfEuV2(String encodedString) {
+    super();
+    decode(encodedString);
   }
 
   @Override
-  public String encode() throws EncodingException {
-    List<String> segmentBitStrings = this.encodeSegmentsToBitStrings();
+  public int getId() {
+    return TcfEuV2.ID;
+  }
+
+  @Override
+  public String getName() {
+    return TcfEuV2.NAME;
+  }
+
+  @Override
+  public int getVersion() {
+    return TcfEuV2.VERSION;
+  }
+
+  @Override
+  protected List<EncodableSegment> initializeSegments() {
+    List<EncodableSegment> segments = new ArrayList<>();
+    segments.add(new TcfEuV2CoreSegment());
+    segments.add(new TcfEuV2PublisherPurposesSegment());
+    segments.add(new TcfEuV2VendorsAllowedSegment());
+    segments.add(new TcfEuV2VendorsDisclosedSegment());
+    return segments;
+  }
+  
+  @Override
+  public List<EncodableSegment> decodeSection(String encodedString) {
+    List<EncodableSegment> segments = initializeSegments();
+    
+    if(encodedString != null && !encodedString.isEmpty()) {
+      String[] encodedSegments = encodedString.split("\\.");
+      for (int i = 0; i < encodedSegments.length; i++) {
+        
+        /**
+         * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
+         * 
+         * A-H     = '000' = 0
+         * I-P     = '001' = 1
+         * Q-X     = '010' = 2
+         * Y-Z,a-f = '011' = 3
+         * 
+         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved 
+         * for the encoding version which only coincidentally works here because the version value is less than 8.
+         */
+        
+        String encodedSegment = encodedSegments[i];
+        if(!encodedSegment.isEmpty()) {
+          char firstChar = encodedSegment.charAt(0);
+          
+          // unfortunately, the segment ordering doesn't match the segment ids
+          if(firstChar >= 'A' && firstChar <= 'H') {
+            segments.get(0).decode(encodedSegments[i]);
+          } else if(firstChar >= 'I' && firstChar <= 'P') {
+            segments.get(3).decode(encodedSegments[i]);
+          } else if(firstChar >= 'Q' && firstChar <= 'X') {
+            segments.get(2).decode(encodedSegments[i]);
+          } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
+            segments.get(1).decode(encodedSegments[i]);
+          } else {
+            throw new DecodingException("Invalid segment '" + encodedSegment + "'");
+          }
+        }
+      }
+    }
+    
+    return segments;
+  }
+
+  @Override
+  public String encodeSection(List<EncodableSegment> segments) {
     List<String> encodedSegments = new ArrayList<>();
-    if (segmentBitStrings.size() >= 1) {
-      encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(0)));
+    if (segments.size() >= 1) {
+      encodedSegments.add(segments.get(0).encode());
 
       Boolean isServiceSpecific = (Boolean) this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
       if (isServiceSpecific) {
-        if (segmentBitStrings.size() >= 2) {
-          encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(1)));
+        if (segments.size() >= 2) {
+          encodedSegments.add(segments.get(1).encode());
         }
       } else {
-        if (segmentBitStrings.size() >= 2) {
-          encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(2)));
+        if (segments.size() >= 2) {
+          encodedSegments.add(segments.get(2).encode());
 
-          if (segmentBitStrings.size() >= 3) {
-            encodedSegments.add(base64UrlEncoder.encode(segmentBitStrings.get(3)));
+          if (segments.size() >= 3) {
+            encodedSegments.add(segments.get(3).encode());
           }
         }
       }
     }
 
-    return encodedSegments.stream().collect(Collectors.joining("."));
-  }
-
-  @Override
-  public void decode(String encodedSection) throws DecodingException {
-    String[] encodedSegments = encodedSection.split("\\.");
-    String[] segmentBitStrings = new String[4];
-    for (int i = 0; i < encodedSegments.length; i++) {
-      /**
-       * first char will contain 6 bits, we only need the first 3. There is no segment type for the CORE
-       * string. Instead the first 6 bits are reserved for the encoding version, but because we're only on
-       * a maximum of encoding version 2 the first 3 bits in the core segment will evaluate to 0.
-       */
-      String segmentBitString = base64UrlEncoder.decode(encodedSegments[i]);
-      switch (segmentBitString.substring(0, 3)) {
-        // unfortunately, the segment ordering doesn't match the segment ids
-        case "000": {
-          segmentBitStrings[0] = segmentBitString;
-          break;
-        }
-        case "001": {
-          segmentBitStrings[3] = segmentBitString;
-          break;
-        }
-        case "010": {
-          segmentBitStrings[2] = segmentBitString;
-          break;
-        }
-        case "011": {
-          segmentBitStrings[1] = segmentBitString;
-          break;
-        }
-        default: {
-          throw new DecodingException("Unable to decode segment '" + encodedSegments[i] + "'");
-        }
-      }
-    }
-    this.decodeSegmentsFromBitStrings(Arrays.asList(segmentBitStrings));
+    return String.join(".", encodedSegments);
   }
 
   @Override
@@ -234,144 +134,130 @@ public class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
     }
   }
 
-  @Override
-  public int getId() {
-    return TcfEuV2.ID;
-  }
-
-  @Override
-  public String getName() {
-    return TcfEuV2.NAME;
-  }
-
-  public Integer getVersion() {
-    return (Integer) this.fields.get(TcfEuV2Field.VERSION).getValue();
-  }
-
+  
   public ZonedDateTime getCreated() {
-    return (ZonedDateTime) this.fields.get(TcfEuV2Field.CREATED).getValue();
+    return (ZonedDateTime) this.getFieldValue(TcfEuV2Field.CREATED);
   }
 
   public ZonedDateTime getLastUpdated() {
-    return (ZonedDateTime) this.fields.get(TcfEuV2Field.LAST_UPDATED).getValue();
+    return (ZonedDateTime) this.getFieldValue(TcfEuV2Field.LAST_UPDATED);
   }
 
   public Integer getCmpId() {
-    return (Integer) this.fields.get(TcfEuV2Field.CMP_ID).getValue();
+    return (Integer) this.getFieldValue(TcfEuV2Field.CMP_ID);
   }
 
   public Integer getCmpVersion() {
-    return (Integer) this.fields.get(TcfEuV2Field.CMP_VERSION).getValue();
+    return (Integer) this.getFieldValue(TcfEuV2Field.CMP_VERSION);
   }
 
   public Integer getConsentScreen() {
-    return (Integer) this.fields.get(TcfEuV2Field.CONSENT_SCREEN).getValue();
+    return (Integer) this.getFieldValue(TcfEuV2Field.CONSENT_SCREEN);
   }
 
   public String getConsentLanguage() {
-    return (String) this.fields.get(TcfEuV2Field.CONSENT_LANGUAGE).getValue();
+    return (String) this.getFieldValue(TcfEuV2Field.CONSENT_LANGUAGE);
   }
 
   public Integer getVendorListVersion() {
-    return (Integer) this.fields.get(TcfEuV2Field.VENDOR_LIST_VERSION).getValue();
+    return (Integer) this.getFieldValue(TcfEuV2Field.VENDOR_LIST_VERSION);
   }
 
   public Integer getPolicyVersion() {
-    return (Integer) this.fields.get(TcfEuV2Field.POLICY_VERSION).getValue();
+    return (Integer) this.getFieldValue(TcfEuV2Field.POLICY_VERSION);
   }
 
   public Boolean getIsServiceSpecific() {
-    return (Boolean) this.fields.get(TcfEuV2Field.IS_SERVICE_SPECIFIC).getValue();
+    return (Boolean) this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
   }
 
   public Boolean getUseNonStandardStacks() {
-    return (Boolean) this.fields.get(TcfEuV2Field.USE_NON_STANDARD_STACKS).getValue();
+    return (Boolean) this.getFieldValue(TcfEuV2Field.USE_NON_STANDARD_STACKS);
   }
 
   @SuppressWarnings("unchecked")
   public List<Boolean> getSpecialFeatureOptins() {
-    return (List<Boolean>) this.fields.get(TcfEuV2Field.SPECIAL_FEATURE_OPTINS).getValue();
+    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.SPECIAL_FEATURE_OPTINS);
   }
 
   @SuppressWarnings("unchecked")
   public List<Boolean> getPurposeConsents() {
-    return (List<Boolean>) this.fields.get(TcfEuV2Field.PURPOSE_CONSENTS).getValue();
+    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.PURPOSE_CONSENTS);
   }
 
   @SuppressWarnings("unchecked")
   public List<Boolean> getPurposeLegitimateInterests() {
-    return (List<Boolean>) this.fields.get(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS).getValue();
+    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS);
   }
 
   public Boolean getPurposeOneTreatment() {
-    return (Boolean) this.fields.get(TcfEuV2Field.PURPOSE_ONE_TREATMENT).getValue();
+    return (Boolean) this.getFieldValue(TcfEuV2Field.PURPOSE_ONE_TREATMENT);
   }
 
   public String getPublisherCountryCode() {
-    return (String) this.fields.get(TcfEuV2Field.PUBLISHER_COUNTRY_CODE).getValue();
+    return (String) this.getFieldValue(TcfEuV2Field.PUBLISHER_COUNTRY_CODE);
   }
 
   @SuppressWarnings("unchecked")
   public List<Integer> getVendorConsents() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.VENDOR_CONSENTS).getValue();
+    return (List<Integer>) this.getFieldValue(TcfEuV2Field.VENDOR_CONSENTS);
   }
 
   @SuppressWarnings("unchecked")
   public List<Integer> getVendorLegitimateInterests() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS).getValue();
+    return (List<Integer>) this.getFieldValue(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS);
   }
 
   @SuppressWarnings("unchecked")
   public List<RangeEntry> getPublisherRestrictions() {
-    return (List<RangeEntry>) this.fields.get(TcfEuV2Field.PUBLISHER_RESTRICTIONS).getValue();
+    return (List<RangeEntry>) this.getFieldValue(TcfEuV2Field.PUBLISHER_RESTRICTIONS);
   }
 
   public Integer getPublisherPurposesSegmentType() {
-    return (Integer) this.fields.get(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE).getValue();
+    return (Integer) this.getFieldValue(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE);
   }
 
   @SuppressWarnings("unchecked")
   public List<Boolean> getPublisherConsents() {
-    return (List<Boolean>) this.fields.get(TcfEuV2Field.PUBLISHER_CONSENTS).getValue();
+    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.PUBLISHER_CONSENTS);
   }
 
   @SuppressWarnings("unchecked")
   public List<Boolean> getPublisherLegitimateInterests() {
-    return (List<Boolean>) this.fields.get(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS).getValue();
+    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS);
   }
 
   public Integer getNumCustomPurposes() {
-    return (Integer) this.fields.get(TcfEuV2Field.NUM_CUSTOM_PURPOSES).getValue();
+    return (Integer) this.getFieldValue(TcfEuV2Field.NUM_CUSTOM_PURPOSES);
   }
 
   @SuppressWarnings("unchecked")
   public List<Integer> getPublisherCustomConsents() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS).getValue();
+    return (List<Integer>) this.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS);
   }
 
   @SuppressWarnings("unchecked")
   public List<Integer> getPublisherCustomLegitimateInterests() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS).getValue();
+    return (List<Integer>) this.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS);
   }
 
   public Integer getVendorsAllowedSegmentType() {
-    return (Integer) this.fields.get(TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE).getValue();
+    return (Integer) this.getFieldValue(TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE);
   }
 
   @SuppressWarnings("unchecked")
   public List<Integer> getVendorsAllowed() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.VENDORS_ALLOWED).getValue();
+    return (List<Integer>) this.getFieldValue(TcfEuV2Field.VENDORS_ALLOWED);
   }
 
   public Integer getVendorsDisclosedSegmentType() {
-    return (Integer) this.fields.get(TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE).getValue();
+    return (Integer) this.getFieldValue(TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE);
   }
 
   @SuppressWarnings("unchecked")
   public List<Integer> getVendorsDisclosed() {
-    return (List<Integer>) this.fields.get(TcfEuV2Field.VENDORS_DISCLOSED).getValue();
+    return (List<Integer>) this.getFieldValue(TcfEuV2Field.VENDORS_DISCLOSED);
   }
-
-
-
+  
+  
 }

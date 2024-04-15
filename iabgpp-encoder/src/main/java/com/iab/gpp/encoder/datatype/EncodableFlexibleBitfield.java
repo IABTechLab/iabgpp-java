@@ -28,7 +28,7 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
     this.setValue(value);
   }
 
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       return FixedBitfieldEncoder.encode(this.value, this.getLengthSupplier.getAsInt());
     } catch (Exception e) {
@@ -36,7 +36,7 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
     }
   }
 
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       this.value = FixedBitfieldEncoder.decode(bitString);
     } catch (Exception e) {
@@ -45,7 +45,6 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
   }
 
   public String substring(String bitString, int fromIndex) throws SubstringException {
-    // TODO: validate
     try {
       return bitString.substring(fromIndex, fromIndex + this.getLengthSupplier.getAsInt());
     } catch (Exception e) {

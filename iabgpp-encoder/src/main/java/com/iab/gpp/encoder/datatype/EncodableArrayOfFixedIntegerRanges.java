@@ -33,7 +33,7 @@ public class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStri
   }
 
   @Override
-  public String encode() throws EncodingException {
+  public String encode() {
     try {
       List<RangeEntry> entries = this.value;
   
@@ -52,7 +52,7 @@ public class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStri
   }
 
   @Override
-  public void decode(String bitString) throws DecodingException {
+  public void decode(String bitString) {
     try {
       List<RangeEntry> entries = new ArrayList<>();
   
