@@ -7,7 +7,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 public class EncodableFibonacciIntegerRangeTest {
 
   @Test
-  public void testSubstring1() throws DecodingException {
+  public void testSubstring1() throws DecodingException, SubstringException {
     Assertions.assertEquals("0000000000100001110110011",
         new EncodableFibonacciIntegerRange().substring("100000000001000011101100110", 1));
   }

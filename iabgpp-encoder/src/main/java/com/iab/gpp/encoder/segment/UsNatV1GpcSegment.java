@@ -6,6 +6,7 @@ import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
+import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsNatV1Field;
 
@@ -49,7 +50,11 @@ public class UsNatV1GpcSegment extends AbstractLazilyEncodableSegment<EncodableB
     if(encodedString == null || encodedString.isEmpty()) {
       this.fields.reset(fields);
     }
-    String bitString = base64UrlEncoder.decode(encodedString);
-    bitStringEncoder.decode(bitString, getFieldNames(), fields);
+    try {
+      String bitString = base64UrlEncoder.decode(encodedString);
+      bitStringEncoder.decode(bitString, getFieldNames(), fields);
+    } catch (Exception e) {
+      throw new DecodingException("Unable to decode UsNatV1GpcSegment '" + encodedString + "'", e);
+    }
   }
 }

@@ -3,6 +3,8 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
+import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<List<Integer>> {
 
@@ -10,28 +12,47 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
   private int numElements;
 
   protected EncodableFixedIntegerList(int elementBitStringLength, int numElements) {
-    super();
+    super(true);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = numElements;
   }
 
   public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value) {
-    super();
+    super(true);
+    this.elementBitStringLength = elementBitStringLength;
+    this.numElements = value.size();
+    setValue(value);
+  }
+
+  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value, boolean hardFailIfMissing) {
+    super(hardFailIfMissing);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = value.size();
     setValue(value);
   }
 
   public String encode() {
-    return FixedIntegerListEncoder.encode(this.value, this.elementBitStringLength, this.numElements);
+    try {
+      return FixedIntegerListEncoder.encode(this.value, this.elementBitStringLength, this.numElements);
+    } catch (Exception e) {
+      throw new EncodingException(e);
+    }
   }
 
   public void decode(String bitString) {
-    this.value = FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements);
+    try {
+      this.value = FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements);
+    } catch (Exception e) {
+      throw new DecodingException(e);
+    }
   }
 
-  public String substring(String bitString, int fromIndex) {
-    return bitString.substring(fromIndex, fromIndex + (this.elementBitStringLength * numElements));
+  public String substring(String bitString, int fromIndex) throws SubstringException {
+    try {
+      return bitString.substring(fromIndex, fromIndex + (this.elementBitStringLength * numElements));
+    } catch (Exception e) {
+      throw new SubstringException(e);
+    }
   }
 
   @SuppressWarnings("unchecked")

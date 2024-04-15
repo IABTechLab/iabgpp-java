@@ -1,40 +1,40 @@
 package com.iab.gpp.encoder.segment;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
-import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
+import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
-import com.iab.gpp.encoder.field.UsCoV1Field;
+import com.iab.gpp.encoder.field.TcfCaV1Field;
 
-public class UsCoV1GpcSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public class TcfCaV1DisclosedVendorsSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
   private AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
   private BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
-  public UsCoV1GpcSegment() {
+  public TcfCaV1DisclosedVendorsSegment() {
     super();
   }
 
-  public UsCoV1GpcSegment(String encodedString) {
+  public TcfCaV1DisclosedVendorsSegment(String encodedString) {
     super();
     this.decode(encodedString);
   }
 
   @Override
   public List<String> getFieldNames() {
-    return UsCoV1Field.USCOV1_GPC_SEGMENT_FIELD_NAMES;
+    return TcfCaV1Field.TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES;
   }
 
   @Override
   protected EncodableBitStringFields initializeFields() {
     EncodableBitStringFields fields = new EncodableBitStringFields();
-    fields.put(UsCoV1Field.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    fields.put(UsCoV1Field.GPC_SEGMENT_INCLUDED, new EncodableBoolean(true));
-    fields.put(UsCoV1Field.GPC, new EncodableBoolean(false));
+    fields.put(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
+    fields.put(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFixedRange(new ArrayList<>()));
     return fields;
   }
 
@@ -47,14 +47,14 @@ public class UsCoV1GpcSegment extends AbstractLazilyEncodableSegment<EncodableBi
 
   @Override
   protected void decodeSegment(String encodedString, EncodableBitStringFields fields) {
-    if(encodedString == null || encodedString.isEmpty()) {
+    if (encodedString == null || encodedString.isEmpty()) {
       this.fields.reset(fields);
     }
     try {
       String bitString = base64UrlEncoder.decode(encodedString);
       bitStringEncoder.decode(bitString, getFieldNames(), fields);
     } catch (Exception e) {
-      throw new DecodingException("Unable to decode UsCoV1GpcSegment '" + encodedString + "'", e);
+      throw new DecodingException("Unable to decode TcfCaV1DisclosedVendorsSegment '" + encodedString + "'", e);
     }
   }
 }

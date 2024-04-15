@@ -4,6 +4,7 @@ package com.iab.gpp.encoder.section;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.UsCaV1Field;
 
@@ -521,5 +522,12 @@ public class UsCaV1Test {
     Assertions.assertEquals(1, usCaV1.getMspaOptOutOptionMode());
     Assertions.assertEquals(2, usCaV1.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usCaV1.getGpcSegmentIncluded());
+  }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new UsCaV1("z").getPersonalDataConsents();
+    });
   }
 }
