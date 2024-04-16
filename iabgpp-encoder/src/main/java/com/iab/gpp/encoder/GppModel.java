@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
+import com.iab.gpp.encoder.field.HeaderV1Field;
 import com.iab.gpp.encoder.section.EncodableSection;
 import com.iab.gpp.encoder.section.HeaderV1;
 import com.iab.gpp.encoder.section.Sections;
@@ -18,27 +20,36 @@ import com.iab.gpp.encoder.section.UsCoV1;
 import com.iab.gpp.encoder.section.UsCtV1;
 import com.iab.gpp.encoder.section.UsNatV1;
 import com.iab.gpp.encoder.section.UsUtV1;
-import com.iab.gpp.encoder.section.UspV1;
 import com.iab.gpp.encoder.section.UsVaV1;
+import com.iab.gpp.encoder.section.UspV1;
 
 public class GppModel {
   private Map<String, EncodableSection> sections = new HashMap<>();
 
+  private String encodedString;
+  
+  private boolean dirty = false;
+  private boolean decoded = true;
+  
   public GppModel() {
 
   }
 
-  public GppModel(String encodedString) throws DecodingException {
-    if (encodedString != null && encodedString.length() > 0) {
-      this.decode(encodedString);
-    }
+  public GppModel(String encodedString) {
+    decode(encodedString);
   }
 
-  public void setFieldValue(int sectionId, String fieldName, Object value) throws InvalidFieldException {
+  public void setFieldValue(int sectionId, String fieldName, Object value) {
     setFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName, value);
   }
 
-  public void setFieldValue(String sectionName, String fieldName, Object value) throws InvalidFieldException {
+  public void setFieldValue(String sectionName, String fieldName, Object value) {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     EncodableSection section = null;
     if (!this.sections.containsKey(sectionName)) {
       if (sectionName.equals(TcfCaV1.NAME)) {
@@ -75,6 +86,7 @@ public class GppModel {
 
     if (section != null) {
       section.setFieldValue(fieldName, value);
+      this.dirty = true;
     } else {
       throw new InvalidFieldException(sectionName + "." + fieldName + " not found");
     }
@@ -85,6 +97,12 @@ public class GppModel {
   }
 
   public Object getFieldValue(String sectionName, String fieldName) {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     if (this.sections.containsKey(sectionName)) {
       return this.sections.get(sectionName).getFieldValue(fieldName);
     } else {
@@ -97,6 +115,12 @@ public class GppModel {
   }
 
   public boolean hasField(String sectionName, String fieldName) {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     if (this.sections.containsKey(sectionName)) {
       return this.sections.get(sectionName).hasField(fieldName);
     } else {
@@ -109,10 +133,22 @@ public class GppModel {
   }
 
   public boolean hasSection(String sectionName) {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     return this.sections.containsKey(sectionName);
   }
 
   public HeaderV1 getHeader() {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     HeaderV1 header = new HeaderV1();
     try {
       header.setFieldValue("SectionIds", this.getSectionIds());
@@ -127,6 +163,12 @@ public class GppModel {
   }
 
   public EncodableSection getSection(String sectionName) {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     if (this.sections.containsKey(sectionName)) {
       return this.sections.get(sectionName);
     } else {
@@ -139,13 +181,23 @@ public class GppModel {
   }
 
   public void deleteSection(String sectionName) {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     if (this.sections.containsKey(sectionName)) {
       this.sections.remove(sectionName);
+      this.dirty = true;
     }
   }
 
   public void clear() {
     this.sections.clear();
+    this.encodedString = null;
+    this.dirty = false;
+    this.decoded = true;
   }
 
   public TcfCaV1 getTcfCaV1Section() {
@@ -185,6 +237,12 @@ public class GppModel {
   }
 
   public List<Integer> getSectionIds() {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     List<Integer> sectionIds = new ArrayList<>();
     for (int i = 0; i < Sections.SECTION_ORDER.size(); i++) {
       String sectionName = Sections.SECTION_ORDER.get(i);
@@ -196,13 +254,13 @@ public class GppModel {
     return sectionIds;
   }
 
-  public String encode() throws EncodingException {
+  protected String encodeModel(Map<String, EncodableSection> sections) {
     List<String> encodedSections = new ArrayList<>();
     List<Integer> sectionIds = new ArrayList<>();
     for (int i = 0; i < Sections.SECTION_ORDER.size(); i++) {
       String sectionName = Sections.SECTION_ORDER.get(i);
-      if (this.sections.containsKey(sectionName)) {
-        EncodableSection section = this.sections.get(sectionName);
+      if (sections.containsKey(sectionName)) {
+        EncodableSection section = sections.get(sectionName);
         encodedSections.add(section.encode());
         sectionIds.add(section.getId());
       }
@@ -210,7 +268,7 @@ public class GppModel {
 
     HeaderV1 header = new HeaderV1();
     try {
-      header.setFieldValue("SectionIds", this.getSectionIds());
+      header.setFieldValue("SectionIds", getSectionIds());
     } catch (InvalidFieldException e) {
       throw new EncodingException(e);
     }
@@ -220,52 +278,78 @@ public class GppModel {
     return encodedString;
   }
 
-  public void decode(String str) throws DecodingException {
-    this.sections.clear();
-
-    String[] encodedSections = str.split("~");
-    HeaderV1 header = new HeaderV1(encodedSections[0]);
-    this.sections.put(HeaderV1.NAME, header);
-
-    @SuppressWarnings("unchecked")
-    List<Integer> sectionIds = (List<Integer>) header.getFieldValue("SectionIds");
-    for (int i = 0; i < sectionIds.size(); i++) {
-      if (sectionIds.get(i).equals(TcfEuV2.ID)) {
-        TcfEuV2 section = new TcfEuV2(encodedSections[i + 1]);
-        this.sections.put(TcfEuV2.NAME, section);
-      } else if (sectionIds.get(i).equals(TcfCaV1.ID)) {
-        TcfCaV1 section = new TcfCaV1(encodedSections[i + 1]);
-        this.sections.put(TcfCaV1.NAME, section);
-      } else if (sectionIds.get(i).equals(UspV1.ID)) {
-        UspV1 section = new UspV1(encodedSections[i + 1]);
-        this.sections.put(UspV1.NAME, section);
-      } else if (sectionIds.get(i).equals(UsCaV1.ID)) {
-        UsCaV1 section = new UsCaV1(encodedSections[i + 1]);
-        this.sections.put(UsCaV1.NAME, section);
-      } else if (sectionIds.get(i).equals(UsNatV1.ID)) {
-        UsNatV1 section = new UsNatV1(encodedSections[i + 1]);
-        this.sections.put(UsNatV1.NAME, section);
-      } else if (sectionIds.get(i).equals(UsVaV1.ID)) {
-        UsVaV1 section = new UsVaV1(encodedSections[i + 1]);
-        this.sections.put(UsVaV1.NAME, section);
-      } else if (sectionIds.get(i).equals(UsCoV1.ID)) {
-        UsCoV1 section = new UsCoV1(encodedSections[i + 1]);
-        this.sections.put(UsCoV1.NAME, section);
-      } else if (sectionIds.get(i).equals(UsUtV1.ID)) {
-        UsUtV1 section = new UsUtV1(encodedSections[i + 1]);
-        this.sections.put(UsUtV1.NAME, section);
-      } else if (sectionIds.get(i).equals(UsCtV1.ID)) {
-        UsCtV1 section = new UsCtV1(encodedSections[i + 1]);
-        this.sections.put(UsCtV1.NAME, section);
+  protected Map<String, EncodableSection> decodeModel(String str) {
+    if(str == null || str.isEmpty() ||  str.startsWith("D")) {
+      Map<String, EncodableSection> sections = new HashMap<>();
+      
+      if(str != null && !str.isEmpty()) {
+        String[] encodedSections = str.split("~");
+        HeaderV1 header = new HeaderV1(encodedSections[0]);
+        sections.put(HeaderV1.NAME, header);
+  
+        @SuppressWarnings("unchecked")
+        List<Integer> sectionIds = (List<Integer>) header.getFieldValue("SectionIds");
+        for (int i = 0; i < sectionIds.size(); i++) {
+          if (sectionIds.get(i).equals(TcfEuV2.ID)) {
+            TcfEuV2 section = new TcfEuV2(encodedSections[i + 1]);
+            sections.put(TcfEuV2.NAME, section);
+          } else if (sectionIds.get(i).equals(TcfCaV1.ID)) {
+            TcfCaV1 section = new TcfCaV1(encodedSections[i + 1]);
+            sections.put(TcfCaV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UspV1.ID)) {
+            UspV1 section = new UspV1(encodedSections[i + 1]);
+            sections.put(UspV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsCaV1.ID)) {
+            UsCaV1 section = new UsCaV1(encodedSections[i + 1]);
+            sections.put(UsCaV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsNatV1.ID)) {
+            UsNatV1 section = new UsNatV1(encodedSections[i + 1]);
+            sections.put(UsNatV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsVaV1.ID)) {
+            UsVaV1 section = new UsVaV1(encodedSections[i + 1]);
+            sections.put(UsVaV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsCoV1.ID)) {
+            UsCoV1 section = new UsCoV1(encodedSections[i + 1]);
+            sections.put(UsCoV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsUtV1.ID)) {
+            UsUtV1 section = new UsUtV1(encodedSections[i + 1]);
+            sections.put(UsUtV1.NAME, section);
+          } else if (sectionIds.get(i).equals(UsCtV1.ID)) {
+            UsCtV1 section = new UsCtV1(encodedSections[i + 1]);
+            sections.put(UsCtV1.NAME, section);
+          }
+        }
       }
+      
+      return sections;
+    } else if(str.startsWith("C")) {
+      // old tcfeu only string
+      Map<String, EncodableSection> sections = new HashMap<>();
+
+      TcfEuV2 section = new TcfEuV2(str);
+      sections.put(TcfEuV2.NAME, section);
+
+      HeaderV1 header = new HeaderV1();
+      header.setFieldValue(HeaderV1Field.SECTION_IDS, Arrays.asList(2));
+      sections.put(HeaderV1.NAME, section);
+
+      return sections;
+    } else {
+      throw new DecodingException("Unable to decode '" + str + "'");
     }
   }
 
-  public String encodeSection(int sectionId) throws EncodingException {
+  public String encodeSection(int sectionId) {
     return encodeSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
 
-  public String encodeSection(String sectionName) throws EncodingException {
+  public String encodeSection(String sectionName) {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     if (this.sections.containsKey(sectionName)) {
       return this.sections.get(sectionName).encode();
     } else {
@@ -273,11 +357,11 @@ public class GppModel {
     }
   }
 
-  public void decodeSection(int sectionId, String encodedString) throws DecodingException {
+  public void decodeSection(int sectionId, String encodedString) {
     decodeSection(Sections.SECTION_ID_NAME_MAP.get(sectionId), encodedString);
   }
 
-  public void decodeSection(String sectionName, String encodedString) throws DecodingException {
+  public void decodeSection(String sectionName, String encodedString) {
     EncodableSection section = null;
     if (!this.sections.containsKey(sectionName)) {
       if (sectionName.equals(TcfEuV2.NAME)) {
@@ -316,4 +400,22 @@ public class GppModel {
       section.decode(encodedString);
     }
   }
+  
+  public String encode() {
+    if (this.encodedString == null || this.encodedString.isEmpty() || this.dirty) {
+      this.encodedString = encodeModel(this.sections);
+      this.dirty = false;
+      this.decoded = true;
+    }
+
+    return this.encodedString;
+  }
+  
+  public void decode(String encodedString) {
+    this.encodedString = encodedString;
+    this.dirty = false;
+    this.decoded = false;
+  }
+  
+  
 }

@@ -7,24 +7,40 @@ import com.iab.gpp.encoder.error.EncodingException;
 public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
 
   protected EncodableBoolean() {
-    super();
+    super(true);
   }
 
   public EncodableBoolean(Boolean value) {
-    super();
+    super(true);
     setValue(value);
   }
 
-  public String encode() throws EncodingException {
-    return BooleanEncoder.encode(this.value);
+  public EncodableBoolean(Boolean value, boolean hardFailIfMissing) {
+    super(hardFailIfMissing);
+    setValue(value);
   }
 
-  public void decode(String bitString) throws DecodingException {
-    this.value = BooleanEncoder.decode(bitString);
+  public String encode() {
+    try {
+      return BooleanEncoder.encode(this.value);
+    } catch (Exception e) {
+      throw new EncodingException(e);
+    }
   }
 
-  public String substring(String bitString, int fromIndex) {
-    // TODO: validate
-    return bitString.substring(fromIndex, fromIndex + 1);
+  public void decode(String bitString) {
+    try {
+      this.value = BooleanEncoder.decode(bitString);
+    } catch (Exception e) {
+      throw new DecodingException(e);
+    }
+  }
+
+  public String substring(String bitString, int fromIndex) throws SubstringException {
+    try {
+      return bitString.substring(fromIndex, fromIndex + 1);
+    } catch (Exception e) {
+      throw new SubstringException(e);
+    }
   }
 }

@@ -6,15 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfEuV2Test {
 
   @Test
-  public void testEncode1() throws EncodingException, InvalidFieldException {
+  public void testEncode1() {
     TcfEuV2 tcfEuV2 = new TcfEuV2();
     tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
@@ -22,16 +21,30 @@ public class TcfEuV2Test {
   }
 
   @Test
-  public void testEncode2() throws EncodingException, InvalidFieldException {
+  public void testEncode2() {
     TcfEuV2 tcfEuV2 = new TcfEuV2();
     tcfEuV2.setFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC, true);
     tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+
+    Assertions.assertEquals(3, tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE));
+    Assertions.assertEquals(
+        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CONSENTS));
+    Assertions.assertEquals(
+        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS));
+    Assertions.assertEquals(0, tcfEuV2.getFieldValue(TcfEuV2Field.NUM_CUSTOM_PURPOSES));
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS));
+    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS));
+
     Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA", tcfEuV2.encode());
   }
 
   @Test
-  public void testDecode1() throws DecodingException {
+  public void testDecode1() {
     TcfEuV2 tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
 
     Assertions.assertEquals(2, tcfEuV2.getVersion());
@@ -84,7 +97,7 @@ public class TcfEuV2Test {
   }
 
   @Test
-  public void testDecode2() throws DecodingException {
+  public void testDecode2() {
     TcfEuV2 tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
 
     Assertions.assertEquals(2, tcfEuV2.getVersion());
@@ -138,7 +151,7 @@ public class TcfEuV2Test {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testDecode3() throws DecodingException {
+  public void testDecode3() {
     TcfEuV2 tcfEuV2 = new TcfEuV2(
         "CPcqBNJPcqBNJNwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.QGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g.IGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g");
 
@@ -241,7 +254,7 @@ public class TcfEuV2Test {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testDecode4() throws DecodingException {
+  public void testDecode4() {
     TcfEuV2 tcfEuV2 = new TcfEuV2(
         "CPi8wgAPi8wgAAOACBENCuCoAP_AAEfAACiQJHNd_H__bX9n-f7_6ft0eY1f9_r37uQzDhfNk-8F3L_W_LwX_2E7NF36tq4KmR4ku1LBIUNtHMnUDUmxaokVrzHsak2cpzNKJ_BkknsZe2dYGF9vm5tj-QKZ7_5_d3f52T_9_9v-39z33913v3d93-_13LjdV5_9H_v9fR_b8_Kf9_5-_4v8_____3_e______8AEEggCTDVuIAuxLHAm0DCKBECMKwkKoFABBQDC0QGADg4KdlYBPrCBAAgFAEYEQIcAUYEAgAAAgCQiACQIsEAAAIgEAAIAEQiEABAwCCgAsDAIAAQDQMUQoABAkIMiAiKUwICIEggJbKhBKC6Q0wgCrLACgkRsFAAiAAAUgACAsHAMESAlYsECTFG-QAjBCgFEqFaAGGgAwABBI4RABgACCRwqADAAEEjgA");
 
@@ -278,7 +291,7 @@ public class TcfEuV2Test {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testDecode5() throws DecodingException {
+  public void testDecode5() {
     TcfEuV2 tcfEuV2 = new TcfEuV2(
         "CPgA5EAPgA5EAAOACBENCuCoAP_AAEfAACiQI0Nd_H__bX9n-f7_6Pt0cY1f9_r3ruQzDhfFk-8F3L_W3LwX32E7NF36pq4KmR4ku1LBIQFtHMnUDUmxaokVrzHsak2cpyNKI7BkknsZe2dYGF9Pm5lD-QKZ7_5_d3f52T_9_9v-39z339V3v3d93-_12PjdV599H_v9fR_b8_Kf9_5-_4v8___4IQAAAAQQ_AJMNW4gC7EscCbQMIoAQIwrCQqAUAEFAMLRAYAODgpmVgEusIEACAUARgRAhxBRgQCAAACAJCIAJAiwQAIAiAQAAgARAIQAEDAIKACwMAgABANAxACgAECQgyICIpTAgIgSCAlsqEEoKpDTCAKssAKARGwUACIAABSAAICwcAwRICViwQJMUbwAw0AGAAIJHCIAMAAQSOFQAYAAgkcA");
 
@@ -314,7 +327,7 @@ public class TcfEuV2Test {
   }
 
   @Test
-  public void testDecode6() throws DecodingException {
+  public void testDecode6() {
     TcfEuV2 tcfEuV2 = new TcfEuV2("COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA.YAAAAAAAAAAAAAAAAAA");
 
     Assertions.assertEquals(2, tcfEuV2.getFieldValue("Version"));
@@ -347,5 +360,62 @@ public class TcfEuV2Test {
 
     Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 37, 42),
         tcfEuV2.getFieldValue("VendorLegitimateInterests"));
+  }
+  
+  @Test
+  public void testDecode7() throws DecodingException {
+    TcfEuV2 tcfEuV2 = new TcfEuV2("COoC-kUOoC-kUAHABAENAwCoAIAAAELAAAwIF5wAoAAgAGAvMACX_ABBAAQAFA");
+
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("Version"));
+    Assertions.assertEquals("2019-10-07T05:17:54Z[UTC]", tcfEuV2.getFieldValue("Created").toString());
+    Assertions.assertEquals("2019-10-07T05:17:54Z[UTC]", tcfEuV2.getFieldValue("LastUpdated").toString());
+    Assertions.assertEquals(7, tcfEuV2.getFieldValue("CmpId"));
+    Assertions.assertEquals(1, tcfEuV2.getFieldValue("CmpVersion"));
+    Assertions.assertEquals(0, tcfEuV2.getFieldValue("ConsentScreen"));
+    Assertions.assertEquals("EN", tcfEuV2.getFieldValue("ConsentLanguage"));
+    Assertions.assertEquals(48, tcfEuV2.getFieldValue("VendorListVersion"));
+    Assertions.assertEquals(2, tcfEuV2.getFieldValue("PolicyVersion"));
+    Assertions.assertEquals(true, tcfEuV2.getFieldValue("IsServiceSpecific"));
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
+
+    Assertions.assertEquals(
+        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("SpecialFeatureOptins"));
+    Assertions.assertEquals(
+        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("PurposeConsents"));
+    Assertions.assertEquals(
+        Arrays.asList(false, true, false, false, false, false, true, false, true, true, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false),
+        tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
+
+    Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
+    Assertions.assertEquals("GB", tcfEuV2.getFieldValue("PublisherCountryCode"));
+
+    Assertions.assertEquals(Arrays.asList(1, 2, 3, 755), tcfEuV2.getFieldValue("VendorConsents"));
+
+    Assertions.assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
+        tcfEuV2.getFieldValue("VendorLegitimateInterests"));
+    
+    Assertions.assertEquals(1, ((List<RangeEntry>)tcfEuV2.getFieldValue("PublisherRestrictions")).size());
+    RangeEntry rangeEntry = ((List<RangeEntry>)tcfEuV2.getFieldValue("PublisherRestrictions")).get(0);
+    Assertions.assertEquals(1, rangeEntry.getKey());
+    Assertions.assertEquals(0, rangeEntry.getType());
+    Assertions.assertEquals(Arrays.asList(10), rangeEntry.getIds());
+  }
+  
+  @Test()
+  public void testDecodeGarbage1() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new TcfEuV2("A").getCreated();
+    });
+  }
+  
+  @Test()
+  public void testDecodeGarbage2() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new TcfEuV2("z").getCreated();
+    });
   }
 }

@@ -3,28 +3,45 @@ package com.iab.gpp.encoder.datatype;
 import java.time.ZonedDateTime;
 import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedDateTime> {
 
   protected EncodableDatetime() {
-    super();
+    super(true);
   }
 
   public EncodableDatetime(ZonedDateTime value) {
-    super();
+    super(true);
+    setValue(value);
+  }
+
+  public EncodableDatetime(ZonedDateTime value, boolean hardFailIfMissing) {
+    super(hardFailIfMissing);
     setValue(value);
   }
 
   public String encode() {
-    return DatetimeEncoder.encode(this.value);
+    try {
+      return DatetimeEncoder.encode(this.value);
+    } catch (Exception e) {
+      throw new EncodingException(e);
+    }
   }
 
-  public void decode(String bitString) throws DecodingException {
-    this.value = DatetimeEncoder.decode(bitString);
+  public void decode(String bitString) {
+    try {
+      this.value = DatetimeEncoder.decode(bitString);
+    } catch (Exception e) {
+      throw new DecodingException(e);
+    }
   }
 
-  public String substring(String bitString, int fromIndex) {
-    // TODO: validate
-    return bitString.substring(fromIndex, fromIndex + 36);
+  public String substring(String bitString, int fromIndex) throws SubstringException {
+    try {
+      return bitString.substring(fromIndex, fromIndex + 36);
+    } catch (Exception e) {
+      throw new SubstringException(e);
+    }
   }
 }
