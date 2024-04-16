@@ -160,7 +160,7 @@ public class UsCaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
     } else if (mspaServiceProviderMode == 1) {
       if (mspaOptOutOptionMode != 2) {
         throw new ValidationException("Invalid usca mspa service provider / opt out option modes combination: {"
-            + mspaServiceProviderMode + " / " + mspaServiceProviderMode + "}");
+            + mspaServiceProviderMode + " / " + mspaOptOutOptionMode + "}");
       }
 
       if (saleOptOutNotice != 0) {
