@@ -177,12 +177,12 @@ public class UsNatV1CoreSegment extends AbstractLazilyEncodableSegment<Encodable
             + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
       }
     } else if (targetedAdvertisingOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
+      if (targetedAdvertisingOptOut != 1 && targetedAdvertisingOptOut != 2) {
         throw new ValidationException("Invalid usnat targeted advertising notice / opt out combination: {"
             + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
       }
     } else if (targetedAdvertisingOptOutNotice == 2) {
-      if (saleOptOut != 1) {
+      if (targetedAdvertisingOptOut != 1) {
         throw new ValidationException("Invalid usnat targeted advertising notice / opt out combination: {"
             + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
       }
@@ -207,7 +207,7 @@ public class UsNatV1CoreSegment extends AbstractLazilyEncodableSegment<Encodable
     } else if (mspaServiceProviderMode == 1) {
       if (mspaOptOutOptionMode != 2) {
         throw new ValidationException("Invalid usnat mspa service provider / opt out option modes combination: {"
-            + mspaServiceProviderMode + " / " + mspaServiceProviderMode + "}");
+            + mspaServiceProviderMode + " / " + mspaOptOutOptionMode + "}");
       }
 
       if (saleOptOutNotice != 0) {
