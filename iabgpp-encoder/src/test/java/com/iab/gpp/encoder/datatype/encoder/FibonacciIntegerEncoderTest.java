@@ -2,6 +2,8 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerEncoderTest {
@@ -37,43 +39,43 @@ public class FibonacciIntegerEncoderTest {
 
   @Test
   public void testDecode1() throws DecodingException {
-    Assertions.assertEquals(1, FibonacciIntegerEncoder.decode("11"));
+    Assertions.assertEquals(1, FibonacciIntegerEncoder.decode(BitString.of("11")));
   }
 
   @Test
   public void testDecode2() throws DecodingException {
-    Assertions.assertEquals(2, FibonacciIntegerEncoder.decode("011"));
+    Assertions.assertEquals(2, FibonacciIntegerEncoder.decode(BitString.of("011")));
   }
 
   @Test
   public void testDecode3() throws DecodingException {
-    Assertions.assertEquals(3, FibonacciIntegerEncoder.decode("0011"));
+    Assertions.assertEquals(3, FibonacciIntegerEncoder.decode(BitString.of("0011")));
   }
 
   @Test
   public void testDecode4() throws DecodingException {
-    Assertions.assertEquals(4, FibonacciIntegerEncoder.decode("1011"));
+    Assertions.assertEquals(4, FibonacciIntegerEncoder.decode(BitString.of("1011")));
   }
 
   @Test
   public void testDecode5() throws DecodingException {
-    Assertions.assertEquals(5, FibonacciIntegerEncoder.decode("00011"));
+    Assertions.assertEquals(5, FibonacciIntegerEncoder.decode(BitString.of("00011")));
   }
 
   @Test
   public void testDecode6() throws DecodingException {
-    Assertions.assertEquals(6, FibonacciIntegerEncoder.decode("10011"));
+    Assertions.assertEquals(6, FibonacciIntegerEncoder.decode(BitString.of("10011")));
   }
 
   @Test
   public void testDecode7() throws DecodingException {
-    Assertions.assertEquals(7, FibonacciIntegerEncoder.decode("01011"));
+    Assertions.assertEquals(7, FibonacciIntegerEncoder.decode(BitString.of("01011")));
   }
 
   @Test
   public void testDecode8() {
     try {
-      FibonacciIntegerEncoder.decode("110");
+      FibonacciIntegerEncoder.decode(BitString.of("110"));
       Assertions.fail("DecodingException expected");
     } catch (DecodingException e) {
 
@@ -83,7 +85,7 @@ public class FibonacciIntegerEncoderTest {
   @Test
   public void testDecode9() {
     try {
-      FibonacciIntegerEncoder.decode("1100");
+      FibonacciIntegerEncoder.decode(BitString.of("1100"));
       Assertions.fail("DecodingException expected");
     } catch (DecodingException e) {
 
@@ -93,7 +95,7 @@ public class FibonacciIntegerEncoderTest {
   @Test
   public void testDecode10() {
     try {
-      FibonacciIntegerEncoder.decode("0110000000");
+      FibonacciIntegerEncoder.decode(BitString.of("0110000000"));
       Assertions.fail("DecodingException expected");
     } catch (DecodingException e) {
 

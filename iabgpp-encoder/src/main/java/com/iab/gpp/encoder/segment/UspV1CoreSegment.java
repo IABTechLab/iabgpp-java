@@ -36,12 +36,12 @@ public class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFiel
 
   @Override
   protected String encodeSegment(GenericFields fields) {
-    String str = "";
-    str += fields.get(UspV1Field.VERSION).getValue();
-    str += fields.get(UspV1Field.NOTICE).getValue();
-    str += fields.get(UspV1Field.OPT_OUT_SALE).getValue();
-    str += fields.get(UspV1Field.LSPA_COVERED).getValue();
-    return str;
+    StringBuilder str = new StringBuilder();
+    str.append(fields.get(UspV1Field.VERSION).getValue());
+    str.append(fields.get(UspV1Field.NOTICE).getValue());
+    str.append(fields.get(UspV1Field.OPT_OUT_SALE).getValue());
+    str.append(fields.get(UspV1Field.LSPA_COVERED).getValue());
+    return str.toString();
   }
 
   @Override

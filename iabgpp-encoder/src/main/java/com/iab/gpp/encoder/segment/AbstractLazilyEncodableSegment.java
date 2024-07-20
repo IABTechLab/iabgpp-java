@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
+import com.iab.gpp.encoder.datatype.DataType;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.Fields;
 
@@ -33,8 +34,9 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
       this.decoded = true;
     }
 
-    if (this.fields.containsKey(fieldName)) {
-      return this.fields.get(fieldName).getValue();
+    DataType<?> field = this.fields.get(fieldName);
+    if (field != null) {
+      return field.getValue();
     } else {
       throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
     }
@@ -47,8 +49,9 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
       this.decoded = true;
     }
 
-    if (this.fields.containsKey(fieldName)) {
-      this.fields.get(fieldName).setValue(value);
+    DataType<?> field = this.fields.get(fieldName);
+    if (field != null) {
+      field.setValue(value);
       this.dirty = true;
     } else {
       throw new InvalidFieldException(fieldName + " not found");

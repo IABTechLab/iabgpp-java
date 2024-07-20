@@ -3,6 +3,8 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -32,7 +34,7 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = FixedIntegerRangeEncoder.decode(bitString);
     } catch (Exception e) {
@@ -40,12 +42,12 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
       int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
       int index = fromIndex + 12;
       for (int i = 0; i < count; i++) {
-        if (bitString.charAt(index) == '1') {
+        if (bitString.getValue(index)) {
           index += 33;
         } else {
           index += 17;

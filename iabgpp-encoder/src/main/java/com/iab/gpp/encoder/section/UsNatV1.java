@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsNatV1Field;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -9,9 +10,9 @@ import com.iab.gpp.encoder.segment.UsNatV1GpcSegment;
 
 public class UsNatV1 extends AbstractLazilyEncodableSection {
 
-  public static int ID = 7;
-  public static int VERSION = 1;
-  public static String NAME = "usnatv1";
+  public static final int ID = 7;
+  public static final int VERSION = 1;
+  public static final String NAME = "usnatv1";
 
   public UsNatV1() {
     super();
@@ -39,10 +40,7 @@ public class UsNatV1 extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsNatV1CoreSegment());
-    segments.add(new UsNatV1GpcSegment());
-    return segments;
+    return Arrays.asList(new UsNatV1CoreSegment(), new UsNatV1GpcSegment());
   }
 
   @Override
@@ -69,7 +67,7 @@ public class UsNatV1 extends AbstractLazilyEncodableSection {
 
   @Override
   protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     
     if(!segments.isEmpty()) {
       encodedSegments.add(segments.get(0).encode());

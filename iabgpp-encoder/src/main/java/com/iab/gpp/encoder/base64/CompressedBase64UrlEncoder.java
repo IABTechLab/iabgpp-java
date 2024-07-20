@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
 
-  private static CompressedBase64UrlEncoder instance = new CompressedBase64UrlEncoder();
+  private static final CompressedBase64UrlEncoder instance = new CompressedBase64UrlEncoder();
   
   private CompressedBase64UrlEncoder() {
     

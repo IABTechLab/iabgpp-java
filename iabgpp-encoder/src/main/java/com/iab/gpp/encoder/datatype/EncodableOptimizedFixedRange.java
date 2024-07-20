@@ -3,6 +3,9 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFixedRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -33,7 +36,7 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = OptimizedFixedRangeEncoder.decode(bitString);
     } catch (Exception e) {
@@ -41,12 +44,14 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
       int max = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 16));
-      if (bitString.charAt(fromIndex + 16) == '1') {
-        return bitString.substring(fromIndex, fromIndex + 17)
-            + new EncodableFixedIntegerRange().substring(bitString, fromIndex + 17);
+      if (bitString.getValue(fromIndex + 16)) {
+        BitStringBuilder out = new BitStringBuilder();
+        out.append(bitString.substring(fromIndex, fromIndex + 17));
+        out.append(new EncodableFixedIntegerRange().substring(bitString, fromIndex + 17));
+        return out.build();
       } else {
         return bitString.substring(fromIndex, fromIndex + 17 + max);
       }
