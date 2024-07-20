@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -56,43 +58,43 @@ public class FixedBitfieldEncoderTest {
   
   @Test
   public void testDecode1() {
-    Assertions.assertEquals(new ArrayList<>(), FixedBitfieldEncoder.decode(""));
+    Assertions.assertEquals(new ArrayList<>(), FixedBitfieldEncoder.decode(BitString.of("")));
   }
 
   @Test
   public void testDecode2() {
-    Assertions.assertEquals(Arrays.asList(false), FixedBitfieldEncoder.decode("0"));
+    Assertions.assertEquals(Arrays.asList(false), FixedBitfieldEncoder.decode(BitString.of("0")));
   }
 
   @Test
   public void testDecode3() {
-    Assertions.assertEquals(Arrays.asList(true), FixedBitfieldEncoder.decode("1"));
+    Assertions.assertEquals(Arrays.asList(true), FixedBitfieldEncoder.decode(BitString.of("1")));
   }
 
   @Test
   public void testDecode4() {
-    Assertions.assertEquals(Arrays.asList(false, false), FixedBitfieldEncoder.decode("00"));
+    Assertions.assertEquals(Arrays.asList(false, false), FixedBitfieldEncoder.decode(BitString.of("00")));
   }
 
   @Test
   public void testDecode5() {
-    Assertions.assertEquals(Arrays.asList(false, true), FixedBitfieldEncoder.decode("01"));
+    Assertions.assertEquals(Arrays.asList(false, true), FixedBitfieldEncoder.decode(BitString.of("01")));
   }
 
   @Test
   public void testDecode6() {
-    Assertions.assertEquals(Arrays.asList(true, false), FixedBitfieldEncoder.decode("10"));
+    Assertions.assertEquals(Arrays.asList(true, false), FixedBitfieldEncoder.decode(BitString.of("10")));
   }
 
   @Test
   public void testDecode7() {
-    Assertions.assertEquals(Arrays.asList(true, true), FixedBitfieldEncoder.decode("11"));
+    Assertions.assertEquals(Arrays.asList(true, true), FixedBitfieldEncoder.decode(BitString.of("11")));
   }
 
   @Test
   public void testDecode8() {
     try {
-      FixedBitfieldEncoder.decode("2");
+      FixedBitfieldEncoder.decode(BitString.of("2"));
       Assertions.fail("DecodingException expected");
     } catch (DecodingException e) {
 

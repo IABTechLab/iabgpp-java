@@ -1,41 +1,31 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
-import com.iab.gpp.encoder.error.DecodingException;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedBitfieldEncoder {
 
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
-
   public static String encode(List<Boolean> value, int bitStringLength) {
-    if (value.size() > bitStringLength) {
-      throw new EncodingException("Too many values '" + value.size() + "'");
+    int length = value.size();
+    if (length > bitStringLength) {
+      throw new EncodingException("Too many values '" + length + "'");
     }
 
-    String bitString = "";
-    for (int i = 0; i < value.size(); i++) {
-      bitString += BooleanEncoder.encode(value.get(i));
+    StringBuilder bitString = new StringBuilder(length);
+    for (int i = 0; i < bitStringLength; i++) {
+      if (i < length) {
+        bitString.append(BooleanEncoder.encode(value.get(i)));
+      } else {
+        bitString.append(BitString.FALSE);
+      }
     }
 
-    while (bitString.length() < bitStringLength) {
-      bitString += "0";
-    }
-
-    return bitString;
+    return bitString.toString();
   }
 
-  public static List<Boolean> decode(String bitString) {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches()) {
-      throw new DecodingException("Undecodable FixedBitfield '" + bitString + "'");
-    }
-
-    List<Boolean> value = new ArrayList<>();
-    for (int i = 0; i < bitString.length(); i++) {
-      value.add(BooleanEncoder.decode(bitString.substring(i, i + 1)));
-    }
-    return value;
+  public static List<Boolean> decode(BitString bitString) {
+    return bitString;
   }
 }

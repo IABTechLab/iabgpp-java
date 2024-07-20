@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsCaField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -8,10 +9,10 @@ import com.iab.gpp.encoder.segment.UsCaCoreSegment;
 import com.iab.gpp.encoder.segment.UsCaGpcSegment;
 
 public class UsCa extends AbstractLazilyEncodableSection {
-  
-  public static int ID = 8;
-  public static int VERSION = 1;
-  public static String NAME = "usca";
+
+  public static final int ID = 8;
+  public static final int VERSION = 1;
+  public static final String NAME = "usca";
 
   public UsCa() {
     super();
@@ -39,10 +40,7 @@ public class UsCa extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsCaCoreSegment());
-    segments.add(new UsCaGpcSegment());
-    return segments;
+    return Arrays.asList(new UsCaCoreSegment(), new UsCaGpcSegment());
   }
   
   @Override
@@ -69,7 +67,7 @@ public class UsCa extends AbstractLazilyEncodableSection {
 
   @Override
   protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     
     if(!segments.isEmpty()) {
       encodedSegments.add(segments.get(0).encode());

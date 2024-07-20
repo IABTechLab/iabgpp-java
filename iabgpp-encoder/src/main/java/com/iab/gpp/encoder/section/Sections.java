@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 public class Sections {
 
-  public static List<String> SECTION_ORDER;
+  public static final List<String> SECTION_ORDER;
 
-  public static Map<Integer, String> SECTION_ID_NAME_MAP;
+  public static final Map<Integer, String> SECTION_ID_NAME_MAP;
 
   static {
     SECTION_ID_NAME_MAP = new HashMap<>();

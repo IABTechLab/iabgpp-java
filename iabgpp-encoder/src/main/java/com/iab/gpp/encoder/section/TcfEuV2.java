@@ -1,10 +1,11 @@
 package com.iab.gpp.encoder.section;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
+import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
@@ -16,9 +17,9 @@ import com.iab.gpp.encoder.segment.TcfEuV2VendorsDisclosedSegment;
 
 public class TcfEuV2 extends AbstractLazilyEncodableSection {
   
-  public static int ID = 2;
-  public static int VERSION = 2;
-  public static String NAME = "tcfeuv2";
+  public static final int ID = 2;
+  public static final int VERSION = 2;
+  public static final String NAME = "tcfeuv2";
 
   public TcfEuV2() {
     super();
@@ -46,12 +47,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new TcfEuV2CoreSegment());
-    segments.add(new TcfEuV2PublisherPurposesSegment());
-    segments.add(new TcfEuV2VendorsAllowedSegment());
-    segments.add(new TcfEuV2VendorsDisclosedSegment());
-    return segments;
+    return Arrays.asList(new TcfEuV2CoreSegment(), new TcfEuV2PublisherPurposesSegment(), new TcfEuV2VendorsAllowedSegment(), new TcfEuV2VendorsDisclosedSegment());
   }
   
   @Override
@@ -99,7 +95,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
 
   @Override
   public String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     if (segments.size() >= 1) {
       encodedSegments.add(segments.get(0).encode());
 
@@ -127,7 +123,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfEuV2Field.CREATED) && !fieldName.equals(TcfEuV2Field.LAST_UPDATED)) {
-      ZonedDateTime utcDateTime = ZonedDateTime.now(ZoneId.of("UTC"));
+      ZonedDateTime utcDateTime = ZonedDateTime.now(DatetimeEncoder.UTC);
 
       super.setFieldValue(TcfEuV2Field.CREATED, utcDateTime);
       super.setFieldValue(TcfEuV2Field.LAST_UPDATED, utcDateTime);

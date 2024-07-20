@@ -1,11 +1,11 @@
 package com.iab.gpp.encoder.segment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.IntSupplier;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
@@ -37,12 +37,8 @@ public class TcfEuV2PublisherPurposesSegment extends AbstractLazilyEncodableSegm
   protected EncodableBitStringFields initializeFields() {
     EncodableBitStringFields fields = new EncodableBitStringFields();
     fields.put(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
-    fields.put(TcfEuV2Field.PUBLISHER_CONSENTS,
-        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
-    fields.put(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS,
-        new EncodableFixedBitfield(Arrays.asList(false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false, false, false)));
+    fields.put(TcfEuV2Field.PUBLISHER_CONSENTS, new EncodableFixedBitfield(24));
+    fields.put(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS, new EncodableFixedBitfield(24));
 
     EncodableFixedInteger numCustomPurposes = new EncodableFixedInteger(6, 0);
     fields.put(TcfEuV2Field.NUM_CUSTOM_PURPOSES, numCustomPurposes);
@@ -57,10 +53,10 @@ public class TcfEuV2PublisherPurposesSegment extends AbstractLazilyEncodableSegm
     };
 
     fields.put(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS,
-        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>()));
+        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>(0)));
 
     fields.put(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS,
-        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>()));
+        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>(0)));
     return fields;
   }
 
@@ -77,7 +73,7 @@ public class TcfEuV2PublisherPurposesSegment extends AbstractLazilyEncodableSegm
       this.fields.reset(fields);
     }
     try {
-      String bitString = base64UrlEncoder.decode(encodedString);
+      BitString bitString = base64UrlEncoder.decode(encodedString);
       bitStringEncoder.decode(bitString, getFieldNames(), fields);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode TcfEuV2PublisherPurposesSegment '" + encodedString + "'", e);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
@@ -94,7 +95,7 @@ public class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
       this.fields.reset(fields);
     }
     try {
-      String bitString = base64UrlEncoder.decode(encodedString);
+      BitString bitString = base64UrlEncoder.decode(encodedString);
 
       // Necessary to maintain backwards compatibility when sensitive data processing changed from a
       // length of 12 to 16 and known child sensitive data consents changed from a length of 2 to 3 in the

@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsVaField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -8,9 +9,9 @@ import com.iab.gpp.encoder.segment.UsVaCoreSegment;
 
 public class UsVa extends AbstractLazilyEncodableSection {
 
-  public static int ID = 9;
-  public static int VERSION = 1;
-  public static String NAME = "usva";
+  public static final int ID = 9;
+  public static final int VERSION = 1;
+  public static final String NAME = "usva";
 
   public UsVa() {
     super();
@@ -38,9 +39,7 @@ public class UsVa extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsVaCoreSegment());
-    return segments;
+    return Collections.singletonList(new UsVaCoreSegment());
   }
 
   @Override
@@ -62,7 +61,7 @@ public class UsVa extends AbstractLazilyEncodableSection {
 
   @Override
   protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     for (EncodableSegment segment : segments) {
       encodedSegments.add(segment.encode());
     }

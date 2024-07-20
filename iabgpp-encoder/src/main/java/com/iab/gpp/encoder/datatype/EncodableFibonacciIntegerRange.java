@@ -3,6 +3,8 @@ package com.iab.gpp.encoder.datatype;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -23,7 +25,7 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     super(hardFailIfMissing);
     setValue(value);
   }
-  
+
   public String encode() {
     try {
       return FibonacciIntegerRangeEncoder.encode(this.value);
@@ -32,7 +34,7 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = FibonacciIntegerRangeEncoder.decode(bitString);
     } catch (Exception e) {
@@ -40,12 +42,12 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
       int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
       int index = fromIndex + 12;
       for (int i = 0; i < count; i++) {
-        if (bitString.charAt(index) == '1') {
+        if (bitString.getValue(index)) {
           index = bitString.indexOf("11", bitString.indexOf("11", index + 1) + 2) + 2;
         } else {
           index = bitString.indexOf("11", index + 1) + 2;

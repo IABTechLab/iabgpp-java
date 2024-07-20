@@ -51,6 +51,7 @@
         <module>iabgpp-encoder</module>
         <module>iabgpp-extras</module>
         <module>iabgpp-extras-jackson</module>
+        <module>iabgpp-jmh</module>
     </modules>
 
     <properties>

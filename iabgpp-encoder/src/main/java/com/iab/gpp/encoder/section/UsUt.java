@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsUtField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -8,9 +9,9 @@ import com.iab.gpp.encoder.segment.UsUtCoreSegment;
 
 public class UsUt extends AbstractLazilyEncodableSection {
   
-  public static int ID = 11;
-  public static int VERSION = 1;
-  public static String NAME = "usut";
+  public static final int ID = 11;
+  public static final int VERSION = 1;
+  public static final String NAME = "usut";
 
   public UsUt() {
     super();
@@ -38,9 +39,7 @@ public class UsUt extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsUtCoreSegment());
-    return segments;
+    return Collections.singletonList(new UsUtCoreSegment());
   }
   
   @Override
@@ -62,7 +61,7 @@ public class UsUt extends AbstractLazilyEncodableSection {
 
   @Override
   protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     for(EncodableSegment segment : segments) {
       encodedSegments.add(segment.encode());
     }
