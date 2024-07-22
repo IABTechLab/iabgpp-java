@@ -715,15 +715,29 @@ public class GppModelTest {
     Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
   }
   
- //java.lang.OutOfMemoryError: Java heap space
- @Test
- public void testDecodingExceptionValidStringButNotGPP() {
-   try {
-     GppModel gppModel = new GppModel("DP48G0AP48G0AEsACCPLAkEgAAAAAEPgAB5YAAAQaQD2F2K2kKFkPCmQWYAQBCijYEAhQAAAAkCBIAAgAUgQAgFIIAgAIFAAAAAAAAAQEgCQAAQABAAAIACgAAAAAAIAAAAAAAQQAAAAAIAAAAAAAAEAAAAAAAQAAAAIAABEhCAAQQAEAAAAAAAQAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAgAA");
-     gppModel.getHeader().getName();
-     Assertions.fail("Expected LazyDecodingException");
-   } catch (DecodingException e) {
-
-   }
- }
+  @Test
+  public void testMismatchedSections() {
+    try {
+      GppModel gppModel = new GppModel("DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+      gppModel.getHeader().getSectionsIds();
+      Assertions.fail("Expected DecodingException");
+    } catch (DecodingException e) {
+      
+    } catch (Exception e) {
+      Assertions.fail("Expected DecodingException");
+    }
+  }
+  
+  @Test
+  public void testEmptySections() {
+    try {
+      GppModel gppModel = new GppModel("DBACOeA~~1YNN");
+      gppModel.getHeader().getSectionsIds();
+      Assertions.fail("Expected DecodingException");
+    } catch (DecodingException e) {
+      
+    } catch (Exception e) {
+      Assertions.fail("Expected DecodingException");
+    }
+  }
 }

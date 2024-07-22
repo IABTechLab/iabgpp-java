@@ -289,7 +289,16 @@ public class GppModel {
   
         @SuppressWarnings("unchecked")
         List<Integer> sectionIds = (List<Integer>) header.getFieldValue("SectionIds");
+        
+        if(sectionIds.size() != encodedSections.length-1) {
+          throw new DecodingException("Unable to decode '" + str + "'. The number of sections does not match the number of sections defined in the header.");
+        }
+        
         for (int i = 0; i < sectionIds.size(); i++) {
+          String encodedSection = encodedSections[i + 1];
+          if(encodedSection.trim().isEmpty()) {
+            throw new DecodingException("Unable to decode '" + str + "'. Section " + (i+1) + " is blank.");
+          }
           if (sectionIds.get(i).equals(TcfEuV2.ID)) {
             TcfEuV2 section = new TcfEuV2(encodedSections[i + 1]);
             sections.put(TcfEuV2.NAME, section);
