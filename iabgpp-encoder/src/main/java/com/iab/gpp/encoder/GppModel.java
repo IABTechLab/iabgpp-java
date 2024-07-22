@@ -279,7 +279,7 @@ public class GppModel {
   }
 
   protected Map<String, EncodableSection> decodeModel(String str) {
-    if(str == null || str.isEmpty() ||  str.startsWith("D")) {
+    if(str == null || str.isEmpty() ||  str.startsWith("DB")) {
       Map<String, EncodableSection> sections = new HashMap<>();
       
       if(str != null && !str.isEmpty()) {

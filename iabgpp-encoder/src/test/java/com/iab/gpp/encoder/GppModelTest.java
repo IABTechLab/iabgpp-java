@@ -714,4 +714,16 @@ public class GppModelTest {
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
     Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
   }
+  
+ //java.lang.OutOfMemoryError: Java heap space
+ @Test
+ public void testDecodingExceptionValidStringButNotGPP() {
+   try {
+     GppModel gppModel = new GppModel("DP48G0AP48G0AEsACCPLAkEgAAAAAEPgAB5YAAAQaQD2F2K2kKFkPCmQWYAQBCijYEAhQAAAAkCBIAAgAUgQAgFIIAgAIFAAAAAAAAAQEgCQAAQABAAAIACgAAAAAAIAAAAAAAQQAAAAAIAAAAAAAAEAAAAAAAQAAAAIAABEhCAAQQAEAAAAAAAQAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAgAA");
+     gppModel.getHeader().getName();
+     Assertions.fail("Expected LazyDecodingException");
+   } catch (DecodingException e) {
+
+   }
+ }
 }
