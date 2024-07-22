@@ -300,31 +300,31 @@ public class GppModel {
             throw new DecodingException("Unable to decode '" + str + "'. Section " + (i+1) + " is blank.");
           }
           if (sectionIds.get(i).equals(TcfEuV2.ID)) {
-            TcfEuV2 section = new TcfEuV2(encodedSections[i + 1]);
+            TcfEuV2 section = new TcfEuV2(encodedSection);
             sections.put(TcfEuV2.NAME, section);
           } else if (sectionIds.get(i).equals(TcfCaV1.ID)) {
-            TcfCaV1 section = new TcfCaV1(encodedSections[i + 1]);
+            TcfCaV1 section = new TcfCaV1(encodedSection);
             sections.put(TcfCaV1.NAME, section);
           } else if (sectionIds.get(i).equals(UspV1.ID)) {
-            UspV1 section = new UspV1(encodedSections[i + 1]);
+            UspV1 section = new UspV1(encodedSection);
             sections.put(UspV1.NAME, section);
           } else if (sectionIds.get(i).equals(UsCaV1.ID)) {
-            UsCaV1 section = new UsCaV1(encodedSections[i + 1]);
+            UsCaV1 section = new UsCaV1(encodedSection);
             sections.put(UsCaV1.NAME, section);
           } else if (sectionIds.get(i).equals(UsNatV1.ID)) {
-            UsNatV1 section = new UsNatV1(encodedSections[i + 1]);
+            UsNatV1 section = new UsNatV1(encodedSection);
             sections.put(UsNatV1.NAME, section);
           } else if (sectionIds.get(i).equals(UsVaV1.ID)) {
-            UsVaV1 section = new UsVaV1(encodedSections[i + 1]);
+            UsVaV1 section = new UsVaV1(encodedSection);
             sections.put(UsVaV1.NAME, section);
           } else if (sectionIds.get(i).equals(UsCoV1.ID)) {
-            UsCoV1 section = new UsCoV1(encodedSections[i + 1]);
+            UsCoV1 section = new UsCoV1(encodedSection);
             sections.put(UsCoV1.NAME, section);
           } else if (sectionIds.get(i).equals(UsUtV1.ID)) {
-            UsUtV1 section = new UsUtV1(encodedSections[i + 1]);
+            UsUtV1 section = new UsUtV1(encodedSection);
             sections.put(UsUtV1.NAME, section);
           } else if (sectionIds.get(i).equals(UsCtV1.ID)) {
-            UsCtV1 section = new UsCtV1(encodedSections[i + 1]);
+            UsCtV1 section = new UsCtV1(encodedSection);
             sections.put(UsCtV1.NAME, section);
           }
         }
