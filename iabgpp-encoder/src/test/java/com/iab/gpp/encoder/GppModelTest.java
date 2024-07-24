@@ -648,6 +648,13 @@ public class GppModelTest {
     Assertions.assertEquals(Arrays.asList(1, 173, 722),
         gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
   }
+  
+  @Test
+  public void testDecode4() {
+    GppModel gppModel = new GppModel("DBABTA~1YYN");
+    gppModel.getFieldValue(UspV1.NAME, UspV1Field.VERSION);
+    
+  }
 
   @Test
   public void testConsistency() {
