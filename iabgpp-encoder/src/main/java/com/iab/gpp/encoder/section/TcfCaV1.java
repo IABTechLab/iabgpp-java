@@ -24,7 +24,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
     super();
   }
 
-  public TcfCaV1(String encodedString) {
+  public TcfCaV1(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -50,12 +50,12 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   }
   
   @Override
-  public List<EncodableSegment> decodeSection(String encodedString) {
+  public List<EncodableSegment> decodeSection(CharSequence encodedString) {
     List<EncodableSegment> segments = initializeSegments();
     
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
-      for (int i = 0; i < encodedSegments.length; i++) {
+    if (encodedString != null && encodedString.length() > 0) {
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+      for (int i = 0; i < encodedSegments.size(); i++) {
         
         /**
          * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
@@ -68,16 +68,16 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
          * for the encoding version which only coincidentally works here because the version value is less than 8.
          */
         
-        String encodedSegment = encodedSegments[i];
-        if(!encodedSegment.isEmpty()) {
+        CharSequence encodedSegment = encodedSegments.get(i);
+        if (encodedSegment.length() > 0) {
           char firstChar = encodedSegment.charAt(0);
           
           if(firstChar >= 'A' && firstChar <= 'H') {
-            segments.get(0).decode(encodedSegments[i]);
+            segments.get(0).decode(encodedSegment);
           } else if(firstChar >= 'I' && firstChar <= 'P') {
-            segments.get(2).decode(encodedSegments[i]);
+            segments.get(2).decode(encodedSegment);
           } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
-            segments.get(1).decode(encodedSegments[i]);
+            segments.get(1).decode(encodedSegment);
           } else {
             throw new DecodingException("Invalid segment '" + encodedSegment + "'");
           }

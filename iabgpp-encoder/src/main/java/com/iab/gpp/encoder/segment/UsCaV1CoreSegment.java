@@ -83,8 +83,8 @@ public class UsCaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
   }
 
   @Override
-  protected void decodeSegment(String encodedString, EncodableBitStringFields fields) {
-    if (encodedString == null || encodedString.isEmpty()) {
+  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields fields) {
+    if (encodedString == null || encodedString.length() == 0) {
       this.fields.reset(fields);
     }
     try {

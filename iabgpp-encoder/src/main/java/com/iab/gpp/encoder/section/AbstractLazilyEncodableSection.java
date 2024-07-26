@@ -8,7 +8,7 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
 
   private List<EncodableSegment> segments;
   
-  private String encodedString = null;
+  private CharSequence encodedString = null;
 
   private boolean dirty = false;
   private boolean decoded = true;
@@ -21,7 +21,7 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
   
   protected abstract String encodeSection(List<EncodableSegment> segments);
 
-  protected abstract List<EncodableSegment> decodeSection(String encodedString);
+  protected abstract List<EncodableSegment> decodeSection(CharSequence encodedString);
   
   public boolean hasField(String fieldName) {
     if (!this.decoded) {
@@ -73,16 +73,16 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
   }
 
   public String encode() {
-    if (this.encodedString == null || this.encodedString.isEmpty() || this.dirty) {
+    if (this.encodedString == null || this.encodedString.length() == 0 || this.dirty) {
       this.encodedString = this.encodeSection(this.segments);
       this.dirty = false;
       this.decoded = true;
     }
 
-    return this.encodedString;
+    return this.encodedString.toString();
   }
 
-  public void decode(String encodedString) {
+  public void decode(CharSequence encodedString) {
     this.encodedString = encodedString;
     this.dirty = false;
     this.decoded = false;
