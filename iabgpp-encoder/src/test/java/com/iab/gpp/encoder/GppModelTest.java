@@ -12,7 +12,11 @@ import com.iab.gpp.encoder.field.TcfEuV2Field;
 import com.iab.gpp.encoder.field.UsCaV1Field;
 import com.iab.gpp.encoder.field.UsCoV1Field;
 import com.iab.gpp.encoder.field.UsCtV1Field;
+import com.iab.gpp.encoder.field.UsFlV1Field;
+import com.iab.gpp.encoder.field.UsMtV1Field;
 import com.iab.gpp.encoder.field.UsNatV1Field;
+import com.iab.gpp.encoder.field.UsOrV1Field;
+import com.iab.gpp.encoder.field.UsTxV1Field;
 import com.iab.gpp.encoder.field.UsUtV1Field;
 import com.iab.gpp.encoder.field.UsVaV1Field;
 import com.iab.gpp.encoder.field.UspV1Field;
@@ -21,7 +25,11 @@ import com.iab.gpp.encoder.section.TcfEuV2;
 import com.iab.gpp.encoder.section.UsCaV1;
 import com.iab.gpp.encoder.section.UsCoV1;
 import com.iab.gpp.encoder.section.UsCtV1;
+import com.iab.gpp.encoder.section.UsFlV1;
+import com.iab.gpp.encoder.section.UsMtV1;
 import com.iab.gpp.encoder.section.UsNatV1;
+import com.iab.gpp.encoder.section.UsOrV1;
+import com.iab.gpp.encoder.section.UsTxV1;
 import com.iab.gpp.encoder.section.UsUtV1;
 import com.iab.gpp.encoder.section.UsVaV1;
 import com.iab.gpp.encoder.section.UspV1;
@@ -82,6 +90,10 @@ public class GppModelTest {
     Assertions.assertEquals(false, gppModel.hasSection(UsCoV1.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(UsUtV1.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(UsCtV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsFlV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsMtV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsOrV1.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsTxV1.NAME));
 
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VERSION, TcfEuV2.VERSION);
     gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV1Field.CREATED, utcDateTime);
@@ -96,6 +108,10 @@ public class GppModelTest {
     gppModel.setFieldValue(UsCoV1.NAME, UsCoV1Field.VERSION, UsCoV1.VERSION);
     gppModel.setFieldValue(UsUtV1.NAME, UsUtV1Field.VERSION, UsUtV1.VERSION);
     gppModel.setFieldValue(UsCtV1.NAME, UsCtV1Field.VERSION, UsCtV1.VERSION);
+    gppModel.setFieldValue(UsFlV1.NAME, UsFlV1Field.VERSION, UsFlV1.VERSION);
+    gppModel.setFieldValue(UsMtV1.NAME, UsMtV1Field.VERSION, UsMtV1.VERSION);
+    gppModel.setFieldValue(UsOrV1.NAME, UsOrV1Field.VERSION, UsOrV1.VERSION);
+    gppModel.setFieldValue(UsTxV1.NAME, UsTxV1Field.VERSION, UsTxV1.VERSION);
 
 
 
@@ -108,10 +124,14 @@ public class GppModelTest {
     Assertions.assertEquals(true, gppModel.hasSection(UsCoV1.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(UsUtV1.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(UsCtV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsFlV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsMtV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsOrV1.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsTxV1.NAME));
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA",
+        "DBACOZY~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA",
         gppString);
 
   }
