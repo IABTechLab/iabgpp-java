@@ -8,7 +8,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   protected T fields;
 
-  private String encodedString = null;
+  private CharSequence encodedString = null;
 
   private boolean dirty = false;
   private boolean decoded = true;
@@ -21,7 +21,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   protected abstract String encodeSegment(T fields);
 
-  protected abstract void decodeSegment(String encodedString, T Fields);
+  protected abstract void decodeSegment(CharSequence encodedString, T Fields);
 
   public boolean hasField(String fieldName) {
     return this.fields.containsKey(fieldName);
@@ -59,17 +59,17 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
   }
 
   public String encode() {
-    if (this.encodedString == null || this.encodedString.isEmpty() || this.dirty) {
+    if (this.encodedString == null || this.encodedString.length() == 0 || this.dirty) {
       this.validate();
       this.encodedString = encodeSegment(this.fields);
       this.dirty = false;
       this.decoded = true;
     }
 
-    return this.encodedString;
+    return this.encodedString.toString();
   }
 
-  public void decode(String encodedString) {
+  public void decode(CharSequence encodedString) {
     this.encodedString = encodedString;
     this.dirty = false;
     this.decoded = false;

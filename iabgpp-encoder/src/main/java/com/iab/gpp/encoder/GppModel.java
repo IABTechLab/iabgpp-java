@@ -13,6 +13,7 @@ import com.iab.gpp.encoder.field.HeaderV1Field;
 import com.iab.gpp.encoder.section.EncodableSection;
 import com.iab.gpp.encoder.section.HeaderV1;
 import com.iab.gpp.encoder.section.Sections;
+import com.iab.gpp.encoder.section.SlicedCharSequence;
 import com.iab.gpp.encoder.section.TcfCaV1;
 import com.iab.gpp.encoder.section.TcfEuV2;
 import com.iab.gpp.encoder.section.UsCa;
@@ -348,16 +349,15 @@ public class GppModel {
   protected Map<String, EncodableSection> decodeModel(String str) {
     if (str == null || str.isEmpty() || str.startsWith("DB")) {
       Map<String, EncodableSection> sections = new HashMap<>();
-
-      if (str != null && !str.isEmpty()) {
-        String[] encodedSections = str.split("~");
-        HeaderV1 header = new HeaderV1(encodedSections[0]);
+      if(str != null && !str.isEmpty()) {
+        List<CharSequence> encodedSections = SlicedCharSequence.split(str, '~');
+        HeaderV1 header = new HeaderV1(encodedSections.get(0));
         sections.put(HeaderV1.NAME, header);
 
         @SuppressWarnings("unchecked")
         List<Integer> sectionIds = (List<Integer>) header.getFieldValue("SectionIds");
         for (int i = 0; i < sectionIds.size(); i++) {
-          String section = encodedSections[i + 1];
+          CharSequence section = encodedSections.get(i + 1);
           switch (sectionIds.get(i)) {
             case TcfEuV2.ID:
               sections.put(TcfEuV2.NAME, new TcfEuV2(section));

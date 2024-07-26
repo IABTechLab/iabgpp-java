@@ -105,7 +105,7 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
   public abstract String encode() throws EncodingException;
 
   @Override
-  public abstract void decode(String encodedString) throws DecodingException;
+  public abstract void decode(CharSequence encodedString) throws DecodingException;
 
   @Override
   public abstract int getId();

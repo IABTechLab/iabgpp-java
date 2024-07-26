@@ -18,7 +18,7 @@ public class UsCt extends AbstractLazilyEncodableSection {
     super();
   }
 
-  public UsCt(String encodedString) {
+  public UsCt(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -44,19 +44,19 @@ public class UsCt extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
+  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     List<EncodableSegment> segments = initializeSegments();
 
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
+    if (encodedString != null && encodedString.length() > 0) {
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
   
-      if(encodedSegments.length > 0) {
-        segments.get(0).decode(encodedSegments[0]);
+      if (encodedSegments.size() > 0) {
+        segments.get(0).decode(encodedSegments.get(0));
       }
       
-      if(encodedSegments.length > 1) {
+      if (encodedSegments.size() > 1) {
         segments.get(1).setFieldValue(UsCtField.GPC_SEGMENT_INCLUDED, true);
-        segments.get(1).decode(encodedSegments[1]);
+        segments.get(1).decode(encodedSegments.get(1));
       } else {
         segments.get(1).setFieldValue(UsCtField.GPC_SEGMENT_INCLUDED, false);
       }

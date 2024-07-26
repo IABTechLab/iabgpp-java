@@ -17,7 +17,7 @@ public class HeaderV1 extends AbstractLazilyEncodableSection {
     super();
   }
 
-  public HeaderV1(String encodedString) {
+  public HeaderV1(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -43,15 +43,15 @@ public class HeaderV1 extends AbstractLazilyEncodableSection {
   }
   
   @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
+  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     List<EncodableSegment> segments = initializeSegments();
     
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
+    if(encodedString != null && encodedString.length() > 0) {
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
       
-      for(int i=0; i<segments.size(); i++) {
-        if(encodedSegments.length > i) {
-          segments.get(i).decode(encodedSegments[i]);
+      for (int i=0; i<segments.size(); i++) {
+        if (encodedSegments.size() > i) {
+          segments.get(i).decode(encodedSegments.get(i));
         }
       }
     }

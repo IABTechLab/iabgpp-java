@@ -44,7 +44,7 @@ public abstract class AbstractBase64UrlEncoder {
     return str.toString();
   }
 
-  public BitString decode(String str) {
+  public BitString decode(CharSequence str) {
     int length = str.length();
     BitStringBuilder sb = new BitStringBuilder(length * BASE64_BITS);
     for (int i = 0; i < length; i++) {

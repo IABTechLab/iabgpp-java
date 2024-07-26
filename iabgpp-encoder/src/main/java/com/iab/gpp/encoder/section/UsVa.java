@@ -17,7 +17,7 @@ public class UsVa extends AbstractLazilyEncodableSection {
     super();
   }
 
-  public UsVa(String encodedString) {
+  public UsVa(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -43,15 +43,15 @@ public class UsVa extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
+  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     List<EncodableSegment> segments = initializeSegments();
 
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
+    if (encodedString != null && encodedString.length() > 0) {
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
   
       for (int i = 0; i < segments.size(); i++) {
-        if (encodedSegments.length > i) {
-          segments.get(i).decode(encodedSegments[i]);
+        if (encodedSegments.size() > i) {
+          segments.get(i).decode(encodedSegments.get(i));
         }
       }
     }
