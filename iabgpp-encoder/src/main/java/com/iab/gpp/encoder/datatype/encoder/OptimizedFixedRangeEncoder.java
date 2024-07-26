@@ -2,13 +2,12 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class OptimizedFixedRangeEncoder {
-
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
   public static String encode(List<Integer> value) throws EncodingException {
     // TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
@@ -19,9 +18,9 @@ public class OptimizedFixedRangeEncoder {
     int bitFieldLength = max;
 
     if (rangeLength <= bitFieldLength) {
-      return FixedIntegerEncoder.encode(max, 16) + "1" + rangeBitString;
+      return FixedIntegerEncoder.encode(max, 16) + BitString.TRUE_STRING + rangeBitString;
     } else {
-      List<Boolean> bits = new ArrayList<>();
+      List<Boolean> bits = new ArrayList<>(max);
       int index = 0;
       for (int i = 0; i < max; i++) {
         if (i == value.get(index) - 1) {
@@ -32,23 +31,24 @@ public class OptimizedFixedRangeEncoder {
         }
       }
 
-      return FixedIntegerEncoder.encode(max, 16) + "0" + FixedBitfieldEncoder.encode(bits, bitFieldLength);
+      return FixedIntegerEncoder.encode(max, 16) + BitString.FALSE_STRING + FixedBitfieldEncoder.encode(bits, bitFieldLength);
     }
   }
 
-  public static List<Integer> decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() < 12) {
+  public static List<Integer> decode(BitString bitString) throws DecodingException {
+    if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FixedIntegerRange '" + bitString + "'");
     }
 
-    if (bitString.charAt(16) == '1') {
+    if (bitString.getValue(16)) {
       return FixedIntegerRangeEncoder.decode(bitString.substring(17));
     } else {
-      List<Integer> value = new ArrayList<>();
-      List<Boolean> bits = FixedBitfieldEncoder.decode(bitString.substring(17));
-      for (int i = 0; i < bits.size(); i++) {
-        if (bits.get(i) == true) {
-          value.add(i + 1);
+      BitString bits = bitString.substring(17);
+      int length = bits.length();
+      List<Integer> value = new ArrayList<>(length);
+      for (int i = 0; i < length; i++) {
+        if (bits.getValue(i)) {
+          value.add(IntegerCache.valueOf(i + 1));
         }
       }
       return value;

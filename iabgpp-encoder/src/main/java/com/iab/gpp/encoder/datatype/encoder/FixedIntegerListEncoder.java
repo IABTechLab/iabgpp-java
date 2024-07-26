@@ -2,56 +2,52 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedIntegerListEncoder {
 
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
-
   public static String encode(List<Integer> value, int elementBitStringLength, int numElements) {
-    if(value.size() > numElements) {
+    int length = value.size();
+    if (length > numElements) {
       throw new EncodingException("Too many values '" + value.size() + "'");
     }
-    
-    String bitString = "";
-    for (int i = 0; i < value.size(); i++) {
-      bitString += FixedIntegerEncoder.encode(value.get(i), elementBitStringLength);
+
+    int expectedLength = elementBitStringLength * numElements;
+
+    StringBuilder bitString = new StringBuilder(expectedLength);
+    for (int i = 0; i < numElements; i++) {
+      if (i < length) {
+        bitString.append(FixedIntegerEncoder.encode(value.get(i), elementBitStringLength));
+      } else {
+        for (int j = 0; j < elementBitStringLength; j++) {
+          bitString.append(BitString.FALSE);
+        }
+      }
     }
 
-    while (bitString.length() < elementBitStringLength * numElements) {
-      bitString += "0";
-    }
-
-    return bitString;
+    return bitString.toString();
   }
 
-  public static List<Integer> decode(String bitString, int elementBitStringLength, int numElements)
+  public static List<Integer> decode(BitString bitString, int elementBitStringLength, int numElements)
       throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches()) {
+    int length = bitString.length();
+    if (length > elementBitStringLength * numElements) {
       throw new DecodingException("Undecodable FixedIntegerList '" + bitString + "'");
     }
 
-    if (bitString.length() > elementBitStringLength * numElements) {
+    if (length % elementBitStringLength != 0) {
       throw new DecodingException("Undecodable FixedIntegerList '" + bitString + "'");
     }
 
-    if (bitString.length() % elementBitStringLength != 0) {
-      throw new DecodingException("Undecodable FixedIntegerList '" + bitString + "'");
-    }
+    bitString = bitString.expandTo(elementBitStringLength * numElements);
 
-    while (bitString.length() < elementBitStringLength * numElements) {
-      bitString += "0";
-    }
-
-    if (bitString.length() > elementBitStringLength * numElements) {
-      bitString = bitString.substring(0, elementBitStringLength * numElements);
-    }
-
-    List<Integer> value = new ArrayList<>();
-    for (int i = 0; i < bitString.length(); i += elementBitStringLength) {
-      value.add(FixedIntegerEncoder.decode(bitString.substring(i, i + elementBitStringLength)));
+    List<Integer> value = new ArrayList<>(numElements);
+    length = bitString.length();
+    for (int i = 0; i < length; i += elementBitStringLength) {
+      value.add(IntegerCache.valueOf(FixedIntegerEncoder.decode(bitString, i, elementBitStringLength)));
     }
 
     while (value.size() < numElements) {

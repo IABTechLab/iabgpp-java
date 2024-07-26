@@ -1,6 +1,8 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.time.ZonedDateTime;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -29,7 +31,7 @@ public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedD
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = DatetimeEncoder.decode(bitString);
     } catch (Exception e) {
@@ -37,7 +39,7 @@ public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedD
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
       return bitString.substring(fromIndex, fromIndex + 36);
     } catch (Exception e) {

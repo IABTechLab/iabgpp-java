@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsUtV1Field;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -8,15 +9,15 @@ import com.iab.gpp.encoder.segment.UsUtV1CoreSegment;
 
 public class UsUtV1 extends AbstractLazilyEncodableSection {
   
-  public static int ID = 11;
-  public static int VERSION = 1;
-  public static String NAME = "usutv1";
+  public static final int ID = 11;
+  public static final int VERSION = 1;
+  public static final String NAME = "usutv1";
 
   public UsUtV1() {
     super();
   }
 
-  public UsUtV1(String encodedString) {
+  public UsUtV1(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -38,21 +39,19 @@ public class UsUtV1 extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsUtV1CoreSegment());
-    return segments;
+    return Collections.singletonList(new UsUtV1CoreSegment());
   }
   
   @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
+  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     List<EncodableSegment> segments = initializeSegments();
     
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
+    if (encodedString != null && encodedString.length() > 0) {
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
       
-      for(int i=0; i<segments.size(); i++) {
-        if(encodedSegments.length > i) {
-          segments.get(i).decode(encodedSegments[i]);
+      for (int i = 0; i < segments.size(); i++) {
+        if (encodedSegments.size() > i) {
+          segments.get(i).decode(encodedSegments.get(i));
         }
       }
     }
@@ -62,7 +61,7 @@ public class UsUtV1 extends AbstractLazilyEncodableSection {
 
   @Override
   protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     for(EncodableSegment segment : segments) {
       encodedSegments.add(segment.encode());
     }

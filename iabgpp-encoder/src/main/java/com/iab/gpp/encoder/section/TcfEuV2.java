@@ -1,10 +1,11 @@
 package com.iab.gpp.encoder.section;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
+import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
@@ -16,15 +17,15 @@ import com.iab.gpp.encoder.segment.TcfEuV2VendorsDisclosedSegment;
 
 public class TcfEuV2 extends AbstractLazilyEncodableSection {
   
-  public static int ID = 2;
-  public static int VERSION = 2;
-  public static String NAME = "tcfeuv2";
+  public static final int ID = 2;
+  public static final int VERSION = 2;
+  public static final String NAME = "tcfeuv2";
 
   public TcfEuV2() {
     super();
   }
 
-  public TcfEuV2(String encodedString) {
+  public TcfEuV2(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -46,21 +47,16 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new TcfEuV2CoreSegment());
-    segments.add(new TcfEuV2PublisherPurposesSegment());
-    segments.add(new TcfEuV2VendorsAllowedSegment());
-    segments.add(new TcfEuV2VendorsDisclosedSegment());
-    return segments;
+    return Arrays.asList(new TcfEuV2CoreSegment(), new TcfEuV2PublisherPurposesSegment(), new TcfEuV2VendorsAllowedSegment(), new TcfEuV2VendorsDisclosedSegment());
   }
   
   @Override
-  public List<EncodableSegment> decodeSection(String encodedString) {
+  public List<EncodableSegment> decodeSection(CharSequence encodedString) {
     List<EncodableSegment> segments = initializeSegments();
     
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
-      for (int i = 0; i < encodedSegments.length; i++) {
+    if (encodedString != null && encodedString.length() > 0) {
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+      for (int i = 0; i < encodedSegments.size(); i++) {
         
         /**
          * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
@@ -74,19 +70,19 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
          * for the encoding version which only coincidentally works here because the version value is less than 8.
          */
         
-        String encodedSegment = encodedSegments[i];
-        if(!encodedSegment.isEmpty()) {
+        CharSequence encodedSegment = encodedSegments.get(i);
+        if (encodedSegment.length() > 0) {
           char firstChar = encodedSegment.charAt(0);
           
           // unfortunately, the segment ordering doesn't match the segment ids
           if(firstChar >= 'A' && firstChar <= 'H') {
-            segments.get(0).decode(encodedSegments[i]);
+            segments.get(0).decode(encodedSegment);
           } else if(firstChar >= 'I' && firstChar <= 'P') {
-            segments.get(3).decode(encodedSegments[i]);
+            segments.get(3).decode(encodedSegment);
           } else if(firstChar >= 'Q' && firstChar <= 'X') {
-            segments.get(2).decode(encodedSegments[i]);
+            segments.get(2).decode(encodedSegment);
           } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
-            segments.get(1).decode(encodedSegments[i]);
+            segments.get(1).decode(encodedSegment);
           } else {
             throw new DecodingException("Invalid segment '" + encodedSegment + "'");
           }
@@ -99,7 +95,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
 
   @Override
   public String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     if (segments.size() >= 1) {
       encodedSegments.add(segments.get(0).encode());
 
@@ -127,7 +123,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfEuV2Field.CREATED) && !fieldName.equals(TcfEuV2Field.LAST_UPDATED)) {
-      ZonedDateTime utcDateTime = ZonedDateTime.now(ZoneId.of("UTC"));
+      ZonedDateTime utcDateTime = ZonedDateTime.now(DatetimeEncoder.UTC);
 
       super.setFieldValue(TcfEuV2Field.CREATED, utcDateTime);
       super.setFieldValue(TcfEuV2Field.LAST_UPDATED, utcDateTime);

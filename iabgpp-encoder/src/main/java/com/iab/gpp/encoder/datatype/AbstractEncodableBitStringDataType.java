@@ -3,6 +3,8 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.ValidationException;
 
 public abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
@@ -50,8 +52,8 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
 
   public abstract String encode();
 
-  public abstract void decode(String bitString);
+  public abstract void decode(BitString bitString);
 
-  public abstract String substring(String bitString, int fromIndex) throws SubstringException;
+  public abstract BitString substring(BitString bitString, int fromIndex) throws SubstringException;
 
 }

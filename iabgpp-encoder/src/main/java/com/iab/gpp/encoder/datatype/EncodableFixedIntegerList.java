@@ -2,6 +2,8 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -39,7 +41,7 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements);
     } catch (Exception e) {
@@ -47,7 +49,7 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
       return bitString.substring(fromIndex, fromIndex + (this.elementBitStringLength * numElements));
     } catch (Exception e) {
