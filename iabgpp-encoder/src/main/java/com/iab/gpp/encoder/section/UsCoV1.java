@@ -11,7 +11,7 @@ public class UsCoV1 extends AbstractLazilyEncodableSection {
   
   public static int ID = 10;
   public static int VERSION = 1;
-  public static String NAME = "uscov1";
+  public static String NAME = "usco";
 
   public UsCoV1() {
     super();
