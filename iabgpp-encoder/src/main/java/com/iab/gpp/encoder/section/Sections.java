@@ -18,16 +18,16 @@ public class Sections {
     SECTION_ID_NAME_MAP.put(TcfEuV2.ID, TcfEuV2.NAME);
     SECTION_ID_NAME_MAP.put(TcfCaV1.ID, TcfCaV1.NAME);
     SECTION_ID_NAME_MAP.put(UspV1.ID, UspV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsNatV1.ID, UsNatV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsCaV1.ID, UsCaV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsVaV1.ID, UsVaV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsCoV1.ID, UsCoV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsUtV1.ID, UsUtV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsCtV1.ID, UsCtV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsFlV1.ID, UsFlV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsMtV1.ID, UsMtV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsOrV1.ID, UsOrV1.NAME);
-    SECTION_ID_NAME_MAP.put(UsTxV1.ID, UsTxV1.NAME);
+    SECTION_ID_NAME_MAP.put(UsNat.ID, UsNat.NAME);
+    SECTION_ID_NAME_MAP.put(UsCa.ID, UsCa.NAME);
+    SECTION_ID_NAME_MAP.put(UsVa.ID, UsVa.NAME);
+    SECTION_ID_NAME_MAP.put(UsCo.ID, UsCo.NAME);
+    SECTION_ID_NAME_MAP.put(UsUt.ID, UsUt.NAME);
+    SECTION_ID_NAME_MAP.put(UsCt.ID, UsCt.NAME);
+    SECTION_ID_NAME_MAP.put(UsFl.ID, UsFl.NAME);
+    SECTION_ID_NAME_MAP.put(UsMt.ID, UsMt.NAME);
+    SECTION_ID_NAME_MAP.put(UsOr.ID, UsOr.NAME);
+    SECTION_ID_NAME_MAP.put(UsTx.ID, UsTx.NAME);
 
     SECTION_ORDER = new ArrayList<Integer>(SECTION_ID_NAME_MAP.keySet()).stream().sorted()
         .map(id -> SECTION_ID_NAME_MAP.get(id)).collect(Collectors.toList());
