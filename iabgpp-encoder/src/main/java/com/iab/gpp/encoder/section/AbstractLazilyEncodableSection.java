@@ -65,6 +65,7 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
     for(EncodableSegment segment : segments) {
       if(segment.hasField(fieldName)) {
         segment.setFieldValue(fieldName, value);
+        this.dirty = true;
         return;
       }
     }
