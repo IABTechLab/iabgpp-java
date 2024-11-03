@@ -108,56 +108,56 @@ public class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
         ((EncodableFixedInteger) fields.get(UsFlField.MSPA_OPT_OUT_OPTION_MODE)).getValue();
 
     if (saleOptOutNotice == 0) {
-      if (saleOptOut != 0) {
+      if (saleOptOut == 1 || saleOptOut == 2) {
         throw new ValidationException(
             "Invalid usfl sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
       }
     } else if (saleOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
+      if (saleOptOut == 0) {
         throw new ValidationException(
             "Invalid usfl sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
       }
     } else if (saleOptOutNotice == 2) {
-      if (saleOptOut != 1) {
+      if (saleOptOut == 0 || saleOptOut == 2) {
         throw new ValidationException(
             "Invalid usfl sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
       }
     }
 
     if (targetedAdvertisingOptOutNotice == 0) {
-      if (targetedAdvertisingOptOut != 0) {
+      if (targetedAdvertisingOptOut == 1 || targetedAdvertisingOptOut == 2) {
         throw new ValidationException("Invalid usfl targeted advertising notice / opt out combination: {"
             + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
       }
     } else if (targetedAdvertisingOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
+      if (targetedAdvertisingOptOut == 0) {
         throw new ValidationException("Invalid usfl targeted advertising notice / opt out combination: {"
             + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
       }
     } else if (targetedAdvertisingOptOutNotice == 2) {
-      if (saleOptOut != 1) {
+      if (targetedAdvertisingOptOut == 0 || targetedAdvertisingOptOut == 2) {
         throw new ValidationException("Invalid usfl targeted advertising notice / opt out combination: {"
             + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
       }
     }
 
     if (mspaServiceProviderMode == 0) {
-      if (saleOptOutNotice != 0) {
+      if (saleOptOutNotice == 1 || saleOptOutNotice == 2) {
         throw new ValidationException("Invalid usfl mspa service provider mode / sale opt out notice combination: {"
             + mspaServiceProviderMode + " / " + saleOptOutNotice + "}");
       }
     } else if (mspaServiceProviderMode == 1) {
-      if (mspaOptOutOptionMode != 2) {
+      if (mspaOptOutOptionMode == 0 || mspaOptOutOptionMode == 1) {
         throw new ValidationException("Invalid usfl mspa service provider / opt out option modes combination: {"
             + mspaServiceProviderMode + " / " + mspaServiceProviderMode + "}");
       }
 
-      if (saleOptOutNotice != 0) {
+      if (saleOptOutNotice == 1 || saleOptOutNotice == 2) {
         throw new ValidationException("Invalid usfl mspa service provider mode / sale opt out notice combination: {"
             + mspaServiceProviderMode + " / " + saleOptOutNotice + "}");
       }
     } else if (mspaServiceProviderMode == 2) {
-      if (mspaOptOutOptionMode != 1) {
+      if (mspaOptOutOptionMode == 0 || mspaOptOutOptionMode == 2) {
         throw new ValidationException("Invalid usfl mspa service provider / opt out option modes combination: {"
             + mspaServiceProviderMode + " / " + mspaOptOutOptionMode + "}");
       }

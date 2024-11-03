@@ -119,263 +119,6 @@ public class UsUtTest {
   }
 
   @Test
-  public void testValidateSale() {
-    UsUt usUt = new UsUt();
-    
-    try {
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 0);
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT, 1);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 0);
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT, 2);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 1);
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT, 0);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 2);
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT, 0);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 2);
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT, 2);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 0);
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT, 0);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 1);
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT, 1);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 1);
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT, 2);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 2);
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT, 1);
-    usUt.encode();
-  }
-  
-  @Test
-  public void testValidateTargetedAdvertising() {
-    UsUt usUt = new UsUt();
-    
-    try {
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 0);
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, 1);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 0);
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, 2);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 1);
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, 0);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 2);
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, 0);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 2);
-      usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, 2);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-
-    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 0);
-    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, 0);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 1);
-    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, 1);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 1);
-    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, 2);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 2);
-    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, 1);
-    usUt.encode();
-  }
-  
-  @Test
-  public void testValidateMspaServiceProviderMode() {
-    UsUt usUt = new UsUt();
-    
-    try {
-      usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 0);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 1);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 2);
-      usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 0);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 2);
-      usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 2);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 1);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 2);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-
-
-    try {
-      usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 1);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 2);
-      usUt.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 0);
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 0);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 1);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 2);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 1);
-    usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 2);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 1);
-    usUt.encode();
-    
-    
-    usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 0);
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 0);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 1);
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 0);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 0);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 1);
-    usUt.encode();
-    
-    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, 2);
-    usUt.encode();
-  }
-  
-  @Test
   public void testDecode1() throws DecodingException {
     UsUt usUt = new UsUt("BVVkklWA");
 
@@ -396,5 +139,161 @@ public class UsUtTest {
     Assertions.assertThrows(DecodingException.class, () -> {
       new UsUt("z").getKnownChildSensitiveDataConsents();
     });
+  }
+  
+  @Test
+  public void testValidate() {
+    testValidate(0, 0, 0, 0, true);
+    testValidate(0, 0, 0, 1, true);
+    testValidate(0, 0, 0, 2, true);
+    testValidate(0, 0, 1, 0, false);
+    testValidate(0, 0, 1, 1, false);
+    testValidate(0, 0, 1, 2, true);
+    testValidate(0, 0, 2, 0, false);
+    testValidate(0, 0, 2, 1, true);
+    testValidate(0, 0, 2, 2, false);
+    testValidate(0, 1, 0, 0, false);
+    testValidate(0, 1, 0, 1, false);
+    testValidate(0, 1, 0, 2, false);
+    testValidate(0, 1, 1, 0, false);
+    testValidate(0, 1, 1, 1, false);
+    testValidate(0, 1, 1, 2, false);
+    testValidate(0, 1, 2, 0, false);
+    testValidate(0, 1, 2, 1, false);
+    testValidate(0, 1, 2, 2, false);
+    testValidate(0, 2, 0, 0, false);
+    testValidate(0, 2, 0, 1, false);
+    testValidate(0, 2, 0, 2, false);
+    testValidate(0, 2, 1, 0, false);
+    testValidate(0, 2, 1, 1, false);
+    testValidate(0, 2, 1, 2, false);
+    testValidate(0, 2, 2, 0, false);
+    testValidate(0, 2, 2, 1, false);
+    testValidate(0, 2, 2, 2, false);
+    testValidate(1, 0, 0, 0, false);
+    testValidate(1, 0, 0, 1, false);
+    testValidate(1, 0, 0, 2, false);
+    testValidate(1, 0, 1, 0, false);
+    testValidate(1, 0, 1, 1, false);
+    testValidate(1, 0, 1, 2, false);
+    testValidate(1, 0, 2, 0, false);
+    testValidate(1, 0, 2, 1, false);
+    testValidate(1, 0, 2, 2, false);
+    testValidate(1, 1, 0, 0, false);
+    testValidate(1, 1, 0, 1, false);
+    testValidate(1, 1, 0, 2, false);
+    testValidate(1, 1, 1, 0, false);
+    testValidate(1, 1, 1, 1, false);
+    testValidate(1, 1, 1, 2, false);
+    testValidate(1, 1, 2, 0, false);
+    testValidate(1, 1, 2, 1, true);
+    testValidate(1, 1, 2, 2, false);
+    testValidate(1, 2, 0, 0, false);
+    testValidate(1, 2, 0, 1, false);
+    testValidate(1, 2, 0, 2, false);
+    testValidate(1, 2, 1, 0, false);
+    testValidate(1, 2, 1, 1, false);
+    testValidate(1, 2, 1, 2, false);
+    testValidate(1, 2, 2, 0, false);
+    testValidate(1, 2, 2, 1, true);
+    testValidate(1, 2, 2, 2, false);
+    testValidate(2, 0, 0, 0, false);
+    testValidate(2, 0, 0, 1, false);
+    testValidate(2, 0, 0, 2, false);
+    testValidate(2, 0, 1, 0, false);
+    testValidate(2, 0, 1, 1, false);
+    testValidate(2, 0, 1, 2, false);
+    testValidate(2, 0, 2, 0, false);
+    testValidate(2, 0, 2, 1, false);
+    testValidate(2, 0, 2, 2, false);
+    testValidate(2, 1, 0, 0, false);
+    testValidate(2, 1, 0, 1, false);
+    testValidate(2, 1, 0, 2, false);
+    testValidate(2, 1, 1, 0, false);
+    testValidate(2, 1, 1, 1, false);
+    testValidate(2, 1, 1, 2, false);
+    testValidate(2, 1, 2, 0, false);
+    testValidate(2, 1, 2, 1, true);
+    testValidate(2, 1, 2, 2, false);
+    testValidate(2, 2, 0, 0, false);
+    testValidate(2, 2, 0, 1, false);
+    testValidate(2, 2, 0, 2, false);
+    testValidate(2, 2, 1, 0, false);
+    testValidate(2, 2, 1, 1, false);
+    testValidate(2, 2, 1, 2, false);
+    testValidate(2, 2, 2, 0, false);
+    testValidate(2, 2, 2, 1, false);
+    testValidate(2, 2, 2, 2, false);
+  }
+
+  private void testValidate(int saleOptOutNotice, int saleOptOut, int mspaServiceProviderMode, int mspaOptOutOptionMode,
+      boolean valid) {
+    UsUt usUt = new UsUt();
+    usUt.setFieldValue(UsUtField.SALE_OPT_OUT_NOTICE, saleOptOutNotice);
+    usUt.setFieldValue(UsUtField.SALE_OPT_OUT, saleOptOut);
+    usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, mspaServiceProviderMode);
+    usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, mspaOptOutOptionMode);
+
+    if (valid) {
+      try {
+        usUt.encode();
+      } catch (ValidationException e) {
+        String msg = String.format(
+            "Unexpected ValidationException. {saleOptOutNotice=%d, saleOptOut=%d, mspaServiceProviderMode=%d, mspaOptOutOptionMode=%d}, valid=%b",
+            saleOptOutNotice, saleOptOut, mspaServiceProviderMode, mspaOptOutOptionMode, valid);
+        Assertions.fail(msg, e);
+      }
+    } else {
+      try {
+        usUt.encode();
+        String msg = String.format(
+            "Expected Validation. {saleOptOutNotice=%d, saleOptOut=%d, mspaServiceProviderMode=%d, mspaOptOutOptionMode=%d}, valid=%b",
+            saleOptOutNotice, saleOptOut, mspaServiceProviderMode, mspaOptOutOptionMode, valid);
+        Assertions.fail(msg);
+      } catch (ValidationException e) {
+
+      }
+    }
+  }
+
+  @Test
+  public void testValidateTargetedAdvertising() {
+    testValidateTargetedAdvertising(0, 0, true);
+    testValidateTargetedAdvertising(0, 1, false);
+    testValidateTargetedAdvertising(0, 2, false);
+    testValidateTargetedAdvertising(1, 0, false);
+    testValidateTargetedAdvertising(1, 1, true);
+    testValidateTargetedAdvertising(1, 2, true);
+    testValidateTargetedAdvertising(2, 0, false);
+    testValidateTargetedAdvertising(2, 1, true);
+    testValidateTargetedAdvertising(2, 2, false);
+  }
+
+  private void testValidateTargetedAdvertising(int targetedAdvertisingOptOutNotice, int targetedAdvertisingOptOut,
+      boolean valid) {
+    UsUt usUt = new UsUt();
+    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, targetedAdvertisingOptOutNotice);
+    usUt.setFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT, targetedAdvertisingOptOut);
+
+    if (valid) {
+      try {
+        usUt.encode();
+      } catch (ValidationException e) {
+        String msg = String.format(
+            "Unexpected ValidationException. {targetedAdvertisingOptOutNotice=%d, targetedAdvertisingOptOut=%d, valid=%b",
+            targetedAdvertisingOptOutNotice, targetedAdvertisingOptOut, valid);
+        Assertions.fail(msg, e);
+      }
+    } else {
+      try {
+        usUt.encode();
+        String msg = String.format(
+            "Expected Validation. {targetedAdvertisingOptOutNotice=%d, targetedAdvertisingOptOut=%d, valid=%b",
+            targetedAdvertisingOptOutNotice, targetedAdvertisingOptOut, valid);
+        Assertions.fail(msg);
+      } catch (ValidationException e) {
+
+      }
+    }
   }
 }

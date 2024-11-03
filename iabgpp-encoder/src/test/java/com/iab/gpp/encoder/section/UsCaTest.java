@@ -56,7 +56,7 @@ public class UsCaTest {
 
     Assertions.assertEquals("BVWSSSVY.YA", usCa.encode());
   }
-  
+
   @Test
   public void testSetInvalidValues() {
     UsCa usCa = new UsCa();
@@ -65,421 +65,80 @@ public class UsCaTest {
       usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, -1);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 0, 0, 0, 3, 0, 0, 0, 0));
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(0, 3));
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.PERSONAL_DATA_CONSENTS, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.MSPA_COVERED_TRANSACTION, 0);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
   }
-  
-  @Test
-  public void testValidateSharing() {
-    UsCa usCa = new UsCa();
-    
-    try {
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 0);
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 1);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 0);
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 1);
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 0);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 2);
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 0);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 2);
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
 
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 0);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 1);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 1);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 1);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 2);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 2);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, 1);
-    usCa.encode();
-  }
-  
-  @Test
-  public void testValidateSale() {
-    UsCa usCa = new UsCa();
-    
-    try {
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 0);
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 1);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 0);
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 1);
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 0);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 2);
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 0);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 2);
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 0);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 1);
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 1);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 1);
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 2);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 2);
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT, 1);
-    usCa.encode();
-  }
-  
-  @Test
-  public void testValidateMspaServiceProviderMode() {
-    UsCa usCa = new UsCa();
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 0);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 1);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 2);
-      usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 0);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 2);
-      usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 1);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 1);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 1);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-
-
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 1);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 1);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 1);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    try {
-      usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 2);
-      usCa.encode();
-      Assertions.fail("Expected ValidationException");
-    } catch (ValidationException e) {
-      
-    }
-    
-    
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 0);
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 0);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 1);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 2);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-    usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 2);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 1);
-    usCa.encode();
-    
-    
-    usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, 0);
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 0);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 1);
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 0);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 0);
-    usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 0);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 1);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 1);
-    usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 1);
-    usCa.encode();
-    
-    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 2);
-    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, 2);
-    usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, 2);
-    usCa.encode();
-  }
-  
   @Test
   public void testEncodeWithGpcSegmentExcluded() {
 
@@ -523,11 +182,2237 @@ public class UsCaTest {
     Assertions.assertEquals(2, usCa.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usCa.getGpcSegmentIncluded());
   }
-  
+
   @Test()
   public void testDecodeGarbage() {
     Assertions.assertThrows(DecodingException.class, () -> {
       new UsCa("z").getPersonalDataConsents();
     });
+  }
+
+  @Test
+  public void testValidate() {
+    testValidate(0, 0, 0, 0, 0, 0, 0, true);
+    testValidate(0, 0, 0, 0, 0, 0, 1, true);
+    testValidate(0, 0, 0, 0, 0, 0, 2, true);
+    testValidate(0, 0, 0, 0, 0, 1, 0, false);
+    testValidate(0, 0, 0, 0, 0, 1, 1, false);
+    testValidate(0, 0, 0, 0, 0, 1, 2, true);
+    testValidate(0, 0, 0, 0, 0, 2, 0, false);
+    testValidate(0, 0, 0, 0, 0, 2, 1, true);
+    testValidate(0, 0, 0, 0, 0, 2, 2, false);
+    testValidate(0, 0, 0, 0, 1, 0, 0, false);
+    testValidate(0, 0, 0, 0, 1, 0, 1, false);
+    testValidate(0, 0, 0, 0, 1, 0, 2, false);
+    testValidate(0, 0, 0, 0, 1, 1, 0, false);
+    testValidate(0, 0, 0, 0, 1, 1, 1, false);
+    testValidate(0, 0, 0, 0, 1, 1, 2, false);
+    testValidate(0, 0, 0, 0, 1, 2, 0, false);
+    testValidate(0, 0, 0, 0, 1, 2, 1, true);
+    testValidate(0, 0, 0, 0, 1, 2, 2, false);
+    testValidate(0, 0, 0, 0, 2, 0, 0, false);
+    testValidate(0, 0, 0, 0, 2, 0, 1, false);
+    testValidate(0, 0, 0, 0, 2, 0, 2, false);
+    testValidate(0, 0, 0, 0, 2, 1, 0, false);
+    testValidate(0, 0, 0, 0, 2, 1, 1, false);
+    testValidate(0, 0, 0, 0, 2, 1, 2, false);
+    testValidate(0, 0, 0, 0, 2, 2, 0, false);
+    testValidate(0, 0, 0, 0, 2, 2, 1, true);
+    testValidate(0, 0, 0, 0, 2, 2, 2, false);
+    testValidate(0, 0, 0, 1, 0, 0, 0, false);
+    testValidate(0, 0, 0, 1, 0, 0, 1, false);
+    testValidate(0, 0, 0, 1, 0, 0, 2, false);
+    testValidate(0, 0, 0, 1, 0, 1, 0, false);
+    testValidate(0, 0, 0, 1, 0, 1, 1, false);
+    testValidate(0, 0, 0, 1, 0, 1, 2, false);
+    testValidate(0, 0, 0, 1, 0, 2, 0, false);
+    testValidate(0, 0, 0, 1, 0, 2, 1, false);
+    testValidate(0, 0, 0, 1, 0, 2, 2, false);
+    testValidate(0, 0, 0, 1, 1, 0, 0, false);
+    testValidate(0, 0, 0, 1, 1, 0, 1, false);
+    testValidate(0, 0, 0, 1, 1, 0, 2, false);
+    testValidate(0, 0, 0, 1, 1, 1, 0, false);
+    testValidate(0, 0, 0, 1, 1, 1, 1, false);
+    testValidate(0, 0, 0, 1, 1, 1, 2, false);
+    testValidate(0, 0, 0, 1, 1, 2, 0, false);
+    testValidate(0, 0, 0, 1, 1, 2, 1, false);
+    testValidate(0, 0, 0, 1, 1, 2, 2, false);
+    testValidate(0, 0, 0, 1, 2, 0, 0, false);
+    testValidate(0, 0, 0, 1, 2, 0, 1, false);
+    testValidate(0, 0, 0, 1, 2, 0, 2, false);
+    testValidate(0, 0, 0, 1, 2, 1, 0, false);
+    testValidate(0, 0, 0, 1, 2, 1, 1, false);
+    testValidate(0, 0, 0, 1, 2, 1, 2, false);
+    testValidate(0, 0, 0, 1, 2, 2, 0, false);
+    testValidate(0, 0, 0, 1, 2, 2, 1, false);
+    testValidate(0, 0, 0, 1, 2, 2, 2, false);
+    testValidate(0, 0, 0, 2, 0, 0, 0, false);
+    testValidate(0, 0, 0, 2, 0, 0, 1, false);
+    testValidate(0, 0, 0, 2, 0, 0, 2, false);
+    testValidate(0, 0, 0, 2, 0, 1, 0, false);
+    testValidate(0, 0, 0, 2, 0, 1, 1, false);
+    testValidate(0, 0, 0, 2, 0, 1, 2, false);
+    testValidate(0, 0, 0, 2, 0, 2, 0, false);
+    testValidate(0, 0, 0, 2, 0, 2, 1, false);
+    testValidate(0, 0, 0, 2, 0, 2, 2, false);
+    testValidate(0, 0, 0, 2, 1, 0, 0, false);
+    testValidate(0, 0, 0, 2, 1, 0, 1, false);
+    testValidate(0, 0, 0, 2, 1, 0, 2, false);
+    testValidate(0, 0, 0, 2, 1, 1, 0, false);
+    testValidate(0, 0, 0, 2, 1, 1, 1, false);
+    testValidate(0, 0, 0, 2, 1, 1, 2, false);
+    testValidate(0, 0, 0, 2, 1, 2, 0, false);
+    testValidate(0, 0, 0, 2, 1, 2, 1, false);
+    testValidate(0, 0, 0, 2, 1, 2, 2, false);
+    testValidate(0, 0, 0, 2, 2, 0, 0, false);
+    testValidate(0, 0, 0, 2, 2, 0, 1, false);
+    testValidate(0, 0, 0, 2, 2, 0, 2, false);
+    testValidate(0, 0, 0, 2, 2, 1, 0, false);
+    testValidate(0, 0, 0, 2, 2, 1, 1, false);
+    testValidate(0, 0, 0, 2, 2, 1, 2, false);
+    testValidate(0, 0, 0, 2, 2, 2, 0, false);
+    testValidate(0, 0, 0, 2, 2, 2, 1, false);
+    testValidate(0, 0, 0, 2, 2, 2, 2, false);
+    testValidate(0, 0, 1, 0, 0, 0, 0, false);
+    testValidate(0, 0, 1, 0, 0, 0, 1, false);
+    testValidate(0, 0, 1, 0, 0, 0, 2, false);
+    testValidate(0, 0, 1, 0, 0, 1, 0, false);
+    testValidate(0, 0, 1, 0, 0, 1, 1, false);
+    testValidate(0, 0, 1, 0, 0, 1, 2, false);
+    testValidate(0, 0, 1, 0, 0, 2, 0, false);
+    testValidate(0, 0, 1, 0, 0, 2, 1, false);
+    testValidate(0, 0, 1, 0, 0, 2, 2, false);
+    testValidate(0, 0, 1, 0, 1, 0, 0, false);
+    testValidate(0, 0, 1, 0, 1, 0, 1, false);
+    testValidate(0, 0, 1, 0, 1, 0, 2, false);
+    testValidate(0, 0, 1, 0, 1, 1, 0, false);
+    testValidate(0, 0, 1, 0, 1, 1, 1, false);
+    testValidate(0, 0, 1, 0, 1, 1, 2, false);
+    testValidate(0, 0, 1, 0, 1, 2, 0, false);
+    testValidate(0, 0, 1, 0, 1, 2, 1, false);
+    testValidate(0, 0, 1, 0, 1, 2, 2, false);
+    testValidate(0, 0, 1, 0, 2, 0, 0, false);
+    testValidate(0, 0, 1, 0, 2, 0, 1, false);
+    testValidate(0, 0, 1, 0, 2, 0, 2, false);
+    testValidate(0, 0, 1, 0, 2, 1, 0, false);
+    testValidate(0, 0, 1, 0, 2, 1, 1, false);
+    testValidate(0, 0, 1, 0, 2, 1, 2, false);
+    testValidate(0, 0, 1, 0, 2, 2, 0, false);
+    testValidate(0, 0, 1, 0, 2, 2, 1, false);
+    testValidate(0, 0, 1, 0, 2, 2, 2, false);
+    testValidate(0, 0, 1, 1, 0, 0, 0, false);
+    testValidate(0, 0, 1, 1, 0, 0, 1, false);
+    testValidate(0, 0, 1, 1, 0, 0, 2, false);
+    testValidate(0, 0, 1, 1, 0, 1, 0, false);
+    testValidate(0, 0, 1, 1, 0, 1, 1, false);
+    testValidate(0, 0, 1, 1, 0, 1, 2, false);
+    testValidate(0, 0, 1, 1, 0, 2, 0, false);
+    testValidate(0, 0, 1, 1, 0, 2, 1, true);
+    testValidate(0, 0, 1, 1, 0, 2, 2, false);
+    testValidate(0, 0, 1, 1, 1, 0, 0, false);
+    testValidate(0, 0, 1, 1, 1, 0, 1, false);
+    testValidate(0, 0, 1, 1, 1, 0, 2, false);
+    testValidate(0, 0, 1, 1, 1, 1, 0, false);
+    testValidate(0, 0, 1, 1, 1, 1, 1, false);
+    testValidate(0, 0, 1, 1, 1, 1, 2, false);
+    testValidate(0, 0, 1, 1, 1, 2, 0, false);
+    testValidate(0, 0, 1, 1, 1, 2, 1, true);
+    testValidate(0, 0, 1, 1, 1, 2, 2, false);
+    testValidate(0, 0, 1, 1, 2, 0, 0, false);
+    testValidate(0, 0, 1, 1, 2, 0, 1, false);
+    testValidate(0, 0, 1, 1, 2, 0, 2, false);
+    testValidate(0, 0, 1, 1, 2, 1, 0, false);
+    testValidate(0, 0, 1, 1, 2, 1, 1, false);
+    testValidate(0, 0, 1, 1, 2, 1, 2, false);
+    testValidate(0, 0, 1, 1, 2, 2, 0, false);
+    testValidate(0, 0, 1, 1, 2, 2, 1, true);
+    testValidate(0, 0, 1, 1, 2, 2, 2, false);
+    testValidate(0, 0, 1, 2, 0, 0, 0, false);
+    testValidate(0, 0, 1, 2, 0, 0, 1, false);
+    testValidate(0, 0, 1, 2, 0, 0, 2, false);
+    testValidate(0, 0, 1, 2, 0, 1, 0, false);
+    testValidate(0, 0, 1, 2, 0, 1, 1, false);
+    testValidate(0, 0, 1, 2, 0, 1, 2, false);
+    testValidate(0, 0, 1, 2, 0, 2, 0, false);
+    testValidate(0, 0, 1, 2, 0, 2, 1, true);
+    testValidate(0, 0, 1, 2, 0, 2, 2, false);
+    testValidate(0, 0, 1, 2, 1, 0, 0, false);
+    testValidate(0, 0, 1, 2, 1, 0, 1, false);
+    testValidate(0, 0, 1, 2, 1, 0, 2, false);
+    testValidate(0, 0, 1, 2, 1, 1, 0, false);
+    testValidate(0, 0, 1, 2, 1, 1, 1, false);
+    testValidate(0, 0, 1, 2, 1, 1, 2, false);
+    testValidate(0, 0, 1, 2, 1, 2, 0, false);
+    testValidate(0, 0, 1, 2, 1, 2, 1, true);
+    testValidate(0, 0, 1, 2, 1, 2, 2, false);
+    testValidate(0, 0, 1, 2, 2, 0, 0, false);
+    testValidate(0, 0, 1, 2, 2, 0, 1, false);
+    testValidate(0, 0, 1, 2, 2, 0, 2, false);
+    testValidate(0, 0, 1, 2, 2, 1, 0, false);
+    testValidate(0, 0, 1, 2, 2, 1, 1, false);
+    testValidate(0, 0, 1, 2, 2, 1, 2, false);
+    testValidate(0, 0, 1, 2, 2, 2, 0, false);
+    testValidate(0, 0, 1, 2, 2, 2, 1, true);
+    testValidate(0, 0, 1, 2, 2, 2, 2, false);
+    testValidate(0, 0, 2, 0, 0, 0, 0, false);
+    testValidate(0, 0, 2, 0, 0, 0, 1, false);
+    testValidate(0, 0, 2, 0, 0, 0, 2, false);
+    testValidate(0, 0, 2, 0, 0, 1, 0, false);
+    testValidate(0, 0, 2, 0, 0, 1, 1, false);
+    testValidate(0, 0, 2, 0, 0, 1, 2, false);
+    testValidate(0, 0, 2, 0, 0, 2, 0, false);
+    testValidate(0, 0, 2, 0, 0, 2, 1, false);
+    testValidate(0, 0, 2, 0, 0, 2, 2, false);
+    testValidate(0, 0, 2, 0, 1, 0, 0, false);
+    testValidate(0, 0, 2, 0, 1, 0, 1, false);
+    testValidate(0, 0, 2, 0, 1, 0, 2, false);
+    testValidate(0, 0, 2, 0, 1, 1, 0, false);
+    testValidate(0, 0, 2, 0, 1, 1, 1, false);
+    testValidate(0, 0, 2, 0, 1, 1, 2, false);
+    testValidate(0, 0, 2, 0, 1, 2, 0, false);
+    testValidate(0, 0, 2, 0, 1, 2, 1, false);
+    testValidate(0, 0, 2, 0, 1, 2, 2, false);
+    testValidate(0, 0, 2, 0, 2, 0, 0, false);
+    testValidate(0, 0, 2, 0, 2, 0, 1, false);
+    testValidate(0, 0, 2, 0, 2, 0, 2, false);
+    testValidate(0, 0, 2, 0, 2, 1, 0, false);
+    testValidate(0, 0, 2, 0, 2, 1, 1, false);
+    testValidate(0, 0, 2, 0, 2, 1, 2, false);
+    testValidate(0, 0, 2, 0, 2, 2, 0, false);
+    testValidate(0, 0, 2, 0, 2, 2, 1, false);
+    testValidate(0, 0, 2, 0, 2, 2, 2, false);
+    testValidate(0, 0, 2, 1, 0, 0, 0, false);
+    testValidate(0, 0, 2, 1, 0, 0, 1, false);
+    testValidate(0, 0, 2, 1, 0, 0, 2, false);
+    testValidate(0, 0, 2, 1, 0, 1, 0, false);
+    testValidate(0, 0, 2, 1, 0, 1, 1, false);
+    testValidate(0, 0, 2, 1, 0, 1, 2, false);
+    testValidate(0, 0, 2, 1, 0, 2, 0, false);
+    testValidate(0, 0, 2, 1, 0, 2, 1, true);
+    testValidate(0, 0, 2, 1, 0, 2, 2, false);
+    testValidate(0, 0, 2, 1, 1, 0, 0, false);
+    testValidate(0, 0, 2, 1, 1, 0, 1, false);
+    testValidate(0, 0, 2, 1, 1, 0, 2, false);
+    testValidate(0, 0, 2, 1, 1, 1, 0, false);
+    testValidate(0, 0, 2, 1, 1, 1, 1, false);
+    testValidate(0, 0, 2, 1, 1, 1, 2, false);
+    testValidate(0, 0, 2, 1, 1, 2, 0, false);
+    testValidate(0, 0, 2, 1, 1, 2, 1, true);
+    testValidate(0, 0, 2, 1, 1, 2, 2, false);
+    testValidate(0, 0, 2, 1, 2, 0, 0, false);
+    testValidate(0, 0, 2, 1, 2, 0, 1, false);
+    testValidate(0, 0, 2, 1, 2, 0, 2, false);
+    testValidate(0, 0, 2, 1, 2, 1, 0, false);
+    testValidate(0, 0, 2, 1, 2, 1, 1, false);
+    testValidate(0, 0, 2, 1, 2, 1, 2, false);
+    testValidate(0, 0, 2, 1, 2, 2, 0, false);
+    testValidate(0, 0, 2, 1, 2, 2, 1, true);
+    testValidate(0, 0, 2, 1, 2, 2, 2, false);
+    testValidate(0, 0, 2, 2, 0, 0, 0, false);
+    testValidate(0, 0, 2, 2, 0, 0, 1, false);
+    testValidate(0, 0, 2, 2, 0, 0, 2, false);
+    testValidate(0, 0, 2, 2, 0, 1, 0, false);
+    testValidate(0, 0, 2, 2, 0, 1, 1, false);
+    testValidate(0, 0, 2, 2, 0, 1, 2, false);
+    testValidate(0, 0, 2, 2, 0, 2, 0, false);
+    testValidate(0, 0, 2, 2, 0, 2, 1, false);
+    testValidate(0, 0, 2, 2, 0, 2, 2, false);
+    testValidate(0, 0, 2, 2, 1, 0, 0, false);
+    testValidate(0, 0, 2, 2, 1, 0, 1, false);
+    testValidate(0, 0, 2, 2, 1, 0, 2, false);
+    testValidate(0, 0, 2, 2, 1, 1, 0, false);
+    testValidate(0, 0, 2, 2, 1, 1, 1, false);
+    testValidate(0, 0, 2, 2, 1, 1, 2, false);
+    testValidate(0, 0, 2, 2, 1, 2, 0, false);
+    testValidate(0, 0, 2, 2, 1, 2, 1, false);
+    testValidate(0, 0, 2, 2, 1, 2, 2, false);
+    testValidate(0, 0, 2, 2, 2, 0, 0, false);
+    testValidate(0, 0, 2, 2, 2, 0, 1, false);
+    testValidate(0, 0, 2, 2, 2, 0, 2, false);
+    testValidate(0, 0, 2, 2, 2, 1, 0, false);
+    testValidate(0, 0, 2, 2, 2, 1, 1, false);
+    testValidate(0, 0, 2, 2, 2, 1, 2, false);
+    testValidate(0, 0, 2, 2, 2, 2, 0, false);
+    testValidate(0, 0, 2, 2, 2, 2, 1, false);
+    testValidate(0, 0, 2, 2, 2, 2, 2, false);
+    testValidate(0, 1, 0, 0, 0, 0, 0, false);
+    testValidate(0, 1, 0, 0, 0, 0, 1, false);
+    testValidate(0, 1, 0, 0, 0, 0, 2, false);
+    testValidate(0, 1, 0, 0, 0, 1, 0, false);
+    testValidate(0, 1, 0, 0, 0, 1, 1, false);
+    testValidate(0, 1, 0, 0, 0, 1, 2, false);
+    testValidate(0, 1, 0, 0, 0, 2, 0, false);
+    testValidate(0, 1, 0, 0, 0, 2, 1, false);
+    testValidate(0, 1, 0, 0, 0, 2, 2, false);
+    testValidate(0, 1, 0, 0, 1, 0, 0, false);
+    testValidate(0, 1, 0, 0, 1, 0, 1, false);
+    testValidate(0, 1, 0, 0, 1, 0, 2, false);
+    testValidate(0, 1, 0, 0, 1, 1, 0, false);
+    testValidate(0, 1, 0, 0, 1, 1, 1, false);
+    testValidate(0, 1, 0, 0, 1, 1, 2, false);
+    testValidate(0, 1, 0, 0, 1, 2, 0, false);
+    testValidate(0, 1, 0, 0, 1, 2, 1, false);
+    testValidate(0, 1, 0, 0, 1, 2, 2, false);
+    testValidate(0, 1, 0, 0, 2, 0, 0, false);
+    testValidate(0, 1, 0, 0, 2, 0, 1, false);
+    testValidate(0, 1, 0, 0, 2, 0, 2, false);
+    testValidate(0, 1, 0, 0, 2, 1, 0, false);
+    testValidate(0, 1, 0, 0, 2, 1, 1, false);
+    testValidate(0, 1, 0, 0, 2, 1, 2, false);
+    testValidate(0, 1, 0, 0, 2, 2, 0, false);
+    testValidate(0, 1, 0, 0, 2, 2, 1, false);
+    testValidate(0, 1, 0, 0, 2, 2, 2, false);
+    testValidate(0, 1, 0, 1, 0, 0, 0, false);
+    testValidate(0, 1, 0, 1, 0, 0, 1, false);
+    testValidate(0, 1, 0, 1, 0, 0, 2, false);
+    testValidate(0, 1, 0, 1, 0, 1, 0, false);
+    testValidate(0, 1, 0, 1, 0, 1, 1, false);
+    testValidate(0, 1, 0, 1, 0, 1, 2, false);
+    testValidate(0, 1, 0, 1, 0, 2, 0, false);
+    testValidate(0, 1, 0, 1, 0, 2, 1, false);
+    testValidate(0, 1, 0, 1, 0, 2, 2, false);
+    testValidate(0, 1, 0, 1, 1, 0, 0, false);
+    testValidate(0, 1, 0, 1, 1, 0, 1, false);
+    testValidate(0, 1, 0, 1, 1, 0, 2, false);
+    testValidate(0, 1, 0, 1, 1, 1, 0, false);
+    testValidate(0, 1, 0, 1, 1, 1, 1, false);
+    testValidate(0, 1, 0, 1, 1, 1, 2, false);
+    testValidate(0, 1, 0, 1, 1, 2, 0, false);
+    testValidate(0, 1, 0, 1, 1, 2, 1, false);
+    testValidate(0, 1, 0, 1, 1, 2, 2, false);
+    testValidate(0, 1, 0, 1, 2, 0, 0, false);
+    testValidate(0, 1, 0, 1, 2, 0, 1, false);
+    testValidate(0, 1, 0, 1, 2, 0, 2, false);
+    testValidate(0, 1, 0, 1, 2, 1, 0, false);
+    testValidate(0, 1, 0, 1, 2, 1, 1, false);
+    testValidate(0, 1, 0, 1, 2, 1, 2, false);
+    testValidate(0, 1, 0, 1, 2, 2, 0, false);
+    testValidate(0, 1, 0, 1, 2, 2, 1, false);
+    testValidate(0, 1, 0, 1, 2, 2, 2, false);
+    testValidate(0, 1, 0, 2, 0, 0, 0, false);
+    testValidate(0, 1, 0, 2, 0, 0, 1, false);
+    testValidate(0, 1, 0, 2, 0, 0, 2, false);
+    testValidate(0, 1, 0, 2, 0, 1, 0, false);
+    testValidate(0, 1, 0, 2, 0, 1, 1, false);
+    testValidate(0, 1, 0, 2, 0, 1, 2, false);
+    testValidate(0, 1, 0, 2, 0, 2, 0, false);
+    testValidate(0, 1, 0, 2, 0, 2, 1, false);
+    testValidate(0, 1, 0, 2, 0, 2, 2, false);
+    testValidate(0, 1, 0, 2, 1, 0, 0, false);
+    testValidate(0, 1, 0, 2, 1, 0, 1, false);
+    testValidate(0, 1, 0, 2, 1, 0, 2, false);
+    testValidate(0, 1, 0, 2, 1, 1, 0, false);
+    testValidate(0, 1, 0, 2, 1, 1, 1, false);
+    testValidate(0, 1, 0, 2, 1, 1, 2, false);
+    testValidate(0, 1, 0, 2, 1, 2, 0, false);
+    testValidate(0, 1, 0, 2, 1, 2, 1, false);
+    testValidate(0, 1, 0, 2, 1, 2, 2, false);
+    testValidate(0, 1, 0, 2, 2, 0, 0, false);
+    testValidate(0, 1, 0, 2, 2, 0, 1, false);
+    testValidate(0, 1, 0, 2, 2, 0, 2, false);
+    testValidate(0, 1, 0, 2, 2, 1, 0, false);
+    testValidate(0, 1, 0, 2, 2, 1, 1, false);
+    testValidate(0, 1, 0, 2, 2, 1, 2, false);
+    testValidate(0, 1, 0, 2, 2, 2, 0, false);
+    testValidate(0, 1, 0, 2, 2, 2, 1, false);
+    testValidate(0, 1, 0, 2, 2, 2, 2, false);
+    testValidate(0, 1, 1, 0, 0, 0, 0, false);
+    testValidate(0, 1, 1, 0, 0, 0, 1, false);
+    testValidate(0, 1, 1, 0, 0, 0, 2, false);
+    testValidate(0, 1, 1, 0, 0, 1, 0, false);
+    testValidate(0, 1, 1, 0, 0, 1, 1, false);
+    testValidate(0, 1, 1, 0, 0, 1, 2, false);
+    testValidate(0, 1, 1, 0, 0, 2, 0, false);
+    testValidate(0, 1, 1, 0, 0, 2, 1, false);
+    testValidate(0, 1, 1, 0, 0, 2, 2, false);
+    testValidate(0, 1, 1, 0, 1, 0, 0, false);
+    testValidate(0, 1, 1, 0, 1, 0, 1, false);
+    testValidate(0, 1, 1, 0, 1, 0, 2, false);
+    testValidate(0, 1, 1, 0, 1, 1, 0, false);
+    testValidate(0, 1, 1, 0, 1, 1, 1, false);
+    testValidate(0, 1, 1, 0, 1, 1, 2, false);
+    testValidate(0, 1, 1, 0, 1, 2, 0, false);
+    testValidate(0, 1, 1, 0, 1, 2, 1, false);
+    testValidate(0, 1, 1, 0, 1, 2, 2, false);
+    testValidate(0, 1, 1, 0, 2, 0, 0, false);
+    testValidate(0, 1, 1, 0, 2, 0, 1, false);
+    testValidate(0, 1, 1, 0, 2, 0, 2, false);
+    testValidate(0, 1, 1, 0, 2, 1, 0, false);
+    testValidate(0, 1, 1, 0, 2, 1, 1, false);
+    testValidate(0, 1, 1, 0, 2, 1, 2, false);
+    testValidate(0, 1, 1, 0, 2, 2, 0, false);
+    testValidate(0, 1, 1, 0, 2, 2, 1, false);
+    testValidate(0, 1, 1, 0, 2, 2, 2, false);
+    testValidate(0, 1, 1, 1, 0, 0, 0, false);
+    testValidate(0, 1, 1, 1, 0, 0, 1, false);
+    testValidate(0, 1, 1, 1, 0, 0, 2, false);
+    testValidate(0, 1, 1, 1, 0, 1, 0, false);
+    testValidate(0, 1, 1, 1, 0, 1, 1, false);
+    testValidate(0, 1, 1, 1, 0, 1, 2, false);
+    testValidate(0, 1, 1, 1, 0, 2, 0, false);
+    testValidate(0, 1, 1, 1, 0, 2, 1, false);
+    testValidate(0, 1, 1, 1, 0, 2, 2, false);
+    testValidate(0, 1, 1, 1, 1, 0, 0, false);
+    testValidate(0, 1, 1, 1, 1, 0, 1, false);
+    testValidate(0, 1, 1, 1, 1, 0, 2, false);
+    testValidate(0, 1, 1, 1, 1, 1, 0, false);
+    testValidate(0, 1, 1, 1, 1, 1, 1, false);
+    testValidate(0, 1, 1, 1, 1, 1, 2, false);
+    testValidate(0, 1, 1, 1, 1, 2, 0, false);
+    testValidate(0, 1, 1, 1, 1, 2, 1, false);
+    testValidate(0, 1, 1, 1, 1, 2, 2, false);
+    testValidate(0, 1, 1, 1, 2, 0, 0, false);
+    testValidate(0, 1, 1, 1, 2, 0, 1, false);
+    testValidate(0, 1, 1, 1, 2, 0, 2, false);
+    testValidate(0, 1, 1, 1, 2, 1, 0, false);
+    testValidate(0, 1, 1, 1, 2, 1, 1, false);
+    testValidate(0, 1, 1, 1, 2, 1, 2, false);
+    testValidate(0, 1, 1, 1, 2, 2, 0, false);
+    testValidate(0, 1, 1, 1, 2, 2, 1, false);
+    testValidate(0, 1, 1, 1, 2, 2, 2, false);
+    testValidate(0, 1, 1, 2, 0, 0, 0, false);
+    testValidate(0, 1, 1, 2, 0, 0, 1, false);
+    testValidate(0, 1, 1, 2, 0, 0, 2, false);
+    testValidate(0, 1, 1, 2, 0, 1, 0, false);
+    testValidate(0, 1, 1, 2, 0, 1, 1, false);
+    testValidate(0, 1, 1, 2, 0, 1, 2, false);
+    testValidate(0, 1, 1, 2, 0, 2, 0, false);
+    testValidate(0, 1, 1, 2, 0, 2, 1, false);
+    testValidate(0, 1, 1, 2, 0, 2, 2, false);
+    testValidate(0, 1, 1, 2, 1, 0, 0, false);
+    testValidate(0, 1, 1, 2, 1, 0, 1, false);
+    testValidate(0, 1, 1, 2, 1, 0, 2, false);
+    testValidate(0, 1, 1, 2, 1, 1, 0, false);
+    testValidate(0, 1, 1, 2, 1, 1, 1, false);
+    testValidate(0, 1, 1, 2, 1, 1, 2, false);
+    testValidate(0, 1, 1, 2, 1, 2, 0, false);
+    testValidate(0, 1, 1, 2, 1, 2, 1, false);
+    testValidate(0, 1, 1, 2, 1, 2, 2, false);
+    testValidate(0, 1, 1, 2, 2, 0, 0, false);
+    testValidate(0, 1, 1, 2, 2, 0, 1, false);
+    testValidate(0, 1, 1, 2, 2, 0, 2, false);
+    testValidate(0, 1, 1, 2, 2, 1, 0, false);
+    testValidate(0, 1, 1, 2, 2, 1, 1, false);
+    testValidate(0, 1, 1, 2, 2, 1, 2, false);
+    testValidate(0, 1, 1, 2, 2, 2, 0, false);
+    testValidate(0, 1, 1, 2, 2, 2, 1, false);
+    testValidate(0, 1, 1, 2, 2, 2, 2, false);
+    testValidate(0, 1, 2, 0, 0, 0, 0, false);
+    testValidate(0, 1, 2, 0, 0, 0, 1, false);
+    testValidate(0, 1, 2, 0, 0, 0, 2, false);
+    testValidate(0, 1, 2, 0, 0, 1, 0, false);
+    testValidate(0, 1, 2, 0, 0, 1, 1, false);
+    testValidate(0, 1, 2, 0, 0, 1, 2, false);
+    testValidate(0, 1, 2, 0, 0, 2, 0, false);
+    testValidate(0, 1, 2, 0, 0, 2, 1, false);
+    testValidate(0, 1, 2, 0, 0, 2, 2, false);
+    testValidate(0, 1, 2, 0, 1, 0, 0, false);
+    testValidate(0, 1, 2, 0, 1, 0, 1, false);
+    testValidate(0, 1, 2, 0, 1, 0, 2, false);
+    testValidate(0, 1, 2, 0, 1, 1, 0, false);
+    testValidate(0, 1, 2, 0, 1, 1, 1, false);
+    testValidate(0, 1, 2, 0, 1, 1, 2, false);
+    testValidate(0, 1, 2, 0, 1, 2, 0, false);
+    testValidate(0, 1, 2, 0, 1, 2, 1, false);
+    testValidate(0, 1, 2, 0, 1, 2, 2, false);
+    testValidate(0, 1, 2, 0, 2, 0, 0, false);
+    testValidate(0, 1, 2, 0, 2, 0, 1, false);
+    testValidate(0, 1, 2, 0, 2, 0, 2, false);
+    testValidate(0, 1, 2, 0, 2, 1, 0, false);
+    testValidate(0, 1, 2, 0, 2, 1, 1, false);
+    testValidate(0, 1, 2, 0, 2, 1, 2, false);
+    testValidate(0, 1, 2, 0, 2, 2, 0, false);
+    testValidate(0, 1, 2, 0, 2, 2, 1, false);
+    testValidate(0, 1, 2, 0, 2, 2, 2, false);
+    testValidate(0, 1, 2, 1, 0, 0, 0, false);
+    testValidate(0, 1, 2, 1, 0, 0, 1, false);
+    testValidate(0, 1, 2, 1, 0, 0, 2, false);
+    testValidate(0, 1, 2, 1, 0, 1, 0, false);
+    testValidate(0, 1, 2, 1, 0, 1, 1, false);
+    testValidate(0, 1, 2, 1, 0, 1, 2, false);
+    testValidate(0, 1, 2, 1, 0, 2, 0, false);
+    testValidate(0, 1, 2, 1, 0, 2, 1, false);
+    testValidate(0, 1, 2, 1, 0, 2, 2, false);
+    testValidate(0, 1, 2, 1, 1, 0, 0, false);
+    testValidate(0, 1, 2, 1, 1, 0, 1, false);
+    testValidate(0, 1, 2, 1, 1, 0, 2, false);
+    testValidate(0, 1, 2, 1, 1, 1, 0, false);
+    testValidate(0, 1, 2, 1, 1, 1, 1, false);
+    testValidate(0, 1, 2, 1, 1, 1, 2, false);
+    testValidate(0, 1, 2, 1, 1, 2, 0, false);
+    testValidate(0, 1, 2, 1, 1, 2, 1, false);
+    testValidate(0, 1, 2, 1, 1, 2, 2, false);
+    testValidate(0, 1, 2, 1, 2, 0, 0, false);
+    testValidate(0, 1, 2, 1, 2, 0, 1, false);
+    testValidate(0, 1, 2, 1, 2, 0, 2, false);
+    testValidate(0, 1, 2, 1, 2, 1, 0, false);
+    testValidate(0, 1, 2, 1, 2, 1, 1, false);
+    testValidate(0, 1, 2, 1, 2, 1, 2, false);
+    testValidate(0, 1, 2, 1, 2, 2, 0, false);
+    testValidate(0, 1, 2, 1, 2, 2, 1, false);
+    testValidate(0, 1, 2, 1, 2, 2, 2, false);
+    testValidate(0, 1, 2, 2, 0, 0, 0, false);
+    testValidate(0, 1, 2, 2, 0, 0, 1, false);
+    testValidate(0, 1, 2, 2, 0, 0, 2, false);
+    testValidate(0, 1, 2, 2, 0, 1, 0, false);
+    testValidate(0, 1, 2, 2, 0, 1, 1, false);
+    testValidate(0, 1, 2, 2, 0, 1, 2, false);
+    testValidate(0, 1, 2, 2, 0, 2, 0, false);
+    testValidate(0, 1, 2, 2, 0, 2, 1, false);
+    testValidate(0, 1, 2, 2, 0, 2, 2, false);
+    testValidate(0, 1, 2, 2, 1, 0, 0, false);
+    testValidate(0, 1, 2, 2, 1, 0, 1, false);
+    testValidate(0, 1, 2, 2, 1, 0, 2, false);
+    testValidate(0, 1, 2, 2, 1, 1, 0, false);
+    testValidate(0, 1, 2, 2, 1, 1, 1, false);
+    testValidate(0, 1, 2, 2, 1, 1, 2, false);
+    testValidate(0, 1, 2, 2, 1, 2, 0, false);
+    testValidate(0, 1, 2, 2, 1, 2, 1, false);
+    testValidate(0, 1, 2, 2, 1, 2, 2, false);
+    testValidate(0, 1, 2, 2, 2, 0, 0, false);
+    testValidate(0, 1, 2, 2, 2, 0, 1, false);
+    testValidate(0, 1, 2, 2, 2, 0, 2, false);
+    testValidate(0, 1, 2, 2, 2, 1, 0, false);
+    testValidate(0, 1, 2, 2, 2, 1, 1, false);
+    testValidate(0, 1, 2, 2, 2, 1, 2, false);
+    testValidate(0, 1, 2, 2, 2, 2, 0, false);
+    testValidate(0, 1, 2, 2, 2, 2, 1, false);
+    testValidate(0, 1, 2, 2, 2, 2, 2, false);
+    testValidate(0, 2, 0, 0, 0, 0, 0, false);
+    testValidate(0, 2, 0, 0, 0, 0, 1, false);
+    testValidate(0, 2, 0, 0, 0, 0, 2, false);
+    testValidate(0, 2, 0, 0, 0, 1, 0, false);
+    testValidate(0, 2, 0, 0, 0, 1, 1, false);
+    testValidate(0, 2, 0, 0, 0, 1, 2, false);
+    testValidate(0, 2, 0, 0, 0, 2, 0, false);
+    testValidate(0, 2, 0, 0, 0, 2, 1, false);
+    testValidate(0, 2, 0, 0, 0, 2, 2, false);
+    testValidate(0, 2, 0, 0, 1, 0, 0, false);
+    testValidate(0, 2, 0, 0, 1, 0, 1, false);
+    testValidate(0, 2, 0, 0, 1, 0, 2, false);
+    testValidate(0, 2, 0, 0, 1, 1, 0, false);
+    testValidate(0, 2, 0, 0, 1, 1, 1, false);
+    testValidate(0, 2, 0, 0, 1, 1, 2, false);
+    testValidate(0, 2, 0, 0, 1, 2, 0, false);
+    testValidate(0, 2, 0, 0, 1, 2, 1, false);
+    testValidate(0, 2, 0, 0, 1, 2, 2, false);
+    testValidate(0, 2, 0, 0, 2, 0, 0, false);
+    testValidate(0, 2, 0, 0, 2, 0, 1, false);
+    testValidate(0, 2, 0, 0, 2, 0, 2, false);
+    testValidate(0, 2, 0, 0, 2, 1, 0, false);
+    testValidate(0, 2, 0, 0, 2, 1, 1, false);
+    testValidate(0, 2, 0, 0, 2, 1, 2, false);
+    testValidate(0, 2, 0, 0, 2, 2, 0, false);
+    testValidate(0, 2, 0, 0, 2, 2, 1, false);
+    testValidate(0, 2, 0, 0, 2, 2, 2, false);
+    testValidate(0, 2, 0, 1, 0, 0, 0, false);
+    testValidate(0, 2, 0, 1, 0, 0, 1, false);
+    testValidate(0, 2, 0, 1, 0, 0, 2, false);
+    testValidate(0, 2, 0, 1, 0, 1, 0, false);
+    testValidate(0, 2, 0, 1, 0, 1, 1, false);
+    testValidate(0, 2, 0, 1, 0, 1, 2, false);
+    testValidate(0, 2, 0, 1, 0, 2, 0, false);
+    testValidate(0, 2, 0, 1, 0, 2, 1, false);
+    testValidate(0, 2, 0, 1, 0, 2, 2, false);
+    testValidate(0, 2, 0, 1, 1, 0, 0, false);
+    testValidate(0, 2, 0, 1, 1, 0, 1, false);
+    testValidate(0, 2, 0, 1, 1, 0, 2, false);
+    testValidate(0, 2, 0, 1, 1, 1, 0, false);
+    testValidate(0, 2, 0, 1, 1, 1, 1, false);
+    testValidate(0, 2, 0, 1, 1, 1, 2, false);
+    testValidate(0, 2, 0, 1, 1, 2, 0, false);
+    testValidate(0, 2, 0, 1, 1, 2, 1, false);
+    testValidate(0, 2, 0, 1, 1, 2, 2, false);
+    testValidate(0, 2, 0, 1, 2, 0, 0, false);
+    testValidate(0, 2, 0, 1, 2, 0, 1, false);
+    testValidate(0, 2, 0, 1, 2, 0, 2, false);
+    testValidate(0, 2, 0, 1, 2, 1, 0, false);
+    testValidate(0, 2, 0, 1, 2, 1, 1, false);
+    testValidate(0, 2, 0, 1, 2, 1, 2, false);
+    testValidate(0, 2, 0, 1, 2, 2, 0, false);
+    testValidate(0, 2, 0, 1, 2, 2, 1, false);
+    testValidate(0, 2, 0, 1, 2, 2, 2, false);
+    testValidate(0, 2, 0, 2, 0, 0, 0, false);
+    testValidate(0, 2, 0, 2, 0, 0, 1, false);
+    testValidate(0, 2, 0, 2, 0, 0, 2, false);
+    testValidate(0, 2, 0, 2, 0, 1, 0, false);
+    testValidate(0, 2, 0, 2, 0, 1, 1, false);
+    testValidate(0, 2, 0, 2, 0, 1, 2, false);
+    testValidate(0, 2, 0, 2, 0, 2, 0, false);
+    testValidate(0, 2, 0, 2, 0, 2, 1, false);
+    testValidate(0, 2, 0, 2, 0, 2, 2, false);
+    testValidate(0, 2, 0, 2, 1, 0, 0, false);
+    testValidate(0, 2, 0, 2, 1, 0, 1, false);
+    testValidate(0, 2, 0, 2, 1, 0, 2, false);
+    testValidate(0, 2, 0, 2, 1, 1, 0, false);
+    testValidate(0, 2, 0, 2, 1, 1, 1, false);
+    testValidate(0, 2, 0, 2, 1, 1, 2, false);
+    testValidate(0, 2, 0, 2, 1, 2, 0, false);
+    testValidate(0, 2, 0, 2, 1, 2, 1, false);
+    testValidate(0, 2, 0, 2, 1, 2, 2, false);
+    testValidate(0, 2, 0, 2, 2, 0, 0, false);
+    testValidate(0, 2, 0, 2, 2, 0, 1, false);
+    testValidate(0, 2, 0, 2, 2, 0, 2, false);
+    testValidate(0, 2, 0, 2, 2, 1, 0, false);
+    testValidate(0, 2, 0, 2, 2, 1, 1, false);
+    testValidate(0, 2, 0, 2, 2, 1, 2, false);
+    testValidate(0, 2, 0, 2, 2, 2, 0, false);
+    testValidate(0, 2, 0, 2, 2, 2, 1, false);
+    testValidate(0, 2, 0, 2, 2, 2, 2, false);
+    testValidate(0, 2, 1, 0, 0, 0, 0, false);
+    testValidate(0, 2, 1, 0, 0, 0, 1, false);
+    testValidate(0, 2, 1, 0, 0, 0, 2, false);
+    testValidate(0, 2, 1, 0, 0, 1, 0, false);
+    testValidate(0, 2, 1, 0, 0, 1, 1, false);
+    testValidate(0, 2, 1, 0, 0, 1, 2, false);
+    testValidate(0, 2, 1, 0, 0, 2, 0, false);
+    testValidate(0, 2, 1, 0, 0, 2, 1, false);
+    testValidate(0, 2, 1, 0, 0, 2, 2, false);
+    testValidate(0, 2, 1, 0, 1, 0, 0, false);
+    testValidate(0, 2, 1, 0, 1, 0, 1, false);
+    testValidate(0, 2, 1, 0, 1, 0, 2, false);
+    testValidate(0, 2, 1, 0, 1, 1, 0, false);
+    testValidate(0, 2, 1, 0, 1, 1, 1, false);
+    testValidate(0, 2, 1, 0, 1, 1, 2, false);
+    testValidate(0, 2, 1, 0, 1, 2, 0, false);
+    testValidate(0, 2, 1, 0, 1, 2, 1, false);
+    testValidate(0, 2, 1, 0, 1, 2, 2, false);
+    testValidate(0, 2, 1, 0, 2, 0, 0, false);
+    testValidate(0, 2, 1, 0, 2, 0, 1, false);
+    testValidate(0, 2, 1, 0, 2, 0, 2, false);
+    testValidate(0, 2, 1, 0, 2, 1, 0, false);
+    testValidate(0, 2, 1, 0, 2, 1, 1, false);
+    testValidate(0, 2, 1, 0, 2, 1, 2, false);
+    testValidate(0, 2, 1, 0, 2, 2, 0, false);
+    testValidate(0, 2, 1, 0, 2, 2, 1, false);
+    testValidate(0, 2, 1, 0, 2, 2, 2, false);
+    testValidate(0, 2, 1, 1, 0, 0, 0, false);
+    testValidate(0, 2, 1, 1, 0, 0, 1, false);
+    testValidate(0, 2, 1, 1, 0, 0, 2, false);
+    testValidate(0, 2, 1, 1, 0, 1, 0, false);
+    testValidate(0, 2, 1, 1, 0, 1, 1, false);
+    testValidate(0, 2, 1, 1, 0, 1, 2, false);
+    testValidate(0, 2, 1, 1, 0, 2, 0, false);
+    testValidate(0, 2, 1, 1, 0, 2, 1, false);
+    testValidate(0, 2, 1, 1, 0, 2, 2, false);
+    testValidate(0, 2, 1, 1, 1, 0, 0, false);
+    testValidate(0, 2, 1, 1, 1, 0, 1, false);
+    testValidate(0, 2, 1, 1, 1, 0, 2, false);
+    testValidate(0, 2, 1, 1, 1, 1, 0, false);
+    testValidate(0, 2, 1, 1, 1, 1, 1, false);
+    testValidate(0, 2, 1, 1, 1, 1, 2, false);
+    testValidate(0, 2, 1, 1, 1, 2, 0, false);
+    testValidate(0, 2, 1, 1, 1, 2, 1, false);
+    testValidate(0, 2, 1, 1, 1, 2, 2, false);
+    testValidate(0, 2, 1, 1, 2, 0, 0, false);
+    testValidate(0, 2, 1, 1, 2, 0, 1, false);
+    testValidate(0, 2, 1, 1, 2, 0, 2, false);
+    testValidate(0, 2, 1, 1, 2, 1, 0, false);
+    testValidate(0, 2, 1, 1, 2, 1, 1, false);
+    testValidate(0, 2, 1, 1, 2, 1, 2, false);
+    testValidate(0, 2, 1, 1, 2, 2, 0, false);
+    testValidate(0, 2, 1, 1, 2, 2, 1, false);
+    testValidate(0, 2, 1, 1, 2, 2, 2, false);
+    testValidate(0, 2, 1, 2, 0, 0, 0, false);
+    testValidate(0, 2, 1, 2, 0, 0, 1, false);
+    testValidate(0, 2, 1, 2, 0, 0, 2, false);
+    testValidate(0, 2, 1, 2, 0, 1, 0, false);
+    testValidate(0, 2, 1, 2, 0, 1, 1, false);
+    testValidate(0, 2, 1, 2, 0, 1, 2, false);
+    testValidate(0, 2, 1, 2, 0, 2, 0, false);
+    testValidate(0, 2, 1, 2, 0, 2, 1, false);
+    testValidate(0, 2, 1, 2, 0, 2, 2, false);
+    testValidate(0, 2, 1, 2, 1, 0, 0, false);
+    testValidate(0, 2, 1, 2, 1, 0, 1, false);
+    testValidate(0, 2, 1, 2, 1, 0, 2, false);
+    testValidate(0, 2, 1, 2, 1, 1, 0, false);
+    testValidate(0, 2, 1, 2, 1, 1, 1, false);
+    testValidate(0, 2, 1, 2, 1, 1, 2, false);
+    testValidate(0, 2, 1, 2, 1, 2, 0, false);
+    testValidate(0, 2, 1, 2, 1, 2, 1, false);
+    testValidate(0, 2, 1, 2, 1, 2, 2, false);
+    testValidate(0, 2, 1, 2, 2, 0, 0, false);
+    testValidate(0, 2, 1, 2, 2, 0, 1, false);
+    testValidate(0, 2, 1, 2, 2, 0, 2, false);
+    testValidate(0, 2, 1, 2, 2, 1, 0, false);
+    testValidate(0, 2, 1, 2, 2, 1, 1, false);
+    testValidate(0, 2, 1, 2, 2, 1, 2, false);
+    testValidate(0, 2, 1, 2, 2, 2, 0, false);
+    testValidate(0, 2, 1, 2, 2, 2, 1, false);
+    testValidate(0, 2, 1, 2, 2, 2, 2, false);
+    testValidate(0, 2, 2, 0, 0, 0, 0, false);
+    testValidate(0, 2, 2, 0, 0, 0, 1, false);
+    testValidate(0, 2, 2, 0, 0, 0, 2, false);
+    testValidate(0, 2, 2, 0, 0, 1, 0, false);
+    testValidate(0, 2, 2, 0, 0, 1, 1, false);
+    testValidate(0, 2, 2, 0, 0, 1, 2, false);
+    testValidate(0, 2, 2, 0, 0, 2, 0, false);
+    testValidate(0, 2, 2, 0, 0, 2, 1, false);
+    testValidate(0, 2, 2, 0, 0, 2, 2, false);
+    testValidate(0, 2, 2, 0, 1, 0, 0, false);
+    testValidate(0, 2, 2, 0, 1, 0, 1, false);
+    testValidate(0, 2, 2, 0, 1, 0, 2, false);
+    testValidate(0, 2, 2, 0, 1, 1, 0, false);
+    testValidate(0, 2, 2, 0, 1, 1, 1, false);
+    testValidate(0, 2, 2, 0, 1, 1, 2, false);
+    testValidate(0, 2, 2, 0, 1, 2, 0, false);
+    testValidate(0, 2, 2, 0, 1, 2, 1, false);
+    testValidate(0, 2, 2, 0, 1, 2, 2, false);
+    testValidate(0, 2, 2, 0, 2, 0, 0, false);
+    testValidate(0, 2, 2, 0, 2, 0, 1, false);
+    testValidate(0, 2, 2, 0, 2, 0, 2, false);
+    testValidate(0, 2, 2, 0, 2, 1, 0, false);
+    testValidate(0, 2, 2, 0, 2, 1, 1, false);
+    testValidate(0, 2, 2, 0, 2, 1, 2, false);
+    testValidate(0, 2, 2, 0, 2, 2, 0, false);
+    testValidate(0, 2, 2, 0, 2, 2, 1, false);
+    testValidate(0, 2, 2, 0, 2, 2, 2, false);
+    testValidate(0, 2, 2, 1, 0, 0, 0, false);
+    testValidate(0, 2, 2, 1, 0, 0, 1, false);
+    testValidate(0, 2, 2, 1, 0, 0, 2, false);
+    testValidate(0, 2, 2, 1, 0, 1, 0, false);
+    testValidate(0, 2, 2, 1, 0, 1, 1, false);
+    testValidate(0, 2, 2, 1, 0, 1, 2, false);
+    testValidate(0, 2, 2, 1, 0, 2, 0, false);
+    testValidate(0, 2, 2, 1, 0, 2, 1, false);
+    testValidate(0, 2, 2, 1, 0, 2, 2, false);
+    testValidate(0, 2, 2, 1, 1, 0, 0, false);
+    testValidate(0, 2, 2, 1, 1, 0, 1, false);
+    testValidate(0, 2, 2, 1, 1, 0, 2, false);
+    testValidate(0, 2, 2, 1, 1, 1, 0, false);
+    testValidate(0, 2, 2, 1, 1, 1, 1, false);
+    testValidate(0, 2, 2, 1, 1, 1, 2, false);
+    testValidate(0, 2, 2, 1, 1, 2, 0, false);
+    testValidate(0, 2, 2, 1, 1, 2, 1, false);
+    testValidate(0, 2, 2, 1, 1, 2, 2, false);
+    testValidate(0, 2, 2, 1, 2, 0, 0, false);
+    testValidate(0, 2, 2, 1, 2, 0, 1, false);
+    testValidate(0, 2, 2, 1, 2, 0, 2, false);
+    testValidate(0, 2, 2, 1, 2, 1, 0, false);
+    testValidate(0, 2, 2, 1, 2, 1, 1, false);
+    testValidate(0, 2, 2, 1, 2, 1, 2, false);
+    testValidate(0, 2, 2, 1, 2, 2, 0, false);
+    testValidate(0, 2, 2, 1, 2, 2, 1, false);
+    testValidate(0, 2, 2, 1, 2, 2, 2, false);
+    testValidate(0, 2, 2, 2, 0, 0, 0, false);
+    testValidate(0, 2, 2, 2, 0, 0, 1, false);
+    testValidate(0, 2, 2, 2, 0, 0, 2, false);
+    testValidate(0, 2, 2, 2, 0, 1, 0, false);
+    testValidate(0, 2, 2, 2, 0, 1, 1, false);
+    testValidate(0, 2, 2, 2, 0, 1, 2, false);
+    testValidate(0, 2, 2, 2, 0, 2, 0, false);
+    testValidate(0, 2, 2, 2, 0, 2, 1, false);
+    testValidate(0, 2, 2, 2, 0, 2, 2, false);
+    testValidate(0, 2, 2, 2, 1, 0, 0, false);
+    testValidate(0, 2, 2, 2, 1, 0, 1, false);
+    testValidate(0, 2, 2, 2, 1, 0, 2, false);
+    testValidate(0, 2, 2, 2, 1, 1, 0, false);
+    testValidate(0, 2, 2, 2, 1, 1, 1, false);
+    testValidate(0, 2, 2, 2, 1, 1, 2, false);
+    testValidate(0, 2, 2, 2, 1, 2, 0, false);
+    testValidate(0, 2, 2, 2, 1, 2, 1, false);
+    testValidate(0, 2, 2, 2, 1, 2, 2, false);
+    testValidate(0, 2, 2, 2, 2, 0, 0, false);
+    testValidate(0, 2, 2, 2, 2, 0, 1, false);
+    testValidate(0, 2, 2, 2, 2, 0, 2, false);
+    testValidate(0, 2, 2, 2, 2, 1, 0, false);
+    testValidate(0, 2, 2, 2, 2, 1, 1, false);
+    testValidate(0, 2, 2, 2, 2, 1, 2, false);
+    testValidate(0, 2, 2, 2, 2, 2, 0, false);
+    testValidate(0, 2, 2, 2, 2, 2, 1, false);
+    testValidate(0, 2, 2, 2, 2, 2, 2, false);
+    testValidate(1, 0, 0, 0, 0, 0, 0, false);
+    testValidate(1, 0, 0, 0, 0, 0, 1, false);
+    testValidate(1, 0, 0, 0, 0, 0, 2, false);
+    testValidate(1, 0, 0, 0, 0, 1, 0, false);
+    testValidate(1, 0, 0, 0, 0, 1, 1, false);
+    testValidate(1, 0, 0, 0, 0, 1, 2, false);
+    testValidate(1, 0, 0, 0, 0, 2, 0, false);
+    testValidate(1, 0, 0, 0, 0, 2, 1, false);
+    testValidate(1, 0, 0, 0, 0, 2, 2, false);
+    testValidate(1, 0, 0, 0, 1, 0, 0, false);
+    testValidate(1, 0, 0, 0, 1, 0, 1, false);
+    testValidate(1, 0, 0, 0, 1, 0, 2, false);
+    testValidate(1, 0, 0, 0, 1, 1, 0, false);
+    testValidate(1, 0, 0, 0, 1, 1, 1, false);
+    testValidate(1, 0, 0, 0, 1, 1, 2, false);
+    testValidate(1, 0, 0, 0, 1, 2, 0, false);
+    testValidate(1, 0, 0, 0, 1, 2, 1, false);
+    testValidate(1, 0, 0, 0, 1, 2, 2, false);
+    testValidate(1, 0, 0, 0, 2, 0, 0, false);
+    testValidate(1, 0, 0, 0, 2, 0, 1, false);
+    testValidate(1, 0, 0, 0, 2, 0, 2, false);
+    testValidate(1, 0, 0, 0, 2, 1, 0, false);
+    testValidate(1, 0, 0, 0, 2, 1, 1, false);
+    testValidate(1, 0, 0, 0, 2, 1, 2, false);
+    testValidate(1, 0, 0, 0, 2, 2, 0, false);
+    testValidate(1, 0, 0, 0, 2, 2, 1, false);
+    testValidate(1, 0, 0, 0, 2, 2, 2, false);
+    testValidate(1, 0, 0, 1, 0, 0, 0, false);
+    testValidate(1, 0, 0, 1, 0, 0, 1, false);
+    testValidate(1, 0, 0, 1, 0, 0, 2, false);
+    testValidate(1, 0, 0, 1, 0, 1, 0, false);
+    testValidate(1, 0, 0, 1, 0, 1, 1, false);
+    testValidate(1, 0, 0, 1, 0, 1, 2, false);
+    testValidate(1, 0, 0, 1, 0, 2, 0, false);
+    testValidate(1, 0, 0, 1, 0, 2, 1, false);
+    testValidate(1, 0, 0, 1, 0, 2, 2, false);
+    testValidate(1, 0, 0, 1, 1, 0, 0, false);
+    testValidate(1, 0, 0, 1, 1, 0, 1, false);
+    testValidate(1, 0, 0, 1, 1, 0, 2, false);
+    testValidate(1, 0, 0, 1, 1, 1, 0, false);
+    testValidate(1, 0, 0, 1, 1, 1, 1, false);
+    testValidate(1, 0, 0, 1, 1, 1, 2, false);
+    testValidate(1, 0, 0, 1, 1, 2, 0, false);
+    testValidate(1, 0, 0, 1, 1, 2, 1, false);
+    testValidate(1, 0, 0, 1, 1, 2, 2, false);
+    testValidate(1, 0, 0, 1, 2, 0, 0, false);
+    testValidate(1, 0, 0, 1, 2, 0, 1, false);
+    testValidate(1, 0, 0, 1, 2, 0, 2, false);
+    testValidate(1, 0, 0, 1, 2, 1, 0, false);
+    testValidate(1, 0, 0, 1, 2, 1, 1, false);
+    testValidate(1, 0, 0, 1, 2, 1, 2, false);
+    testValidate(1, 0, 0, 1, 2, 2, 0, false);
+    testValidate(1, 0, 0, 1, 2, 2, 1, false);
+    testValidate(1, 0, 0, 1, 2, 2, 2, false);
+    testValidate(1, 0, 0, 2, 0, 0, 0, false);
+    testValidate(1, 0, 0, 2, 0, 0, 1, false);
+    testValidate(1, 0, 0, 2, 0, 0, 2, false);
+    testValidate(1, 0, 0, 2, 0, 1, 0, false);
+    testValidate(1, 0, 0, 2, 0, 1, 1, false);
+    testValidate(1, 0, 0, 2, 0, 1, 2, false);
+    testValidate(1, 0, 0, 2, 0, 2, 0, false);
+    testValidate(1, 0, 0, 2, 0, 2, 1, false);
+    testValidate(1, 0, 0, 2, 0, 2, 2, false);
+    testValidate(1, 0, 0, 2, 1, 0, 0, false);
+    testValidate(1, 0, 0, 2, 1, 0, 1, false);
+    testValidate(1, 0, 0, 2, 1, 0, 2, false);
+    testValidate(1, 0, 0, 2, 1, 1, 0, false);
+    testValidate(1, 0, 0, 2, 1, 1, 1, false);
+    testValidate(1, 0, 0, 2, 1, 1, 2, false);
+    testValidate(1, 0, 0, 2, 1, 2, 0, false);
+    testValidate(1, 0, 0, 2, 1, 2, 1, false);
+    testValidate(1, 0, 0, 2, 1, 2, 2, false);
+    testValidate(1, 0, 0, 2, 2, 0, 0, false);
+    testValidate(1, 0, 0, 2, 2, 0, 1, false);
+    testValidate(1, 0, 0, 2, 2, 0, 2, false);
+    testValidate(1, 0, 0, 2, 2, 1, 0, false);
+    testValidate(1, 0, 0, 2, 2, 1, 1, false);
+    testValidate(1, 0, 0, 2, 2, 1, 2, false);
+    testValidate(1, 0, 0, 2, 2, 2, 0, false);
+    testValidate(1, 0, 0, 2, 2, 2, 1, false);
+    testValidate(1, 0, 0, 2, 2, 2, 2, false);
+    testValidate(1, 0, 1, 0, 0, 0, 0, false);
+    testValidate(1, 0, 1, 0, 0, 0, 1, false);
+    testValidate(1, 0, 1, 0, 0, 0, 2, false);
+    testValidate(1, 0, 1, 0, 0, 1, 0, false);
+    testValidate(1, 0, 1, 0, 0, 1, 1, false);
+    testValidate(1, 0, 1, 0, 0, 1, 2, false);
+    testValidate(1, 0, 1, 0, 0, 2, 0, false);
+    testValidate(1, 0, 1, 0, 0, 2, 1, false);
+    testValidate(1, 0, 1, 0, 0, 2, 2, false);
+    testValidate(1, 0, 1, 0, 1, 0, 0, false);
+    testValidate(1, 0, 1, 0, 1, 0, 1, false);
+    testValidate(1, 0, 1, 0, 1, 0, 2, false);
+    testValidate(1, 0, 1, 0, 1, 1, 0, false);
+    testValidate(1, 0, 1, 0, 1, 1, 1, false);
+    testValidate(1, 0, 1, 0, 1, 1, 2, false);
+    testValidate(1, 0, 1, 0, 1, 2, 0, false);
+    testValidate(1, 0, 1, 0, 1, 2, 1, false);
+    testValidate(1, 0, 1, 0, 1, 2, 2, false);
+    testValidate(1, 0, 1, 0, 2, 0, 0, false);
+    testValidate(1, 0, 1, 0, 2, 0, 1, false);
+    testValidate(1, 0, 1, 0, 2, 0, 2, false);
+    testValidate(1, 0, 1, 0, 2, 1, 0, false);
+    testValidate(1, 0, 1, 0, 2, 1, 1, false);
+    testValidate(1, 0, 1, 0, 2, 1, 2, false);
+    testValidate(1, 0, 1, 0, 2, 2, 0, false);
+    testValidate(1, 0, 1, 0, 2, 2, 1, false);
+    testValidate(1, 0, 1, 0, 2, 2, 2, false);
+    testValidate(1, 0, 1, 1, 0, 0, 0, false);
+    testValidate(1, 0, 1, 1, 0, 0, 1, false);
+    testValidate(1, 0, 1, 1, 0, 0, 2, false);
+    testValidate(1, 0, 1, 1, 0, 1, 0, false);
+    testValidate(1, 0, 1, 1, 0, 1, 1, false);
+    testValidate(1, 0, 1, 1, 0, 1, 2, false);
+    testValidate(1, 0, 1, 1, 0, 2, 0, false);
+    testValidate(1, 0, 1, 1, 0, 2, 1, false);
+    testValidate(1, 0, 1, 1, 0, 2, 2, false);
+    testValidate(1, 0, 1, 1, 1, 0, 0, false);
+    testValidate(1, 0, 1, 1, 1, 0, 1, false);
+    testValidate(1, 0, 1, 1, 1, 0, 2, false);
+    testValidate(1, 0, 1, 1, 1, 1, 0, false);
+    testValidate(1, 0, 1, 1, 1, 1, 1, false);
+    testValidate(1, 0, 1, 1, 1, 1, 2, false);
+    testValidate(1, 0, 1, 1, 1, 2, 0, false);
+    testValidate(1, 0, 1, 1, 1, 2, 1, false);
+    testValidate(1, 0, 1, 1, 1, 2, 2, false);
+    testValidate(1, 0, 1, 1, 2, 0, 0, false);
+    testValidate(1, 0, 1, 1, 2, 0, 1, false);
+    testValidate(1, 0, 1, 1, 2, 0, 2, false);
+    testValidate(1, 0, 1, 1, 2, 1, 0, false);
+    testValidate(1, 0, 1, 1, 2, 1, 1, false);
+    testValidate(1, 0, 1, 1, 2, 1, 2, false);
+    testValidate(1, 0, 1, 1, 2, 2, 0, false);
+    testValidate(1, 0, 1, 1, 2, 2, 1, false);
+    testValidate(1, 0, 1, 1, 2, 2, 2, false);
+    testValidate(1, 0, 1, 2, 0, 0, 0, false);
+    testValidate(1, 0, 1, 2, 0, 0, 1, false);
+    testValidate(1, 0, 1, 2, 0, 0, 2, false);
+    testValidate(1, 0, 1, 2, 0, 1, 0, false);
+    testValidate(1, 0, 1, 2, 0, 1, 1, false);
+    testValidate(1, 0, 1, 2, 0, 1, 2, false);
+    testValidate(1, 0, 1, 2, 0, 2, 0, false);
+    testValidate(1, 0, 1, 2, 0, 2, 1, false);
+    testValidate(1, 0, 1, 2, 0, 2, 2, false);
+    testValidate(1, 0, 1, 2, 1, 0, 0, false);
+    testValidate(1, 0, 1, 2, 1, 0, 1, false);
+    testValidate(1, 0, 1, 2, 1, 0, 2, false);
+    testValidate(1, 0, 1, 2, 1, 1, 0, false);
+    testValidate(1, 0, 1, 2, 1, 1, 1, false);
+    testValidate(1, 0, 1, 2, 1, 1, 2, false);
+    testValidate(1, 0, 1, 2, 1, 2, 0, false);
+    testValidate(1, 0, 1, 2, 1, 2, 1, false);
+    testValidate(1, 0, 1, 2, 1, 2, 2, false);
+    testValidate(1, 0, 1, 2, 2, 0, 0, false);
+    testValidate(1, 0, 1, 2, 2, 0, 1, false);
+    testValidate(1, 0, 1, 2, 2, 0, 2, false);
+    testValidate(1, 0, 1, 2, 2, 1, 0, false);
+    testValidate(1, 0, 1, 2, 2, 1, 1, false);
+    testValidate(1, 0, 1, 2, 2, 1, 2, false);
+    testValidate(1, 0, 1, 2, 2, 2, 0, false);
+    testValidate(1, 0, 1, 2, 2, 2, 1, false);
+    testValidate(1, 0, 1, 2, 2, 2, 2, false);
+    testValidate(1, 0, 2, 0, 0, 0, 0, false);
+    testValidate(1, 0, 2, 0, 0, 0, 1, false);
+    testValidate(1, 0, 2, 0, 0, 0, 2, false);
+    testValidate(1, 0, 2, 0, 0, 1, 0, false);
+    testValidate(1, 0, 2, 0, 0, 1, 1, false);
+    testValidate(1, 0, 2, 0, 0, 1, 2, false);
+    testValidate(1, 0, 2, 0, 0, 2, 0, false);
+    testValidate(1, 0, 2, 0, 0, 2, 1, false);
+    testValidate(1, 0, 2, 0, 0, 2, 2, false);
+    testValidate(1, 0, 2, 0, 1, 0, 0, false);
+    testValidate(1, 0, 2, 0, 1, 0, 1, false);
+    testValidate(1, 0, 2, 0, 1, 0, 2, false);
+    testValidate(1, 0, 2, 0, 1, 1, 0, false);
+    testValidate(1, 0, 2, 0, 1, 1, 1, false);
+    testValidate(1, 0, 2, 0, 1, 1, 2, false);
+    testValidate(1, 0, 2, 0, 1, 2, 0, false);
+    testValidate(1, 0, 2, 0, 1, 2, 1, false);
+    testValidate(1, 0, 2, 0, 1, 2, 2, false);
+    testValidate(1, 0, 2, 0, 2, 0, 0, false);
+    testValidate(1, 0, 2, 0, 2, 0, 1, false);
+    testValidate(1, 0, 2, 0, 2, 0, 2, false);
+    testValidate(1, 0, 2, 0, 2, 1, 0, false);
+    testValidate(1, 0, 2, 0, 2, 1, 1, false);
+    testValidate(1, 0, 2, 0, 2, 1, 2, false);
+    testValidate(1, 0, 2, 0, 2, 2, 0, false);
+    testValidate(1, 0, 2, 0, 2, 2, 1, false);
+    testValidate(1, 0, 2, 0, 2, 2, 2, false);
+    testValidate(1, 0, 2, 1, 0, 0, 0, false);
+    testValidate(1, 0, 2, 1, 0, 0, 1, false);
+    testValidate(1, 0, 2, 1, 0, 0, 2, false);
+    testValidate(1, 0, 2, 1, 0, 1, 0, false);
+    testValidate(1, 0, 2, 1, 0, 1, 1, false);
+    testValidate(1, 0, 2, 1, 0, 1, 2, false);
+    testValidate(1, 0, 2, 1, 0, 2, 0, false);
+    testValidate(1, 0, 2, 1, 0, 2, 1, false);
+    testValidate(1, 0, 2, 1, 0, 2, 2, false);
+    testValidate(1, 0, 2, 1, 1, 0, 0, false);
+    testValidate(1, 0, 2, 1, 1, 0, 1, false);
+    testValidate(1, 0, 2, 1, 1, 0, 2, false);
+    testValidate(1, 0, 2, 1, 1, 1, 0, false);
+    testValidate(1, 0, 2, 1, 1, 1, 1, false);
+    testValidate(1, 0, 2, 1, 1, 1, 2, false);
+    testValidate(1, 0, 2, 1, 1, 2, 0, false);
+    testValidate(1, 0, 2, 1, 1, 2, 1, false);
+    testValidate(1, 0, 2, 1, 1, 2, 2, false);
+    testValidate(1, 0, 2, 1, 2, 0, 0, false);
+    testValidate(1, 0, 2, 1, 2, 0, 1, false);
+    testValidate(1, 0, 2, 1, 2, 0, 2, false);
+    testValidate(1, 0, 2, 1, 2, 1, 0, false);
+    testValidate(1, 0, 2, 1, 2, 1, 1, false);
+    testValidate(1, 0, 2, 1, 2, 1, 2, false);
+    testValidate(1, 0, 2, 1, 2, 2, 0, false);
+    testValidate(1, 0, 2, 1, 2, 2, 1, false);
+    testValidate(1, 0, 2, 1, 2, 2, 2, false);
+    testValidate(1, 0, 2, 2, 0, 0, 0, false);
+    testValidate(1, 0, 2, 2, 0, 0, 1, false);
+    testValidate(1, 0, 2, 2, 0, 0, 2, false);
+    testValidate(1, 0, 2, 2, 0, 1, 0, false);
+    testValidate(1, 0, 2, 2, 0, 1, 1, false);
+    testValidate(1, 0, 2, 2, 0, 1, 2, false);
+    testValidate(1, 0, 2, 2, 0, 2, 0, false);
+    testValidate(1, 0, 2, 2, 0, 2, 1, false);
+    testValidate(1, 0, 2, 2, 0, 2, 2, false);
+    testValidate(1, 0, 2, 2, 1, 0, 0, false);
+    testValidate(1, 0, 2, 2, 1, 0, 1, false);
+    testValidate(1, 0, 2, 2, 1, 0, 2, false);
+    testValidate(1, 0, 2, 2, 1, 1, 0, false);
+    testValidate(1, 0, 2, 2, 1, 1, 1, false);
+    testValidate(1, 0, 2, 2, 1, 1, 2, false);
+    testValidate(1, 0, 2, 2, 1, 2, 0, false);
+    testValidate(1, 0, 2, 2, 1, 2, 1, false);
+    testValidate(1, 0, 2, 2, 1, 2, 2, false);
+    testValidate(1, 0, 2, 2, 2, 0, 0, false);
+    testValidate(1, 0, 2, 2, 2, 0, 1, false);
+    testValidate(1, 0, 2, 2, 2, 0, 2, false);
+    testValidate(1, 0, 2, 2, 2, 1, 0, false);
+    testValidate(1, 0, 2, 2, 2, 1, 1, false);
+    testValidate(1, 0, 2, 2, 2, 1, 2, false);
+    testValidate(1, 0, 2, 2, 2, 2, 0, false);
+    testValidate(1, 0, 2, 2, 2, 2, 1, false);
+    testValidate(1, 0, 2, 2, 2, 2, 2, false);
+    testValidate(1, 1, 0, 0, 0, 0, 0, false);
+    testValidate(1, 1, 0, 0, 0, 0, 1, false);
+    testValidate(1, 1, 0, 0, 0, 0, 2, false);
+    testValidate(1, 1, 0, 0, 0, 1, 0, false);
+    testValidate(1, 1, 0, 0, 0, 1, 1, false);
+    testValidate(1, 1, 0, 0, 0, 1, 2, false);
+    testValidate(1, 1, 0, 0, 0, 2, 0, false);
+    testValidate(1, 1, 0, 0, 0, 2, 1, true);
+    testValidate(1, 1, 0, 0, 0, 2, 2, false);
+    testValidate(1, 1, 0, 0, 1, 0, 0, false);
+    testValidate(1, 1, 0, 0, 1, 0, 1, false);
+    testValidate(1, 1, 0, 0, 1, 0, 2, false);
+    testValidate(1, 1, 0, 0, 1, 1, 0, false);
+    testValidate(1, 1, 0, 0, 1, 1, 1, false);
+    testValidate(1, 1, 0, 0, 1, 1, 2, false);
+    testValidate(1, 1, 0, 0, 1, 2, 0, false);
+    testValidate(1, 1, 0, 0, 1, 2, 1, true);
+    testValidate(1, 1, 0, 0, 1, 2, 2, false);
+    testValidate(1, 1, 0, 0, 2, 0, 0, false);
+    testValidate(1, 1, 0, 0, 2, 0, 1, false);
+    testValidate(1, 1, 0, 0, 2, 0, 2, false);
+    testValidate(1, 1, 0, 0, 2, 1, 0, false);
+    testValidate(1, 1, 0, 0, 2, 1, 1, false);
+    testValidate(1, 1, 0, 0, 2, 1, 2, false);
+    testValidate(1, 1, 0, 0, 2, 2, 0, false);
+    testValidate(1, 1, 0, 0, 2, 2, 1, true);
+    testValidate(1, 1, 0, 0, 2, 2, 2, false);
+    testValidate(1, 1, 0, 1, 0, 0, 0, false);
+    testValidate(1, 1, 0, 1, 0, 0, 1, false);
+    testValidate(1, 1, 0, 1, 0, 0, 2, false);
+    testValidate(1, 1, 0, 1, 0, 1, 0, false);
+    testValidate(1, 1, 0, 1, 0, 1, 1, false);
+    testValidate(1, 1, 0, 1, 0, 1, 2, false);
+    testValidate(1, 1, 0, 1, 0, 2, 0, false);
+    testValidate(1, 1, 0, 1, 0, 2, 1, false);
+    testValidate(1, 1, 0, 1, 0, 2, 2, false);
+    testValidate(1, 1, 0, 1, 1, 0, 0, false);
+    testValidate(1, 1, 0, 1, 1, 0, 1, false);
+    testValidate(1, 1, 0, 1, 1, 0, 2, false);
+    testValidate(1, 1, 0, 1, 1, 1, 0, false);
+    testValidate(1, 1, 0, 1, 1, 1, 1, false);
+    testValidate(1, 1, 0, 1, 1, 1, 2, false);
+    testValidate(1, 1, 0, 1, 1, 2, 0, false);
+    testValidate(1, 1, 0, 1, 1, 2, 1, false);
+    testValidate(1, 1, 0, 1, 1, 2, 2, false);
+    testValidate(1, 1, 0, 1, 2, 0, 0, false);
+    testValidate(1, 1, 0, 1, 2, 0, 1, false);
+    testValidate(1, 1, 0, 1, 2, 0, 2, false);
+    testValidate(1, 1, 0, 1, 2, 1, 0, false);
+    testValidate(1, 1, 0, 1, 2, 1, 1, false);
+    testValidate(1, 1, 0, 1, 2, 1, 2, false);
+    testValidate(1, 1, 0, 1, 2, 2, 0, false);
+    testValidate(1, 1, 0, 1, 2, 2, 1, false);
+    testValidate(1, 1, 0, 1, 2, 2, 2, false);
+    testValidate(1, 1, 0, 2, 0, 0, 0, false);
+    testValidate(1, 1, 0, 2, 0, 0, 1, false);
+    testValidate(1, 1, 0, 2, 0, 0, 2, false);
+    testValidate(1, 1, 0, 2, 0, 1, 0, false);
+    testValidate(1, 1, 0, 2, 0, 1, 1, false);
+    testValidate(1, 1, 0, 2, 0, 1, 2, false);
+    testValidate(1, 1, 0, 2, 0, 2, 0, false);
+    testValidate(1, 1, 0, 2, 0, 2, 1, false);
+    testValidate(1, 1, 0, 2, 0, 2, 2, false);
+    testValidate(1, 1, 0, 2, 1, 0, 0, false);
+    testValidate(1, 1, 0, 2, 1, 0, 1, false);
+    testValidate(1, 1, 0, 2, 1, 0, 2, false);
+    testValidate(1, 1, 0, 2, 1, 1, 0, false);
+    testValidate(1, 1, 0, 2, 1, 1, 1, false);
+    testValidate(1, 1, 0, 2, 1, 1, 2, false);
+    testValidate(1, 1, 0, 2, 1, 2, 0, false);
+    testValidate(1, 1, 0, 2, 1, 2, 1, false);
+    testValidate(1, 1, 0, 2, 1, 2, 2, false);
+    testValidate(1, 1, 0, 2, 2, 0, 0, false);
+    testValidate(1, 1, 0, 2, 2, 0, 1, false);
+    testValidate(1, 1, 0, 2, 2, 0, 2, false);
+    testValidate(1, 1, 0, 2, 2, 1, 0, false);
+    testValidate(1, 1, 0, 2, 2, 1, 1, false);
+    testValidate(1, 1, 0, 2, 2, 1, 2, false);
+    testValidate(1, 1, 0, 2, 2, 2, 0, false);
+    testValidate(1, 1, 0, 2, 2, 2, 1, false);
+    testValidate(1, 1, 0, 2, 2, 2, 2, false);
+    testValidate(1, 1, 1, 0, 0, 0, 0, false);
+    testValidate(1, 1, 1, 0, 0, 0, 1, false);
+    testValidate(1, 1, 1, 0, 0, 0, 2, false);
+    testValidate(1, 1, 1, 0, 0, 1, 0, false);
+    testValidate(1, 1, 1, 0, 0, 1, 1, false);
+    testValidate(1, 1, 1, 0, 0, 1, 2, false);
+    testValidate(1, 1, 1, 0, 0, 2, 0, false);
+    testValidate(1, 1, 1, 0, 0, 2, 1, false);
+    testValidate(1, 1, 1, 0, 0, 2, 2, false);
+    testValidate(1, 1, 1, 0, 1, 0, 0, false);
+    testValidate(1, 1, 1, 0, 1, 0, 1, false);
+    testValidate(1, 1, 1, 0, 1, 0, 2, false);
+    testValidate(1, 1, 1, 0, 1, 1, 0, false);
+    testValidate(1, 1, 1, 0, 1, 1, 1, false);
+    testValidate(1, 1, 1, 0, 1, 1, 2, false);
+    testValidate(1, 1, 1, 0, 1, 2, 0, false);
+    testValidate(1, 1, 1, 0, 1, 2, 1, false);
+    testValidate(1, 1, 1, 0, 1, 2, 2, false);
+    testValidate(1, 1, 1, 0, 2, 0, 0, false);
+    testValidate(1, 1, 1, 0, 2, 0, 1, false);
+    testValidate(1, 1, 1, 0, 2, 0, 2, false);
+    testValidate(1, 1, 1, 0, 2, 1, 0, false);
+    testValidate(1, 1, 1, 0, 2, 1, 1, false);
+    testValidate(1, 1, 1, 0, 2, 1, 2, false);
+    testValidate(1, 1, 1, 0, 2, 2, 0, false);
+    testValidate(1, 1, 1, 0, 2, 2, 1, false);
+    testValidate(1, 1, 1, 0, 2, 2, 2, false);
+    testValidate(1, 1, 1, 1, 0, 0, 0, false);
+    testValidate(1, 1, 1, 1, 0, 0, 1, false);
+    testValidate(1, 1, 1, 1, 0, 0, 2, false);
+    testValidate(1, 1, 1, 1, 0, 1, 0, false);
+    testValidate(1, 1, 1, 1, 0, 1, 1, false);
+    testValidate(1, 1, 1, 1, 0, 1, 2, false);
+    testValidate(1, 1, 1, 1, 0, 2, 0, false);
+    testValidate(1, 1, 1, 1, 0, 2, 1, true);
+    testValidate(1, 1, 1, 1, 0, 2, 2, false);
+    testValidate(1, 1, 1, 1, 1, 0, 0, false);
+    testValidate(1, 1, 1, 1, 1, 0, 1, false);
+    testValidate(1, 1, 1, 1, 1, 0, 2, false);
+    testValidate(1, 1, 1, 1, 1, 1, 0, false);
+    testValidate(1, 1, 1, 1, 1, 1, 1, false);
+    testValidate(1, 1, 1, 1, 1, 1, 2, false);
+    testValidate(1, 1, 1, 1, 1, 2, 0, false);
+    testValidate(1, 1, 1, 1, 1, 2, 1, true);
+    testValidate(1, 1, 1, 1, 1, 2, 2, false);
+    testValidate(1, 1, 1, 1, 2, 0, 0, false);
+    testValidate(1, 1, 1, 1, 2, 0, 1, false);
+    testValidate(1, 1, 1, 1, 2, 0, 2, false);
+    testValidate(1, 1, 1, 1, 2, 1, 0, false);
+    testValidate(1, 1, 1, 1, 2, 1, 1, false);
+    testValidate(1, 1, 1, 1, 2, 1, 2, false);
+    testValidate(1, 1, 1, 1, 2, 2, 0, false);
+    testValidate(1, 1, 1, 1, 2, 2, 1, true);
+    testValidate(1, 1, 1, 1, 2, 2, 2, false);
+    testValidate(1, 1, 1, 2, 0, 0, 0, false);
+    testValidate(1, 1, 1, 2, 0, 0, 1, false);
+    testValidate(1, 1, 1, 2, 0, 0, 2, false);
+    testValidate(1, 1, 1, 2, 0, 1, 0, false);
+    testValidate(1, 1, 1, 2, 0, 1, 1, false);
+    testValidate(1, 1, 1, 2, 0, 1, 2, false);
+    testValidate(1, 1, 1, 2, 0, 2, 0, false);
+    testValidate(1, 1, 1, 2, 0, 2, 1, true);
+    testValidate(1, 1, 1, 2, 0, 2, 2, false);
+    testValidate(1, 1, 1, 2, 1, 0, 0, false);
+    testValidate(1, 1, 1, 2, 1, 0, 1, false);
+    testValidate(1, 1, 1, 2, 1, 0, 2, false);
+    testValidate(1, 1, 1, 2, 1, 1, 0, false);
+    testValidate(1, 1, 1, 2, 1, 1, 1, false);
+    testValidate(1, 1, 1, 2, 1, 1, 2, false);
+    testValidate(1, 1, 1, 2, 1, 2, 0, false);
+    testValidate(1, 1, 1, 2, 1, 2, 1, true);
+    testValidate(1, 1, 1, 2, 1, 2, 2, false);
+    testValidate(1, 1, 1, 2, 2, 0, 0, false);
+    testValidate(1, 1, 1, 2, 2, 0, 1, false);
+    testValidate(1, 1, 1, 2, 2, 0, 2, false);
+    testValidate(1, 1, 1, 2, 2, 1, 0, false);
+    testValidate(1, 1, 1, 2, 2, 1, 1, false);
+    testValidate(1, 1, 1, 2, 2, 1, 2, false);
+    testValidate(1, 1, 1, 2, 2, 2, 0, false);
+    testValidate(1, 1, 1, 2, 2, 2, 1, true);
+    testValidate(1, 1, 1, 2, 2, 2, 2, false);
+    testValidate(1, 1, 2, 0, 0, 0, 0, false);
+    testValidate(1, 1, 2, 0, 0, 0, 1, false);
+    testValidate(1, 1, 2, 0, 0, 0, 2, false);
+    testValidate(1, 1, 2, 0, 0, 1, 0, false);
+    testValidate(1, 1, 2, 0, 0, 1, 1, false);
+    testValidate(1, 1, 2, 0, 0, 1, 2, false);
+    testValidate(1, 1, 2, 0, 0, 2, 0, false);
+    testValidate(1, 1, 2, 0, 0, 2, 1, false);
+    testValidate(1, 1, 2, 0, 0, 2, 2, false);
+    testValidate(1, 1, 2, 0, 1, 0, 0, false);
+    testValidate(1, 1, 2, 0, 1, 0, 1, false);
+    testValidate(1, 1, 2, 0, 1, 0, 2, false);
+    testValidate(1, 1, 2, 0, 1, 1, 0, false);
+    testValidate(1, 1, 2, 0, 1, 1, 1, false);
+    testValidate(1, 1, 2, 0, 1, 1, 2, false);
+    testValidate(1, 1, 2, 0, 1, 2, 0, false);
+    testValidate(1, 1, 2, 0, 1, 2, 1, false);
+    testValidate(1, 1, 2, 0, 1, 2, 2, false);
+    testValidate(1, 1, 2, 0, 2, 0, 0, false);
+    testValidate(1, 1, 2, 0, 2, 0, 1, false);
+    testValidate(1, 1, 2, 0, 2, 0, 2, false);
+    testValidate(1, 1, 2, 0, 2, 1, 0, false);
+    testValidate(1, 1, 2, 0, 2, 1, 1, false);
+    testValidate(1, 1, 2, 0, 2, 1, 2, false);
+    testValidate(1, 1, 2, 0, 2, 2, 0, false);
+    testValidate(1, 1, 2, 0, 2, 2, 1, false);
+    testValidate(1, 1, 2, 0, 2, 2, 2, false);
+    testValidate(1, 1, 2, 1, 0, 0, 0, false);
+    testValidate(1, 1, 2, 1, 0, 0, 1, false);
+    testValidate(1, 1, 2, 1, 0, 0, 2, false);
+    testValidate(1, 1, 2, 1, 0, 1, 0, false);
+    testValidate(1, 1, 2, 1, 0, 1, 1, false);
+    testValidate(1, 1, 2, 1, 0, 1, 2, false);
+    testValidate(1, 1, 2, 1, 0, 2, 0, false);
+    testValidate(1, 1, 2, 1, 0, 2, 1, true);
+    testValidate(1, 1, 2, 1, 0, 2, 2, false);
+    testValidate(1, 1, 2, 1, 1, 0, 0, false);
+    testValidate(1, 1, 2, 1, 1, 0, 1, false);
+    testValidate(1, 1, 2, 1, 1, 0, 2, false);
+    testValidate(1, 1, 2, 1, 1, 1, 0, false);
+    testValidate(1, 1, 2, 1, 1, 1, 1, false);
+    testValidate(1, 1, 2, 1, 1, 1, 2, false);
+    testValidate(1, 1, 2, 1, 1, 2, 0, false);
+    testValidate(1, 1, 2, 1, 1, 2, 1, true);
+    testValidate(1, 1, 2, 1, 1, 2, 2, false);
+    testValidate(1, 1, 2, 1, 2, 0, 0, false);
+    testValidate(1, 1, 2, 1, 2, 0, 1, false);
+    testValidate(1, 1, 2, 1, 2, 0, 2, false);
+    testValidate(1, 1, 2, 1, 2, 1, 0, false);
+    testValidate(1, 1, 2, 1, 2, 1, 1, false);
+    testValidate(1, 1, 2, 1, 2, 1, 2, false);
+    testValidate(1, 1, 2, 1, 2, 2, 0, false);
+    testValidate(1, 1, 2, 1, 2, 2, 1, true);
+    testValidate(1, 1, 2, 1, 2, 2, 2, false);
+    testValidate(1, 1, 2, 2, 0, 0, 0, false);
+    testValidate(1, 1, 2, 2, 0, 0, 1, false);
+    testValidate(1, 1, 2, 2, 0, 0, 2, false);
+    testValidate(1, 1, 2, 2, 0, 1, 0, false);
+    testValidate(1, 1, 2, 2, 0, 1, 1, false);
+    testValidate(1, 1, 2, 2, 0, 1, 2, false);
+    testValidate(1, 1, 2, 2, 0, 2, 0, false);
+    testValidate(1, 1, 2, 2, 0, 2, 1, false);
+    testValidate(1, 1, 2, 2, 0, 2, 2, false);
+    testValidate(1, 1, 2, 2, 1, 0, 0, false);
+    testValidate(1, 1, 2, 2, 1, 0, 1, false);
+    testValidate(1, 1, 2, 2, 1, 0, 2, false);
+    testValidate(1, 1, 2, 2, 1, 1, 0, false);
+    testValidate(1, 1, 2, 2, 1, 1, 1, false);
+    testValidate(1, 1, 2, 2, 1, 1, 2, false);
+    testValidate(1, 1, 2, 2, 1, 2, 0, false);
+    testValidate(1, 1, 2, 2, 1, 2, 1, false);
+    testValidate(1, 1, 2, 2, 1, 2, 2, false);
+    testValidate(1, 1, 2, 2, 2, 0, 0, false);
+    testValidate(1, 1, 2, 2, 2, 0, 1, false);
+    testValidate(1, 1, 2, 2, 2, 0, 2, false);
+    testValidate(1, 1, 2, 2, 2, 1, 0, false);
+    testValidate(1, 1, 2, 2, 2, 1, 1, false);
+    testValidate(1, 1, 2, 2, 2, 1, 2, false);
+    testValidate(1, 1, 2, 2, 2, 2, 0, false);
+    testValidate(1, 1, 2, 2, 2, 2, 1, false);
+    testValidate(1, 1, 2, 2, 2, 2, 2, false);
+    testValidate(1, 2, 0, 0, 0, 0, 0, false);
+    testValidate(1, 2, 0, 0, 0, 0, 1, false);
+    testValidate(1, 2, 0, 0, 0, 0, 2, false);
+    testValidate(1, 2, 0, 0, 0, 1, 0, false);
+    testValidate(1, 2, 0, 0, 0, 1, 1, false);
+    testValidate(1, 2, 0, 0, 0, 1, 2, false);
+    testValidate(1, 2, 0, 0, 0, 2, 0, false);
+    testValidate(1, 2, 0, 0, 0, 2, 1, true);
+    testValidate(1, 2, 0, 0, 0, 2, 2, false);
+    testValidate(1, 2, 0, 0, 1, 0, 0, false);
+    testValidate(1, 2, 0, 0, 1, 0, 1, false);
+    testValidate(1, 2, 0, 0, 1, 0, 2, false);
+    testValidate(1, 2, 0, 0, 1, 1, 0, false);
+    testValidate(1, 2, 0, 0, 1, 1, 1, false);
+    testValidate(1, 2, 0, 0, 1, 1, 2, false);
+    testValidate(1, 2, 0, 0, 1, 2, 0, false);
+    testValidate(1, 2, 0, 0, 1, 2, 1, true);
+    testValidate(1, 2, 0, 0, 1, 2, 2, false);
+    testValidate(1, 2, 0, 0, 2, 0, 0, false);
+    testValidate(1, 2, 0, 0, 2, 0, 1, false);
+    testValidate(1, 2, 0, 0, 2, 0, 2, false);
+    testValidate(1, 2, 0, 0, 2, 1, 0, false);
+    testValidate(1, 2, 0, 0, 2, 1, 1, false);
+    testValidate(1, 2, 0, 0, 2, 1, 2, false);
+    testValidate(1, 2, 0, 0, 2, 2, 0, false);
+    testValidate(1, 2, 0, 0, 2, 2, 1, true);
+    testValidate(1, 2, 0, 0, 2, 2, 2, false);
+    testValidate(1, 2, 0, 1, 0, 0, 0, false);
+    testValidate(1, 2, 0, 1, 0, 0, 1, false);
+    testValidate(1, 2, 0, 1, 0, 0, 2, false);
+    testValidate(1, 2, 0, 1, 0, 1, 0, false);
+    testValidate(1, 2, 0, 1, 0, 1, 1, false);
+    testValidate(1, 2, 0, 1, 0, 1, 2, false);
+    testValidate(1, 2, 0, 1, 0, 2, 0, false);
+    testValidate(1, 2, 0, 1, 0, 2, 1, false);
+    testValidate(1, 2, 0, 1, 0, 2, 2, false);
+    testValidate(1, 2, 0, 1, 1, 0, 0, false);
+    testValidate(1, 2, 0, 1, 1, 0, 1, false);
+    testValidate(1, 2, 0, 1, 1, 0, 2, false);
+    testValidate(1, 2, 0, 1, 1, 1, 0, false);
+    testValidate(1, 2, 0, 1, 1, 1, 1, false);
+    testValidate(1, 2, 0, 1, 1, 1, 2, false);
+    testValidate(1, 2, 0, 1, 1, 2, 0, false);
+    testValidate(1, 2, 0, 1, 1, 2, 1, false);
+    testValidate(1, 2, 0, 1, 1, 2, 2, false);
+    testValidate(1, 2, 0, 1, 2, 0, 0, false);
+    testValidate(1, 2, 0, 1, 2, 0, 1, false);
+    testValidate(1, 2, 0, 1, 2, 0, 2, false);
+    testValidate(1, 2, 0, 1, 2, 1, 0, false);
+    testValidate(1, 2, 0, 1, 2, 1, 1, false);
+    testValidate(1, 2, 0, 1, 2, 1, 2, false);
+    testValidate(1, 2, 0, 1, 2, 2, 0, false);
+    testValidate(1, 2, 0, 1, 2, 2, 1, false);
+    testValidate(1, 2, 0, 1, 2, 2, 2, false);
+    testValidate(1, 2, 0, 2, 0, 0, 0, false);
+    testValidate(1, 2, 0, 2, 0, 0, 1, false);
+    testValidate(1, 2, 0, 2, 0, 0, 2, false);
+    testValidate(1, 2, 0, 2, 0, 1, 0, false);
+    testValidate(1, 2, 0, 2, 0, 1, 1, false);
+    testValidate(1, 2, 0, 2, 0, 1, 2, false);
+    testValidate(1, 2, 0, 2, 0, 2, 0, false);
+    testValidate(1, 2, 0, 2, 0, 2, 1, false);
+    testValidate(1, 2, 0, 2, 0, 2, 2, false);
+    testValidate(1, 2, 0, 2, 1, 0, 0, false);
+    testValidate(1, 2, 0, 2, 1, 0, 1, false);
+    testValidate(1, 2, 0, 2, 1, 0, 2, false);
+    testValidate(1, 2, 0, 2, 1, 1, 0, false);
+    testValidate(1, 2, 0, 2, 1, 1, 1, false);
+    testValidate(1, 2, 0, 2, 1, 1, 2, false);
+    testValidate(1, 2, 0, 2, 1, 2, 0, false);
+    testValidate(1, 2, 0, 2, 1, 2, 1, false);
+    testValidate(1, 2, 0, 2, 1, 2, 2, false);
+    testValidate(1, 2, 0, 2, 2, 0, 0, false);
+    testValidate(1, 2, 0, 2, 2, 0, 1, false);
+    testValidate(1, 2, 0, 2, 2, 0, 2, false);
+    testValidate(1, 2, 0, 2, 2, 1, 0, false);
+    testValidate(1, 2, 0, 2, 2, 1, 1, false);
+    testValidate(1, 2, 0, 2, 2, 1, 2, false);
+    testValidate(1, 2, 0, 2, 2, 2, 0, false);
+    testValidate(1, 2, 0, 2, 2, 2, 1, false);
+    testValidate(1, 2, 0, 2, 2, 2, 2, false);
+    testValidate(1, 2, 1, 0, 0, 0, 0, false);
+    testValidate(1, 2, 1, 0, 0, 0, 1, false);
+    testValidate(1, 2, 1, 0, 0, 0, 2, false);
+    testValidate(1, 2, 1, 0, 0, 1, 0, false);
+    testValidate(1, 2, 1, 0, 0, 1, 1, false);
+    testValidate(1, 2, 1, 0, 0, 1, 2, false);
+    testValidate(1, 2, 1, 0, 0, 2, 0, false);
+    testValidate(1, 2, 1, 0, 0, 2, 1, false);
+    testValidate(1, 2, 1, 0, 0, 2, 2, false);
+    testValidate(1, 2, 1, 0, 1, 0, 0, false);
+    testValidate(1, 2, 1, 0, 1, 0, 1, false);
+    testValidate(1, 2, 1, 0, 1, 0, 2, false);
+    testValidate(1, 2, 1, 0, 1, 1, 0, false);
+    testValidate(1, 2, 1, 0, 1, 1, 1, false);
+    testValidate(1, 2, 1, 0, 1, 1, 2, false);
+    testValidate(1, 2, 1, 0, 1, 2, 0, false);
+    testValidate(1, 2, 1, 0, 1, 2, 1, false);
+    testValidate(1, 2, 1, 0, 1, 2, 2, false);
+    testValidate(1, 2, 1, 0, 2, 0, 0, false);
+    testValidate(1, 2, 1, 0, 2, 0, 1, false);
+    testValidate(1, 2, 1, 0, 2, 0, 2, false);
+    testValidate(1, 2, 1, 0, 2, 1, 0, false);
+    testValidate(1, 2, 1, 0, 2, 1, 1, false);
+    testValidate(1, 2, 1, 0, 2, 1, 2, false);
+    testValidate(1, 2, 1, 0, 2, 2, 0, false);
+    testValidate(1, 2, 1, 0, 2, 2, 1, false);
+    testValidate(1, 2, 1, 0, 2, 2, 2, false);
+    testValidate(1, 2, 1, 1, 0, 0, 0, false);
+    testValidate(1, 2, 1, 1, 0, 0, 1, false);
+    testValidate(1, 2, 1, 1, 0, 0, 2, false);
+    testValidate(1, 2, 1, 1, 0, 1, 0, false);
+    testValidate(1, 2, 1, 1, 0, 1, 1, false);
+    testValidate(1, 2, 1, 1, 0, 1, 2, false);
+    testValidate(1, 2, 1, 1, 0, 2, 0, false);
+    testValidate(1, 2, 1, 1, 0, 2, 1, true);
+    testValidate(1, 2, 1, 1, 0, 2, 2, false);
+    testValidate(1, 2, 1, 1, 1, 0, 0, false);
+    testValidate(1, 2, 1, 1, 1, 0, 1, false);
+    testValidate(1, 2, 1, 1, 1, 0, 2, false);
+    testValidate(1, 2, 1, 1, 1, 1, 0, false);
+    testValidate(1, 2, 1, 1, 1, 1, 1, false);
+    testValidate(1, 2, 1, 1, 1, 1, 2, false);
+    testValidate(1, 2, 1, 1, 1, 2, 0, false);
+    testValidate(1, 2, 1, 1, 1, 2, 1, true);
+    testValidate(1, 2, 1, 1, 1, 2, 2, false);
+    testValidate(1, 2, 1, 1, 2, 0, 0, false);
+    testValidate(1, 2, 1, 1, 2, 0, 1, false);
+    testValidate(1, 2, 1, 1, 2, 0, 2, false);
+    testValidate(1, 2, 1, 1, 2, 1, 0, false);
+    testValidate(1, 2, 1, 1, 2, 1, 1, false);
+    testValidate(1, 2, 1, 1, 2, 1, 2, false);
+    testValidate(1, 2, 1, 1, 2, 2, 0, false);
+    testValidate(1, 2, 1, 1, 2, 2, 1, true);
+    testValidate(1, 2, 1, 1, 2, 2, 2, false);
+    testValidate(1, 2, 1, 2, 0, 0, 0, false);
+    testValidate(1, 2, 1, 2, 0, 0, 1, false);
+    testValidate(1, 2, 1, 2, 0, 0, 2, false);
+    testValidate(1, 2, 1, 2, 0, 1, 0, false);
+    testValidate(1, 2, 1, 2, 0, 1, 1, false);
+    testValidate(1, 2, 1, 2, 0, 1, 2, false);
+    testValidate(1, 2, 1, 2, 0, 2, 0, false);
+    testValidate(1, 2, 1, 2, 0, 2, 1, true);
+    testValidate(1, 2, 1, 2, 0, 2, 2, false);
+    testValidate(1, 2, 1, 2, 1, 0, 0, false);
+    testValidate(1, 2, 1, 2, 1, 0, 1, false);
+    testValidate(1, 2, 1, 2, 1, 0, 2, false);
+    testValidate(1, 2, 1, 2, 1, 1, 0, false);
+    testValidate(1, 2, 1, 2, 1, 1, 1, false);
+    testValidate(1, 2, 1, 2, 1, 1, 2, false);
+    testValidate(1, 2, 1, 2, 1, 2, 0, false);
+    testValidate(1, 2, 1, 2, 1, 2, 1, true);
+    testValidate(1, 2, 1, 2, 1, 2, 2, false);
+    testValidate(1, 2, 1, 2, 2, 0, 0, false);
+    testValidate(1, 2, 1, 2, 2, 0, 1, false);
+    testValidate(1, 2, 1, 2, 2, 0, 2, false);
+    testValidate(1, 2, 1, 2, 2, 1, 0, false);
+    testValidate(1, 2, 1, 2, 2, 1, 1, false);
+    testValidate(1, 2, 1, 2, 2, 1, 2, false);
+    testValidate(1, 2, 1, 2, 2, 2, 0, false);
+    testValidate(1, 2, 1, 2, 2, 2, 1, true);
+    testValidate(1, 2, 1, 2, 2, 2, 2, false);
+    testValidate(1, 2, 2, 0, 0, 0, 0, false);
+    testValidate(1, 2, 2, 0, 0, 0, 1, false);
+    testValidate(1, 2, 2, 0, 0, 0, 2, false);
+    testValidate(1, 2, 2, 0, 0, 1, 0, false);
+    testValidate(1, 2, 2, 0, 0, 1, 1, false);
+    testValidate(1, 2, 2, 0, 0, 1, 2, false);
+    testValidate(1, 2, 2, 0, 0, 2, 0, false);
+    testValidate(1, 2, 2, 0, 0, 2, 1, false);
+    testValidate(1, 2, 2, 0, 0, 2, 2, false);
+    testValidate(1, 2, 2, 0, 1, 0, 0, false);
+    testValidate(1, 2, 2, 0, 1, 0, 1, false);
+    testValidate(1, 2, 2, 0, 1, 0, 2, false);
+    testValidate(1, 2, 2, 0, 1, 1, 0, false);
+    testValidate(1, 2, 2, 0, 1, 1, 1, false);
+    testValidate(1, 2, 2, 0, 1, 1, 2, false);
+    testValidate(1, 2, 2, 0, 1, 2, 0, false);
+    testValidate(1, 2, 2, 0, 1, 2, 1, false);
+    testValidate(1, 2, 2, 0, 1, 2, 2, false);
+    testValidate(1, 2, 2, 0, 2, 0, 0, false);
+    testValidate(1, 2, 2, 0, 2, 0, 1, false);
+    testValidate(1, 2, 2, 0, 2, 0, 2, false);
+    testValidate(1, 2, 2, 0, 2, 1, 0, false);
+    testValidate(1, 2, 2, 0, 2, 1, 1, false);
+    testValidate(1, 2, 2, 0, 2, 1, 2, false);
+    testValidate(1, 2, 2, 0, 2, 2, 0, false);
+    testValidate(1, 2, 2, 0, 2, 2, 1, false);
+    testValidate(1, 2, 2, 0, 2, 2, 2, false);
+    testValidate(1, 2, 2, 1, 0, 0, 0, false);
+    testValidate(1, 2, 2, 1, 0, 0, 1, false);
+    testValidate(1, 2, 2, 1, 0, 0, 2, false);
+    testValidate(1, 2, 2, 1, 0, 1, 0, false);
+    testValidate(1, 2, 2, 1, 0, 1, 1, false);
+    testValidate(1, 2, 2, 1, 0, 1, 2, false);
+    testValidate(1, 2, 2, 1, 0, 2, 0, false);
+    testValidate(1, 2, 2, 1, 0, 2, 1, true);
+    testValidate(1, 2, 2, 1, 0, 2, 2, false);
+    testValidate(1, 2, 2, 1, 1, 0, 0, false);
+    testValidate(1, 2, 2, 1, 1, 0, 1, false);
+    testValidate(1, 2, 2, 1, 1, 0, 2, false);
+    testValidate(1, 2, 2, 1, 1, 1, 0, false);
+    testValidate(1, 2, 2, 1, 1, 1, 1, false);
+    testValidate(1, 2, 2, 1, 1, 1, 2, false);
+    testValidate(1, 2, 2, 1, 1, 2, 0, false);
+    testValidate(1, 2, 2, 1, 1, 2, 1, true);
+    testValidate(1, 2, 2, 1, 1, 2, 2, false);
+    testValidate(1, 2, 2, 1, 2, 0, 0, false);
+    testValidate(1, 2, 2, 1, 2, 0, 1, false);
+    testValidate(1, 2, 2, 1, 2, 0, 2, false);
+    testValidate(1, 2, 2, 1, 2, 1, 0, false);
+    testValidate(1, 2, 2, 1, 2, 1, 1, false);
+    testValidate(1, 2, 2, 1, 2, 1, 2, false);
+    testValidate(1, 2, 2, 1, 2, 2, 0, false);
+    testValidate(1, 2, 2, 1, 2, 2, 1, true);
+    testValidate(1, 2, 2, 1, 2, 2, 2, false);
+    testValidate(1, 2, 2, 2, 0, 0, 0, false);
+    testValidate(1, 2, 2, 2, 0, 0, 1, false);
+    testValidate(1, 2, 2, 2, 0, 0, 2, false);
+    testValidate(1, 2, 2, 2, 0, 1, 0, false);
+    testValidate(1, 2, 2, 2, 0, 1, 1, false);
+    testValidate(1, 2, 2, 2, 0, 1, 2, false);
+    testValidate(1, 2, 2, 2, 0, 2, 0, false);
+    testValidate(1, 2, 2, 2, 0, 2, 1, false);
+    testValidate(1, 2, 2, 2, 0, 2, 2, false);
+    testValidate(1, 2, 2, 2, 1, 0, 0, false);
+    testValidate(1, 2, 2, 2, 1, 0, 1, false);
+    testValidate(1, 2, 2, 2, 1, 0, 2, false);
+    testValidate(1, 2, 2, 2, 1, 1, 0, false);
+    testValidate(1, 2, 2, 2, 1, 1, 1, false);
+    testValidate(1, 2, 2, 2, 1, 1, 2, false);
+    testValidate(1, 2, 2, 2, 1, 2, 0, false);
+    testValidate(1, 2, 2, 2, 1, 2, 1, false);
+    testValidate(1, 2, 2, 2, 1, 2, 2, false);
+    testValidate(1, 2, 2, 2, 2, 0, 0, false);
+    testValidate(1, 2, 2, 2, 2, 0, 1, false);
+    testValidate(1, 2, 2, 2, 2, 0, 2, false);
+    testValidate(1, 2, 2, 2, 2, 1, 0, false);
+    testValidate(1, 2, 2, 2, 2, 1, 1, false);
+    testValidate(1, 2, 2, 2, 2, 1, 2, false);
+    testValidate(1, 2, 2, 2, 2, 2, 0, false);
+    testValidate(1, 2, 2, 2, 2, 2, 1, false);
+    testValidate(1, 2, 2, 2, 2, 2, 2, false);
+    testValidate(2, 0, 0, 0, 0, 0, 0, false);
+    testValidate(2, 0, 0, 0, 0, 0, 1, false);
+    testValidate(2, 0, 0, 0, 0, 0, 2, false);
+    testValidate(2, 0, 0, 0, 0, 1, 0, false);
+    testValidate(2, 0, 0, 0, 0, 1, 1, false);
+    testValidate(2, 0, 0, 0, 0, 1, 2, false);
+    testValidate(2, 0, 0, 0, 0, 2, 0, false);
+    testValidate(2, 0, 0, 0, 0, 2, 1, false);
+    testValidate(2, 0, 0, 0, 0, 2, 2, false);
+    testValidate(2, 0, 0, 0, 1, 0, 0, false);
+    testValidate(2, 0, 0, 0, 1, 0, 1, false);
+    testValidate(2, 0, 0, 0, 1, 0, 2, false);
+    testValidate(2, 0, 0, 0, 1, 1, 0, false);
+    testValidate(2, 0, 0, 0, 1, 1, 1, false);
+    testValidate(2, 0, 0, 0, 1, 1, 2, false);
+    testValidate(2, 0, 0, 0, 1, 2, 0, false);
+    testValidate(2, 0, 0, 0, 1, 2, 1, false);
+    testValidate(2, 0, 0, 0, 1, 2, 2, false);
+    testValidate(2, 0, 0, 0, 2, 0, 0, false);
+    testValidate(2, 0, 0, 0, 2, 0, 1, false);
+    testValidate(2, 0, 0, 0, 2, 0, 2, false);
+    testValidate(2, 0, 0, 0, 2, 1, 0, false);
+    testValidate(2, 0, 0, 0, 2, 1, 1, false);
+    testValidate(2, 0, 0, 0, 2, 1, 2, false);
+    testValidate(2, 0, 0, 0, 2, 2, 0, false);
+    testValidate(2, 0, 0, 0, 2, 2, 1, false);
+    testValidate(2, 0, 0, 0, 2, 2, 2, false);
+    testValidate(2, 0, 0, 1, 0, 0, 0, false);
+    testValidate(2, 0, 0, 1, 0, 0, 1, false);
+    testValidate(2, 0, 0, 1, 0, 0, 2, false);
+    testValidate(2, 0, 0, 1, 0, 1, 0, false);
+    testValidate(2, 0, 0, 1, 0, 1, 1, false);
+    testValidate(2, 0, 0, 1, 0, 1, 2, false);
+    testValidate(2, 0, 0, 1, 0, 2, 0, false);
+    testValidate(2, 0, 0, 1, 0, 2, 1, false);
+    testValidate(2, 0, 0, 1, 0, 2, 2, false);
+    testValidate(2, 0, 0, 1, 1, 0, 0, false);
+    testValidate(2, 0, 0, 1, 1, 0, 1, false);
+    testValidate(2, 0, 0, 1, 1, 0, 2, false);
+    testValidate(2, 0, 0, 1, 1, 1, 0, false);
+    testValidate(2, 0, 0, 1, 1, 1, 1, false);
+    testValidate(2, 0, 0, 1, 1, 1, 2, false);
+    testValidate(2, 0, 0, 1, 1, 2, 0, false);
+    testValidate(2, 0, 0, 1, 1, 2, 1, false);
+    testValidate(2, 0, 0, 1, 1, 2, 2, false);
+    testValidate(2, 0, 0, 1, 2, 0, 0, false);
+    testValidate(2, 0, 0, 1, 2, 0, 1, false);
+    testValidate(2, 0, 0, 1, 2, 0, 2, false);
+    testValidate(2, 0, 0, 1, 2, 1, 0, false);
+    testValidate(2, 0, 0, 1, 2, 1, 1, false);
+    testValidate(2, 0, 0, 1, 2, 1, 2, false);
+    testValidate(2, 0, 0, 1, 2, 2, 0, false);
+    testValidate(2, 0, 0, 1, 2, 2, 1, false);
+    testValidate(2, 0, 0, 1, 2, 2, 2, false);
+    testValidate(2, 0, 0, 2, 0, 0, 0, false);
+    testValidate(2, 0, 0, 2, 0, 0, 1, false);
+    testValidate(2, 0, 0, 2, 0, 0, 2, false);
+    testValidate(2, 0, 0, 2, 0, 1, 0, false);
+    testValidate(2, 0, 0, 2, 0, 1, 1, false);
+    testValidate(2, 0, 0, 2, 0, 1, 2, false);
+    testValidate(2, 0, 0, 2, 0, 2, 0, false);
+    testValidate(2, 0, 0, 2, 0, 2, 1, false);
+    testValidate(2, 0, 0, 2, 0, 2, 2, false);
+    testValidate(2, 0, 0, 2, 1, 0, 0, false);
+    testValidate(2, 0, 0, 2, 1, 0, 1, false);
+    testValidate(2, 0, 0, 2, 1, 0, 2, false);
+    testValidate(2, 0, 0, 2, 1, 1, 0, false);
+    testValidate(2, 0, 0, 2, 1, 1, 1, false);
+    testValidate(2, 0, 0, 2, 1, 1, 2, false);
+    testValidate(2, 0, 0, 2, 1, 2, 0, false);
+    testValidate(2, 0, 0, 2, 1, 2, 1, false);
+    testValidate(2, 0, 0, 2, 1, 2, 2, false);
+    testValidate(2, 0, 0, 2, 2, 0, 0, false);
+    testValidate(2, 0, 0, 2, 2, 0, 1, false);
+    testValidate(2, 0, 0, 2, 2, 0, 2, false);
+    testValidate(2, 0, 0, 2, 2, 1, 0, false);
+    testValidate(2, 0, 0, 2, 2, 1, 1, false);
+    testValidate(2, 0, 0, 2, 2, 1, 2, false);
+    testValidate(2, 0, 0, 2, 2, 2, 0, false);
+    testValidate(2, 0, 0, 2, 2, 2, 1, false);
+    testValidate(2, 0, 0, 2, 2, 2, 2, false);
+    testValidate(2, 0, 1, 0, 0, 0, 0, false);
+    testValidate(2, 0, 1, 0, 0, 0, 1, false);
+    testValidate(2, 0, 1, 0, 0, 0, 2, false);
+    testValidate(2, 0, 1, 0, 0, 1, 0, false);
+    testValidate(2, 0, 1, 0, 0, 1, 1, false);
+    testValidate(2, 0, 1, 0, 0, 1, 2, false);
+    testValidate(2, 0, 1, 0, 0, 2, 0, false);
+    testValidate(2, 0, 1, 0, 0, 2, 1, false);
+    testValidate(2, 0, 1, 0, 0, 2, 2, false);
+    testValidate(2, 0, 1, 0, 1, 0, 0, false);
+    testValidate(2, 0, 1, 0, 1, 0, 1, false);
+    testValidate(2, 0, 1, 0, 1, 0, 2, false);
+    testValidate(2, 0, 1, 0, 1, 1, 0, false);
+    testValidate(2, 0, 1, 0, 1, 1, 1, false);
+    testValidate(2, 0, 1, 0, 1, 1, 2, false);
+    testValidate(2, 0, 1, 0, 1, 2, 0, false);
+    testValidate(2, 0, 1, 0, 1, 2, 1, false);
+    testValidate(2, 0, 1, 0, 1, 2, 2, false);
+    testValidate(2, 0, 1, 0, 2, 0, 0, false);
+    testValidate(2, 0, 1, 0, 2, 0, 1, false);
+    testValidate(2, 0, 1, 0, 2, 0, 2, false);
+    testValidate(2, 0, 1, 0, 2, 1, 0, false);
+    testValidate(2, 0, 1, 0, 2, 1, 1, false);
+    testValidate(2, 0, 1, 0, 2, 1, 2, false);
+    testValidate(2, 0, 1, 0, 2, 2, 0, false);
+    testValidate(2, 0, 1, 0, 2, 2, 1, false);
+    testValidate(2, 0, 1, 0, 2, 2, 2, false);
+    testValidate(2, 0, 1, 1, 0, 0, 0, false);
+    testValidate(2, 0, 1, 1, 0, 0, 1, false);
+    testValidate(2, 0, 1, 1, 0, 0, 2, false);
+    testValidate(2, 0, 1, 1, 0, 1, 0, false);
+    testValidate(2, 0, 1, 1, 0, 1, 1, false);
+    testValidate(2, 0, 1, 1, 0, 1, 2, false);
+    testValidate(2, 0, 1, 1, 0, 2, 0, false);
+    testValidate(2, 0, 1, 1, 0, 2, 1, false);
+    testValidate(2, 0, 1, 1, 0, 2, 2, false);
+    testValidate(2, 0, 1, 1, 1, 0, 0, false);
+    testValidate(2, 0, 1, 1, 1, 0, 1, false);
+    testValidate(2, 0, 1, 1, 1, 0, 2, false);
+    testValidate(2, 0, 1, 1, 1, 1, 0, false);
+    testValidate(2, 0, 1, 1, 1, 1, 1, false);
+    testValidate(2, 0, 1, 1, 1, 1, 2, false);
+    testValidate(2, 0, 1, 1, 1, 2, 0, false);
+    testValidate(2, 0, 1, 1, 1, 2, 1, false);
+    testValidate(2, 0, 1, 1, 1, 2, 2, false);
+    testValidate(2, 0, 1, 1, 2, 0, 0, false);
+    testValidate(2, 0, 1, 1, 2, 0, 1, false);
+    testValidate(2, 0, 1, 1, 2, 0, 2, false);
+    testValidate(2, 0, 1, 1, 2, 1, 0, false);
+    testValidate(2, 0, 1, 1, 2, 1, 1, false);
+    testValidate(2, 0, 1, 1, 2, 1, 2, false);
+    testValidate(2, 0, 1, 1, 2, 2, 0, false);
+    testValidate(2, 0, 1, 1, 2, 2, 1, false);
+    testValidate(2, 0, 1, 1, 2, 2, 2, false);
+    testValidate(2, 0, 1, 2, 0, 0, 0, false);
+    testValidate(2, 0, 1, 2, 0, 0, 1, false);
+    testValidate(2, 0, 1, 2, 0, 0, 2, false);
+    testValidate(2, 0, 1, 2, 0, 1, 0, false);
+    testValidate(2, 0, 1, 2, 0, 1, 1, false);
+    testValidate(2, 0, 1, 2, 0, 1, 2, false);
+    testValidate(2, 0, 1, 2, 0, 2, 0, false);
+    testValidate(2, 0, 1, 2, 0, 2, 1, false);
+    testValidate(2, 0, 1, 2, 0, 2, 2, false);
+    testValidate(2, 0, 1, 2, 1, 0, 0, false);
+    testValidate(2, 0, 1, 2, 1, 0, 1, false);
+    testValidate(2, 0, 1, 2, 1, 0, 2, false);
+    testValidate(2, 0, 1, 2, 1, 1, 0, false);
+    testValidate(2, 0, 1, 2, 1, 1, 1, false);
+    testValidate(2, 0, 1, 2, 1, 1, 2, false);
+    testValidate(2, 0, 1, 2, 1, 2, 0, false);
+    testValidate(2, 0, 1, 2, 1, 2, 1, false);
+    testValidate(2, 0, 1, 2, 1, 2, 2, false);
+    testValidate(2, 0, 1, 2, 2, 0, 0, false);
+    testValidate(2, 0, 1, 2, 2, 0, 1, false);
+    testValidate(2, 0, 1, 2, 2, 0, 2, false);
+    testValidate(2, 0, 1, 2, 2, 1, 0, false);
+    testValidate(2, 0, 1, 2, 2, 1, 1, false);
+    testValidate(2, 0, 1, 2, 2, 1, 2, false);
+    testValidate(2, 0, 1, 2, 2, 2, 0, false);
+    testValidate(2, 0, 1, 2, 2, 2, 1, false);
+    testValidate(2, 0, 1, 2, 2, 2, 2, false);
+    testValidate(2, 0, 2, 0, 0, 0, 0, false);
+    testValidate(2, 0, 2, 0, 0, 0, 1, false);
+    testValidate(2, 0, 2, 0, 0, 0, 2, false);
+    testValidate(2, 0, 2, 0, 0, 1, 0, false);
+    testValidate(2, 0, 2, 0, 0, 1, 1, false);
+    testValidate(2, 0, 2, 0, 0, 1, 2, false);
+    testValidate(2, 0, 2, 0, 0, 2, 0, false);
+    testValidate(2, 0, 2, 0, 0, 2, 1, false);
+    testValidate(2, 0, 2, 0, 0, 2, 2, false);
+    testValidate(2, 0, 2, 0, 1, 0, 0, false);
+    testValidate(2, 0, 2, 0, 1, 0, 1, false);
+    testValidate(2, 0, 2, 0, 1, 0, 2, false);
+    testValidate(2, 0, 2, 0, 1, 1, 0, false);
+    testValidate(2, 0, 2, 0, 1, 1, 1, false);
+    testValidate(2, 0, 2, 0, 1, 1, 2, false);
+    testValidate(2, 0, 2, 0, 1, 2, 0, false);
+    testValidate(2, 0, 2, 0, 1, 2, 1, false);
+    testValidate(2, 0, 2, 0, 1, 2, 2, false);
+    testValidate(2, 0, 2, 0, 2, 0, 0, false);
+    testValidate(2, 0, 2, 0, 2, 0, 1, false);
+    testValidate(2, 0, 2, 0, 2, 0, 2, false);
+    testValidate(2, 0, 2, 0, 2, 1, 0, false);
+    testValidate(2, 0, 2, 0, 2, 1, 1, false);
+    testValidate(2, 0, 2, 0, 2, 1, 2, false);
+    testValidate(2, 0, 2, 0, 2, 2, 0, false);
+    testValidate(2, 0, 2, 0, 2, 2, 1, false);
+    testValidate(2, 0, 2, 0, 2, 2, 2, false);
+    testValidate(2, 0, 2, 1, 0, 0, 0, false);
+    testValidate(2, 0, 2, 1, 0, 0, 1, false);
+    testValidate(2, 0, 2, 1, 0, 0, 2, false);
+    testValidate(2, 0, 2, 1, 0, 1, 0, false);
+    testValidate(2, 0, 2, 1, 0, 1, 1, false);
+    testValidate(2, 0, 2, 1, 0, 1, 2, false);
+    testValidate(2, 0, 2, 1, 0, 2, 0, false);
+    testValidate(2, 0, 2, 1, 0, 2, 1, false);
+    testValidate(2, 0, 2, 1, 0, 2, 2, false);
+    testValidate(2, 0, 2, 1, 1, 0, 0, false);
+    testValidate(2, 0, 2, 1, 1, 0, 1, false);
+    testValidate(2, 0, 2, 1, 1, 0, 2, false);
+    testValidate(2, 0, 2, 1, 1, 1, 0, false);
+    testValidate(2, 0, 2, 1, 1, 1, 1, false);
+    testValidate(2, 0, 2, 1, 1, 1, 2, false);
+    testValidate(2, 0, 2, 1, 1, 2, 0, false);
+    testValidate(2, 0, 2, 1, 1, 2, 1, false);
+    testValidate(2, 0, 2, 1, 1, 2, 2, false);
+    testValidate(2, 0, 2, 1, 2, 0, 0, false);
+    testValidate(2, 0, 2, 1, 2, 0, 1, false);
+    testValidate(2, 0, 2, 1, 2, 0, 2, false);
+    testValidate(2, 0, 2, 1, 2, 1, 0, false);
+    testValidate(2, 0, 2, 1, 2, 1, 1, false);
+    testValidate(2, 0, 2, 1, 2, 1, 2, false);
+    testValidate(2, 0, 2, 1, 2, 2, 0, false);
+    testValidate(2, 0, 2, 1, 2, 2, 1, false);
+    testValidate(2, 0, 2, 1, 2, 2, 2, false);
+    testValidate(2, 0, 2, 2, 0, 0, 0, false);
+    testValidate(2, 0, 2, 2, 0, 0, 1, false);
+    testValidate(2, 0, 2, 2, 0, 0, 2, false);
+    testValidate(2, 0, 2, 2, 0, 1, 0, false);
+    testValidate(2, 0, 2, 2, 0, 1, 1, false);
+    testValidate(2, 0, 2, 2, 0, 1, 2, false);
+    testValidate(2, 0, 2, 2, 0, 2, 0, false);
+    testValidate(2, 0, 2, 2, 0, 2, 1, false);
+    testValidate(2, 0, 2, 2, 0, 2, 2, false);
+    testValidate(2, 0, 2, 2, 1, 0, 0, false);
+    testValidate(2, 0, 2, 2, 1, 0, 1, false);
+    testValidate(2, 0, 2, 2, 1, 0, 2, false);
+    testValidate(2, 0, 2, 2, 1, 1, 0, false);
+    testValidate(2, 0, 2, 2, 1, 1, 1, false);
+    testValidate(2, 0, 2, 2, 1, 1, 2, false);
+    testValidate(2, 0, 2, 2, 1, 2, 0, false);
+    testValidate(2, 0, 2, 2, 1, 2, 1, false);
+    testValidate(2, 0, 2, 2, 1, 2, 2, false);
+    testValidate(2, 0, 2, 2, 2, 0, 0, false);
+    testValidate(2, 0, 2, 2, 2, 0, 1, false);
+    testValidate(2, 0, 2, 2, 2, 0, 2, false);
+    testValidate(2, 0, 2, 2, 2, 1, 0, false);
+    testValidate(2, 0, 2, 2, 2, 1, 1, false);
+    testValidate(2, 0, 2, 2, 2, 1, 2, false);
+    testValidate(2, 0, 2, 2, 2, 2, 0, false);
+    testValidate(2, 0, 2, 2, 2, 2, 1, false);
+    testValidate(2, 0, 2, 2, 2, 2, 2, false);
+    testValidate(2, 1, 0, 0, 0, 0, 0, false);
+    testValidate(2, 1, 0, 0, 0, 0, 1, false);
+    testValidate(2, 1, 0, 0, 0, 0, 2, false);
+    testValidate(2, 1, 0, 0, 0, 1, 0, false);
+    testValidate(2, 1, 0, 0, 0, 1, 1, false);
+    testValidate(2, 1, 0, 0, 0, 1, 2, false);
+    testValidate(2, 1, 0, 0, 0, 2, 0, false);
+    testValidate(2, 1, 0, 0, 0, 2, 1, true);
+    testValidate(2, 1, 0, 0, 0, 2, 2, false);
+    testValidate(2, 1, 0, 0, 1, 0, 0, false);
+    testValidate(2, 1, 0, 0, 1, 0, 1, false);
+    testValidate(2, 1, 0, 0, 1, 0, 2, false);
+    testValidate(2, 1, 0, 0, 1, 1, 0, false);
+    testValidate(2, 1, 0, 0, 1, 1, 1, false);
+    testValidate(2, 1, 0, 0, 1, 1, 2, false);
+    testValidate(2, 1, 0, 0, 1, 2, 0, false);
+    testValidate(2, 1, 0, 0, 1, 2, 1, true);
+    testValidate(2, 1, 0, 0, 1, 2, 2, false);
+    testValidate(2, 1, 0, 0, 2, 0, 0, false);
+    testValidate(2, 1, 0, 0, 2, 0, 1, false);
+    testValidate(2, 1, 0, 0, 2, 0, 2, false);
+    testValidate(2, 1, 0, 0, 2, 1, 0, false);
+    testValidate(2, 1, 0, 0, 2, 1, 1, false);
+    testValidate(2, 1, 0, 0, 2, 1, 2, false);
+    testValidate(2, 1, 0, 0, 2, 2, 0, false);
+    testValidate(2, 1, 0, 0, 2, 2, 1, true);
+    testValidate(2, 1, 0, 0, 2, 2, 2, false);
+    testValidate(2, 1, 0, 1, 0, 0, 0, false);
+    testValidate(2, 1, 0, 1, 0, 0, 1, false);
+    testValidate(2, 1, 0, 1, 0, 0, 2, false);
+    testValidate(2, 1, 0, 1, 0, 1, 0, false);
+    testValidate(2, 1, 0, 1, 0, 1, 1, false);
+    testValidate(2, 1, 0, 1, 0, 1, 2, false);
+    testValidate(2, 1, 0, 1, 0, 2, 0, false);
+    testValidate(2, 1, 0, 1, 0, 2, 1, false);
+    testValidate(2, 1, 0, 1, 0, 2, 2, false);
+    testValidate(2, 1, 0, 1, 1, 0, 0, false);
+    testValidate(2, 1, 0, 1, 1, 0, 1, false);
+    testValidate(2, 1, 0, 1, 1, 0, 2, false);
+    testValidate(2, 1, 0, 1, 1, 1, 0, false);
+    testValidate(2, 1, 0, 1, 1, 1, 1, false);
+    testValidate(2, 1, 0, 1, 1, 1, 2, false);
+    testValidate(2, 1, 0, 1, 1, 2, 0, false);
+    testValidate(2, 1, 0, 1, 1, 2, 1, false);
+    testValidate(2, 1, 0, 1, 1, 2, 2, false);
+    testValidate(2, 1, 0, 1, 2, 0, 0, false);
+    testValidate(2, 1, 0, 1, 2, 0, 1, false);
+    testValidate(2, 1, 0, 1, 2, 0, 2, false);
+    testValidate(2, 1, 0, 1, 2, 1, 0, false);
+    testValidate(2, 1, 0, 1, 2, 1, 1, false);
+    testValidate(2, 1, 0, 1, 2, 1, 2, false);
+    testValidate(2, 1, 0, 1, 2, 2, 0, false);
+    testValidate(2, 1, 0, 1, 2, 2, 1, false);
+    testValidate(2, 1, 0, 1, 2, 2, 2, false);
+    testValidate(2, 1, 0, 2, 0, 0, 0, false);
+    testValidate(2, 1, 0, 2, 0, 0, 1, false);
+    testValidate(2, 1, 0, 2, 0, 0, 2, false);
+    testValidate(2, 1, 0, 2, 0, 1, 0, false);
+    testValidate(2, 1, 0, 2, 0, 1, 1, false);
+    testValidate(2, 1, 0, 2, 0, 1, 2, false);
+    testValidate(2, 1, 0, 2, 0, 2, 0, false);
+    testValidate(2, 1, 0, 2, 0, 2, 1, false);
+    testValidate(2, 1, 0, 2, 0, 2, 2, false);
+    testValidate(2, 1, 0, 2, 1, 0, 0, false);
+    testValidate(2, 1, 0, 2, 1, 0, 1, false);
+    testValidate(2, 1, 0, 2, 1, 0, 2, false);
+    testValidate(2, 1, 0, 2, 1, 1, 0, false);
+    testValidate(2, 1, 0, 2, 1, 1, 1, false);
+    testValidate(2, 1, 0, 2, 1, 1, 2, false);
+    testValidate(2, 1, 0, 2, 1, 2, 0, false);
+    testValidate(2, 1, 0, 2, 1, 2, 1, false);
+    testValidate(2, 1, 0, 2, 1, 2, 2, false);
+    testValidate(2, 1, 0, 2, 2, 0, 0, false);
+    testValidate(2, 1, 0, 2, 2, 0, 1, false);
+    testValidate(2, 1, 0, 2, 2, 0, 2, false);
+    testValidate(2, 1, 0, 2, 2, 1, 0, false);
+    testValidate(2, 1, 0, 2, 2, 1, 1, false);
+    testValidate(2, 1, 0, 2, 2, 1, 2, false);
+    testValidate(2, 1, 0, 2, 2, 2, 0, false);
+    testValidate(2, 1, 0, 2, 2, 2, 1, false);
+    testValidate(2, 1, 0, 2, 2, 2, 2, false);
+    testValidate(2, 1, 1, 0, 0, 0, 0, false);
+    testValidate(2, 1, 1, 0, 0, 0, 1, false);
+    testValidate(2, 1, 1, 0, 0, 0, 2, false);
+    testValidate(2, 1, 1, 0, 0, 1, 0, false);
+    testValidate(2, 1, 1, 0, 0, 1, 1, false);
+    testValidate(2, 1, 1, 0, 0, 1, 2, false);
+    testValidate(2, 1, 1, 0, 0, 2, 0, false);
+    testValidate(2, 1, 1, 0, 0, 2, 1, false);
+    testValidate(2, 1, 1, 0, 0, 2, 2, false);
+    testValidate(2, 1, 1, 0, 1, 0, 0, false);
+    testValidate(2, 1, 1, 0, 1, 0, 1, false);
+    testValidate(2, 1, 1, 0, 1, 0, 2, false);
+    testValidate(2, 1, 1, 0, 1, 1, 0, false);
+    testValidate(2, 1, 1, 0, 1, 1, 1, false);
+    testValidate(2, 1, 1, 0, 1, 1, 2, false);
+    testValidate(2, 1, 1, 0, 1, 2, 0, false);
+    testValidate(2, 1, 1, 0, 1, 2, 1, false);
+    testValidate(2, 1, 1, 0, 1, 2, 2, false);
+    testValidate(2, 1, 1, 0, 2, 0, 0, false);
+    testValidate(2, 1, 1, 0, 2, 0, 1, false);
+    testValidate(2, 1, 1, 0, 2, 0, 2, false);
+    testValidate(2, 1, 1, 0, 2, 1, 0, false);
+    testValidate(2, 1, 1, 0, 2, 1, 1, false);
+    testValidate(2, 1, 1, 0, 2, 1, 2, false);
+    testValidate(2, 1, 1, 0, 2, 2, 0, false);
+    testValidate(2, 1, 1, 0, 2, 2, 1, false);
+    testValidate(2, 1, 1, 0, 2, 2, 2, false);
+    testValidate(2, 1, 1, 1, 0, 0, 0, false);
+    testValidate(2, 1, 1, 1, 0, 0, 1, false);
+    testValidate(2, 1, 1, 1, 0, 0, 2, false);
+    testValidate(2, 1, 1, 1, 0, 1, 0, false);
+    testValidate(2, 1, 1, 1, 0, 1, 1, false);
+    testValidate(2, 1, 1, 1, 0, 1, 2, false);
+    testValidate(2, 1, 1, 1, 0, 2, 0, false);
+    testValidate(2, 1, 1, 1, 0, 2, 1, true);
+    testValidate(2, 1, 1, 1, 0, 2, 2, false);
+    testValidate(2, 1, 1, 1, 1, 0, 0, false);
+    testValidate(2, 1, 1, 1, 1, 0, 1, false);
+    testValidate(2, 1, 1, 1, 1, 0, 2, false);
+    testValidate(2, 1, 1, 1, 1, 1, 0, false);
+    testValidate(2, 1, 1, 1, 1, 1, 1, false);
+    testValidate(2, 1, 1, 1, 1, 1, 2, false);
+    testValidate(2, 1, 1, 1, 1, 2, 0, false);
+    testValidate(2, 1, 1, 1, 1, 2, 1, true);
+    testValidate(2, 1, 1, 1, 1, 2, 2, false);
+    testValidate(2, 1, 1, 1, 2, 0, 0, false);
+    testValidate(2, 1, 1, 1, 2, 0, 1, false);
+    testValidate(2, 1, 1, 1, 2, 0, 2, false);
+    testValidate(2, 1, 1, 1, 2, 1, 0, false);
+    testValidate(2, 1, 1, 1, 2, 1, 1, false);
+    testValidate(2, 1, 1, 1, 2, 1, 2, false);
+    testValidate(2, 1, 1, 1, 2, 2, 0, false);
+    testValidate(2, 1, 1, 1, 2, 2, 1, true);
+    testValidate(2, 1, 1, 1, 2, 2, 2, false);
+    testValidate(2, 1, 1, 2, 0, 0, 0, false);
+    testValidate(2, 1, 1, 2, 0, 0, 1, false);
+    testValidate(2, 1, 1, 2, 0, 0, 2, false);
+    testValidate(2, 1, 1, 2, 0, 1, 0, false);
+    testValidate(2, 1, 1, 2, 0, 1, 1, false);
+    testValidate(2, 1, 1, 2, 0, 1, 2, false);
+    testValidate(2, 1, 1, 2, 0, 2, 0, false);
+    testValidate(2, 1, 1, 2, 0, 2, 1, true);
+    testValidate(2, 1, 1, 2, 0, 2, 2, false);
+    testValidate(2, 1, 1, 2, 1, 0, 0, false);
+    testValidate(2, 1, 1, 2, 1, 0, 1, false);
+    testValidate(2, 1, 1, 2, 1, 0, 2, false);
+    testValidate(2, 1, 1, 2, 1, 1, 0, false);
+    testValidate(2, 1, 1, 2, 1, 1, 1, false);
+    testValidate(2, 1, 1, 2, 1, 1, 2, false);
+    testValidate(2, 1, 1, 2, 1, 2, 0, false);
+    testValidate(2, 1, 1, 2, 1, 2, 1, true);
+    testValidate(2, 1, 1, 2, 1, 2, 2, false);
+    testValidate(2, 1, 1, 2, 2, 0, 0, false);
+    testValidate(2, 1, 1, 2, 2, 0, 1, false);
+    testValidate(2, 1, 1, 2, 2, 0, 2, false);
+    testValidate(2, 1, 1, 2, 2, 1, 0, false);
+    testValidate(2, 1, 1, 2, 2, 1, 1, false);
+    testValidate(2, 1, 1, 2, 2, 1, 2, false);
+    testValidate(2, 1, 1, 2, 2, 2, 0, false);
+    testValidate(2, 1, 1, 2, 2, 2, 1, true);
+    testValidate(2, 1, 1, 2, 2, 2, 2, false);
+    testValidate(2, 1, 2, 0, 0, 0, 0, false);
+    testValidate(2, 1, 2, 0, 0, 0, 1, false);
+    testValidate(2, 1, 2, 0, 0, 0, 2, false);
+    testValidate(2, 1, 2, 0, 0, 1, 0, false);
+    testValidate(2, 1, 2, 0, 0, 1, 1, false);
+    testValidate(2, 1, 2, 0, 0, 1, 2, false);
+    testValidate(2, 1, 2, 0, 0, 2, 0, false);
+    testValidate(2, 1, 2, 0, 0, 2, 1, false);
+    testValidate(2, 1, 2, 0, 0, 2, 2, false);
+    testValidate(2, 1, 2, 0, 1, 0, 0, false);
+    testValidate(2, 1, 2, 0, 1, 0, 1, false);
+    testValidate(2, 1, 2, 0, 1, 0, 2, false);
+    testValidate(2, 1, 2, 0, 1, 1, 0, false);
+    testValidate(2, 1, 2, 0, 1, 1, 1, false);
+    testValidate(2, 1, 2, 0, 1, 1, 2, false);
+    testValidate(2, 1, 2, 0, 1, 2, 0, false);
+    testValidate(2, 1, 2, 0, 1, 2, 1, false);
+    testValidate(2, 1, 2, 0, 1, 2, 2, false);
+    testValidate(2, 1, 2, 0, 2, 0, 0, false);
+    testValidate(2, 1, 2, 0, 2, 0, 1, false);
+    testValidate(2, 1, 2, 0, 2, 0, 2, false);
+    testValidate(2, 1, 2, 0, 2, 1, 0, false);
+    testValidate(2, 1, 2, 0, 2, 1, 1, false);
+    testValidate(2, 1, 2, 0, 2, 1, 2, false);
+    testValidate(2, 1, 2, 0, 2, 2, 0, false);
+    testValidate(2, 1, 2, 0, 2, 2, 1, false);
+    testValidate(2, 1, 2, 0, 2, 2, 2, false);
+    testValidate(2, 1, 2, 1, 0, 0, 0, false);
+    testValidate(2, 1, 2, 1, 0, 0, 1, false);
+    testValidate(2, 1, 2, 1, 0, 0, 2, false);
+    testValidate(2, 1, 2, 1, 0, 1, 0, false);
+    testValidate(2, 1, 2, 1, 0, 1, 1, false);
+    testValidate(2, 1, 2, 1, 0, 1, 2, false);
+    testValidate(2, 1, 2, 1, 0, 2, 0, false);
+    testValidate(2, 1, 2, 1, 0, 2, 1, true);
+    testValidate(2, 1, 2, 1, 0, 2, 2, false);
+    testValidate(2, 1, 2, 1, 1, 0, 0, false);
+    testValidate(2, 1, 2, 1, 1, 0, 1, false);
+    testValidate(2, 1, 2, 1, 1, 0, 2, false);
+    testValidate(2, 1, 2, 1, 1, 1, 0, false);
+    testValidate(2, 1, 2, 1, 1, 1, 1, false);
+    testValidate(2, 1, 2, 1, 1, 1, 2, false);
+    testValidate(2, 1, 2, 1, 1, 2, 0, false);
+    testValidate(2, 1, 2, 1, 1, 2, 1, true);
+    testValidate(2, 1, 2, 1, 1, 2, 2, false);
+    testValidate(2, 1, 2, 1, 2, 0, 0, false);
+    testValidate(2, 1, 2, 1, 2, 0, 1, false);
+    testValidate(2, 1, 2, 1, 2, 0, 2, false);
+    testValidate(2, 1, 2, 1, 2, 1, 0, false);
+    testValidate(2, 1, 2, 1, 2, 1, 1, false);
+    testValidate(2, 1, 2, 1, 2, 1, 2, false);
+    testValidate(2, 1, 2, 1, 2, 2, 0, false);
+    testValidate(2, 1, 2, 1, 2, 2, 1, true);
+    testValidate(2, 1, 2, 1, 2, 2, 2, false);
+    testValidate(2, 1, 2, 2, 0, 0, 0, false);
+    testValidate(2, 1, 2, 2, 0, 0, 1, false);
+    testValidate(2, 1, 2, 2, 0, 0, 2, false);
+    testValidate(2, 1, 2, 2, 0, 1, 0, false);
+    testValidate(2, 1, 2, 2, 0, 1, 1, false);
+    testValidate(2, 1, 2, 2, 0, 1, 2, false);
+    testValidate(2, 1, 2, 2, 0, 2, 0, false);
+    testValidate(2, 1, 2, 2, 0, 2, 1, false);
+    testValidate(2, 1, 2, 2, 0, 2, 2, false);
+    testValidate(2, 1, 2, 2, 1, 0, 0, false);
+    testValidate(2, 1, 2, 2, 1, 0, 1, false);
+    testValidate(2, 1, 2, 2, 1, 0, 2, false);
+    testValidate(2, 1, 2, 2, 1, 1, 0, false);
+    testValidate(2, 1, 2, 2, 1, 1, 1, false);
+    testValidate(2, 1, 2, 2, 1, 1, 2, false);
+    testValidate(2, 1, 2, 2, 1, 2, 0, false);
+    testValidate(2, 1, 2, 2, 1, 2, 1, false);
+    testValidate(2, 1, 2, 2, 1, 2, 2, false);
+    testValidate(2, 1, 2, 2, 2, 0, 0, false);
+    testValidate(2, 1, 2, 2, 2, 0, 1, false);
+    testValidate(2, 1, 2, 2, 2, 0, 2, false);
+    testValidate(2, 1, 2, 2, 2, 1, 0, false);
+    testValidate(2, 1, 2, 2, 2, 1, 1, false);
+    testValidate(2, 1, 2, 2, 2, 1, 2, false);
+    testValidate(2, 1, 2, 2, 2, 2, 0, false);
+    testValidate(2, 1, 2, 2, 2, 2, 1, false);
+    testValidate(2, 1, 2, 2, 2, 2, 2, false);
+    testValidate(2, 2, 0, 0, 0, 0, 0, false);
+    testValidate(2, 2, 0, 0, 0, 0, 1, false);
+    testValidate(2, 2, 0, 0, 0, 0, 2, false);
+    testValidate(2, 2, 0, 0, 0, 1, 0, false);
+    testValidate(2, 2, 0, 0, 0, 1, 1, false);
+    testValidate(2, 2, 0, 0, 0, 1, 2, false);
+    testValidate(2, 2, 0, 0, 0, 2, 0, false);
+    testValidate(2, 2, 0, 0, 0, 2, 1, false);
+    testValidate(2, 2, 0, 0, 0, 2, 2, false);
+    testValidate(2, 2, 0, 0, 1, 0, 0, false);
+    testValidate(2, 2, 0, 0, 1, 0, 1, false);
+    testValidate(2, 2, 0, 0, 1, 0, 2, false);
+    testValidate(2, 2, 0, 0, 1, 1, 0, false);
+    testValidate(2, 2, 0, 0, 1, 1, 1, false);
+    testValidate(2, 2, 0, 0, 1, 1, 2, false);
+    testValidate(2, 2, 0, 0, 1, 2, 0, false);
+    testValidate(2, 2, 0, 0, 1, 2, 1, false);
+    testValidate(2, 2, 0, 0, 1, 2, 2, false);
+    testValidate(2, 2, 0, 0, 2, 0, 0, false);
+    testValidate(2, 2, 0, 0, 2, 0, 1, false);
+    testValidate(2, 2, 0, 0, 2, 0, 2, false);
+    testValidate(2, 2, 0, 0, 2, 1, 0, false);
+    testValidate(2, 2, 0, 0, 2, 1, 1, false);
+    testValidate(2, 2, 0, 0, 2, 1, 2, false);
+    testValidate(2, 2, 0, 0, 2, 2, 0, false);
+    testValidate(2, 2, 0, 0, 2, 2, 1, false);
+    testValidate(2, 2, 0, 0, 2, 2, 2, false);
+    testValidate(2, 2, 0, 1, 0, 0, 0, false);
+    testValidate(2, 2, 0, 1, 0, 0, 1, false);
+    testValidate(2, 2, 0, 1, 0, 0, 2, false);
+    testValidate(2, 2, 0, 1, 0, 1, 0, false);
+    testValidate(2, 2, 0, 1, 0, 1, 1, false);
+    testValidate(2, 2, 0, 1, 0, 1, 2, false);
+    testValidate(2, 2, 0, 1, 0, 2, 0, false);
+    testValidate(2, 2, 0, 1, 0, 2, 1, false);
+    testValidate(2, 2, 0, 1, 0, 2, 2, false);
+    testValidate(2, 2, 0, 1, 1, 0, 0, false);
+    testValidate(2, 2, 0, 1, 1, 0, 1, false);
+    testValidate(2, 2, 0, 1, 1, 0, 2, false);
+    testValidate(2, 2, 0, 1, 1, 1, 0, false);
+    testValidate(2, 2, 0, 1, 1, 1, 1, false);
+    testValidate(2, 2, 0, 1, 1, 1, 2, false);
+    testValidate(2, 2, 0, 1, 1, 2, 0, false);
+    testValidate(2, 2, 0, 1, 1, 2, 1, false);
+    testValidate(2, 2, 0, 1, 1, 2, 2, false);
+    testValidate(2, 2, 0, 1, 2, 0, 0, false);
+    testValidate(2, 2, 0, 1, 2, 0, 1, false);
+    testValidate(2, 2, 0, 1, 2, 0, 2, false);
+    testValidate(2, 2, 0, 1, 2, 1, 0, false);
+    testValidate(2, 2, 0, 1, 2, 1, 1, false);
+    testValidate(2, 2, 0, 1, 2, 1, 2, false);
+    testValidate(2, 2, 0, 1, 2, 2, 0, false);
+    testValidate(2, 2, 0, 1, 2, 2, 1, false);
+    testValidate(2, 2, 0, 1, 2, 2, 2, false);
+    testValidate(2, 2, 0, 2, 0, 0, 0, false);
+    testValidate(2, 2, 0, 2, 0, 0, 1, false);
+    testValidate(2, 2, 0, 2, 0, 0, 2, false);
+    testValidate(2, 2, 0, 2, 0, 1, 0, false);
+    testValidate(2, 2, 0, 2, 0, 1, 1, false);
+    testValidate(2, 2, 0, 2, 0, 1, 2, false);
+    testValidate(2, 2, 0, 2, 0, 2, 0, false);
+    testValidate(2, 2, 0, 2, 0, 2, 1, false);
+    testValidate(2, 2, 0, 2, 0, 2, 2, false);
+    testValidate(2, 2, 0, 2, 1, 0, 0, false);
+    testValidate(2, 2, 0, 2, 1, 0, 1, false);
+    testValidate(2, 2, 0, 2, 1, 0, 2, false);
+    testValidate(2, 2, 0, 2, 1, 1, 0, false);
+    testValidate(2, 2, 0, 2, 1, 1, 1, false);
+    testValidate(2, 2, 0, 2, 1, 1, 2, false);
+    testValidate(2, 2, 0, 2, 1, 2, 0, false);
+    testValidate(2, 2, 0, 2, 1, 2, 1, false);
+    testValidate(2, 2, 0, 2, 1, 2, 2, false);
+    testValidate(2, 2, 0, 2, 2, 0, 0, false);
+    testValidate(2, 2, 0, 2, 2, 0, 1, false);
+    testValidate(2, 2, 0, 2, 2, 0, 2, false);
+    testValidate(2, 2, 0, 2, 2, 1, 0, false);
+    testValidate(2, 2, 0, 2, 2, 1, 1, false);
+    testValidate(2, 2, 0, 2, 2, 1, 2, false);
+    testValidate(2, 2, 0, 2, 2, 2, 0, false);
+    testValidate(2, 2, 0, 2, 2, 2, 1, false);
+    testValidate(2, 2, 0, 2, 2, 2, 2, false);
+    testValidate(2, 2, 1, 0, 0, 0, 0, false);
+    testValidate(2, 2, 1, 0, 0, 0, 1, false);
+    testValidate(2, 2, 1, 0, 0, 0, 2, false);
+    testValidate(2, 2, 1, 0, 0, 1, 0, false);
+    testValidate(2, 2, 1, 0, 0, 1, 1, false);
+    testValidate(2, 2, 1, 0, 0, 1, 2, false);
+    testValidate(2, 2, 1, 0, 0, 2, 0, false);
+    testValidate(2, 2, 1, 0, 0, 2, 1, false);
+    testValidate(2, 2, 1, 0, 0, 2, 2, false);
+    testValidate(2, 2, 1, 0, 1, 0, 0, false);
+    testValidate(2, 2, 1, 0, 1, 0, 1, false);
+    testValidate(2, 2, 1, 0, 1, 0, 2, false);
+    testValidate(2, 2, 1, 0, 1, 1, 0, false);
+    testValidate(2, 2, 1, 0, 1, 1, 1, false);
+    testValidate(2, 2, 1, 0, 1, 1, 2, false);
+    testValidate(2, 2, 1, 0, 1, 2, 0, false);
+    testValidate(2, 2, 1, 0, 1, 2, 1, false);
+    testValidate(2, 2, 1, 0, 1, 2, 2, false);
+    testValidate(2, 2, 1, 0, 2, 0, 0, false);
+    testValidate(2, 2, 1, 0, 2, 0, 1, false);
+    testValidate(2, 2, 1, 0, 2, 0, 2, false);
+    testValidate(2, 2, 1, 0, 2, 1, 0, false);
+    testValidate(2, 2, 1, 0, 2, 1, 1, false);
+    testValidate(2, 2, 1, 0, 2, 1, 2, false);
+    testValidate(2, 2, 1, 0, 2, 2, 0, false);
+    testValidate(2, 2, 1, 0, 2, 2, 1, false);
+    testValidate(2, 2, 1, 0, 2, 2, 2, false);
+    testValidate(2, 2, 1, 1, 0, 0, 0, false);
+    testValidate(2, 2, 1, 1, 0, 0, 1, false);
+    testValidate(2, 2, 1, 1, 0, 0, 2, false);
+    testValidate(2, 2, 1, 1, 0, 1, 0, false);
+    testValidate(2, 2, 1, 1, 0, 1, 1, false);
+    testValidate(2, 2, 1, 1, 0, 1, 2, false);
+    testValidate(2, 2, 1, 1, 0, 2, 0, false);
+    testValidate(2, 2, 1, 1, 0, 2, 1, false);
+    testValidate(2, 2, 1, 1, 0, 2, 2, false);
+    testValidate(2, 2, 1, 1, 1, 0, 0, false);
+    testValidate(2, 2, 1, 1, 1, 0, 1, false);
+    testValidate(2, 2, 1, 1, 1, 0, 2, false);
+    testValidate(2, 2, 1, 1, 1, 1, 0, false);
+    testValidate(2, 2, 1, 1, 1, 1, 1, false);
+    testValidate(2, 2, 1, 1, 1, 1, 2, false);
+    testValidate(2, 2, 1, 1, 1, 2, 0, false);
+    testValidate(2, 2, 1, 1, 1, 2, 1, false);
+    testValidate(2, 2, 1, 1, 1, 2, 2, false);
+    testValidate(2, 2, 1, 1, 2, 0, 0, false);
+    testValidate(2, 2, 1, 1, 2, 0, 1, false);
+    testValidate(2, 2, 1, 1, 2, 0, 2, false);
+    testValidate(2, 2, 1, 1, 2, 1, 0, false);
+    testValidate(2, 2, 1, 1, 2, 1, 1, false);
+    testValidate(2, 2, 1, 1, 2, 1, 2, false);
+    testValidate(2, 2, 1, 1, 2, 2, 0, false);
+    testValidate(2, 2, 1, 1, 2, 2, 1, false);
+    testValidate(2, 2, 1, 1, 2, 2, 2, false);
+    testValidate(2, 2, 1, 2, 0, 0, 0, false);
+    testValidate(2, 2, 1, 2, 0, 0, 1, false);
+    testValidate(2, 2, 1, 2, 0, 0, 2, false);
+    testValidate(2, 2, 1, 2, 0, 1, 0, false);
+    testValidate(2, 2, 1, 2, 0, 1, 1, false);
+    testValidate(2, 2, 1, 2, 0, 1, 2, false);
+    testValidate(2, 2, 1, 2, 0, 2, 0, false);
+    testValidate(2, 2, 1, 2, 0, 2, 1, false);
+    testValidate(2, 2, 1, 2, 0, 2, 2, false);
+    testValidate(2, 2, 1, 2, 1, 0, 0, false);
+    testValidate(2, 2, 1, 2, 1, 0, 1, false);
+    testValidate(2, 2, 1, 2, 1, 0, 2, false);
+    testValidate(2, 2, 1, 2, 1, 1, 0, false);
+    testValidate(2, 2, 1, 2, 1, 1, 1, false);
+    testValidate(2, 2, 1, 2, 1, 1, 2, false);
+    testValidate(2, 2, 1, 2, 1, 2, 0, false);
+    testValidate(2, 2, 1, 2, 1, 2, 1, false);
+    testValidate(2, 2, 1, 2, 1, 2, 2, false);
+    testValidate(2, 2, 1, 2, 2, 0, 0, false);
+    testValidate(2, 2, 1, 2, 2, 0, 1, false);
+    testValidate(2, 2, 1, 2, 2, 0, 2, false);
+    testValidate(2, 2, 1, 2, 2, 1, 0, false);
+    testValidate(2, 2, 1, 2, 2, 1, 1, false);
+    testValidate(2, 2, 1, 2, 2, 1, 2, false);
+    testValidate(2, 2, 1, 2, 2, 2, 0, false);
+    testValidate(2, 2, 1, 2, 2, 2, 1, false);
+    testValidate(2, 2, 1, 2, 2, 2, 2, false);
+    testValidate(2, 2, 2, 0, 0, 0, 0, false);
+    testValidate(2, 2, 2, 0, 0, 0, 1, false);
+    testValidate(2, 2, 2, 0, 0, 0, 2, false);
+    testValidate(2, 2, 2, 0, 0, 1, 0, false);
+    testValidate(2, 2, 2, 0, 0, 1, 1, false);
+    testValidate(2, 2, 2, 0, 0, 1, 2, false);
+    testValidate(2, 2, 2, 0, 0, 2, 0, false);
+    testValidate(2, 2, 2, 0, 0, 2, 1, false);
+    testValidate(2, 2, 2, 0, 0, 2, 2, false);
+    testValidate(2, 2, 2, 0, 1, 0, 0, false);
+    testValidate(2, 2, 2, 0, 1, 0, 1, false);
+    testValidate(2, 2, 2, 0, 1, 0, 2, false);
+    testValidate(2, 2, 2, 0, 1, 1, 0, false);
+    testValidate(2, 2, 2, 0, 1, 1, 1, false);
+    testValidate(2, 2, 2, 0, 1, 1, 2, false);
+    testValidate(2, 2, 2, 0, 1, 2, 0, false);
+    testValidate(2, 2, 2, 0, 1, 2, 1, false);
+    testValidate(2, 2, 2, 0, 1, 2, 2, false);
+    testValidate(2, 2, 2, 0, 2, 0, 0, false);
+    testValidate(2, 2, 2, 0, 2, 0, 1, false);
+    testValidate(2, 2, 2, 0, 2, 0, 2, false);
+    testValidate(2, 2, 2, 0, 2, 1, 0, false);
+    testValidate(2, 2, 2, 0, 2, 1, 1, false);
+    testValidate(2, 2, 2, 0, 2, 1, 2, false);
+    testValidate(2, 2, 2, 0, 2, 2, 0, false);
+    testValidate(2, 2, 2, 0, 2, 2, 1, false);
+    testValidate(2, 2, 2, 0, 2, 2, 2, false);
+    testValidate(2, 2, 2, 1, 0, 0, 0, false);
+    testValidate(2, 2, 2, 1, 0, 0, 1, false);
+    testValidate(2, 2, 2, 1, 0, 0, 2, false);
+    testValidate(2, 2, 2, 1, 0, 1, 0, false);
+    testValidate(2, 2, 2, 1, 0, 1, 1, false);
+    testValidate(2, 2, 2, 1, 0, 1, 2, false);
+    testValidate(2, 2, 2, 1, 0, 2, 0, false);
+    testValidate(2, 2, 2, 1, 0, 2, 1, false);
+    testValidate(2, 2, 2, 1, 0, 2, 2, false);
+    testValidate(2, 2, 2, 1, 1, 0, 0, false);
+    testValidate(2, 2, 2, 1, 1, 0, 1, false);
+    testValidate(2, 2, 2, 1, 1, 0, 2, false);
+    testValidate(2, 2, 2, 1, 1, 1, 0, false);
+    testValidate(2, 2, 2, 1, 1, 1, 1, false);
+    testValidate(2, 2, 2, 1, 1, 1, 2, false);
+    testValidate(2, 2, 2, 1, 1, 2, 0, false);
+    testValidate(2, 2, 2, 1, 1, 2, 1, false);
+    testValidate(2, 2, 2, 1, 1, 2, 2, false);
+    testValidate(2, 2, 2, 1, 2, 0, 0, false);
+    testValidate(2, 2, 2, 1, 2, 0, 1, false);
+    testValidate(2, 2, 2, 1, 2, 0, 2, false);
+    testValidate(2, 2, 2, 1, 2, 1, 0, false);
+    testValidate(2, 2, 2, 1, 2, 1, 1, false);
+    testValidate(2, 2, 2, 1, 2, 1, 2, false);
+    testValidate(2, 2, 2, 1, 2, 2, 0, false);
+    testValidate(2, 2, 2, 1, 2, 2, 1, false);
+    testValidate(2, 2, 2, 1, 2, 2, 2, false);
+    testValidate(2, 2, 2, 2, 0, 0, 0, false);
+    testValidate(2, 2, 2, 2, 0, 0, 1, false);
+    testValidate(2, 2, 2, 2, 0, 0, 2, false);
+    testValidate(2, 2, 2, 2, 0, 1, 0, false);
+    testValidate(2, 2, 2, 2, 0, 1, 1, false);
+    testValidate(2, 2, 2, 2, 0, 1, 2, false);
+    testValidate(2, 2, 2, 2, 0, 2, 0, false);
+    testValidate(2, 2, 2, 2, 0, 2, 1, false);
+    testValidate(2, 2, 2, 2, 0, 2, 2, false);
+    testValidate(2, 2, 2, 2, 1, 0, 0, false);
+    testValidate(2, 2, 2, 2, 1, 0, 1, false);
+    testValidate(2, 2, 2, 2, 1, 0, 2, false);
+    testValidate(2, 2, 2, 2, 1, 1, 0, false);
+    testValidate(2, 2, 2, 2, 1, 1, 1, false);
+    testValidate(2, 2, 2, 2, 1, 1, 2, false);
+    testValidate(2, 2, 2, 2, 1, 2, 0, false);
+    testValidate(2, 2, 2, 2, 1, 2, 1, false);
+    testValidate(2, 2, 2, 2, 1, 2, 2, false);
+    testValidate(2, 2, 2, 2, 2, 0, 0, false);
+    testValidate(2, 2, 2, 2, 2, 0, 1, false);
+    testValidate(2, 2, 2, 2, 2, 0, 2, false);
+    testValidate(2, 2, 2, 2, 2, 1, 0, false);
+    testValidate(2, 2, 2, 2, 2, 1, 1, false);
+    testValidate(2, 2, 2, 2, 2, 1, 2, false);
+    testValidate(2, 2, 2, 2, 2, 2, 0, false);
+    testValidate(2, 2, 2, 2, 2, 2, 1, false);
+    testValidate(2, 2, 2, 2, 2, 2, 2, false);
+  }
+
+  private void testValidate(int saleOptOutNotice, int saleOptOut, int sharingOptOutNotice, int sharingOptOut,
+      int sensitiveDataLimitUseNotice, int mspaServiceProviderMode, int mspaOptOutOptionMode, boolean valid) {
+    UsCa usCa = new UsCa();
+    usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, saleOptOutNotice);
+    usCa.setFieldValue(UsCaField.SALE_OPT_OUT, saleOptOut);
+    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE, sharingOptOutNotice);
+    usCa.setFieldValue(UsCaField.SHARING_OPT_OUT, sharingOptOut);
+    usCa.setFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE, sensitiveDataLimitUseNotice);
+    usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, mspaServiceProviderMode);
+    usCa.setFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE, mspaOptOutOptionMode);
+
+    if (valid) {
+      try {
+        usCa.encode();
+      } catch (ValidationException e) {
+        String msg = String.format(
+            "Unexpected ValidationException. {saleOptOutNotice=%d, saleOptOut=%d, sharingOptOutNotice=%d, sharingOptOut=%d, sensitiveDataLimitUseNotice=%d, mspaServiceProviderMode=%d, mspaOptOutOptionMode=%d}, valid=%b",
+            saleOptOutNotice, saleOptOut, sharingOptOutNotice, sharingOptOut, sensitiveDataLimitUseNotice,
+            mspaServiceProviderMode, mspaOptOutOptionMode, valid);
+        Assertions.fail(msg, e);
+      }
+    } else {
+      try {
+        usCa.encode();
+        String msg = String.format(
+            "Expected Validation. {saleOptOutNotice=%d, saleOptOut=%d, sharingOptOutNotice=%d, sharingOptOut=%d, sensitiveDataLimitUseNotice=%d, mspaServiceProviderMode=%d, mspaOptOutOptionMode=%d}, valid=%b",
+            saleOptOutNotice, saleOptOut, sharingOptOutNotice, sharingOptOut, sensitiveDataLimitUseNotice,
+            mspaServiceProviderMode, mspaOptOutOptionMode, valid);
+        Assertions.fail(msg);
+      } catch (ValidationException e) {
+
+      }
+    }
   }
 }
