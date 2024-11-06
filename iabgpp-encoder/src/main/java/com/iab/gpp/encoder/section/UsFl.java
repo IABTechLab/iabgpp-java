@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsFlField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -8,15 +9,15 @@ import com.iab.gpp.encoder.segment.UsFlCoreSegment;
 
 public class UsFl extends AbstractLazilyEncodableSection {
 
-  public static int ID = 13;
-  public static int VERSION = 1;
-  public static String NAME = "usfl";
+  public static final int ID = 13;
+  public static final int VERSION = 1;
+  public static final String NAME = "usfl";
 
   public UsFl() {
     super();
   }
 
-  public UsFl(String encodedString) {
+  public UsFl(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -38,21 +39,19 @@ public class UsFl extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsFlCoreSegment());
-    return segments;
+    return Collections.singletonList(new UsFlCoreSegment());
   }
 
   @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
+  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     List<EncodableSegment> segments = initializeSegments();
 
     if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
   
       for (int i = 0; i < segments.size(); i++) {
-        if (encodedSegments.length > i) {
-          segments.get(i).decode(encodedSegments[i]);
+        if (encodedSegments.size() > i) {
+          segments.get(i).decode(encodedSegments.get(i));
         }
       }
     }
@@ -62,7 +61,7 @@ public class UsFl extends AbstractLazilyEncodableSection {
 
   @Override
   protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     for (EncodableSegment segment : segments) {
       encodedSegments.add(segment.encode());
     }
