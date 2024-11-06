@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.section;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsMtField;
@@ -39,10 +40,7 @@ public class UsMt extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsMtCoreSegment());
-    segments.add(new UsMtGpcSegment());
-    return segments;
+    return Arrays.asList(new UsMtCoreSegment(), new UsMtGpcSegment());
   }
 
   @Override
