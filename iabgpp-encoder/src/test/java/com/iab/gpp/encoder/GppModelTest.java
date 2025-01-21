@@ -711,6 +711,52 @@ public class GppModelTest {
   }
 
   @Test
+  public void testDecode5() {
+    GppModel gppModel = new GppModel("DBABLA~BVQqAAAAAgA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+  }
+    
+  @Test
+  public void testDecode6() {
+    GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAQA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+  
+  @Test
+  public void testDecode7() {
+    GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAABA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+  
+  @Test
+  public void testDecode8() {
+    GppModel gppModel = new GppModel("DBABLA~BAAAAAABEQA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(0, 1, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+  
+  @Test
+  public void testDecode9() {
+    GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAQRA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(0, 0, 1),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+  
+  @Test
   public void testConsistency() {
     GppModel fromObjectModel = new GppModel();
 
@@ -775,4 +821,6 @@ public class GppModelTest {
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
     Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
   }
+  
+  
 }
