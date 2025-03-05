@@ -44,7 +44,7 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
 
   public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
-      int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
+      int count = FixedIntegerEncoder.decode(bitString, fromIndex, 12);
       int index = fromIndex + 12;
       for (int i = 0; i < count; i++) {
         if (bitString.getValue(index)) {
