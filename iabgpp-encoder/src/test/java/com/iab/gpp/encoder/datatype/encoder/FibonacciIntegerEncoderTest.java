@@ -15,26 +15,32 @@ public class FibonacciIntegerEncoderTest {
     Assertions.assertEquals("11", FibonacciIntegerEncoder.encode(1));
   }
 
+  @Test
   public void testEncode2() {
     Assertions.assertEquals("011", FibonacciIntegerEncoder.encode(2));
   }
 
+  @Test
   public void testEncode3() {
     Assertions.assertEquals("0011", FibonacciIntegerEncoder.encode(3));
   }
 
+  @Test
   public void testEncode4() {
     Assertions.assertEquals("1011", FibonacciIntegerEncoder.encode(4));
   }
 
+  @Test
   public void testEncode5() {
     Assertions.assertEquals("00011", FibonacciIntegerEncoder.encode(5));
   }
 
+  @Test
   public void testEncode6() {
     Assertions.assertEquals("10011", FibonacciIntegerEncoder.encode(6));
   }
 
+  @Test
   public void testEncode7() {
     Assertions.assertEquals("01011", FibonacciIntegerEncoder.encode(7));
   }
