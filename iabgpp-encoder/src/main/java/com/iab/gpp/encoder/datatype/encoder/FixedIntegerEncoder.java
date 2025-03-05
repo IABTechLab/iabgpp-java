@@ -38,8 +38,9 @@ public class FixedIntegerEncoder {
   public static int decode(BitString bitString, int fromIndex, int length) throws DecodingException {
     int value = 0;
 
+    int base = fromIndex + length - 1;
     for (int i = 0; i < length; i++) {
-      if (bitString.getValue(fromIndex + length - (i + 1))) {
+      if (bitString.getValue(base - i)) {
         value += 1 << i;
       }
     }
@@ -50,8 +51,9 @@ public class FixedIntegerEncoder {
   public static int decode(String bitString, int fromIndex, int length) throws DecodingException {
     int value = 0;
 
+    int base = fromIndex + length - 1;
     for (int i = 0; i < length; i++) {
-      char c = bitString.charAt(fromIndex + length - (i + 1));
+      char c = bitString.charAt(base - i);
       if (c == BitString.TRUE) {
         value += 1 << i;
       } else if (c != BitString.FALSE) {
