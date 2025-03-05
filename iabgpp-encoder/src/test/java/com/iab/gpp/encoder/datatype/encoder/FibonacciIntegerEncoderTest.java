@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class FibonacciIntegerEncoderTest {
 
@@ -36,6 +37,12 @@ public class FibonacciIntegerEncoderTest {
 
   public void testEncode7() {
     Assertions.assertEquals("01011", FibonacciIntegerEncoder.encode(7));
+  }
+
+  @Test
+  public void testEncodeTooLarge() {
+    Assertions.assertThrows(EncodingException.class, () -> 
+      FibonacciIntegerEncoder.encode(Integer.MAX_VALUE));
   }
 
   @Test
@@ -105,7 +112,8 @@ public class FibonacciIntegerEncoderTest {
 
   @Test
   public void testDecodeTooLarge() {
-    String large = FibonacciIntegerEncoder.encode(2 << 17);
-    assertThrows(DecodingException.class, () -> FibonacciIntegerEncoder.decode(large));
+    Assertions.assertThrows(DecodingException.class, () -> 
+      FibonacciIntegerEncoder.decode(BitString.of("0001010001000101001000001001000100001000100011")));
   }
+
 }

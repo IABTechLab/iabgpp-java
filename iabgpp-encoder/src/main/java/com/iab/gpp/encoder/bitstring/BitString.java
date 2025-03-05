@@ -92,26 +92,6 @@ public final class BitString extends AbstractList<Boolean> {
     return new BitString(bitSet, oldFrom + newFrom, oldFrom + newTo);
   }
 
-  public int indexOf(String string) {
-    return indexOf(string, 0);
-  }
-
-  public int indexOf(String string, int startIndex) {
-    int stringLength = string.length();
-    for (int i = startIndex, to = this.to; i < to; i++) {
-      int match = 0;
-      for (int j = 0; j < stringLength; j++) {
-        if ((string.charAt(j) == TRUE) == bitSet.get(from + i + j)) {
-          match++;
-        }
-      }
-      if (match == stringLength) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
   public boolean isEmpty() {
     return length() == 0;
   }

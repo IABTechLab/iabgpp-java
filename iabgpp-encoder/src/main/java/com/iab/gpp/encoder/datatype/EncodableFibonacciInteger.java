@@ -39,7 +39,7 @@ public class EncodableFibonacciInteger extends AbstractEncodableBitStringDataTyp
 
   public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
-      int index = bitString.indexOf("11", fromIndex);
+      int index = FibonacciIntegerEncoder.indexOfEndTag(bitString, fromIndex);
       if (index > 0) {
         return bitString.substring(fromIndex, index + 2);
       } else {

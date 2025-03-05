@@ -59,12 +59,12 @@ public class FibonacciIntegerRangeEncoder {
       startIndex++;
 
       if (group == true) {
-        int index = bitString.indexOf("11", startIndex);
+        int index = FibonacciIntegerEncoder.indexOfEndTag(bitString, startIndex);
         int start = FibonacciIntegerEncoder.decode(bitString, startIndex, index + 2 - startIndex) + offset;
         offset = start;
         startIndex = index + 2;
 
-        index = bitString.indexOf("11", startIndex);
+        index = FibonacciIntegerEncoder.indexOfEndTag(bitString, startIndex);
         int end = FibonacciIntegerEncoder.decode(bitString, startIndex, index + 2 - startIndex) + offset;
         offset = end;
         startIndex = index + 2;
@@ -77,7 +77,7 @@ public class FibonacciIntegerRangeEncoder {
           value.add(IntegerCache.valueOf(j));
         }
       } else {
-        int index = bitString.indexOf("11", startIndex);
+        int index = FibonacciIntegerEncoder.indexOfEndTag(bitString, startIndex);
         int val = FibonacciIntegerEncoder.decode(bitString, startIndex, index + 2 - startIndex) + offset;
         offset = val;
         value.add(IntegerCache.valueOf(val));

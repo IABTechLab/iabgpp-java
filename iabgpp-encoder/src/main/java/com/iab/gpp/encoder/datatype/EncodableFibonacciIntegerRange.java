@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -48,9 +49,9 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
       int index = fromIndex + 12;
       for (int i = 0; i < count; i++) {
         if (bitString.getValue(index)) {
-          index = bitString.indexOf("11", bitString.indexOf("11", index + 1) + 2) + 2;
+          index = FibonacciIntegerEncoder.indexOfEndTag(bitString, FibonacciIntegerEncoder.indexOfEndTag(bitString, index + 1) + 2) + 2;
         } else {
-          index = bitString.indexOf("11", index + 1) + 2;
+          index = FibonacciIntegerEncoder.indexOfEndTag(bitString, index + 1) + 2;
         }
       }
       return bitString.substring(fromIndex, index);
