@@ -260,3 +260,6 @@ CmpList cmpList = loader.cmpList(cmpListContent);
 |usct|12|GpcSegmentIncluded|Boolean. Default value is true|
 |usct|12|Gpc|Boolean|
 
+## Contributing
+
+Here you can find the [contributing guide](CONTRIBUTING.md) to help maintain and update the library.
