@@ -267,7 +267,7 @@ public class GppModel {
   public UsTx getUsTxSection() {
     return (UsTx) getSection(UsTx.NAME);
   }
-
+  
   public List<Integer> getSectionIds() {
     if (!this.decoded) {
       this.sections = this.decodeModel(this.encodedString);
