@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.section;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsOrField;
@@ -9,15 +10,15 @@ import com.iab.gpp.encoder.segment.UsOrGpcSegment;
 
 public class UsOr extends AbstractLazilyEncodableSection {
 
-  public static int ID = 15;
-  public static int VERSION = 1;
-  public static String NAME = "usor";
+  public static final int ID = 15;
+  public static final int VERSION = 1;
+  public static final String NAME = "usor";
 
   public UsOr() {
     super();
   }
 
-  public UsOr(String encodedString) {
+  public UsOr(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -39,26 +40,23 @@ public class UsOr extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsOrCoreSegment());
-    segments.add(new UsOrGpcSegment());
-    return segments;
+    return Arrays.asList(new UsOrCoreSegment(), new UsOrGpcSegment());
   }
 
   @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
+  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     List<EncodableSegment> segments = initializeSegments();
 
     if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
   
-      if(encodedSegments.length > 0) {
-        segments.get(0).decode(encodedSegments[0]);
+      if (encodedSegments.size() > 0) {
+        segments.get(0).decode(encodedSegments.get(0));
       }
       
-      if(encodedSegments.length > 1) {
+      if (encodedSegments.size() > 1) {
         segments.get(1).setFieldValue(UsOrField.GPC_SEGMENT_INCLUDED, true);
-        segments.get(1).decode(encodedSegments[1]);
+        segments.get(1).decode(encodedSegments.get(1));
       } else {
         segments.get(1).setFieldValue(UsOrField.GPC_SEGMENT_INCLUDED, false);
       }
@@ -69,7 +67,7 @@ public class UsOr extends AbstractLazilyEncodableSection {
 
   @Override
   protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     
     if(!segments.isEmpty()) {
       encodedSegments.add(segments.get(0).encode());

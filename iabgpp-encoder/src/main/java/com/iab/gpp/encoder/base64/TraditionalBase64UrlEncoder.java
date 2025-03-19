@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder {
 
-  private static TraditionalBase64UrlEncoder instance = new TraditionalBase64UrlEncoder();
+  private static final TraditionalBase64UrlEncoder instance = new TraditionalBase64UrlEncoder();
   
   private TraditionalBase64UrlEncoder() {
     

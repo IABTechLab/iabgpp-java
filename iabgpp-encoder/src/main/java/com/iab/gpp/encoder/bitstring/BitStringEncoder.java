@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.field.EncodableBitStringFields;
 
 public class BitStringEncoder {
 
-  private static BitStringEncoder instance = new BitStringEncoder();
+  private static final BitStringEncoder instance = new BitStringEncoder();
   
   private BitStringEncoder() {
     
@@ -20,28 +20,28 @@ public class BitStringEncoder {
   }
   
   public String encode(EncodableBitStringFields fields, List<String> fieldNames) {
-    String bitString = "";
+    StringBuilder bitString = new StringBuilder();
     for (int i = 0; i < fieldNames.size(); i++) {
       String fieldName = fieldNames.get(i);
-      if (fields.containsKey(fieldName)) {
-        AbstractEncodableBitStringDataType<?> field = fields.get(fieldName);
-        bitString += field.encode();
+      AbstractEncodableBitStringDataType<?> field = fields.get(fieldName);
+      if (field != null) {
+        bitString.append(field.encode());
       } else {
         throw new EncodingException("Field not found: '" + fieldName + "'");
       }
     }
 
-    return bitString;
+    return bitString.toString();
   }
 
-  public void decode(String bitString, List<String> fieldNames, EncodableBitStringFields fields) {
+  public void decode(BitString bitString, List<String> fieldNames, EncodableBitStringFields fields) {
     int index = 0;
     for (int i = 0; i < fieldNames.size(); i++) {
       String fieldName = fieldNames.get(i);
-      if (fields.containsKey(fieldName)) {
-        AbstractEncodableBitStringDataType<?> field = fields.get(fieldName);
+      AbstractEncodableBitStringDataType<?> field = fields.get(fieldName);
+      if (field != null) {
         try {
-          String substring = field.substring(bitString, index);
+          BitString substring = field.substring(bitString, index);
           field.decode(substring);
           index += substring.length();
         } catch (SubstringException e) {

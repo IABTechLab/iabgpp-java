@@ -2,11 +2,11 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerEncoder {
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
   public static String encode(int value) {
     List<Integer> fib = new ArrayList<Integer>();
@@ -24,30 +24,30 @@ public class FibonacciIntegerEncoder {
       }
     }
 
-    String bitString = "1";
+    String bitString = BitString.TRUE_STRING;
     for (int i = fib.size() - 1; i >= 0; i--) {
       int f = fib.get(i);
       if (value >= f) {
-        bitString = "1" + bitString;
+        bitString = BitString.TRUE_STRING + bitString;
         value -= f;
       } else {
-        bitString = "0" + bitString;
+        bitString = BitString.FALSE_STRING + bitString;
       }
     }
 
     return bitString;
   }
 
-  public static int decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() < 2
-        || bitString.indexOf("11") != bitString.length() - 2) {
+  public static int decode(BitString bitString) throws DecodingException {
+    int length = bitString.length();
+    if (length < 2 || bitString.indexOf("11") != length - 2) {
       throw new DecodingException("Undecodable FibonacciInteger '" + bitString + "'");
     }
 
     int value = 0;
 
-    List<Integer> fib = new ArrayList<>();
-    for (int i = 0; i < bitString.length() - 1; i++) {
+    List<Integer> fib = new ArrayList<>(length);
+    for (int i = 0; i < length - 1; i++) {
       if (i == 0) {
         fib.add(1);
       } else if (i == 1) {
@@ -57,8 +57,8 @@ public class FibonacciIntegerEncoder {
       }
     }
 
-    for (int i = 0; i < bitString.length() - 1; i++) {
-      if (bitString.charAt(i) == '1') {
+    for (int i = 0; i < length - 1; i++) {
+      if (bitString.getValue(i)) {
         value += fib.get(i);
       }
     }

@@ -16,5 +16,5 @@ public interface EncodableSection {
 
   String encode();
 
-  void decode(String encodedString);
+  void decode(CharSequence encodedString);
 }

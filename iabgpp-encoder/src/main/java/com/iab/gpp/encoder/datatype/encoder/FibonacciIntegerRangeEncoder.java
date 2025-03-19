@@ -3,12 +3,11 @@ package com.iab.gpp.encoder.datatype.encoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerRangeEncoder {
-
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
   public static String encode(List<Integer> value) {
     Collections.sort(value);
@@ -28,35 +27,35 @@ public class FibonacciIntegerRangeEncoder {
       groupStartIndex = groupEndIndex + 1;
     }
 
-    String bitString = FixedIntegerEncoder.encode(groups.size(), 12);
+    StringBuilder bitString = new StringBuilder(FixedIntegerEncoder.encode(groups.size(), 12));
     for (int i = 0; i < groups.size(); i++) {
       if (groups.get(i).size() == 1) {
         int v = groups.get(i).get(0) - offset;
         offset = groups.get(i).get(0);
-        bitString += "0" + FibonacciIntegerEncoder.encode(v);
+        bitString.append(BitString.FALSE).append(FibonacciIntegerEncoder.encode(v));
       } else {
         int startVal = groups.get(i).get(0) - offset;
         offset = groups.get(i).get(0);
         int endVal = groups.get(i).get(groups.get(i).size() - 1) - offset;
         offset = groups.get(i).get(groups.get(i).size() - 1);
-        bitString += "1" + FibonacciIntegerEncoder.encode(startVal) + FibonacciIntegerEncoder.encode(endVal);
+        bitString.append(BitString.TRUE).append(FibonacciIntegerEncoder.encode(startVal)).append(FibonacciIntegerEncoder.encode(endVal));
       }
     }
-    return bitString;
+    return bitString.toString();
   }
 
-  public static List<Integer> decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() < 12) {
+  public static List<Integer> decode(BitString bitString) throws DecodingException {
+    if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FibonacciIntegerRange '" + bitString + "'");
     }
 
-    List<Integer> value = new ArrayList<>();
-    int count = FixedIntegerEncoder.decode(bitString.substring(0, 12));
+    int count = FixedIntegerEncoder.decode(bitString, 0, 12);
+    List<Integer> value = new ArrayList<>(count);
 
     int offset = 0;
     int startIndex = 12;
     for (int i = 0; i < count; i++) {
-      boolean group = BooleanEncoder.decode(bitString.substring(startIndex, startIndex + 1));
+      boolean group = BooleanEncoder.decode(bitString, startIndex, 1);
       startIndex++;
 
       if (group == true) {
@@ -71,13 +70,13 @@ public class FibonacciIntegerRangeEncoder {
         startIndex = index + 2;
 
         for (int j = start; j <= end; j++) {
-          value.add(j);
+          value.add(IntegerCache.valueOf(j));
         }
       } else {
         int index = bitString.indexOf("11", startIndex);
         int val = FibonacciIntegerEncoder.decode(bitString.substring(startIndex, index + 2)) + offset;
         offset = val;
-        value.add(val);
+        value.add(IntegerCache.valueOf(val));
         startIndex = index + 2;
       }
     }

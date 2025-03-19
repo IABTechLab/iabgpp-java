@@ -1,20 +1,18 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.regex.Pattern;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedLongEncoder {
 
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
-
   public static String encode(long value, int bitStringLength) {
     String bitString = "";
     while (value > 0) {
       if ((value & 1) == 1) {
-        bitString = "1" + bitString;
+        bitString = BitString.TRUE_STRING + bitString;
       } else {
-        bitString = "0" + bitString;
+        bitString = BitString.FALSE_STRING + bitString;
       }
       value = value >> 1;
     }
@@ -25,21 +23,18 @@ public class FixedLongEncoder {
     }
 
     while (bitString.length() < bitStringLength) {
-      bitString = "0" + bitString;
+      bitString = BitString.FALSE_STRING + bitString;
     }
 
     return bitString;
   }
 
-  public static long decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches()) {
-      throw new DecodingException("Undecodable FixedLong '" + bitString + "'");
-    }
-
+  public static long decode(BitString bitString) throws DecodingException {
     long value = 0;
 
-    for (int i = 0; i < bitString.length(); i++) {
-      if (bitString.charAt(bitString.length() - (i + 1)) == '1') {
+    int length = bitString.length();
+    for (int i = 0; i < length; i++) {
+      if (bitString.getValue(length - (i + 1))) {
         value += 1L << i;
       }
     }

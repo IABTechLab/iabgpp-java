@@ -2,6 +2,8 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -10,20 +12,15 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
 
   private int numElements;
 
-  protected EncodableFixedBitfield(int numElements) {
+  public EncodableFixedBitfield(int numElements) {
     super(true);
     this.numElements = numElements;
+    this.value = BitString.empty(numElements);
   }
 
   protected EncodableFixedBitfield(int numElements, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
     this.numElements = numElements;
-  }
-
-  public EncodableFixedBitfield(List<Boolean> value) {
-    super(true);
-    this.numElements = value.size();
-    setValue(value);
   }
 
   public EncodableFixedBitfield(List<Boolean> value, boolean hardFailIfMissing) {
@@ -40,7 +37,7 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = FixedBitfieldEncoder.decode(bitString);
     } catch (Exception e) {
@@ -48,7 +45,7 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
       return bitString.substring(fromIndex, fromIndex + this.numElements);
     } catch (Exception e) {

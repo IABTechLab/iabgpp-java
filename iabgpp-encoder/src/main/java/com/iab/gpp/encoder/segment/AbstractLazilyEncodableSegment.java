@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
+import com.iab.gpp.encoder.datatype.DataType;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.Fields;
 
@@ -7,7 +8,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   protected T fields;
 
-  private String encodedString = null;
+  private CharSequence encodedString = null;
 
   private boolean dirty = false;
   private boolean decoded = true;
@@ -20,7 +21,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   protected abstract String encodeSegment(T fields);
 
-  protected abstract void decodeSegment(String encodedString, T Fields);
+  protected abstract void decodeSegment(CharSequence encodedString, T Fields);
 
   public boolean hasField(String fieldName) {
     return this.fields.containsKey(fieldName);
@@ -33,8 +34,9 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
       this.decoded = true;
     }
 
-    if (this.fields.containsKey(fieldName)) {
-      return this.fields.get(fieldName).getValue();
+    DataType<?> field = this.fields.get(fieldName);
+    if (field != null) {
+      return field.getValue();
     } else {
       throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
     }
@@ -47,8 +49,9 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
       this.decoded = true;
     }
 
-    if (this.fields.containsKey(fieldName)) {
-      this.fields.get(fieldName).setValue(value);
+    DataType<?> field = this.fields.get(fieldName);
+    if (field != null) {
+      field.setValue(value);
       this.dirty = true;
     } else {
       throw new InvalidFieldException(fieldName + " not found");
@@ -56,17 +59,17 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
   }
 
   public String encode() {
-    if (this.encodedString == null || this.encodedString.isEmpty() || this.dirty) {
+    if (this.encodedString == null || this.encodedString.length() == 0 || this.dirty) {
       this.validate();
       this.encodedString = encodeSegment(this.fields);
       this.dirty = false;
       this.decoded = true;
     }
 
-    return this.encodedString;
+    return this.encodedString.toString();
   }
 
-  public void decode(String encodedString) {
+  public void decode(CharSequence encodedString) {
     this.encodedString = encodedString;
     this.dirty = false;
     this.decoded = false;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFibonacciIntegerRange;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
@@ -36,7 +37,7 @@ public class HeaderV1CoreSegment extends AbstractLazilyEncodableSegment<Encodabl
     EncodableBitStringFields fields = new EncodableBitStringFields();
     fields.put(HeaderV1Field.ID, new EncodableFixedInteger(6, HeaderV1.ID));
     fields.put(HeaderV1Field.VERSION, new EncodableFixedInteger(6, HeaderV1.VERSION));
-    fields.put(HeaderV1Field.SECTION_IDS, new EncodableFibonacciIntegerRange(new ArrayList<>()));
+    fields.put(HeaderV1Field.SECTION_IDS, new EncodableFibonacciIntegerRange(new ArrayList<>(0)));
     return fields;
   }
 
@@ -48,12 +49,12 @@ public class HeaderV1CoreSegment extends AbstractLazilyEncodableSegment<Encodabl
   }
 
   @Override
-  protected void decodeSegment(String encodedString, EncodableBitStringFields fields) {
-    if(encodedString == null || encodedString.isEmpty()) {
+  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields fields) {
+    if(encodedString == null || encodedString.length() == 0) {
       this.fields.reset(fields);
     }
     try {
-      String bitString = base64UrlEncoder.decode(encodedString);
+      BitString bitString = base64UrlEncoder.decode(encodedString);
       bitStringEncoder.decode(bitString, getFieldNames(), fields);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode HeaderV1CoreSegment '" + encodedString + "'", e);

@@ -36,22 +36,22 @@ public class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFiel
 
   @Override
   protected String encodeSegment(GenericFields fields) {
-    String str = "";
-    str += fields.get(UspV1Field.VERSION).getValue();
-    str += fields.get(UspV1Field.NOTICE).getValue();
-    str += fields.get(UspV1Field.OPT_OUT_SALE).getValue();
-    str += fields.get(UspV1Field.LSPA_COVERED).getValue();
-    return str;
+    StringBuilder str = new StringBuilder();
+    str.append(fields.get(UspV1Field.VERSION).getValue());
+    str.append(fields.get(UspV1Field.NOTICE).getValue());
+    str.append(fields.get(UspV1Field.OPT_OUT_SALE).getValue());
+    str.append(fields.get(UspV1Field.LSPA_COVERED).getValue());
+    return str.toString();
   }
 
   @Override
-  protected void decodeSegment(String encodedString, GenericFields fields) {
+  protected void decodeSegment(CharSequence encodedString, GenericFields fields) {
     if (encodedString == null || encodedString.length() != 4) {
       throw new DecodingException("Invalid uspv1 string: '" + encodedString + "'");
     }
 
     try {
-      fields.get(UspV1Field.VERSION).setValue(Integer.parseInt(encodedString.substring(0, 1)));
+      fields.get(UspV1Field.VERSION).setValue((int)(encodedString.charAt(0) - '0'));
       fields.get(UspV1Field.NOTICE).setValue(encodedString.charAt(1));
       fields.get(UspV1Field.OPT_OUT_SALE).setValue(encodedString.charAt(2));
       fields.get(UspV1Field.LSPA_COVERED).setValue(encodedString.charAt(3));
