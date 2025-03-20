@@ -406,6 +406,12 @@ public class GppModel {
   }
 
   public void decodeSection(String sectionName, String encodedString) {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+    
     EncodableSection section = null;
     if (!this.sections.containsKey(sectionName)) {
       if (sectionName.equals(TcfEuV2.NAME)) {
@@ -454,6 +460,7 @@ public class GppModel {
 
     if (section != null) {
       section.decode(encodedString);
+      this.dirty = true;
     }
   }
   
