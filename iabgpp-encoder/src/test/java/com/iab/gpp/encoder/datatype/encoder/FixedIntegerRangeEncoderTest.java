@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
@@ -125,5 +126,12 @@ public class FixedIntegerRangeEncoderTest {
     } catch (DecodingException e) {
 
     }
+  }
+
+  @Test
+  public void testGiantRange() {
+    String max = FibonacciIntegerEncoder.encode(FibonacciIntegerRangeEncoder.MAX_SIZE + 1);
+    assertThrows(DecodingException.class, ()->
+      FixedIntegerRangeEncoder.decode("00000000000110000000000000001" + max));
   }
 }

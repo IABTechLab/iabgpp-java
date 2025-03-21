@@ -8,6 +8,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedIntegerRangeEncoder {
 
+  private static final int MAX_SIZE = 16384;
   private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
   public static String encode(List<Integer> value) {
@@ -58,11 +59,20 @@ public class FixedIntegerRangeEncoder {
         int end = FixedIntegerEncoder.decode(bitString.substring(startIndex, startIndex + 16));
         startIndex += 16;
 
+        if (end < start) {
+          throw new DecodingException("FixedIntegerRange has invalid range");
+        }
+        if (value.size() + (end - start) > MAX_SIZE) {
+          throw new DecodingException("FixedIntegerRange has too many values");
+        }
         for (int j = start; j <= end; j++) {
           value.add(j);
         }
       } else {
         int val = FixedIntegerEncoder.decode(bitString.substring(startIndex, startIndex + 16));
+        if (value.size() == MAX_SIZE) {
+          throw new DecodingException("FixedIntegerRange has too many values");
+        }
         value.add(val);
         startIndex += 16;
       }
