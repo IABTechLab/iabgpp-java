@@ -8,6 +8,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerRangeEncoder {
 
+  static final int MAX_SIZE = 16384;
   private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
   public static String encode(List<Integer> value) {
@@ -70,6 +71,9 @@ public class FibonacciIntegerRangeEncoder {
         offset = end;
         startIndex = index + 2;
 
+        if (value.size() + (end - start) > MAX_SIZE) {
+          throw new DecodingException("FibonacciIntegerRange has too many values");
+        }
         for (int j = start; j <= end; j++) {
           value.add(j);
         }
@@ -77,6 +81,9 @@ public class FibonacciIntegerRangeEncoder {
         int index = bitString.indexOf("11", startIndex);
         int val = FibonacciIntegerEncoder.decode(bitString.substring(startIndex, index + 2)) + offset;
         offset = val;
+        if (value.size() == MAX_SIZE) {
+          throw new DecodingException("FibonacciIntegerRange has too many values");
+        }
         value.add(val);
         startIndex = index + 2;
       }
