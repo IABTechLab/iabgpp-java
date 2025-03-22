@@ -28,6 +28,12 @@ public class Sections {
     SECTION_ID_NAME_MAP.put(UsMt.ID, UsMt.NAME);
     SECTION_ID_NAME_MAP.put(UsOr.ID, UsOr.NAME);
     SECTION_ID_NAME_MAP.put(UsTx.ID, UsTx.NAME);
+    SECTION_ID_NAME_MAP.put(UsDe.ID, UsDe.NAME);
+    SECTION_ID_NAME_MAP.put(UsIa.ID, UsIa.NAME);
+    SECTION_ID_NAME_MAP.put(UsNe.ID, UsNe.NAME);
+    SECTION_ID_NAME_MAP.put(UsNh.ID, UsNh.NAME);
+    SECTION_ID_NAME_MAP.put(UsNj.ID, UsNj.NAME);
+    SECTION_ID_NAME_MAP.put(UsTn.ID, UsTn.NAME);
 
     SECTION_ORDER = new ArrayList<Integer>(SECTION_ID_NAME_MAP.keySet()).stream().sorted()
         .map(id -> SECTION_ID_NAME_MAP.get(id)).collect(Collectors.toList());
