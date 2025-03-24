@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsNeField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -9,15 +10,15 @@ import com.iab.gpp.encoder.segment.UsNeGpcSegment;
 
 public class UsNe extends AbstractLazilyEncodableSection {
 
-  public static int ID = 19;
-  public static int VERSION = 1;
-  public static String NAME = "usne";
+  public static final int ID = 19;
+  public static final int VERSION = 1;
+  public static final String NAME = "usne";
 
   public UsNe() {
     super();
   }
 
-  public UsNe(String encodedString) {
+  public UsNe(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -39,26 +40,23 @@ public class UsNe extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsNeCoreSegment());
-    segments.add(new UsNeGpcSegment());
-    return segments;
+    return Arrays.asList(new UsNeCoreSegment(), new UsNeGpcSegment());
   }
 
   @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
+  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     List<EncodableSegment> segments = initializeSegments();
 
     if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
-  
-      if(encodedSegments.length > 0) {
-        segments.get(0).decode(encodedSegments[0]);
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+      
+      if (encodedSegments.size() > 0) {
+        segments.get(0).decode(encodedSegments.get(0));
       }
       
-      if(encodedSegments.length > 1) {
+      if (encodedSegments.size() > 1) {
         segments.get(1).setFieldValue(UsNeField.GPC_SEGMENT_INCLUDED, true);
-        segments.get(1).decode(encodedSegments[1]);
+        segments.get(1).decode(encodedSegments.get(1));
       } else {
         segments.get(1).setFieldValue(UsNeField.GPC_SEGMENT_INCLUDED, false);
       }
@@ -69,7 +67,7 @@ public class UsNe extends AbstractLazilyEncodableSection {
 
   @Override
   protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+    List<String> encodedSegments = new ArrayList<>(segments.size());
     
     if(!segments.isEmpty()) {
       encodedSegments.add(segments.get(0).encode());
