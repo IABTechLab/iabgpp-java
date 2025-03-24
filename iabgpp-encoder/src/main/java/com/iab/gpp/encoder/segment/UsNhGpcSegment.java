@@ -13,8 +13,8 @@ import com.iab.gpp.encoder.field.UsNhField;
 
 public class UsNhGpcSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
-  private AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
-  private BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
+  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
+  private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
   public UsNhGpcSegment() {
     super();

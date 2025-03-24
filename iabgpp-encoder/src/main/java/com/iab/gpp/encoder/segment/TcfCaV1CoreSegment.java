@@ -21,8 +21,8 @@ import com.iab.gpp.encoder.section.TcfCaV1;
 
 public class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
-  private AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
-  private BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
+  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
+  private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
   public TcfCaV1CoreSegment() {
     super();

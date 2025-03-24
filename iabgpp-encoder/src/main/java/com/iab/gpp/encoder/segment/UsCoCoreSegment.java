@@ -2,7 +2,6 @@ package com.iab.gpp.encoder.segment;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -16,8 +15,8 @@ import com.iab.gpp.encoder.section.UsCo;
 
 public class UsCoCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
-  private AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
-  private BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
+  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
+  private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
   public UsCoCoreSegment() {
     super();
@@ -35,17 +34,6 @@ public class UsCoCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
 
   @Override
   protected EncodableBitStringFields initializeFields() {
-    Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
-    Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
-    Predicate<List<Integer>> nullableBooleanAsTwoBitIntegerListValidator = (l -> {
-      for (int n : l) {
-        if (n < 0 || n > 2) {
-          return false;
-        }
-      }
-      return true;
-    });
-
     EncodableBitStringFields fields = new EncodableBitStringFields();
     fields.put(UsCoField.VERSION, new EncodableFixedInteger(6, UsCo.VERSION));
     fields.put(UsCoField.SHARING_NOTICE,
