@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
@@ -27,9 +28,9 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     setValue(value);
   }
 
-  public String encode() {
+  public void encode(BitStringBuilder builder) {
     try {
-      return FibonacciIntegerRangeEncoder.encode(this.value);
+      FibonacciIntegerRangeEncoder.encode(builder, this.value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }

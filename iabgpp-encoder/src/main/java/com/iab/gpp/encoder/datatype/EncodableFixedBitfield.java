@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -29,9 +30,9 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
     setValue(value);
   }
 
-  public String encode() {
+  public void encode(BitStringBuilder builder) {
     try {
-      return FixedBitfieldEncoder.encode(this.value, this.numElements);
+      FixedBitfieldEncoder.encode(builder, this.value, this.numElements);
     } catch (Exception e) {
       throw new EncodingException(e);
     }

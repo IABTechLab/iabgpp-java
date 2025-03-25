@@ -4,31 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedIntegerListEncoder {
 
-  public static String encode(List<Integer> value, int elementBitStringLength, int numElements) {
+  public static void encode(BitStringBuilder builder, List<Integer> value, int elementBitStringLength, int numElements) {
     int length = value.size();
     if (length > numElements) {
       throw new EncodingException("Too many values '" + value.size() + "'");
     }
 
-    int expectedLength = elementBitStringLength * numElements;
-
-    StringBuilder bitString = new StringBuilder(expectedLength);
     for (int i = 0; i < numElements; i++) {
       if (i < length) {
-        bitString.append(FixedIntegerEncoder.encode(value.get(i), elementBitStringLength));
+        FixedIntegerEncoder.encode(builder, value.get(i), elementBitStringLength);
       } else {
         for (int j = 0; j < elementBitStringLength; j++) {
-          bitString.append(BitString.FALSE);
+          builder.append(false);
         }
       }
     }
-
-    return bitString.toString();
   }
 
   public static List<Integer> decode(BitString bitString, int elementBitStringLength, int numElements)

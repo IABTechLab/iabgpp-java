@@ -5,11 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerRangeEncoder {
 
-  public static String encode(List<Integer> value) {
+  public static void encode(BitStringBuilder builder, List<Integer> value) {
     Collections.sort(value);
 
     List<List<Integer>> groups = new ArrayList<>();
@@ -27,21 +28,23 @@ public class FibonacciIntegerRangeEncoder {
       groupStartIndex = groupEndIndex + 1;
     }
 
-    StringBuilder bitString = new StringBuilder(FixedIntegerEncoder.encode(groups.size(), 12));
+    FixedIntegerEncoder.encode(builder,groups.size(), 12);
     for (int i = 0; i < groups.size(); i++) {
       if (groups.get(i).size() == 1) {
         int v = groups.get(i).get(0) - offset;
         offset = groups.get(i).get(0);
-        bitString.append(BitString.FALSE).append(FibonacciIntegerEncoder.encode(v));
+        builder.append(false);
+        FibonacciIntegerEncoder.encode(builder, v);
       } else {
         int startVal = groups.get(i).get(0) - offset;
         offset = groups.get(i).get(0);
         int endVal = groups.get(i).get(groups.get(i).size() - 1) - offset;
         offset = groups.get(i).get(groups.get(i).size() - 1);
-        bitString.append(BitString.TRUE).append(FibonacciIntegerEncoder.encode(startVal)).append(FibonacciIntegerEncoder.encode(endVal));
+        builder.append(true);
+        FibonacciIntegerEncoder.encode(builder, startVal);
+        FibonacciIntegerEncoder.encode(builder, endVal);
       }
     }
-    return bitString.toString();
   }
 
   public static List<Integer> decode(BitString bitString) throws DecodingException {

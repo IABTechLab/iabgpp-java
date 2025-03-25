@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.ValidationException;
 
 public abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
@@ -50,7 +51,7 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
     return this.hardFailIfMissing;
   }
 
-  public abstract String encode();
+  public abstract void encode(BitStringBuilder builder);
 
   public abstract void decode(BitString bitString);
 

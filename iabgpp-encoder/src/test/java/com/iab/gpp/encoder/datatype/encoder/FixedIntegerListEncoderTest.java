@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -13,98 +14,135 @@ public class FixedIntegerListEncoderTest {
 
   @Test
   public void testEncode1() {
-    Assertions.assertEquals("0000", FixedIntegerListEncoder.encode(new ArrayList<>(), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, new ArrayList<>(), 2, 2);
+    Assertions.assertEquals("0000", builder.build().toString());
   }
 
   @Test
   public void testEncode2() {
-    Assertions.assertEquals("0000", FixedIntegerListEncoder.encode(Arrays.asList(0), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0), 2, 2);
+    Assertions.assertEquals("0000", builder.build().toString());
   }
 
   @Test
   public void testEncode3() {
-    Assertions.assertEquals("0000", FixedIntegerListEncoder.encode(Arrays.asList(0, 0), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0, 0), 2, 2);
+    Assertions.assertEquals("0000", builder.build().toString());
   }
 
   @Test
   public void testEncode4() {
-    Assertions.assertEquals("0001", FixedIntegerListEncoder.encode(Arrays.asList(0, 1), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0, 1), 2, 2);
+    Assertions.assertEquals("0001", builder.build().toString());
   }
 
   @Test
   public void testEncode5() {
-    Assertions.assertEquals("0010", FixedIntegerListEncoder.encode(Arrays.asList(0, 2), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0, 2), 2, 2);
+    Assertions.assertEquals("0010", builder.build().toString());
   }
 
   @Test
   public void testEncode6() {
-    Assertions.assertEquals("0011", FixedIntegerListEncoder.encode(Arrays.asList(0, 3), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0, 3), 2, 2);
+    Assertions.assertEquals("0011", builder.build().toString());
   }
 
   @Test
   public void testEncode7() {
-    Assertions.assertEquals("0100", FixedIntegerListEncoder.encode(Arrays.asList(1, 0), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(1, 0), 2, 2);
+    Assertions.assertEquals("0100", builder.build().toString());
   }
 
   @Test
   public void testEncode8() {
-    Assertions.assertEquals("0101", FixedIntegerListEncoder.encode(Arrays.asList(1, 1), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(1, 1), 2, 2);
+    Assertions.assertEquals("0101", builder.build().toString());
   }
 
   @Test
   public void testEncode9() {
-    Assertions.assertEquals("0110", FixedIntegerListEncoder.encode(Arrays.asList(1, 2), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(1, 2), 2, 2);
+    Assertions.assertEquals("0110", builder.build().toString());
   }
 
   @Test
   public void testEncode10() {
-    Assertions.assertEquals("0111", FixedIntegerListEncoder.encode(Arrays.asList(1, 3), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(1, 3), 2, 2);
+    Assertions.assertEquals("0111", builder.build().toString());
   }
 
   @Test
   public void testEncode11() {
-    Assertions.assertEquals("1000", FixedIntegerListEncoder.encode(Arrays.asList(2, 0), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(2, 0), 2, 2);
+    Assertions.assertEquals("1000", builder.build().toString());
   }
 
   @Test
   public void testEncode12() {
-    Assertions.assertEquals("1001", FixedIntegerListEncoder.encode(Arrays.asList(2, 1), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(2, 1), 2, 2);
+    Assertions.assertEquals("1001", builder.build().toString());
   }
 
   @Test
   public void testEncode13() {
-    Assertions.assertEquals("1010", FixedIntegerListEncoder.encode(Arrays.asList(2, 2), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(2, 2), 2, 2);
+    Assertions.assertEquals("1010", builder.build().toString());
   }
 
   @Test
   public void testEncode14() {
-    Assertions.assertEquals("1011", FixedIntegerListEncoder.encode(Arrays.asList(2, 3), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(2, 3), 2, 2);
+    Assertions.assertEquals("1011", builder.build().toString());
   }
 
   @Test
   public void testEncode15() {
-    Assertions.assertEquals("1100", FixedIntegerListEncoder.encode(Arrays.asList(3, 0), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 0), 2, 2);
+    Assertions.assertEquals("1100", builder.build().toString());
   }
 
   @Test
   public void testEncode16() {
-    Assertions.assertEquals("1101", FixedIntegerListEncoder.encode(Arrays.asList(3, 1), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 1), 2, 2);
+    Assertions.assertEquals("1101", builder.build().toString());
   }
 
   @Test
   public void testEncode17() {
-    Assertions.assertEquals("1110", FixedIntegerListEncoder.encode(Arrays.asList(3, 2), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 2), 2, 2);
+    Assertions.assertEquals("1110", builder.build().toString());
   }
 
   @Test
   public void testEncode18() {
-    Assertions.assertEquals("1111", FixedIntegerListEncoder.encode(Arrays.asList(3, 3), 2, 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 3), 2, 2);
+    Assertions.assertEquals("1111", builder.build().toString());
   }
 
   @Test
   public void testEncode19() {
     try {
-      FixedIntegerListEncoder.encode(Arrays.asList(3, 3), 1, 1);
+      BitStringBuilder builder = new BitStringBuilder();
+      FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 3), 1, 1);
       Assertions.fail("EncodingException expected");
     } catch (EncodingException e) {
 

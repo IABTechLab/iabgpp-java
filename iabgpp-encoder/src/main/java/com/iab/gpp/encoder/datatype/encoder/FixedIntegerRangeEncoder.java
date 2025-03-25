@@ -5,11 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedIntegerRangeEncoder {
 
-  public static String encode(List<Integer> value) {
+  public static void encode(BitStringBuilder builder, List<Integer> value) {
     Collections.sort(value);
 
     List<List<Integer>> groups = new ArrayList<>();
@@ -26,16 +27,17 @@ public class FixedIntegerRangeEncoder {
       groupStartIndex = groupEndIndex + 1;
     }
 
-    StringBuilder bitString = new StringBuilder(FixedIntegerEncoder.encode(groups.size(), 12));
+    FixedIntegerEncoder.encode(builder, groups.size(), 12);
     for (int i = 0; i < groups.size(); i++) {
       if (groups.get(i).size() == 1) {
-        bitString.append(BitString.FALSE).append(FixedIntegerEncoder.encode(groups.get(i).get(0), 16));
+        builder.append(false);
+        FixedIntegerEncoder.encode(builder, groups.get(i).get(0), 16);
       } else {
-        bitString.append(BitString.TRUE).append(FixedIntegerEncoder.encode(groups.get(i).get(0), 16))
-            .append(FixedIntegerEncoder.encode(groups.get(i).get(groups.get(i).size() - 1), 16));
+        builder.append(true);
+        FixedIntegerEncoder.encode(builder, groups.get(i).get(0), 16);
+        FixedIntegerEncoder.encode(builder, groups.get(i).get(groups.get(i).size() - 1), 16);
       }
     }
-    return bitString.toString();
   }
 
   public static List<Integer> decode(BitString bitString) throws DecodingException {

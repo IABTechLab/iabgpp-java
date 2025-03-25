@@ -72,7 +72,7 @@ public class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
 
   @Override
   protected String encodeSegment(EncodableBitStringFields fields) {
-    String bitString = bitStringEncoder.encode(fields, getFieldNames());
+    BitStringBuilder bitString = bitStringEncoder.encode(fields, getFieldNames());
     String encodedString = base64UrlEncoder.encode(bitString);
     return encodedString;
   }

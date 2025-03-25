@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -28,14 +29,18 @@ public class EncodableFixedIntegerRangeTest {
   public void testEncode1() throws EncodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
     encodableFixedIntegerRange.setValue(Arrays.asList(28));
-    Assertions.assertEquals("00000000000100000000000011100", encodableFixedIntegerRange.encode());
+    BitStringBuilder builder = new BitStringBuilder();
+    encodableFixedIntegerRange.encode(builder);
+    Assertions.assertEquals("00000000000100000000000011100", builder.build().toString());
   }
 
   @Test
   public void testEncode2() throws EncodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
     encodableFixedIntegerRange.setValue(Arrays.asList(29));
-    Assertions.assertEquals("00000000000100000000000011101", encodableFixedIntegerRange.encode());
+    BitStringBuilder builder = new BitStringBuilder();
+    encodableFixedIntegerRange.encode(builder);
+    Assertions.assertEquals("00000000000100000000000011101", builder.build().toString());
   }
 
   @Test

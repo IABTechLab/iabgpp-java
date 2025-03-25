@@ -8,45 +8,58 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerRangeEncoderTest {
 
   @Test
   public void testEncode1() {
-    Assertions.assertEquals("000000000000", FibonacciIntegerRangeEncoder.encode(new ArrayList<>()));
+    BitStringBuilder builder = new BitStringBuilder();
+    FibonacciIntegerRangeEncoder.encode(builder, new ArrayList<>());
+    Assertions.assertEquals("000000000000", builder.build().toString());
   }
 
   @Test
   public void testEncode2() {
-    Assertions.assertEquals("0000000000010011", FibonacciIntegerRangeEncoder.encode(Arrays.asList(2)));
+    BitStringBuilder builder = new BitStringBuilder();
+    FibonacciIntegerRangeEncoder.encode(builder, Arrays.asList(2));
+    Assertions.assertEquals("0000000000010011", builder.build().toString());
   }
 
   @Test
   public void testEncode3() {
-    Assertions.assertEquals("00000000000110111011", FibonacciIntegerRangeEncoder.encode(Arrays.asList(2, 3, 4, 5, 6)));
+    BitStringBuilder builder = new BitStringBuilder();
+    FibonacciIntegerRangeEncoder.encode(builder, Arrays.asList(2, 3, 4, 5, 6));
+    Assertions.assertEquals("00000000000110111011", builder.build().toString());
   }
 
   @Test
   public void testEncode4() {
-    Assertions.assertEquals("000000000010001110011011", FibonacciIntegerRangeEncoder.encode(Arrays.asList(2, 5, 6, 7)));
+    BitStringBuilder builder = new BitStringBuilder();
+    FibonacciIntegerRangeEncoder.encode(builder, Arrays.asList(2, 5, 6, 7));
+    Assertions.assertEquals("000000000010001110011011", builder.build().toString());
   }
 
   @Test
   public void testEncode5() {
-    Assertions.assertEquals("000000000010001110011011", FibonacciIntegerRangeEncoder.encode(Arrays.asList(6, 7, 2, 5)));
+    BitStringBuilder builder = new BitStringBuilder();
+    FibonacciIntegerRangeEncoder.encode(builder, Arrays.asList(6, 7, 2, 5));
+    Assertions.assertEquals("000000000010001110011011", builder.build().toString());
   }
 
   @Test
   public void testEncode6() {
-    Assertions.assertEquals("0000000000100001110110011",
-        FibonacciIntegerRangeEncoder.encode(Arrays.asList(3, 5, 6, 7, 8)));
+    BitStringBuilder builder = new BitStringBuilder();
+    FibonacciIntegerRangeEncoder.encode(builder, Arrays.asList(3, 5, 6, 7, 8));
+    Assertions.assertEquals("0000000000100001110110011", builder.build().toString());
   }
 
   @Test
   public void testEncode7() {
-    Assertions.assertEquals("00000000001000111001101011",
-        FibonacciIntegerRangeEncoder.encode(Arrays.asList(2, 5, 6, 7, 8, 9, 10, 11, 12)));
+    BitStringBuilder builder = new BitStringBuilder();
+    FibonacciIntegerRangeEncoder.encode(builder, Arrays.asList(2, 5, 6, 7, 8, 9, 10, 11, 12));
+    Assertions.assertEquals("00000000001000111001101011", builder.build().toString());
   }
 
   @Test

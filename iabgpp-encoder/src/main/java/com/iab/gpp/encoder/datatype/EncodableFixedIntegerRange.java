@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -26,9 +27,9 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
     setValue(value);
   }
 
-  public String encode() {
+  public void encode(BitStringBuilder builder) {
     try {
-      return FixedIntegerRangeEncoder.encode(this.value);
+      FixedIntegerRangeEncoder.encode(builder, this.value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }

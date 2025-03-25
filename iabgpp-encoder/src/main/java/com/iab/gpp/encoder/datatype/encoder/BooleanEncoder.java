@@ -1,15 +1,16 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class BooleanEncoder {
-  public static String encode(Boolean value) {
+  public static void encode(BitStringBuilder builder, Boolean value) {
     if (value == true) {
-      return BitString.TRUE_STRING;
+      builder.append(true);
     } else if (value == false) {
-      return BitString.FALSE_STRING;
+      builder.append(false);
     } else {
       throw new EncodingException("Unencodable Boolean '" + value + "'");
     }

@@ -28,9 +28,9 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     setValue(value);
   }
 
-  public String encode() {
+  public void encode(BitStringBuilder builder) {
     try {
-      return OptimizedFixedRangeEncoder.encode(this.value);
+      OptimizedFixedRangeEncoder.encode(builder, this.value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }

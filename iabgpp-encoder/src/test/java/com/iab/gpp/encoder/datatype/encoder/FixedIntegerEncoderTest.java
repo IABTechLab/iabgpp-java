@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -11,33 +12,44 @@ public class FixedIntegerEncoderTest {
 
   @Test
   public void testEncode1() {
-    Assertions.assertEquals("0", FixedIntegerEncoder.encode(0, 1));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerEncoder.encode(builder, 0, 1);
+    Assertions.assertEquals("0", builder.build().toString());
   }
 
   @Test
   public void testEncode2() {
-    Assertions.assertEquals("000000", FixedIntegerEncoder.encode(0, 6));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerEncoder.encode(builder, 0, 6);
+    Assertions.assertEquals("000000", builder.build().toString());
   }
 
   @Test
   public void testEncode3() {
-    Assertions.assertEquals("1", FixedIntegerEncoder.encode(1, 1));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerEncoder.encode(builder, 1, 1);
+    Assertions.assertEquals("1", builder.build().toString());
   }
 
   @Test
   public void testEncode4() {
-    Assertions.assertEquals("0001", FixedIntegerEncoder.encode(1, 4));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerEncoder.encode(builder, 1, 4);
+    Assertions.assertEquals("0001", builder.build().toString());
   }
 
   @Test
   public void testEncode5() {
-    Assertions.assertEquals("00000111", FixedIntegerEncoder.encode(7, 8));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerEncoder.encode(builder, 7, 8);
+    Assertions.assertEquals("00000111", builder.build().toString());
   }
   
   @Test
   public void testEncode6() {
     try {
-      FixedIntegerEncoder.encode(8, 1);
+      BitStringBuilder builder = new BitStringBuilder();
+      FixedIntegerEncoder.encode(builder, 8, 1);
       Assertions.fail("EncodingException expected");
     } catch (EncodingException e) {
 

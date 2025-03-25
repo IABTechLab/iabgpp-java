@@ -5,17 +5,18 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class DatetimeEncoder {
 
   public static final ZoneId UTC = ZoneId.of("UTC");
 
-  public static String encode(ZonedDateTime value) {
+  public static void encode(BitStringBuilder builder, ZonedDateTime value) {
     if (value != null) {
-      return FixedLongEncoder.encode(value.toInstant().toEpochMilli() / 100, 36);
+      FixedLongEncoder.encode(builder, value.toInstant().toEpochMilli() / 100, 36);
     } else {
-      return FixedLongEncoder.encode(0, 36);
+      FixedLongEncoder.encode(builder, 0, 36);
     }
   }
 

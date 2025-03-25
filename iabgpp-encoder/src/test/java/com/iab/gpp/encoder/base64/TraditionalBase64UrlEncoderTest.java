@@ -2,6 +2,8 @@ package com.iab.gpp.encoder.base64;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 
 public class TraditionalBase64UrlEncoderTest {
 
@@ -9,17 +11,23 @@ public class TraditionalBase64UrlEncoderTest {
 
   @Test
   public void testEncode1() {
-    Assertions.assertEquals("DBABMAAA", base64UrlEncoder.encode("0000110000010000000000010011"));
+    BitStringBuilder builder = new BitStringBuilder();
+    builder.append(BitString.of("0000110000010000000000010011"));
+    Assertions.assertEquals("DBABMAAA", base64UrlEncoder.encode(builder));
   }
 
   @Test
   public void testEncode2() {
-    Assertions.assertEquals("DBACNYAA", base64UrlEncoder.encode("000011000001000000000010001101011"));
+    BitStringBuilder builder = new BitStringBuilder();
+    builder.append(BitString.of("000011000001000000000010001101011"));
+    Assertions.assertEquals("DBACNYAA", base64UrlEncoder.encode(builder));
   }
 
   @Test
   public void testEncode3() {
-    Assertions.assertEquals("DBABjwAA", base64UrlEncoder.encode("00001100000100000000000110001111"));
+    BitStringBuilder builder = new BitStringBuilder();
+    builder.append(BitString.of("00001100000100000000000110001111"));
+    Assertions.assertEquals("DBABjwAA", base64UrlEncoder.encode(builder));
   }
 
   @Test

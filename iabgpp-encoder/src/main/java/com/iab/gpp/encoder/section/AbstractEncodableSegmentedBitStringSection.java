@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
 import com.iab.gpp.encoder.datatype.SubstringException;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -48,13 +49,13 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
     int length = this.segments.length;
     List<String> segmentBitStrings = new ArrayList<>(length);
     for (int i = 0; i < length; i++) {
-      StringBuilder segmentBitString = new StringBuilder();
+      BitStringBuilder segmentBitString = new BitStringBuilder();
       for (int j = 0; j < this.segments[i].length; j++) {
         String fieldName = this.segments[i][j];
         AbstractEncodableBitStringDataType<?> field = this.fields.get(fieldName);
         if (field != null) {
           try {
-            segmentBitString.append(field.encode());
+            field.encode(segmentBitString);
           } catch (Exception e) {
             throw new EncodingException("Unable to encode " + fieldName, e);
           }
@@ -62,7 +63,7 @@ public abstract class AbstractEncodableSegmentedBitStringSection implements Enco
           throw new EncodingException("Field not found: '" + fieldName + "'");
         }
       }
-      segmentBitStrings.add(segmentBitString.toString());
+      segmentBitStrings.add(segmentBitString.build().toString());
     }
 
     return segmentBitStrings;

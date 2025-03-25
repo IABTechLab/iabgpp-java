@@ -19,19 +19,19 @@ public class BitStringEncoder {
     return instance;
   }
   
-  public String encode(EncodableBitStringFields fields, List<String> fieldNames) {
-    StringBuilder bitString = new StringBuilder();
+  public BitStringBuilder encode(EncodableBitStringFields fields, List<String> fieldNames) {
+    BitStringBuilder bitString = new BitStringBuilder();
     for (int i = 0; i < fieldNames.size(); i++) {
       String fieldName = fieldNames.get(i);
       AbstractEncodableBitStringDataType<?> field = fields.get(fieldName);
       if (field != null) {
-        bitString.append(field.encode());
+        field.encode(bitString);
       } else {
         throw new EncodingException("Field not found: '" + fieldName + "'");
       }
     }
 
-    return bitString.toString();
+    return bitString;
   }
 
   public void decode(BitString bitString, List<String> fieldNames, EncodableBitStringFields fields) {

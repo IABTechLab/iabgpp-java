@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.base64;
 
-import java.util.Arrays;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 
 public class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
 
@@ -15,24 +15,22 @@ public class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
   }
   
   @Override
-  protected String pad(String bitString) {
-    char[] chars1 = null;
-    if(bitString.length() % 8 > 0) {
-      chars1 = new char[8 - (bitString.length() % 8)];
-    } else {
-      chars1 = new char[0];
+  protected void pad(BitStringBuilder bitString) {
+    int remainder = bitString.length() % 8;
+    if(remainder > 0) {
+      int padding = 8 - remainder;
+      for (int i = 0; i < padding; i++) {
+        bitString.append(false);
+      }
     }
-    Arrays.fill(chars1, '0');
-    
-    char[] chars2 = null;
-    if((bitString.length() + chars1.length) % 6 > 0) {
-      chars2 = new char[6 - ((bitString.length() + chars1.length) % 6)];
-    } else {
-      chars2 = new char[0];
+
+    remainder = bitString.length() % 6;
+    if(remainder > 0) {
+      int padding = 6 - remainder;
+      for (int i = 0; i < padding; i++) {
+        bitString.append(false);
+      }
     }
-    Arrays.fill(chars2, '0');
-    
-    return bitString + new String(chars1) + new String(chars2);
   }
 
 }

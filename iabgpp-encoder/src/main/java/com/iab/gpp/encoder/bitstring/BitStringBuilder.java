@@ -18,17 +18,31 @@ public final class BitStringBuilder {
     return new BitString(bitSet, 0, length);
   }
 
-  public void append(boolean value) {
+  public BitStringBuilder append(boolean value) {
     int idx = length++;
     if (value) {
       bitSet.set(idx);
     }
+    return this;
   }
 
-  public void append(BitString other) {
+  public BitStringBuilder append(BitString other) {
     int length = other.length();
     for (int i = 0; i < length; i++) {
       append(other.getValue(i));
     }
+    return this;
+  }
+
+  public int length() {
+    return length;
+  }
+
+  public BitStringBuilder append(BitStringBuilder rangeBitString) {
+    int length = rangeBitString.length();
+    for (int i = 0; i < length; i++) {
+      append(rangeBitString.bitSet.get(i));
+    }
+    return this;
   }
 }

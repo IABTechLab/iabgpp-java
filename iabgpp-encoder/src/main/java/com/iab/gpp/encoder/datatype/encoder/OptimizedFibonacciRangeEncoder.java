@@ -4,33 +4,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class OptimizedFibonacciRangeEncoder {
 
-  public static String encode(List<Integer> value) throws EncodingException {
+  public static void encode(BitStringBuilder builder, List<Integer> value) throws EncodingException {
     // TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
     // to identify in advance which will be shorter based on the array length and values
     int max = value.size() > 0 ? value.get(value.size() - 1) : 0;
-    String rangeBitString = FibonacciIntegerRangeEncoder.encode(value);
+    BitStringBuilder rangeBitString = new BitStringBuilder();
+    FibonacciIntegerRangeEncoder.encode(rangeBitString, value);
     int rangeLength = rangeBitString.length();
     int bitFieldLength = max;
 
     if (rangeLength <= bitFieldLength) {
-      return FixedIntegerEncoder.encode(max, 16) + BitString.TRUE_STRING + rangeBitString;
+      FixedIntegerEncoder.encode(builder, max, 16);
+      builder.append(true).append(rangeBitString);
     } else {
-      List<Boolean> bits = new ArrayList<>(max);
+      FixedIntegerEncoder.encode(builder, max, 16);
+      builder.append(false);
       int index = 0;
       for (int i = 0; i < max; i++) {
         if (i == value.get(index) - 1) {
-          bits.add(true);
+          builder.append(true);
           index++;
         } else {
-          bits.add(false);
+          builder.append(false);
         }
       }
-      return FixedIntegerEncoder.encode(max, 16) + BitString.FALSE_STRING + FixedBitfieldEncoder.encode(bits, bitFieldLength);
     }
   }
 

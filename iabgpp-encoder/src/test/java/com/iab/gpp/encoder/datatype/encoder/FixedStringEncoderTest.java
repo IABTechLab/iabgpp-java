@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -11,18 +12,23 @@ public class FixedStringEncoderTest {
 
   @Test
   public void testEncode1() {
-    Assertions.assertEquals("000000000001", FixedStringEncoder.encode("AB", 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedStringEncoder.encode(builder, "AB", 2);
+    Assertions.assertEquals("000000000001", builder.build().toString());
   }
 
   @Test
   public void testEncode2() {
-    Assertions.assertEquals("100000111111", FixedStringEncoder.encode("a", 2));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedStringEncoder.encode(builder, "a", 2);
+    Assertions.assertEquals("100000111111", builder.build().toString());
   }
 
   @Test
   public void testEncode3() {
     try {
-      FixedStringEncoder.encode("1", 2);
+      BitStringBuilder builder = new BitStringBuilder();
+      FixedStringEncoder.encode(builder, "1", 2);
       Assertions.fail("DecodingException expected");
     } catch (EncodingException e) {
 

@@ -342,8 +342,7 @@ public class GppModel {
     }
     encodedSections.add(0, header.encode());
 
-    String encodedString = encodedSections.stream().collect(Collectors.joining("~"));
-    return encodedString;
+    return String.join("~", encodedSections);
   }
 
   protected Map<String, EncodableSection> decodeModel(String str) {

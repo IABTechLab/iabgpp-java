@@ -8,61 +8,80 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedIntegerRangeEncoderTest {
 
   @Test
   public void testEncode1() {
-    Assertions.assertEquals("000000000000", FixedIntegerRangeEncoder.encode(new ArrayList<>()));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerRangeEncoder.encode(builder, new ArrayList<>());
+    Assertions.assertEquals("000000000000", builder.build().toString());
   }
 
   @Test
   public void testEncode2() {
-    Assertions.assertEquals("00000000000100000000000000010", FixedIntegerRangeEncoder.encode(Arrays.asList(2)));
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(2));
+    Assertions.assertEquals("00000000000100000000000000010", builder.build().toString());
   }
 
   @Test
   public void testEncode3() {
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(2, 3, 4, 5, 6));
     Assertions.assertEquals("000000000001100000000000000100000000000000110",
-        FixedIntegerRangeEncoder.encode(Arrays.asList(2, 3, 4, 5, 6)));
+        builder.build().toString());
   }
 
   @Test
   public void testEncode4() {
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(2, 5, 6, 7));
     Assertions.assertEquals("00000000001000000000000000010100000000000001010000000000000111",
-        FixedIntegerRangeEncoder.encode(Arrays.asList(2, 5, 6, 7)));
+        builder.build().toString());
   }
 
   @Test
   public void testEncode5() {
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(5, 2, 7, 6));
     Assertions.assertEquals("00000000001000000000000000010100000000000001010000000000000111",
-        FixedIntegerRangeEncoder.encode(Arrays.asList(5, 2, 7, 6)));
+        builder.build().toString());
   }
 
   @Test
   public void testEncode6() {
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(3, 5, 6, 7, 8));
     Assertions.assertEquals("00000000001000000000000000011100000000000001010000000000001000",
-        FixedIntegerRangeEncoder.encode(Arrays.asList(3, 5, 6, 7, 8)));
+        builder.build().toString());
   }
 
   @Test
   public void testEncode7() {
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(12, 24, 48));
     Assertions.assertEquals("000000000011000000000000011000000000000001100000000000000110000",
-        FixedIntegerRangeEncoder.encode(Arrays.asList(12, 24, 48)));
+        builder.build().toString());
   }
 
   @Test
   public void testEncode8() {
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(12, 24, 48, 49));
     Assertions.assertEquals("0000000000110000000000000110000000000000011000100000000001100000000000000110001",
-        FixedIntegerRangeEncoder.encode(Arrays.asList(12, 24, 48, 49)));
+        builder.build().toString());
   }
 
   @Test
   public void testEncode9() {
+    BitStringBuilder builder = new BitStringBuilder();
+    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(2, 6, 8, 12, 18, 23, 24, 25, 37, 42));
     Assertions.assertEquals(
         "00000000100000000000000000010000000000000001100000000000000100000000000000001100000000000000100101000000000001011100000000000110010000000000010010100000000000101010",
-        FixedIntegerRangeEncoder.encode(Arrays.asList(2, 6, 8, 12, 18, 23, 24, 25, 37, 42)));
+        builder.build().toString());
   }
 
   @Test

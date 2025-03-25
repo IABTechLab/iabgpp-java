@@ -36,19 +36,17 @@ public class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStri
   }
 
   @Override
-  public String encode() {
+  public void encode(BitStringBuilder sb) {
     try {
       List<RangeEntry> entries = this.value;
 
-      StringBuilder sb = new StringBuilder();
-      sb.append(FixedIntegerEncoder.encode(entries.size(), 12));
+      FixedIntegerEncoder.encode(sb, entries.size(), 12);
       for (RangeEntry entry : entries) {
-        sb.append(FixedIntegerEncoder.encode(entry.getKey(), keyBitStringLength))
-            .append(FixedIntegerEncoder.encode(entry.getType(), typeBitStringLength))
-            .append(FixedIntegerRangeEncoder.encode(entry.getIds()));
+        FixedIntegerEncoder.encode(sb, entry.getKey(), keyBitStringLength);
+        FixedIntegerEncoder.encode(sb, entry.getType(), typeBitStringLength);
+        FixedIntegerRangeEncoder.encode(sb, entry.getIds());
       }
 
-      return sb.toString();
     } catch (Exception e) {
       throw new EncodingException(e);
     }

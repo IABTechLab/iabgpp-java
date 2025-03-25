@@ -8,7 +8,7 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public abstract class AbstractBase64UrlEncoder {
 
-  abstract protected String pad(String bitString);
+  abstract protected void pad(BitStringBuilder bitString);
 
   private static final int BASE64_BITS = 6;
   /**
@@ -20,13 +20,15 @@ public abstract class AbstractBase64UrlEncoder {
   private static final BitString[] REVERSE_DICT = new BitString[REVERSE_DICT_SIZE];
   static {
     for (int i = 0; i < DICT.length(); i++) {
-      REVERSE_DICT[DICT.charAt(i)] = BitString.of(FixedIntegerEncoder.encode(i, 6));
+      BitStringBuilder builder = new BitStringBuilder();
+      FixedIntegerEncoder.encode(builder, i, 6);
+      REVERSE_DICT[DICT.charAt(i)] = builder.build();
     }
   }
 
-  public String encode(String bitString) {
-    bitString = pad(bitString);
-
+  public String encode(BitStringBuilder bitStringBuilder) {
+    pad(bitStringBuilder);
+    BitString bitString = bitStringBuilder.build();
     int length = bitString.length();
     StringBuilder str = new StringBuilder(length / BASE64_BITS);
 

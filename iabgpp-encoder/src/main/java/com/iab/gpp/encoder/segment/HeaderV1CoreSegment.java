@@ -5,6 +5,7 @@ import java.util.List;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFibonacciIntegerRange;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
@@ -43,7 +44,7 @@ public class HeaderV1CoreSegment extends AbstractLazilyEncodableSegment<Encodabl
 
   @Override
   protected String encodeSegment(EncodableBitStringFields fields) {
-    String bitString = bitStringEncoder.encode(fields, getFieldNames());
+    BitStringBuilder bitString = bitStringEncoder.encode(fields, getFieldNames());
     String encodedString = base64UrlEncoder.encode(bitString);
     return encodedString;
   }
