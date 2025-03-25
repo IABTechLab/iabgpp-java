@@ -9,7 +9,6 @@ import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsCaField;
 import com.iab.gpp.encoder.section.UsCa;
@@ -35,16 +34,16 @@ public class UsCaCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
 
   @Override
   protected EncodableBitStringFields initializeFields() {
-      Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
-      Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
-      Predicate<List<Integer>> nullableBooleanAsTwoBitIntegerListValidator = (l -> {
-        for (int n : l) {
-          if (n < 0 || n > 2) {
-            return false;
-          }
+    Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
+    Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
+    Predicate<List<Integer>> nullableBooleanAsTwoBitIntegerListValidator = (l -> {
+      for (int n : l) {
+        if (n < 0 || n > 2) {
+          return false;
         }
-        return true;
-      });
+      }
+      return true;
+    });
 
     EncodableBitStringFields fields = new EncodableBitStringFields();
     fields.put(UsCaField.VERSION, new EncodableFixedInteger(6, UsCa.VERSION));
@@ -93,98 +92,5 @@ public class UsCaCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
       throw new DecodingException("Unable to decode UsCaCoreSegment '" + encodedString + "'", e);
     }
   }
-
-  @Override
-  public void validate() {
-    Integer sharingOptOutNotice = ((EncodableFixedInteger) fields.get(UsCaField.SHARING_OPT_OUT_NOTICE)).getValue();
-    Integer sharingOptOut = ((EncodableFixedInteger) fields.get(UsCaField.SHARING_OPT_OUT)).getValue();
-    Integer saleOptOutNotice = ((EncodableFixedInteger) fields.get(UsCaField.SALE_OPT_OUT_NOTICE)).getValue();
-    Integer saleOptOut = ((EncodableFixedInteger) fields.get(UsCaField.SALE_OPT_OUT)).getValue();
-    Integer mspaServiceProviderMode =
-        ((EncodableFixedInteger) fields.get(UsCaField.MSPA_SERVICE_PROVIDER_MODE)).getValue();
-    Integer mspaOptOutOptionMode =
-        ((EncodableFixedInteger) fields.get(UsCaField.MSPA_OPT_OUT_OPTION_MODE)).getValue();
-    Integer sensitiveDataLimtUserNotice =
-        ((EncodableFixedInteger) fields.get(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE)).getValue();
-
-    if (sharingOptOutNotice == 0) {
-      if (sharingOptOut != 0) {
-        throw new ValidationException(
-            "Invalid usca sharing notice / opt out combination: {" + sharingOptOutNotice + " / " + sharingOptOut + "}");
-      }
-    } else if (sharingOptOutNotice == 1) {
-      if (sharingOptOut != 1 && sharingOptOut != 2) {
-        throw new ValidationException(
-            "Invalid usca sharing notice / opt out combination: {" + sharingOptOutNotice + " / " + sharingOptOut + "}");
-      }
-    } else if (sharingOptOutNotice == 2) {
-      if (sharingOptOut != 1) {
-        throw new ValidationException(
-            "Invalid usca sharing notice / opt out combination: {" + sharingOptOutNotice + " / " + sharingOptOut + "}");
-      }
-    }
-
-    if (saleOptOutNotice == 0) {
-      if (saleOptOut != 0) {
-        throw new ValidationException(
-            "Invalid usca sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
-      }
-    } else if (saleOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
-        throw new ValidationException(
-            "Invalid usca sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
-      }
-    } else if (saleOptOutNotice == 2) {
-      if (saleOptOut != 1) {
-        throw new ValidationException(
-            "Invalid usca sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
-      }
-    }
-
-    if (mspaServiceProviderMode == 0) {
-      if (saleOptOutNotice != 0) {
-        throw new ValidationException("Invalid usca mspa service provider mode / sale opt out notice combination: {"
-            + mspaServiceProviderMode + " / " + saleOptOutNotice + "}");
-      }
-
-      if (sharingOptOutNotice != 0) {
-        throw new ValidationException("Invalid usca mspa service provider mode / sharing opt out notice combination: {"
-            + mspaServiceProviderMode + " / " + sharingOptOutNotice + "}");
-      }
-
-      if (sensitiveDataLimtUserNotice != 0) {
-        throw new ValidationException(
-            "Invalid usca mspa service provider mode / sensitive data limit use notice combination: {"
-                + mspaServiceProviderMode + " / " + sensitiveDataLimtUserNotice + "}");
-      }
-    } else if (mspaServiceProviderMode == 1) {
-      if (mspaOptOutOptionMode != 2) {
-        throw new ValidationException("Invalid usca mspa service provider / opt out option modes combination: {"
-            + mspaServiceProviderMode + " / " + mspaServiceProviderMode + "}");
-      }
-
-      if (saleOptOutNotice != 0) {
-        throw new ValidationException("Invalid usca mspa service provider mode / sale opt out notice combination: {"
-            + mspaServiceProviderMode + " / " + saleOptOutNotice + "}");
-      }
-
-      if (sharingOptOutNotice != 0) {
-        throw new ValidationException("Invalid usca mspa service provider mode / sharing opt out notice combination: {"
-            + mspaServiceProviderMode + " / " + sharingOptOutNotice + "}");
-      }
-
-      if (sensitiveDataLimtUserNotice != 0) {
-        throw new ValidationException(
-            "Invalid usca mspa service provider mode / sensitive data limit use notice combination: {"
-                + mspaServiceProviderMode + " / " + sensitiveDataLimtUserNotice + "}");
-      }
-    } else if (mspaServiceProviderMode == 2) {
-      if (mspaOptOutOptionMode != 1) {
-        throw new ValidationException("Invalid usca mspa service provider / opt out option modes combination: {"
-            + mspaServiceProviderMode + " / " + mspaOptOutOptionMode + "}");
-      }
-    }
-  }
-
 
 }
