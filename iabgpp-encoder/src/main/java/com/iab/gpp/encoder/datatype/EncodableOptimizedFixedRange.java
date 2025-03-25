@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -68,6 +69,6 @@ public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
 
   @Override
   public List<Integer> getValue() {
-    return new ArrayList<>(super.getValue());
+    return Collections.unmodifiableList(super.getValue());
   }
 }

@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class FixedIntegerRangeEncoder {
     }
 
     int count = FixedIntegerEncoder.decode(bitString, 0, 12);
-    List<Integer> value = new ArrayList<>(count);
+    BitSet value = new BitSet();
     int startIndex = 12;
     for (int i = 0; i < count; i++) {
       boolean group = BooleanEncoder.decode(bitString, startIndex, 1);
@@ -59,23 +60,14 @@ public class FixedIntegerRangeEncoder {
         int end = FixedIntegerEncoder.decode(bitString, startIndex, 16);
         startIndex += 16;
 
-        if (end < start) {
-          throw new DecodingException("FixedIntegerRange has invalid range");
-        }
-        if (value.size() + (end - start) > MAX_SIZE) {
-          LOGGER.warning("FixedIntegerRange has too many values");
-          break;
-        }
-        for (int j = start; j <= end; j++) {
-          value.add(IntegerCache.valueOf(j));
-        }
+        value.set(start, end + 1);
       } else {
         int val = FixedIntegerEncoder.decode(bitString, startIndex, 16);
-        value.add(IntegerCache.valueOf(val));
+        value.set(val);
         startIndex += 16;
       }
     }
 
-    return value;
+    return new IntegerList(value);
   }
 }

@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -47,13 +47,13 @@ public class OptimizedFibonacciRangeEncoder {
     } else {
       BitString bits = bitString.substring(17);
       int length = bits.length();
-      List<Integer> value = new ArrayList<>(length);
+      BitSet value = new BitSet(length + 1);
       for (int i = 0; i < length; i++) {
         if (bits.getValue(i)) {
-          value.add(IntegerCache.valueOf(i + 1));
+          value.set(i + 1);
         }
       }
-      return value;
+      return new IntegerList(value);
     }
   }
 }

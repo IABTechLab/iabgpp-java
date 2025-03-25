@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -73,6 +74,6 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
 
   @Override
   public List<Integer> getValue() {
-    return new ArrayList<>(super.getValue());
+    return Collections.unmodifiableList(super.getValue());
   }
 }

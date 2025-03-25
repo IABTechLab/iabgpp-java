@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.IntSupplier;
 
@@ -71,6 +72,6 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
 
   @Override
   public List<Boolean> getValue() {
-    return new ArrayList<>(super.getValue());
+    return Collections.unmodifiableList(super.getValue());
   }
 }
