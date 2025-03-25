@@ -25,10 +25,16 @@ import com.iab.gpp.encoder.section.TcfEuV2;
 import com.iab.gpp.encoder.section.UsCa;
 import com.iab.gpp.encoder.section.UsCo;
 import com.iab.gpp.encoder.section.UsCt;
+import com.iab.gpp.encoder.section.UsDe;
 import com.iab.gpp.encoder.section.UsFl;
+import com.iab.gpp.encoder.section.UsIa;
 import com.iab.gpp.encoder.section.UsMt;
 import com.iab.gpp.encoder.section.UsNat;
+import com.iab.gpp.encoder.section.UsNe;
+import com.iab.gpp.encoder.section.UsNh;
+import com.iab.gpp.encoder.section.UsNj;
 import com.iab.gpp.encoder.section.UsOr;
+import com.iab.gpp.encoder.section.UsTn;
 import com.iab.gpp.encoder.section.UsTx;
 import com.iab.gpp.encoder.section.UsUt;
 import com.iab.gpp.encoder.section.UsVa;
@@ -94,6 +100,12 @@ public class GppModelTest {
     Assertions.assertEquals(false, gppModel.hasSection(UsMt.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(UsOr.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(UsTx.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsDe.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsIa.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsNe.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsNh.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsNj.NAME));
+    Assertions.assertEquals(false, gppModel.hasSection(UsTn.NAME));
 
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VERSION, TcfEuV2.VERSION);
     gppModel.setFieldValue(TcfEuV2.NAME, TcfCaV1Field.CREATED, utcDateTime);
@@ -112,6 +124,12 @@ public class GppModelTest {
     gppModel.setFieldValue(UsMt.NAME, UsMtField.VERSION, UsMt.VERSION);
     gppModel.setFieldValue(UsOr.NAME, UsOrField.VERSION, UsOr.VERSION);
     gppModel.setFieldValue(UsTx.NAME, UsTxField.VERSION, UsTx.VERSION);
+    gppModel.setFieldValue(UsDe.NAME, UsTxField.VERSION, UsTx.VERSION);
+    gppModel.setFieldValue(UsIa.NAME, UsTxField.VERSION, UsTx.VERSION);
+    gppModel.setFieldValue(UsNe.NAME, UsTxField.VERSION, UsTx.VERSION);
+    gppModel.setFieldValue(UsNh.NAME, UsTxField.VERSION, UsTx.VERSION);
+    gppModel.setFieldValue(UsNj.NAME, UsTxField.VERSION, UsTx.VERSION);
+    gppModel.setFieldValue(UsTn.NAME, UsTxField.VERSION, UsTx.VERSION);
 
 
 
@@ -128,10 +146,16 @@ public class GppModelTest {
     Assertions.assertEquals(true, gppModel.hasSection(UsMt.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(UsOr.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(UsTx.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsDe.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsIa.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsNe.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsNh.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsNj.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsTn.NAME));
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOZY~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA",
+        "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA",
         gppString);
 
   }
@@ -391,7 +415,7 @@ public class GppModelTest {
   @Test
   public void testDecodeDefaultsAll() {
     String gppString =
-        "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA";
+        "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA";
     GppModel gppModel = new GppModel(gppString);
 
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));
@@ -403,6 +427,16 @@ public class GppModelTest {
     Assertions.assertEquals(true, gppModel.hasSection(UsCo.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(UsUt.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(UsCt.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsFl.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsMt.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsOr.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsTx.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsDe.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsIa.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsNe.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsNh.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsNj.NAME));
+    Assertions.assertEquals(true, gppModel.hasSection(UsTn.NAME));
   }
 
   @Test
@@ -677,6 +711,52 @@ public class GppModelTest {
   }
 
   @Test
+  public void testDecode5() {
+    GppModel gppModel = new GppModel("DBABLA~BVQqAAAAAgA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+  }
+    
+  @Test
+  public void testDecode6() {
+    GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAQA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+  
+  @Test
+  public void testDecode7() {
+    GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAABA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+  
+  @Test
+  public void testDecode8() {
+    GppModel gppModel = new GppModel("DBABLA~BAAAAAABEQA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(0, 1, 0),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+  
+  @Test
+  public void testDecode9() {
+    GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAQRA.QA");
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(0, 0, 1),
+        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+  
+  @Test
   public void testConsistency() {
     GppModel fromObjectModel = new GppModel();
 
@@ -741,4 +821,6 @@ public class GppModelTest {
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
     Assertions.assertEquals("DBABTA~1Y--", gppModel.encode());
   }
+  
+  
 }
