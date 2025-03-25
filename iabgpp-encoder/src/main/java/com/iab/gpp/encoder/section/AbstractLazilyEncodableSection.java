@@ -6,7 +6,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 
 public abstract class AbstractLazilyEncodableSection implements EncodableSection {
 
-  private List<EncodableSegment> segments;
+  protected List<EncodableSegment> segments;
   
   private CharSequence encodedString = null;
 

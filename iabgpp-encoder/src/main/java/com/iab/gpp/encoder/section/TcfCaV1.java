@@ -51,8 +51,6 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   
   @Override
   public List<EncodableSegment> decodeSection(CharSequence encodedString) {
-    List<EncodableSegment> segments = initializeSegments();
-    
     if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
       for (int i = 0; i < encodedSegments.size(); i++) {

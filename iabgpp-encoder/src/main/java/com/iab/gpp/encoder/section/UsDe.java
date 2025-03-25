@@ -45,8 +45,6 @@ public class UsDe extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
-    List<EncodableSegment> segments = initializeSegments();
-
     if (encodedString != null && !encodedString.isEmpty()) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
       
