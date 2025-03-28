@@ -4,4 +4,6 @@ public interface DataType<T> {
   boolean hasValue();
   T getValue();
   void setValue(Object value);
+  boolean isDirty();
+  void markClean();
 }

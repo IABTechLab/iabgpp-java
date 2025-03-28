@@ -5,6 +5,7 @@ import com.iab.gpp.encoder.error.ValidationException;
 
 public class UnencodableCharacter implements DataType<Character> {
 
+  private boolean dirty = false;
   private Predicate<Character> validator;
   private Character value = null;
 
@@ -41,9 +42,20 @@ public class UnencodableCharacter implements DataType<Character> {
     Character c = (Character)value.toString().charAt(0);
     if(validator.test(c)) {
       this.value = c;
+      this.dirty = true;
     } else {
       throw new ValidationException("Invalid value '" + c + "'");
     }
+  }
+
+  @Override
+  public boolean isDirty() {
+    return dirty;
+  }
+
+  @Override
+  public void markClean() {
+    dirty = false;
   }
 
 }

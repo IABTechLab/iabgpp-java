@@ -5,6 +5,7 @@ import com.iab.gpp.encoder.error.ValidationException;
 
 public class UnencodableInteger implements DataType<Integer> {
 
+  private boolean dirty;
   private Predicate<Integer> validator;
   private Integer value = null;
 
@@ -41,9 +42,19 @@ public class UnencodableInteger implements DataType<Integer> {
     Integer i = (Integer)value;
     if(validator.test(i)) {
       this.value = i;
+      this.dirty = true;
     } else {
       throw new ValidationException("Invalid value '" + i + "'");
     }
   }
 
+  @Override
+  public boolean isDirty() {
+    return dirty;
+  }
+
+  @Override
+  public void markClean() {
+    dirty = false;
+  }
 }

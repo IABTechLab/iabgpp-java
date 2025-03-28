@@ -23,7 +23,6 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   private CharSequence encodedString = null;
 
-  private boolean dirty = false;
   private boolean decoded = true;
 
   public AbstractLazilyEncodableSegment() {
@@ -43,7 +42,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
   public Object getFieldValue(String fieldName) {
     if (!this.decoded) {
       this.decodeSegment(this.encodedString, this.fields);
-      this.dirty = false;
+      this.fields.markClean();
       this.decoded = true;
     }
 
@@ -58,23 +57,22 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
   public void setFieldValue(String fieldName, Object value) {
     if (!this.decoded) {
       this.decodeSegment(this.encodedString, this.fields);
-      this.dirty = false;
+      this.fields.markClean();
       this.decoded = true;
     }
 
     DataType<?> field = this.fields.get(fieldName);
     if (field != null) {
       field.setValue(value);
-      this.dirty = true;
     } else {
       throw new InvalidFieldException(fieldName + " not found");
     }
   }
 
   public CharSequence encodeCharSequence() {
-    if (this.encodedString == null || this.encodedString.length() == 0 || this.dirty) {
+    if (this.encodedString == null || this.encodedString.length() == 0 || this.fields.isDirty()) {
       this.encodedString = encodeSegment(this.fields);
-      this.dirty = false;
+      this.fields.markClean();
       this.decoded = true;
     }
 
@@ -83,7 +81,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   public void decode(CharSequence encodedString) {
     this.encodedString = encodedString;
-    this.dirty = false;
+    this.fields.markClean();
     this.decoded = false;
   }
 

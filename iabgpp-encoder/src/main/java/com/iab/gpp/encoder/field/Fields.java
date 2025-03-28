@@ -47,4 +47,25 @@ public abstract class Fields<T extends DataType<?>> {
       put(name, fields.get(name));
     }
   }
+
+  public boolean isDirty() {
+    int size = getNames().size();
+    for (int i = 0; i < size; i++) {
+      T value = get(i);
+      if (value != null && value.isDirty()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public void markClean() {
+    int size = getNames().size();
+    for (int i = 0; i < size; i++) {
+      T value = get(i);
+      if (value != null) {
+        value.markClean();
+      }
+    }
+  }
 }

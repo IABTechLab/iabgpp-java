@@ -11,6 +11,7 @@ import com.iab.gpp.encoder.error.ValidationException;
 public abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
   //this if for backwards compatibility with the newer fields
   protected boolean hardFailIfMissing = true;
+  protected boolean dirty = false;
   protected Predicate<T> validator = null;
   protected T value;
 
@@ -36,6 +37,7 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
     T v = (T) value;
     if (validator == null || validator.test(v)) {
       this.value = v;
+      this.dirty = true;
     } else {
       if (v instanceof Collection) {
         throw new ValidationException("Invalid value '"
@@ -57,4 +59,11 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
 
   public abstract BitString substring(BitString bitString, int fromIndex) throws SubstringException;
 
+  public boolean isDirty() {
+    return dirty;
+  }
+
+  public void markClean() {
+    dirty = false;
+  }
 }
