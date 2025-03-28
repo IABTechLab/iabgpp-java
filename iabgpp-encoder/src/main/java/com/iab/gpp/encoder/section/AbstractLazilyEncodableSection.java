@@ -31,8 +31,8 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
     }
     
     for(EncodableSegment segment : segments) {
-      if(segment.getFieldNames().contains(fieldName)) {
-        return segment.hasField(fieldName);
+      if (segment.hasField(fieldName)) {
+        return true;
       }
     }
     

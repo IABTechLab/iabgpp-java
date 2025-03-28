@@ -1,8 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class UsIaField {
 
   public static final String VERSION = "Version";
@@ -23,7 +20,7 @@ public class UsIaField {
   public static final String GPC = "Gpc";
   
   //@formatter:off
-  public static final List<String> USIA_CORE_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames USIA_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsIaField.VERSION,
       UsIaField.PROCESSING_NOTICE,
       UsIaField.SALE_OPT_OUT_NOTICE,
@@ -36,13 +33,14 @@ public class UsIaField {
       UsIaField.MSPA_COVERED_TRANSACTION,
       UsIaField.MSPA_OPT_OUT_OPTION_MODE,
       UsIaField.MSPA_SERVICE_PROVIDER_MODE
-  });
+  );
   //@formatter:on
   
   //@formatter:off
-  public static final List<String> USIA_GPC_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames USIA_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsIaField.GPC_SEGMENT_TYPE,
+      UsIaField.GPC_SEGMENT_INCLUDED,
       UsIaField.GPC
-  });
+  );
   //@formatter:on
 }

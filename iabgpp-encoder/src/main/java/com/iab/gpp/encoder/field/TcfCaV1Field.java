@@ -1,8 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class TcfCaV1Field {
 
   public static final String VERSION = "Version";
@@ -33,7 +30,7 @@ public class TcfCaV1Field {
   public static final String DISCLOSED_VENDORS = "DisclosedVendors";
   
   //@formatter:off
-  public static final List<String> TCFCAV1_CORE_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames TCFCAV1_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfCaV1Field.VERSION,
       TcfCaV1Field.CREATED,
       TcfCaV1Field.LAST_UPDATED,
@@ -50,24 +47,24 @@ public class TcfCaV1Field {
       TcfCaV1Field.VENDOR_EXPRESS_CONSENT,
       TcfCaV1Field.VENDOR_IMPLIED_CONSENT,
       TcfCaV1Field.PUB_RESTRICTIONS
-  });
+  );
   //@formatter:on
 
   //@formatter:off
-  public static final List<String> TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = FieldNames.of(
     TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE,
     TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
     TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
     TcfCaV1Field.NUM_CUSTOM_PURPOSES,
     TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
-    TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
-  });
+    TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT
+  );
   //@formatter:on
   
   //@formatter:off
-  public static final List<String> TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES = FieldNames.of(
     TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE,
-    TcfCaV1Field.DISCLOSED_VENDORS,
-  });
+    TcfCaV1Field.DISCLOSED_VENDORS
+  );
   //@formatter:on
 }

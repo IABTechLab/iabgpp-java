@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.IntSupplier;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
@@ -30,13 +29,8 @@ public class TcfCaV1PublisherPurposesSegment extends AbstractLazilyEncodableSegm
   }
 
   @Override
-  public List<String> getFieldNames() {
-    return TcfCaV1Field.TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES;
-  }
-
-  @Override
   protected EncodableBitStringFields initializeFields() {
-    EncodableBitStringFields fields = new EncodableBitStringFields();
+    EncodableBitStringFields fields = new EncodableBitStringFields(TcfCaV1Field.TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES);
     fields.put(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
     fields.put(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT, new EncodableFixedBitfield(24));
     fields.put(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT, new EncodableFixedBitfield(24));
@@ -63,7 +57,7 @@ public class TcfCaV1PublisherPurposesSegment extends AbstractLazilyEncodableSegm
 
   @Override
   protected String encodeSegment(EncodableBitStringFields fields) {
-    BitStringBuilder bitString = bitStringEncoder.encode(fields, getFieldNames());
+    BitStringBuilder bitString = bitStringEncoder.encode(fields);
     String encodedString = base64UrlEncoder.encode(bitString);
     return encodedString;
   }
@@ -75,7 +69,7 @@ public class TcfCaV1PublisherPurposesSegment extends AbstractLazilyEncodableSegm
     }
     try {
       BitString bitString = base64UrlEncoder.decode(encodedString);
-      bitStringEncoder.decode(bitString, getFieldNames(), fields);
+      bitStringEncoder.decode(bitString, fields);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode TcfCaV1PublisherPurposesSegment '" + encodedString + "'", e);
     }

@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
 import java.util.Arrays;
-import java.util.List;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -28,13 +27,8 @@ public class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
   }
 
   @Override
-  public List<String> getFieldNames() {
-    return UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES;
-  }
-
-  @Override
   protected EncodableBitStringFields initializeFields() {
-    EncodableBitStringFields fields = new EncodableBitStringFields();
+    EncodableBitStringFields fields = new EncodableBitStringFields(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES);
     fields.put(UsNatField.VERSION, new EncodableFixedInteger(6, UsNat.VERSION));
     fields.put(UsNatField.SHARING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
@@ -72,7 +66,7 @@ public class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
 
   @Override
   protected String encodeSegment(EncodableBitStringFields fields) {
-    BitStringBuilder bitString = bitStringEncoder.encode(fields, getFieldNames());
+    BitStringBuilder bitString = bitStringEncoder.encode(fields);
     String encodedString = base64UrlEncoder.encode(bitString);
     return encodedString;
   }
@@ -93,7 +87,7 @@ public class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
             bitString.substring(0, 48) + "00000000" + bitString.substring(48, 52) + "00" + bitString.substring(52, 62);
       }
 
-      bitStringEncoder.decode(bitString, getFieldNames(), fields);
+      bitStringEncoder.decode(bitString, fields);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode UsNatCoreSegment '" + encodedString + "'", e);
     }

@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
 import java.util.ArrayList;
-import java.util.List;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -28,13 +27,8 @@ public class TcfEuV2VendorsDisclosedSegment extends AbstractLazilyEncodableSegme
   }
 
   @Override
-  public List<String> getFieldNames() {
-    return TcfEuV2Field.TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES;
-  }
-
-  @Override
   protected EncodableBitStringFields initializeFields() {
-    EncodableBitStringFields fields = new EncodableBitStringFields();
+    EncodableBitStringFields fields = new EncodableBitStringFields(TcfEuV2Field.TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES);
     fields.put(TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
     fields.put(TcfEuV2Field.VENDORS_DISCLOSED, new EncodableOptimizedFixedRange(new ArrayList<>(0)));
     return fields;
@@ -42,7 +36,7 @@ public class TcfEuV2VendorsDisclosedSegment extends AbstractLazilyEncodableSegme
 
   @Override
   protected String encodeSegment(EncodableBitStringFields fields) {
-    BitStringBuilder bitString = bitStringEncoder.encode(fields, getFieldNames());
+    BitStringBuilder bitString = bitStringEncoder.encode(fields);
     String encodedString = base64UrlEncoder.encode(bitString);
     return encodedString;
   }
@@ -54,7 +48,7 @@ public class TcfEuV2VendorsDisclosedSegment extends AbstractLazilyEncodableSegme
     }
     try {
       BitString bitString = base64UrlEncoder.decode(encodedString);
-      bitStringEncoder.decode(bitString, getFieldNames(), fields);
+      bitStringEncoder.decode(bitString, fields);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode TcfEuV2VendorsDisclosedSegment '" + encodedString + "'", e);
     }

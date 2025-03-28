@@ -1,8 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class UsFlField {
 
   public static final String VERSION = "Version";
@@ -19,7 +16,7 @@ public class UsFlField {
   public static final String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
 
   //@formatter:off
-  public static final List<String> USFL_CORE_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames USFL_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsFlField.VERSION,
       UsFlField.PROCESSING_NOTICE,
       UsFlField.SALE_OPT_OUT_NOTICE,
@@ -32,6 +29,6 @@ public class UsFlField {
       UsFlField.MSPA_COVERED_TRANSACTION,
       UsFlField.MSPA_OPT_OUT_OPTION_MODE,
       UsFlField.MSPA_SERVICE_PROVIDER_MODE
-  });
+  );
   //@formatter:on
 }

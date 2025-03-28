@@ -1,8 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class UsNeField {
 
   public static final String VERSION = "Version";
@@ -23,7 +20,7 @@ public class UsNeField {
   public static final String GPC = "Gpc";
   
   //@formatter:off
-  public static final List<String> USNE_CORE_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames USNE_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsNeField.VERSION,
       UsNeField.PROCESSING_NOTICE,
       UsNeField.SALE_OPT_OUT_NOTICE,
@@ -36,13 +33,14 @@ public class UsNeField {
       UsNeField.MSPA_COVERED_TRANSACTION,
       UsNeField.MSPA_OPT_OUT_OPTION_MODE,
       UsNeField.MSPA_SERVICE_PROVIDER_MODE
-  });
+  );
   //@formatter:on
   
   //@formatter:off
-  public static final List<String> USNE_GPC_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames USNE_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsNeField.GPC_SEGMENT_TYPE,
+      UsNeField.GPC_SEGMENT_INCLUDED,
       UsNeField.GPC
-  });
+  );
   //@formatter:on
 }

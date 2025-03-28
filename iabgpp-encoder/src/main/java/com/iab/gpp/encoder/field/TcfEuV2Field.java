@@ -1,8 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class TcfEuV2Field {
 
   public static final String VERSION = "Version";
@@ -36,7 +33,7 @@ public class TcfEuV2Field {
   public static final String VENDORS_DISCLOSED = "VendorsDisclosed";
 
   //@formatter:off
-  public static final List<String> TCFEUV2_CORE_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames TCFEUV2_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfEuV2Field.VERSION,
       TcfEuV2Field.CREATED,
       TcfEuV2Field.LAST_UPDATED,
@@ -56,31 +53,31 @@ public class TcfEuV2Field {
       TcfEuV2Field.VENDOR_CONSENTS,
       TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS,
       TcfEuV2Field.PUBLISHER_RESTRICTIONS
-  });
+  );
   //@formatter:on
   
   //@formatter:off
-  public static final List<String> TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE,
       TcfEuV2Field.PUBLISHER_CONSENTS,
       TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS,
       TcfEuV2Field.NUM_CUSTOM_PURPOSES,
       TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS,
-      TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS,
-  });
+      TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS
+  );
   //@formatter:on
   
   //@formatter:off
-  public static final List<String> TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE,
-      TcfEuV2Field.VENDORS_ALLOWED,
-  });
+      TcfEuV2Field.VENDORS_ALLOWED
+  );
   //@formatter:on
   
   //@formatter:off
-  public static final List<String> TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE,
-      TcfEuV2Field.VENDORS_DISCLOSED,
-  });
+      TcfEuV2Field.VENDORS_DISCLOSED
+  );
   //@formatter:on
 }

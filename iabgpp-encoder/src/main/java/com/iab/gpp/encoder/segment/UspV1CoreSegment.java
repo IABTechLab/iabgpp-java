@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.List;
 import com.iab.gpp.encoder.datatype.UnencodableCharacter;
 import com.iab.gpp.encoder.datatype.UnencodableInteger;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -20,13 +19,8 @@ public class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFiel
   }
 
   @Override
-  public List<String> getFieldNames() {
-    return UspV1Field.USPV1_CORE_SEGMENT_FIELD_NAMES;
-  }
-
-  @Override
   protected GenericFields initializeFields() {
-    GenericFields fields = new GenericFields();
+    GenericFields fields = new GenericFields(UspV1Field.USPV1_CORE_SEGMENT_FIELD_NAMES);
     fields.put(UspV1Field.VERSION, new UnencodableInteger(UspV1.VERSION));
     fields.put(UspV1Field.NOTICE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
     fields.put(UspV1Field.OPT_OUT_SALE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));

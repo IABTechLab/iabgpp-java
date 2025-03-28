@@ -1,10 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.List;
-
 public interface EncodableSegment {
-
-  List<String> getFieldNames();
 
   boolean hasField(String fieldName);
 
@@ -15,6 +11,4 @@ public interface EncodableSegment {
   String encode();
 
   void decode(CharSequence encodedString);
-
-  default void validate() {};
 }

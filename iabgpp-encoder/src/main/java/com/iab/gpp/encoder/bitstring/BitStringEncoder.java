@@ -19,26 +19,26 @@ public class BitStringEncoder {
     return instance;
   }
   
-  public BitStringBuilder encode(EncodableBitStringFields fields, List<String> fieldNames) {
+  public BitStringBuilder encode(EncodableBitStringFields fields) {
     BitStringBuilder bitString = new BitStringBuilder();
+    List<String> fieldNames = fields.getNames();
     for (int i = 0; i < fieldNames.size(); i++) {
-      String fieldName = fieldNames.get(i);
-      AbstractEncodableBitStringDataType<?> field = fields.get(fieldName);
+      AbstractEncodableBitStringDataType<?> field = fields.get(i);
       if (field != null) {
         field.encode(bitString);
       } else {
-        throw new EncodingException("Field not found: '" + fieldName + "'");
+        throw new EncodingException("Field not found: '" + fieldNames.get(i) + "'");
       }
     }
 
     return bitString;
   }
 
-  public void decode(BitString bitString, List<String> fieldNames, EncodableBitStringFields fields) {
+  public void decode(BitString bitString, EncodableBitStringFields fields) {
     int index = 0;
+    List<String> fieldNames = fields.getNames();
     for (int i = 0; i < fieldNames.size(); i++) {
-      String fieldName = fieldNames.get(i);
-      AbstractEncodableBitStringDataType<?> field = fields.get(fieldName);
+      AbstractEncodableBitStringDataType<?> field = fields.get(i);
       if (field != null) {
         try {
           BitString substring = field.substring(bitString, index);
@@ -46,15 +46,15 @@ public class BitStringEncoder {
           index += substring.length();
         } catch (SubstringException e) {
           if(field.getHardFailIfMissing()) {
-            throw new DecodingException("Unable to decode " + fieldName, e);
+            throw new DecodingException("Unable to decode " + fieldNames.get(i), e);
           } else {
             return;
           }
         } catch (Exception e) {
-          throw new DecodingException("Unable to decode " + fieldName, e);
+          throw new DecodingException("Unable to decode " + fieldNames.get(i), e);
         }
       } else {
-        throw new DecodingException("Field not found: '" + fieldName + "'");
+        throw new DecodingException("Field not found: '" + fieldNames.get(i) + "'");
       }
     }
   }

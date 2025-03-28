@@ -10,6 +10,7 @@ public final class BitString extends AbstractList<Boolean> {
   public static final char FALSE = '0';
   public static final String TRUE_STRING = new String(new char[] {TRUE});
   public static final String FALSE_STRING = new String(new char[] {FALSE});
+  private static final BitString EMPTY = new BitString(new BitSet(), 0, 0);
 
   private final BitSet bitSet;
   private final int from;
@@ -22,6 +23,9 @@ public final class BitString extends AbstractList<Boolean> {
   }
 
   public static final BitString empty(int size) {
+    if (size == 0) {
+      return EMPTY;
+    }
     return new BitString(new BitSet(size), 0, size);
   }
 
