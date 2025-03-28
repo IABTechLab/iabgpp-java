@@ -58,12 +58,12 @@ public class UsUt extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>(segments.size());
+  protected CharSequence encodeSection(List<EncodableSegment> segments) {
+    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
     for(EncodableSegment segment : segments) {
-      encodedSegments.add(segment.encode());
+      encodedSegments.add(segment.encodeCharSequence());
     }
-    return String.join(".", encodedSegments);
+    return SlicedCharSequence.join('.',  encodedSegments);
   }
 
   

@@ -26,7 +26,7 @@ public abstract class AbstractBase64UrlEncoder {
     }
   }
 
-  public String encode(BitStringBuilder bitStringBuilder) {
+  public StringBuilder encode(BitStringBuilder bitStringBuilder) {
     pad(bitStringBuilder);
     BitString bitString = bitStringBuilder.build();
     int length = bitString.length();
@@ -43,7 +43,7 @@ public abstract class AbstractBase64UrlEncoder {
       }
     }
 
-    return str.toString();
+    return str;
   }
 
   public BitString decode(CharSequence str) {

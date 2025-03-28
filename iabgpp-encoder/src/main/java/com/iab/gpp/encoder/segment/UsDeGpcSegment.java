@@ -36,10 +36,9 @@ public class UsDeGpcSegment extends AbstractLazilyEncodableSegment<EncodableBitS
   }
 
   @Override
-  protected String encodeSegment(EncodableBitStringFields fields) {
+  protected StringBuilder encodeSegment(EncodableBitStringFields fields) {
     BitStringBuilder bitString = bitStringEncoder.encode(fields);
-    String encodedString = base64UrlEncoder.encode(bitString);
-    return encodedString;
+    return base64UrlEncoder.encode(bitString);
   }
 
   @Override

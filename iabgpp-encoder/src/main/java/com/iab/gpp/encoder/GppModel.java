@@ -322,13 +322,13 @@ public class GppModel {
 
   protected String encodeModel(Map<String, EncodableSection> sections) {
     int length = Sections.SECTION_ORDER.size();
-    List<String> encodedSections = new ArrayList<>(length);
+    List<CharSequence> encodedSections = new ArrayList<>(length);
     List<Integer> sectionIds = new ArrayList<>(length);
     for (int i = 0; i < length; i++) {
       String sectionName = Sections.SECTION_ORDER.get(i);
       EncodableSection section = sections.get(sectionName);
       if (section != null) {
-        encodedSections.add(section.encode());
+        encodedSections.add(section.encodeCharSequence());
         sectionIds.add(section.getId());
       }
     }
@@ -339,9 +339,8 @@ public class GppModel {
     } catch (InvalidFieldException e) {
       throw new EncodingException(e);
     }
-    encodedSections.add(0, header.encode());
-
-    return String.join("~", encodedSections);
+    encodedSections.add(0, header.encodeCharSequence());
+    return SlicedCharSequence.join('~', encodedSections).toString();
   }
 
   protected Map<String, EncodableSection> decodeModel(String str) {

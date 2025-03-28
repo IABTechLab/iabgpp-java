@@ -64,17 +64,17 @@ public class UsNat extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>(segments.size());
+  protected CharSequence encodeSection(List<EncodableSegment> segments) {
+    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
     
     if(!segments.isEmpty()) {
-      encodedSegments.add(segments.get(0).encode());
+      encodedSegments.add(segments.get(0).encodeCharSequence());
       if(segments.size() >= 2 && segments.get(1).getFieldValue(UsNatField.GPC_SEGMENT_INCLUDED).equals(true)) {
-        encodedSegments.add(segments.get(1).encode());
+        encodedSegments.add(segments.get(1).encodeCharSequence());
       }
     }
     
-    return String.join(".", encodedSegments);
+    return SlicedCharSequence.join('.',  encodedSegments);
   }
 
 

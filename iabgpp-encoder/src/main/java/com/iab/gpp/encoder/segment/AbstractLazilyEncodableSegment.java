@@ -32,7 +32,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   protected abstract T initializeFields();
 
-  protected abstract String encodeSegment(T fields);
+  protected abstract StringBuilder encodeSegment(T fields);
 
   protected abstract void decodeSegment(CharSequence encodedString, T Fields);
 
@@ -71,14 +71,14 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
     }
   }
 
-  public String encode() {
+  public CharSequence encodeCharSequence() {
     if (this.encodedString == null || this.encodedString.length() == 0 || this.dirty) {
       this.encodedString = encodeSegment(this.fields);
       this.dirty = false;
       this.decoded = true;
     }
 
-    return this.encodedString.toString();
+    return this.encodedString;
   }
 
   public void decode(CharSequence encodedString) {

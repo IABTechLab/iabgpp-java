@@ -87,16 +87,16 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  public String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>(segments.size());
+  public CharSequence encodeSection(List<EncodableSegment> segments) {
+    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
-    encodedSegments.add(segments.get(0).encode());
-    encodedSegments.add(segments.get(1).encode());
+    encodedSegments.add(segments.get(0).encodeCharSequence());
+    encodedSegments.add(segments.get(1).encodeCharSequence());
     if(!this.getDisclosedVendors().isEmpty()) {
-      encodedSegments.add(segments.get(2).encode());
+      encodedSegments.add(segments.get(2).encodeCharSequence());
     }
     
-    return String.join(".", encodedSegments);
+    return SlicedCharSequence.join('.',  encodedSegments);
   }
 
   @Override

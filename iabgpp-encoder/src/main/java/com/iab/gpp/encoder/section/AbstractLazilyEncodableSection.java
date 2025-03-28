@@ -19,7 +19,7 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
 
   protected abstract List<EncodableSegment> initializeSegments();
   
-  protected abstract String encodeSection(List<EncodableSegment> segments);
+  protected abstract CharSequence encodeSection(List<EncodableSegment> segments);
 
   protected abstract List<EncodableSegment> decodeSection(CharSequence encodedString);
   
@@ -74,13 +74,17 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
   }
 
   public String encode() {
+    return encodeCharSequence().toString();
+  }
+  
+  public CharSequence encodeCharSequence() {
     if (this.encodedString == null || this.encodedString.length() == 0 || this.dirty) {
       this.encodedString = this.encodeSection(this.segments);
       this.dirty = false;
       this.decoded = true;
     }
 
-    return this.encodedString.toString();
+    return this.encodedString;
   }
 
   public void decode(CharSequence encodedString) {

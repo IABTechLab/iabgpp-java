@@ -13,21 +13,21 @@ public class TraditionalBase64UrlEncoderTest {
   public void testEncode1() {
     BitStringBuilder builder = new BitStringBuilder();
     builder.append(BitString.of("0000110000010000000000010011"));
-    Assertions.assertEquals("DBABMAAA", base64UrlEncoder.encode(builder));
+    Assertions.assertEquals("DBABMAAA", base64UrlEncoder.encode(builder).toString());
   }
 
   @Test
   public void testEncode2() {
     BitStringBuilder builder = new BitStringBuilder();
     builder.append(BitString.of("000011000001000000000010001101011"));
-    Assertions.assertEquals("DBACNYAA", base64UrlEncoder.encode(builder));
+    Assertions.assertEquals("DBACNYAA", base64UrlEncoder.encode(builder).toString());
   }
 
   @Test
   public void testEncode3() {
     BitStringBuilder builder = new BitStringBuilder();
     builder.append(BitString.of("00001100000100000000000110001111"));
-    Assertions.assertEquals("DBABjwAA", base64UrlEncoder.encode(builder));
+    Assertions.assertEquals("DBABjwAA", base64UrlEncoder.encode(builder).toString());
   }
 
   @Test

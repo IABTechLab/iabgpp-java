@@ -92,28 +92,28 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  public String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>(segments.size());
+  public CharSequence encodeSection(List<EncodableSegment> segments) {
+    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
     if (segments.size() >= 1) {
-      encodedSegments.add(segments.get(0).encode());
+      encodedSegments.add(segments.get(0).encodeCharSequence());
 
       Boolean isServiceSpecific = (Boolean) this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
       if (isServiceSpecific) {
         if (segments.size() >= 2) {
-          encodedSegments.add(segments.get(1).encode());
+          encodedSegments.add(segments.get(1).encodeCharSequence());
         }
       } else {
         if (segments.size() >= 2) {
-          encodedSegments.add(segments.get(2).encode());
+          encodedSegments.add(segments.get(2).encodeCharSequence());
 
           if (segments.size() >= 3) {
-            encodedSegments.add(segments.get(3).encode());
+            encodedSegments.add(segments.get(3).encodeCharSequence());
           }
         }
       }
     }
 
-    return String.join(".", encodedSegments);
+    return SlicedCharSequence.join('.',  encodedSegments);
   }
 
   @Override
