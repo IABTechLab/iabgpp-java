@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
@@ -13,38 +12,40 @@ public class FibonacciIntegerRangeEncoder {
 
   public static void encode(BitStringBuilder builder, List<Integer> value) {
     Collections.sort(value);
-
-    List<List<Integer>> groups = new ArrayList<>();
-
+    BitStringBuilder rangeBuilder = new BitStringBuilder();
+    int groupStart = -1;
+    int last = Integer.MIN_VALUE;
     int offset = 0;
-    int groupStartIndex = 0;
-    while (groupStartIndex < value.size()) {
-      int groupEndIndex = groupStartIndex;
-      while (groupEndIndex < value.size() - 1 && value.get(groupEndIndex) + 1 == value.get(groupEndIndex + 1)) {
-        groupEndIndex++;
+    int groupCount = 0;
+    for (Integer item : value) {
+      if (last != (item - 1)) {
+        if (groupStart > 0) {
+          groupCount++;
+          writeGroup(rangeBuilder, groupStart, last, offset);
+          offset = last;
+        }
+        groupStart = item;
       }
-
-      groups.add(value.subList(groupStartIndex, groupEndIndex + 1));
-
-      groupStartIndex = groupEndIndex + 1;
+      last = item;
     }
+    if (groupStart > 0) {
+      groupCount++;
+      writeGroup(rangeBuilder, groupStart, last, offset);
+    }
+    FixedIntegerEncoder.encode(builder,groupCount, 12);
+    builder.append(rangeBuilder);
+  }
 
-    FixedIntegerEncoder.encode(builder,groups.size(), 12);
-    for (int i = 0; i < groups.size(); i++) {
-      if (groups.get(i).size() == 1) {
-        int v = groups.get(i).get(0) - offset;
-        offset = groups.get(i).get(0);
-        builder.append(false);
-        FibonacciIntegerEncoder.encode(builder, v);
-      } else {
-        int startVal = groups.get(i).get(0) - offset;
-        offset = groups.get(i).get(0);
-        int endVal = groups.get(i).get(groups.get(i).size() - 1) - offset;
-        offset = groups.get(i).get(groups.get(i).size() - 1);
-        builder.append(true);
-        FibonacciIntegerEncoder.encode(builder, startVal);
-        FibonacciIntegerEncoder.encode(builder, endVal);
-      }
+  private static void writeGroup(BitStringBuilder builder, int groupStart, int last, int offset) {
+    int base = groupStart - offset;
+    int span = last - groupStart;
+    if (span == 0) {
+      builder.append(false);
+      FibonacciIntegerEncoder.encode(builder, base);
+    } else {
+      builder.append(true);
+      FibonacciIntegerEncoder.encode(builder, base);
+      FibonacciIntegerEncoder.encode(builder, span);
     }
   }
 

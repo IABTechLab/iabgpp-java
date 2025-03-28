@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
@@ -13,31 +12,36 @@ public class FixedIntegerRangeEncoder {
 
   public static void encode(BitStringBuilder builder, List<Integer> value) {
     Collections.sort(value);
-
-    List<List<Integer>> groups = new ArrayList<>();
-
-    int groupStartIndex = 0;
-    while (groupStartIndex < value.size()) {
-      int groupEndIndex = groupStartIndex;
-      while (groupEndIndex < value.size() - 1 && value.get(groupEndIndex) + 1 == value.get(groupEndIndex + 1)) {
-        groupEndIndex++;
+    BitStringBuilder rangeBuilder = new BitStringBuilder();
+    int groupStart = -1;
+    int last = Integer.MIN_VALUE;
+    int groupCount = 0;
+    for (Integer item : value) {
+      if (last != (item - 1)) {
+        if (groupStart > 0) {
+          groupCount++;
+          writeGroup(rangeBuilder, groupStart, last);
+        }
+        groupStart = item;
       }
-
-      groups.add(value.subList(groupStartIndex, groupEndIndex + 1));
-
-      groupStartIndex = groupEndIndex + 1;
+      last = item;
     }
+    if (groupStart > 0) {
+      groupCount++;
+      writeGroup(rangeBuilder, groupStart, last);
+    }
+    FixedIntegerEncoder.encode(builder,groupCount, 12);
+    builder.append(rangeBuilder);
+  }
 
-    FixedIntegerEncoder.encode(builder, groups.size(), 12);
-    for (int i = 0; i < groups.size(); i++) {
-      if (groups.get(i).size() == 1) {
-        builder.append(false);
-        FixedIntegerEncoder.encode(builder, groups.get(i).get(0), 16);
-      } else {
-        builder.append(true);
-        FixedIntegerEncoder.encode(builder, groups.get(i).get(0), 16);
-        FixedIntegerEncoder.encode(builder, groups.get(i).get(groups.get(i).size() - 1), 16);
-      }
+  private static void writeGroup(BitStringBuilder builder, int groupStart, int last) {
+    if (groupStart == last) {
+      builder.append(false);
+      FixedIntegerEncoder.encode(builder, groupStart, 16);
+    } else {
+      builder.append(true);
+      FixedIntegerEncoder.encode(builder, groupStart, 16);
+      FixedIntegerEncoder.encode(builder, last, 16);
     }
   }
 
