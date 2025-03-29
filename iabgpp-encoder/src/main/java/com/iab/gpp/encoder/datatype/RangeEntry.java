@@ -1,14 +1,15 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Set;
 
 public class RangeEntry {
 
   private int key;
   private int type;
-  private List<Integer> ids;
+  private Set<Integer> ids;
 
-  public RangeEntry(int key, int type, List<Integer> ids) {
+  public RangeEntry(int key, int type, Set<Integer> ids) {
     super();
     this.key = key;
     this.type = type;
@@ -31,12 +32,13 @@ public class RangeEntry {
     this.type = type;
   }
 
-  public List<Integer> getIds() {
+  public Set<Integer> getIds() {
     return ids;
   }
 
-  public void setIds(List<Integer> ids) {
-    this.ids = ids;
+  public void setIds(Collection<Integer> ids) {
+    this.ids.clear();
+    this.ids.addAll(ids);
   }
 
 }

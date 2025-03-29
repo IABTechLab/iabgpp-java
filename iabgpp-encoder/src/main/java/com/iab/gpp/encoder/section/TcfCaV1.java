@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
@@ -148,29 +149,24 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
     return (Boolean) this.getFieldValue(TcfCaV1Field.USE_NON_STANDARD_STACKS);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getSpecialFeatureExpressConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT);
+  public IntegerSet getSpecialFeatureExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPurposesExpressConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT);
+  public IntegerSet getPurposesExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPurposesImpliedConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT);
+  public IntegerSet getPurposesImpliedConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getVendorExpressConsent() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT);
+  public IntegerSet getVendorExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getVendorImpliedConsent() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT);
+  public IntegerSet getVendorImpliedConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT);
   }
 
   @SuppressWarnings("unchecked")
@@ -182,37 +178,32 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPubPurposesExpressConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT);
+  public IntegerSet getPubPurposesExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPubPurposesImpliedConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT);
+  public IntegerSet getPubPurposesImpliedConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT);
   }
 
   public Integer getNumCustomPurposes() {
     return (Integer) this.getFieldValue(TcfCaV1Field.NUM_CUSTOM_PURPOSES);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getCustomPurposesExpressConsent() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT);
+  public IntegerSet getCustomPurposesExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getCustomPurposesImpliedConsent() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT);
+  public IntegerSet getCustomPurposesImpliedConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT);
   }
 
   public Integer getDisclosedVendorsSegmentType() {
     return (Integer) this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE);
   }
   
-  @SuppressWarnings("unchecked")
-  public List<Integer> getDisclosedVendors() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS);
+  public IntegerSet getDisclosedVendors() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS);
   }
 
 }

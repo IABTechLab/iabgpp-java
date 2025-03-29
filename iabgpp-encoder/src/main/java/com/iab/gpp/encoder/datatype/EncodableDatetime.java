@@ -19,11 +19,6 @@ public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedD
     setValue(value);
   }
 
-  public EncodableDatetime(ZonedDateTime value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
-  }
-
   public void encode(BitStringBuilder builder) {
     try {
       DatetimeEncoder.encode(builder, this.value);

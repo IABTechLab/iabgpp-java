@@ -3,7 +3,8 @@ package com.iab.gpp.encoder.datatype.encoder;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.BitSet;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +45,9 @@ public class FibonacciIntegerRangeEncoderTest {
   @Test
   public void testEncode5() {
     BitStringBuilder builder = new BitStringBuilder();
-    FibonacciIntegerRangeEncoder.encode(builder, Arrays.asList(6, 7, 2, 5));
+    IntegerSet set = new BitStringSet();
+    set.addAll(Arrays.asList(6, 7, 2, 5));
+    FibonacciIntegerRangeEncoder.encode(builder, set);
     Assertions.assertEquals("000000000010001110011011", builder.build().toString());
   }
 
@@ -64,33 +67,33 @@ public class FibonacciIntegerRangeEncoderTest {
 
   @Test
   public void testDecode1() throws DecodingException {
-    Assertions.assertEquals(new ArrayList<>(), FibonacciIntegerRangeEncoder.decode(BitString.of("000000000000")));
+    Assertions.assertEquals(Set.of(), FibonacciIntegerRangeEncoder.decode(BitString.of("000000000000")));
   }
 
   @Test
   public void testDecode2() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(2), FibonacciIntegerRangeEncoder.decode(BitString.of("0000000000010011")));
+    Assertions.assertEquals(Set.of(2), FibonacciIntegerRangeEncoder.decode(BitString.of("0000000000010011")));
   }
 
   @Test
   public void testDecode3() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(2, 3, 4, 5, 6), FibonacciIntegerRangeEncoder.decode(BitString.of("00000000000110111011")));
+    Assertions.assertEquals(Set.of(2, 3, 4, 5, 6), FibonacciIntegerRangeEncoder.decode(BitString.of("00000000000110111011")));
   }
 
   @Test
   public void testDecode4() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(2, 5, 6, 7), FibonacciIntegerRangeEncoder.decode(BitString.of("000000000010001110011011")));
+    Assertions.assertEquals(Set.of(2, 5, 6, 7), FibonacciIntegerRangeEncoder.decode(BitString.of("000000000010001110011011")));
   }
 
   @Test
   public void testDecode5() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(3, 5, 6, 7, 8),
+    Assertions.assertEquals(Set.of(3, 5, 6, 7, 8),
         FibonacciIntegerRangeEncoder.decode(BitString.of("0000000000100001110110011")));
   }
 
   @Test
   public void testDecode6() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(2, 5, 6, 7, 8, 9, 10, 11, 12),
+    Assertions.assertEquals(Set.of(2, 5, 6, 7, 8, 9, 10, 11, 12),
         FibonacciIntegerRangeEncoder.decode(BitString.of("00000000001000111001101011")));
   }
 

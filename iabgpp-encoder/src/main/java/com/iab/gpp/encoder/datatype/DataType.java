@@ -5,5 +5,5 @@ public interface DataType<T> {
   T getValue();
   void setValue(Object value);
   boolean isDirty();
-  void markClean();
+  void setDirty(boolean dirty);
 }

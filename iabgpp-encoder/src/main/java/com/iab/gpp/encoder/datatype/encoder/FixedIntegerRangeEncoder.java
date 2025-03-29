@@ -1,17 +1,13 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.BitSet;
-import java.util.Collections;
-import java.util.List;
-
+import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedIntegerRangeEncoder {
 
-  public static void encode(BitStringBuilder builder, List<Integer> value) {
-    Collections.sort(value);
+  public static int encode(BitStringBuilder builder, Collection<Integer> value) {
     BitStringBuilder rangeBuilder = new BitStringBuilder();
     int groupStart = -1;
     int last = Integer.MIN_VALUE;
@@ -32,6 +28,7 @@ public class FixedIntegerRangeEncoder {
     }
     FixedIntegerEncoder.encode(builder,groupCount, 12);
     builder.append(rangeBuilder);
+    return last;
   }
 
   private static void writeGroup(BitStringBuilder builder, int groupStart, int last) {
@@ -45,13 +42,13 @@ public class FixedIntegerRangeEncoder {
     }
   }
 
-  public static List<Integer> decode(BitString bitString) throws DecodingException {
+  public static IntegerSet decode(BitString bitString) throws DecodingException {
     if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FixedIntegerRange '" + bitString + "'");
     }
 
     int count = FixedIntegerEncoder.decode(bitString, 0, 12);
-    BitSet value = new BitSet();
+    BitStringSet value = new BitStringSet();
     int startIndex = 12;
     for (int i = 0; i < count; i++) {
       boolean group = BooleanEncoder.decode(bitString, startIndex, 1);
@@ -64,14 +61,14 @@ public class FixedIntegerRangeEncoder {
         int end = FixedIntegerEncoder.decode(bitString, startIndex, 16);
         startIndex += 16;
 
-        value.set(start, end + 1);
+        value.addRange(start, end + 1);
       } else {
         int val = FixedIntegerEncoder.decode(bitString, startIndex, 16);
-        value.set(val);
+        value.addInt(val);
         startIndex += 16;
       }
     }
 
-    return new IntegerList(value);
+    return value;
   }
 }

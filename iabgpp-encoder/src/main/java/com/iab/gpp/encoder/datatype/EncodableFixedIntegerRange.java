@@ -1,31 +1,22 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
-import java.util.TreeSet;
-
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.datatype.encoder.BitStringSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
+import com.iab.gpp.encoder.datatype.encoder.ManagedSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataType<List<Integer>> {
+public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataType<IntegerSet> {
 
   protected EncodableFixedIntegerRange() {
     super(true);
-  }
-
-  public EncodableFixedIntegerRange(List<Integer> value) {
-    super(true);
-    setValue(value);
-  }
-
-  public EncodableFixedIntegerRange(List<Integer> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
+    this.value = new BitStringSet();
   }
 
   public void encode(BitStringBuilder builder) {
@@ -64,11 +55,12 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
   @SuppressWarnings("unchecked")
   @Override
   public void setValue(Object value) {
-    super.setValue(new ArrayList<>(new TreeSet<>((List<Integer>) value)));
+    this.value.clear();
+    this.value.addAll((Collection<Integer>) value);
   }
-
+  
   @Override
-  public List<Integer> getValue() {
-    return Collections.unmodifiableList(super.getValue());
+  public IntegerSet getValue() {
+    return new ManagedSet(this, super.getValue());
   }
 }

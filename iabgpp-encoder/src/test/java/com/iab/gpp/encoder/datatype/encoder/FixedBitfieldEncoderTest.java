@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,96 +16,109 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode1() {
     BitStringBuilder builder = new BitStringBuilder();
-    FixedBitfieldEncoder.encode(builder, new ArrayList<>(), 2);
+    IntegerSet set = new BitStringSet();
+    FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("00", builder.build().toString());
   }
 
   @Test
   public void testEncode2() {
     BitStringBuilder builder = new BitStringBuilder();
-    FixedBitfieldEncoder.encode(builder, Arrays.asList(false), 1);
+    IntegerSet set = new BitStringSet();
+    FixedBitfieldEncoder.encode(builder, set, 1);
     Assertions.assertEquals("0", builder.build().toString());
   }
 
   @Test
   public void testEncode3() {
     BitStringBuilder builder = new BitStringBuilder();
-    FixedBitfieldEncoder.encode(builder, Arrays.asList(true), 1);
+    IntegerSet set = new BitStringSet();
+    set.add(0);
+    FixedBitfieldEncoder.encode(builder, set, 1);
     Assertions.assertEquals("1", builder.build().toString());
   }
 
   @Test
   public void testEncode4() {
     BitStringBuilder builder = new BitStringBuilder();
-    FixedBitfieldEncoder.encode(builder, Arrays.asList(false, false), 2);
+    IntegerSet set = new BitStringSet();
+    FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("00", builder.build().toString());
   }
 
   @Test
   public void testEncode5() {
     BitStringBuilder builder = new BitStringBuilder();
-    FixedBitfieldEncoder.encode(builder, Arrays.asList(false, true), 2);
+    IntegerSet set = new BitStringSet();
+    set.addInt(1);
+    FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("01", builder.build().toString());
   }
 
   @Test
   public void testEncode6() {
     BitStringBuilder builder = new BitStringBuilder();
-    FixedBitfieldEncoder.encode(builder, Arrays.asList(true, false), 2);
+    IntegerSet set = new BitStringSet();
+    set.addInt(0);
+    FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("10", builder.build().toString());
   }
 
   @Test
   public void testEncode7() {
     BitStringBuilder builder = new BitStringBuilder();
-    FixedBitfieldEncoder.encode(builder, Arrays.asList(true, true), 2);
+    IntegerSet set = new BitStringSet();
+    set.addInt(0);
+    set.addInt(1);
+    FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("11", builder.build().toString());
   }
 
   @Test
   public void testEncode8() {
-    try {
+    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
       BitStringBuilder builder = new BitStringBuilder();
-      FixedBitfieldEncoder.encode(builder, Arrays.asList(true, true, true), 2);
-      Assertions.fail("EncodingException expected");
-    } catch (EncodingException e) {
-
-    }
+      IntegerSet set = new BitStringSet(BitStringSet.MAX_COLLECTION_SIZE);
+      for(int i = 0; i <= BitStringSet.MAX_COLLECTION_SIZE; i++) {
+        set.addInt(i);
+      }
+      FixedBitfieldEncoder.encode(builder, set, 2);
+    });
   }
   
   @Test
   public void testDecode1() {
-    Assertions.assertEquals(new ArrayList<>(), FixedBitfieldEncoder.decode(BitString.of("")));
+    Assertions.assertEquals(Set.of(), FixedBitfieldEncoder.decode(BitString.of("")));
   }
 
   @Test
   public void testDecode2() {
-    Assertions.assertEquals(Arrays.asList(false), FixedBitfieldEncoder.decode(BitString.of("0")));
+    Assertions.assertEquals(Set.of(), FixedBitfieldEncoder.decode(BitString.of("0")));
   }
 
   @Test
   public void testDecode3() {
-    Assertions.assertEquals(Arrays.asList(true), FixedBitfieldEncoder.decode(BitString.of("1")));
+    Assertions.assertEquals(Set.of(0), FixedBitfieldEncoder.decode(BitString.of("1")));
   }
 
   @Test
   public void testDecode4() {
-    Assertions.assertEquals(Arrays.asList(false, false), FixedBitfieldEncoder.decode(BitString.of("00")));
+    Assertions.assertEquals(Set.of(), FixedBitfieldEncoder.decode(BitString.of("00")));
   }
 
   @Test
   public void testDecode5() {
-    Assertions.assertEquals(Arrays.asList(false, true), FixedBitfieldEncoder.decode(BitString.of("01")));
+    Assertions.assertEquals(Set.of(1), FixedBitfieldEncoder.decode(BitString.of("01")));
   }
 
   @Test
   public void testDecode6() {
-    Assertions.assertEquals(Arrays.asList(true, false), FixedBitfieldEncoder.decode(BitString.of("10")));
+    Assertions.assertEquals(Set.of(0), FixedBitfieldEncoder.decode(BitString.of("10")));
   }
 
   @Test
   public void testDecode7() {
-    Assertions.assertEquals(Arrays.asList(true, true), FixedBitfieldEncoder.decode(BitString.of("11")));
+    Assertions.assertEquals(Set.of(0, 1), FixedBitfieldEncoder.decode(BitString.of("11")));
   }
 
   @Test

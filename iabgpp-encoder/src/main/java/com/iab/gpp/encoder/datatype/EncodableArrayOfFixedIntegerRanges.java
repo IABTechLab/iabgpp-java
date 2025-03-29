@@ -1,12 +1,14 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -14,25 +16,12 @@ public class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStri
 
   private int keyBitStringLength;
   private int typeBitStringLength;
-
-  protected EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength) {
-    super(true);
-    this.keyBitStringLength = keyBitStringLength;
-    this.typeBitStringLength = typeBitStringLength;
-  }
-
-  public EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value) {
-    super(true);
-    this.keyBitStringLength = keyBitStringLength;
-    this.typeBitStringLength = typeBitStringLength;
-    setValue(value);
-  }
   
-  public EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength, List<RangeEntry> value, boolean hardFailIfMissing) {
+  public EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
-    setValue(value);
+    this.value = Collections.emptyList();
   }
 
   @Override
@@ -66,13 +55,14 @@ public class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStri
         index += typeBitStringLength;
 
         BitString substring = new EncodableFixedIntegerRange().substring(bitString, index);
-        List<Integer> ids = FixedIntegerRangeEncoder.decode(substring);
+        IntegerSet ids = FixedIntegerRangeEncoder.decode(substring);
         index += substring.length();
 
         entries.add(new RangeEntry(key, type, ids));
       }
 
-      this.value = entries;
+      // NOTE: this requires that updates to structure be done using the setter
+      this.value = Collections.unmodifiableList(entries);
     } catch (Exception e) {
       throw new DecodingException(e);
     }

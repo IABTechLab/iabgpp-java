@@ -64,7 +64,7 @@ public abstract class Fields<T extends DataType<?>> {
     for (int i = 0; i < size; i++) {
       T value = get(i);
       if (value != null) {
-        value.markClean();
+        value.setDirty(false);
       }
     }
   }

@@ -63,7 +63,7 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
     return dirty;
   }
 
-  public void markClean() {
-    dirty = false;
+  public void setDirty(boolean dirty) {
+    this.dirty = dirty;
   }
 }

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
@@ -169,19 +170,16 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
     return (Boolean) this.getFieldValue(TcfEuV2Field.USE_NON_STANDARD_STACKS);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getSpecialFeatureOptins() {
-    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.SPECIAL_FEATURE_OPTINS);
+  public IntegerSet getSpecialFeatureOptins() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.SPECIAL_FEATURE_OPTINS);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPurposeConsents() {
-    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.PURPOSE_CONSENTS);
+  public IntegerSet getPurposeConsents() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.PURPOSE_CONSENTS);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPurposeLegitimateInterests() {
-    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS);
+  public IntegerSet getPurposeLegitimateInterests() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS);
   }
 
   public Boolean getPurposeOneTreatment() {
@@ -192,14 +190,12 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
     return (String) this.getFieldValue(TcfEuV2Field.PUBLISHER_COUNTRY_CODE);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getVendorConsents() {
-    return (List<Integer>) this.getFieldValue(TcfEuV2Field.VENDOR_CONSENTS);
+  public IntegerSet getVendorConsents() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.VENDOR_CONSENTS);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getVendorLegitimateInterests() {
-    return (List<Integer>) this.getFieldValue(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS);
+  public IntegerSet getVendorLegitimateInterests() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS);
   }
 
   @SuppressWarnings("unchecked")
@@ -211,46 +207,40 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPublisherConsents() {
-    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.PUBLISHER_CONSENTS);
+  public IntegerSet getPublisherConsents() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.PUBLISHER_CONSENTS);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPublisherLegitimateInterests() {
-    return (List<Boolean>) this.getFieldValue(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS);
+  public IntegerSet getPublisherLegitimateInterests() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS);
   }
 
   public Integer getNumCustomPurposes() {
     return (Integer) this.getFieldValue(TcfEuV2Field.NUM_CUSTOM_PURPOSES);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getPublisherCustomConsents() {
-    return (List<Integer>) this.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS);
+  public IntegerSet getPublisherCustomConsents() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getPublisherCustomLegitimateInterests() {
-    return (List<Integer>) this.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS);
+  public IntegerSet getPublisherCustomLegitimateInterests() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS);
   }
 
   public Integer getVendorsAllowedSegmentType() {
     return (Integer) this.getFieldValue(TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getVendorsAllowed() {
-    return (List<Integer>) this.getFieldValue(TcfEuV2Field.VENDORS_ALLOWED);
+  public IntegerSet getVendorsAllowed() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.VENDORS_ALLOWED);
   }
 
   public Integer getVendorsDisclosedSegmentType() {
     return (Integer) this.getFieldValue(TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getVendorsDisclosed() {
-    return (List<Integer>) this.getFieldValue(TcfEuV2Field.VENDORS_DISCLOSED);
+  public IntegerSet getVendorsDisclosed() {
+    return (IntegerSet) this.getFieldValue(TcfEuV2Field.VENDORS_DISCLOSED);
   }
   
   

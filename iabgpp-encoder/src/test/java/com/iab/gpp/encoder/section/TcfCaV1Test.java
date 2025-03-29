@@ -6,9 +6,11 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.datatype.RangeEntry;
+import com.iab.gpp.encoder.datatype.encoder.BitStringSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
@@ -50,8 +52,8 @@ public class TcfCaV1Test {
         Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false, false,
             true, true, true, false, false, false, true, true, true));
     tcfCaV1.setFieldValue(TcfCaV1Field.NUM_CUSTOM_PURPOSES, 3);
-    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT, Arrays.asList(false, true, false));
-    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT, Arrays.asList(true, false, true));
+    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT, Set.of(1));
+    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT, Set.of(0,2));
 
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
@@ -75,7 +77,7 @@ public class TcfCaV1Test {
   public void testEncode4() throws EncodingException, InvalidFieldException {
 
     List<RangeEntry> pubRestrictions = new ArrayList<>();
-    pubRestrictions.add(new RangeEntry(1, 1, Arrays.asList(1, 2, 3, 5, 6, 7, 9)));
+    pubRestrictions.add(new RangeEntry(1, 1, Set.of(1, 2, 3, 5, 6, 7, 9)));
 
     TcfCaV1 tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.PUB_RESTRICTIONS, pubRestrictions);
@@ -106,8 +108,8 @@ public class TcfCaV1Test {
             Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false,
                 false, false, false, false, false, false, false, false, false, false, false),
             tcfCaV1.getPurposesImpliedConsent());
-    Assertions.assertEquals(Arrays.asList(), tcfCaV1.getVendorExpressConsent());
-    Assertions.assertEquals(Arrays.asList(), tcfCaV1.getVendorImpliedConsent());
+    Assertions.assertEquals(Set.of(), tcfCaV1.getVendorExpressConsent());
+    Assertions.assertEquals(Set.of(), tcfCaV1.getVendorImpliedConsent());
     Assertions.assertEquals(
         Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
             false, false, false, false, false, false, false, false, false, false),
@@ -143,8 +145,8 @@ public class TcfCaV1Test {
     Assertions.assertEquals(Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true,
         false, false, false, false, false, false, true, true, true, true, true, true),
         tcfCaV1.getPurposesImpliedConsent());
-    Assertions.assertEquals(Arrays.asList(12, 24, 48), tcfCaV1.getVendorExpressConsent());
-    Assertions.assertEquals(Arrays.asList(18, 30), tcfCaV1.getVendorImpliedConsent());
+    Assertions.assertEquals(Set.of(12, 24, 48), tcfCaV1.getVendorExpressConsent());
+    Assertions.assertEquals(Set.of(18, 30), tcfCaV1.getVendorImpliedConsent());
     Assertions
         .assertEquals(
             Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true,
@@ -171,7 +173,7 @@ public class TcfCaV1Test {
     TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5w");
 
     Assertions.assertEquals(1, tcfCaV1.getDisclosedVendorsSegmentType());
-    Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 10, 11, 12), tcfCaV1.getDisclosedVendors());
+    Assertions.assertEquals(Set.of(1, 2, 3, 5, 6, 7, 10, 11, 12), tcfCaV1.getDisclosedVendors());
   }
 
   @Test
@@ -182,7 +184,7 @@ public class TcfCaV1Test {
     Assertions.assertEquals(1, pubRestictions.size());
     Assertions.assertEquals(1, pubRestictions.get(0).getKey());
     Assertions.assertEquals(1, pubRestictions.get(0).getType());
-    Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 9), pubRestictions.get(0).getIds());
+    Assertions.assertEquals(Set.of(1, 2, 3, 5, 6, 7, 9), pubRestictions.get(0).getIds());
   }
   
   @Test()

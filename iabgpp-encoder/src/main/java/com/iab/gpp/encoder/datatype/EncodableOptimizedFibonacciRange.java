@@ -1,18 +1,17 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
-import java.util.TreeSet;
-
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
+import com.iab.gpp.encoder.datatype.encoder.ManagedSet;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFibonacciRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<List<Integer>> {
+public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<IntegerSet> {
 
   protected EncodableOptimizedFibonacciRange() {
     super(true);
@@ -63,11 +62,12 @@ public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitString
   @SuppressWarnings("unchecked")
   @Override
   public void setValue(Object value) {
-    super.setValue(new ArrayList<>(new TreeSet<>((List<Integer>) value)));
+    this.value.clear();
+    this.value.addAll((Collection<Integer>) value);
   }
 
   @Override
-  public List<Integer> getValue() {
-    return Collections.unmodifiableList(super.getValue());
+  public IntegerSet getValue() {
+    return new ManagedSet(this, super.getValue());
   }
 }

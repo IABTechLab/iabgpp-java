@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.Arrays;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -47,14 +48,14 @@ public class EncodableFixedIntegerRangeTest {
   public void testDecode1() throws DecodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
     encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011100"));
-    Assertions.assertEquals(Arrays.asList(28), encodableFixedIntegerRange.getValue());
+    Assertions.assertEquals(Set.of(28), encodableFixedIntegerRange.getValue());
   }
 
   @Test
   public void testDecode2() throws DecodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
     encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011101"));
-    Assertions.assertEquals(Arrays.asList(29), encodableFixedIntegerRange.getValue());
+    Assertions.assertEquals(Set.of(29), encodableFixedIntegerRange.getValue());
   }
 
 }

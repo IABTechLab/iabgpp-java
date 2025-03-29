@@ -1,17 +1,13 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.BitSet;
-import java.util.Collections;
-import java.util.List;
-
+import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerRangeEncoder {
 
-  public static void encode(BitStringBuilder builder, List<Integer> value) {
-    Collections.sort(value);
+  public static int encode(BitStringBuilder builder, Collection<Integer> value) {
     BitStringBuilder rangeBuilder = new BitStringBuilder();
     int groupStart = -1;
     int last = Integer.MIN_VALUE;
@@ -34,6 +30,7 @@ public class FibonacciIntegerRangeEncoder {
     }
     FixedIntegerEncoder.encode(builder,groupCount, 12);
     builder.append(rangeBuilder);
+    return last;
   }
 
   private static void writeGroup(BitStringBuilder builder, int groupStart, int last, int offset) {
@@ -49,13 +46,13 @@ public class FibonacciIntegerRangeEncoder {
     }
   }
 
-  public static List<Integer> decode(BitString bitString) throws DecodingException {
+  public static IntegerSet decode(BitString bitString) throws DecodingException {
     if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FibonacciIntegerRange '" + bitString + "'");
     }
 
     int count = FixedIntegerEncoder.decode(bitString, 0, 12);
-    BitSet value = new BitSet();
+    BitStringSet value = new BitStringSet();
 
     int offset = 0;
     int startIndex = 12;
@@ -73,16 +70,16 @@ public class FibonacciIntegerRangeEncoder {
         int end = FibonacciIntegerEncoder.decode(bitString, startIndex, index + 2 - startIndex) + offset;
         offset = end;
         startIndex = index + 2;
-        value.set(start, end + 1);
+        value.addRange(start, end + 1);
       } else {
         int index = FibonacciIntegerEncoder.indexOfEndTag(bitString, startIndex);
         int val = FibonacciIntegerEncoder.decode(bitString, startIndex, index + 2 - startIndex) + offset;
         offset = val;
-        value.set(val);
+        value.addInt(val);
         startIndex = index + 2;
       }
     }
 
-    return new IntegerList(value);
+    return value;
   }
 }

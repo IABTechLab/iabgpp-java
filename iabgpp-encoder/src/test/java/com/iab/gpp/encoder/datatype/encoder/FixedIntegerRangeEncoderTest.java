@@ -3,7 +3,8 @@ package com.iab.gpp.encoder.datatype.encoder;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.BitSet;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +47,9 @@ public class FixedIntegerRangeEncoderTest {
   @Test
   public void testEncode5() {
     BitStringBuilder builder = new BitStringBuilder();
-    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(5, 2, 7, 6));
+    IntegerSet set = new BitStringSet();
+    set.addAll(Arrays.asList(6, 7, 2, 5));
+    FibonacciIntegerRangeEncoder.encode(builder, set);
     Assertions.assertEquals("00000000001000000000000000010100000000000001010000000000000111",
         builder.build().toString());
   }
@@ -86,47 +89,47 @@ public class FixedIntegerRangeEncoderTest {
 
   @Test
   public void testDecode1() throws DecodingException {
-    Assertions.assertEquals(new ArrayList<>(), FixedIntegerRangeEncoder.decode(BitString.of("000000000000")));
+    Assertions.assertEquals(Set.of(), FixedIntegerRangeEncoder.decode(BitString.of("000000000000")));
   }
 
   @Test
   public void testDecode2() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(2), FixedIntegerRangeEncoder.decode(BitString.of("00000000000100000000000000010")));
+    Assertions.assertEquals(Set.of(2), FixedIntegerRangeEncoder.decode(BitString.of("00000000000100000000000000010")));
   }
 
   @Test
   public void testDecode3() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(2, 3, 4, 5, 6),
+    Assertions.assertEquals(Set.of(2, 3, 4, 5, 6),
         FixedIntegerRangeEncoder.decode(BitString.of("000000000001100000000000000100000000000000110")));
   }
 
   @Test
   public void testDecode4() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(2, 5, 6, 7),
+    Assertions.assertEquals(Set.of(2, 5, 6, 7),
         FixedIntegerRangeEncoder.decode(BitString.of("00000000001000000000000000010100000000000001010000000000000111")));
   }
 
   @Test
   public void testDecode5() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(3, 5, 6, 7, 8),
+    Assertions.assertEquals(Set.of(3, 5, 6, 7, 8),
         FixedIntegerRangeEncoder.decode(BitString.of("00000000001000000000000000011100000000000001010000000000001000")));
   }
 
   @Test
   public void testDecode6() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(12, 24, 48),
+    Assertions.assertEquals(Set.of(12, 24, 48),
         FixedIntegerRangeEncoder.decode(BitString.of("000000000011000000000000011000000000000001100000000000000110000")));
   }
 
   @Test
   public void testDecode7() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(12, 24, 48, 49), FixedIntegerRangeEncoder
+    Assertions.assertEquals(Set.of(12, 24, 48, 49), FixedIntegerRangeEncoder
         .decode(BitString.of("0000000000110000000000000110000000000000011000100000000001100000000000000110001")));
   }
 
   @Test
   public void testDecode8() throws DecodingException {
-    Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 24, 25, 37, 42), FixedIntegerRangeEncoder.decode(
+    Assertions.assertEquals(Set.of(2, 6, 8, 12, 18, 23, 24, 25, 37, 42), FixedIntegerRangeEncoder.decode(
     		BitString.of("00000000100000000000000000010000000000000001100000000000000100000000000000001100000000000000100101000000000001011100000000000110010000000000010010100000000000101010")));
   }
 

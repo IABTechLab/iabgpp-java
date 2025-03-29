@@ -32,7 +32,7 @@ public class HeaderV1CoreSegment extends AbstractLazilyEncodableSegment<Encodabl
     EncodableBitStringFields fields = new EncodableBitStringFields(HeaderV1Field.HEADER_CORE_SEGMENT_FIELD_NAMES);
     fields.put(HeaderV1Field.ID, new EncodableFixedInteger(6, HeaderV1.ID));
     fields.put(HeaderV1Field.VERSION, new EncodableFixedInteger(6, HeaderV1.VERSION));
-    fields.put(HeaderV1Field.SECTION_IDS, new EncodableFibonacciIntegerRange(new ArrayList<>(0)));
+    fields.put(HeaderV1Field.SECTION_IDS, new EncodableFibonacciIntegerRange());
     return fields;
   }
 

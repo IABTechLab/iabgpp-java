@@ -48,10 +48,10 @@ public class TcfEuV2PublisherPurposesSegment extends AbstractLazilyEncodableSegm
     };
 
     fields.put(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS,
-        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>(0)));
+        new EncodableFlexibleBitfield(getLengthSupplier));
 
     fields.put(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS,
-        new EncodableFlexibleBitfield(getLengthSupplier, new ArrayList<>(0)));
+        new EncodableFlexibleBitfield(getLengthSupplier));
     return fields;
   }
 

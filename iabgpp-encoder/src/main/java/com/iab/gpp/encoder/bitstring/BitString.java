@@ -1,11 +1,11 @@
 package com.iab.gpp.encoder.bitstring;
 
-import java.util.AbstractList;
 import java.util.BitSet;
-
+import com.iab.gpp.encoder.datatype.encoder.BitStringSet;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 
-public final class BitString extends AbstractList<Boolean> {
+public final class BitString {
   public static final char TRUE = '1';
   public static final char FALSE = '0';
   public static final String TRUE_STRING = new String(new char[] {TRUE});
@@ -44,7 +44,12 @@ public final class BitString extends AbstractList<Boolean> {
     }
     return builder.build();
   }
+  
+  public IntegerSet toIntegerSet() {
+    return new BitStringSet(bitSet, from, to);
+  }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(length());
     for (int i = from; i < to; i++) {
@@ -53,34 +58,12 @@ public final class BitString extends AbstractList<Boolean> {
     return sb.toString();
   }
 
-  /**
-   * This is the fast getter without boxing
-   * @param i index
-   * @return the value at that index
-   */
   public boolean getValue(int i) {
     return bitSet.get(from + i);
   }
 
-  @Override
-  public Boolean get(int i) {
-    return getValue(i);
-  }
-
-  @Override
-  public Boolean set(int index, Boolean element) {
-    Boolean old = get(index);
-    bitSet.set(from + index, element);
-    return old;
-  }
-
   public int length() {
     return to - from;
-  }
-
-  @Override
-  public int size() {
-    return length();
   }
 
   public BitString substring(int i) {
@@ -94,10 +77,6 @@ public final class BitString extends AbstractList<Boolean> {
     }
     int oldFrom = this.from;
     return new BitString(bitSet, oldFrom + newFrom, oldFrom + newTo);
-  }
-
-  public boolean isEmpty() {
-    return length() == 0;
   }
 
   public BitString expandTo(int target) {

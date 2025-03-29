@@ -30,7 +30,7 @@ public class TcfEuV2VendorsAllowedSegment extends AbstractLazilyEncodableSegment
   protected EncodableBitStringFields initializeFields() {
     EncodableBitStringFields fields = new EncodableBitStringFields(TcfEuV2Field.TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES);
     fields.put(TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE, new EncodableFixedInteger(3, 2));
-    fields.put(TcfEuV2Field.VENDORS_ALLOWED, new EncodableOptimizedFixedRange(new ArrayList<>(0)));
+    fields.put(TcfEuV2Field.VENDORS_ALLOWED, new EncodableOptimizedFixedRange());
     return fields;
   }
 

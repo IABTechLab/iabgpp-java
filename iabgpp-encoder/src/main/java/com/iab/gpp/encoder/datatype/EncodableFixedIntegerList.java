@@ -1,12 +1,12 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
+import com.iab.gpp.encoder.datatype.encoder.ManagedList;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -23,13 +23,6 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
 
   public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value) {
     super(true);
-    this.elementBitStringLength = elementBitStringLength;
-    this.numElements = value.size();
-    setValue(value);
-  }
-
-  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = value.size();
     setValue(value);
@@ -74,6 +67,6 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
 
   @Override
   public List<Integer> getValue() {
-    return Collections.unmodifiableList(super.getValue());
+    return new ManagedList<>(this, super.getValue());
   }
 }

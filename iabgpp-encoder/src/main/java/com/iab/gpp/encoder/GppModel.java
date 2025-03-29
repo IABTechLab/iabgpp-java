@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PrimitiveIterator;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
@@ -351,11 +353,11 @@ public class GppModel {
         HeaderV1 header = new HeaderV1(encodedSections.get(0));
         sections.put(HeaderV1.NAME, header);
 
-        @SuppressWarnings("unchecked")
-        List<Integer> sectionIds = (List<Integer>) header.getFieldValue("SectionIds");
-        for (int i = 0; i < sectionIds.size(); i++) {
-          CharSequence section = encodedSections.get(i + 1);
-          switch (sectionIds.get(i)) {
+        PrimitiveIterator.OfInt it = header.getSectionsIds().iterator();
+        int i = 1;
+        while (it.hasNext()) {
+          CharSequence section = encodedSections.get(i++);
+          switch (it.nextInt()) {
             case TcfEuV2.ID:
               sections.put(TcfEuV2.NAME, new TcfEuV2(section));
               break;

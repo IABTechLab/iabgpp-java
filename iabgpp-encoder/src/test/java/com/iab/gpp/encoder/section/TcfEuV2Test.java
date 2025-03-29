@@ -2,11 +2,14 @@ package com.iab.gpp.encoder.section;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.datatype.RangeEntry;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
@@ -72,8 +75,8 @@ public class TcfEuV2Test {
         tcfEuV2.getPurposeLegitimateInterests());
     Assertions.assertEquals(false, tcfEuV2.getPurposeOneTreatment());
     Assertions.assertEquals("AA", tcfEuV2.getPublisherCountryCode());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorConsents());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorLegitimateInterests());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getVendorConsents());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getVendorLegitimateInterests());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherRestrictions());
     Assertions.assertEquals(3, tcfEuV2.getPublisherPurposesSegmentType());
     Assertions
@@ -89,9 +92,9 @@ public class TcfEuV2Test {
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomConsents());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomLegitimateInterests());
     Assertions.assertEquals(2, tcfEuV2.getVendorsAllowedSegmentType());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorsAllowed());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getVendorsAllowed());
     Assertions.assertEquals(1, tcfEuV2.getVendorsDisclosedSegmentType());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorsDisclosed());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getVendorsDisclosed());
 
     Assertions.assertEquals(2, tcfEuV2.getId());
   }
@@ -125,8 +128,8 @@ public class TcfEuV2Test {
         tcfEuV2.getPurposeLegitimateInterests());
     Assertions.assertEquals(false, tcfEuV2.getPurposeOneTreatment());
     Assertions.assertEquals("AA", tcfEuV2.getPublisherCountryCode());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorConsents());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorLegitimateInterests());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getVendorConsents());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getVendorLegitimateInterests());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherRestrictions());
     Assertions.assertEquals(3, tcfEuV2.getPublisherPurposesSegmentType());
     Assertions
@@ -142,9 +145,9 @@ public class TcfEuV2Test {
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomConsents());
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomLegitimateInterests());
     Assertions.assertEquals(2, tcfEuV2.getVendorsAllowedSegmentType());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorsAllowed());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getVendorsAllowed());
     Assertions.assertEquals(1, tcfEuV2.getVendorsDisclosedSegmentType());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getVendorsDisclosed());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getVendorsDisclosed());
 
     Assertions.assertEquals(2, tcfEuV2.getId());
   }
@@ -171,7 +174,7 @@ public class TcfEuV2Test {
     Assertions.assertEquals(3, tcfEuV2.getFieldValue("PublisherPurposesSegmentType"));
 
     Assertions.assertEquals(2, tcfEuV2.getFieldValue("VendorsAllowedSegmentType"));
-    List<Integer> vendorsAllowed = (List<Integer>) tcfEuV2.getFieldValue("VendorsAllowed");
+    List<Integer> vendorsAllowed = new ArrayList<>((IntegerSet) tcfEuV2.getFieldValue("VendorsAllowed"));
     Assertions.assertEquals(434, vendorsAllowed.size());
     Assertions.assertEquals(1, vendorsAllowed.get(0));
     Assertions.assertEquals(2, vendorsAllowed.get(1));
@@ -194,7 +197,7 @@ public class TcfEuV2Test {
     Assertions.assertEquals(791, vendorsAllowed.get(vendorsAllowed.size() - 1));
 
     Assertions.assertEquals(1, tcfEuV2.getFieldValue("VendorsDisclosedSegmentType"));
-    List<Integer> vendorsDisclosed = (List<Integer>) tcfEuV2.getFieldValue("VendorsDisclosed");
+    List<Integer> vendorsDisclosed = new ArrayList<>((IntegerSet) tcfEuV2.getFieldValue("VendorsDisclosed"));
     Assertions.assertEquals(434, vendorsDisclosed.size());
     Assertions.assertEquals(1, vendorsDisclosed.get(0));
     Assertions.assertEquals(2, vendorsDisclosed.get(1));
@@ -284,9 +287,9 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
     Assertions.assertEquals("US", tcfEuV2.getFieldValue("PublisherCountryCode"));
 
-    Assertions.assertEquals(772, ((List<Integer>) tcfEuV2.getFieldValue("VendorConsents")).size());
+    Assertions.assertEquals(772, ((IntegerSet) tcfEuV2.getFieldValue("VendorConsents")).size());
 
-    Assertions.assertEquals(280, ((List<Integer>) tcfEuV2.getFieldValue("VendorLegitimateInterests")).size());
+    Assertions.assertEquals(280, ((IntegerSet) tcfEuV2.getFieldValue("VendorLegitimateInterests")).size());
   }
 
   @SuppressWarnings("unchecked")
@@ -321,9 +324,9 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
     Assertions.assertEquals("US", tcfEuV2.getFieldValue("PublisherCountryCode"));
 
-    Assertions.assertEquals(693, ((List<Integer>) tcfEuV2.getFieldValue("VendorConsents")).size());
+    Assertions.assertEquals(693, ((IntegerSet) tcfEuV2.getFieldValue("VendorConsents")).size());
 
-    Assertions.assertEquals(254, ((List<Integer>) tcfEuV2.getFieldValue("VendorLegitimateInterests")).size());
+    Assertions.assertEquals(254, ((IntegerSet) tcfEuV2.getFieldValue("VendorLegitimateInterests")).size());
   }
 
   @Test
@@ -356,9 +359,9 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
     Assertions.assertEquals("US", tcfEuV2.getFieldValue("PublisherCountryCode"));
 
-    Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 25, 37, 42), tcfEuV2.getFieldValue("VendorConsents"));
+    Assertions.assertEquals(Set.of(2, 6, 8, 12, 18, 23, 25, 37, 42), tcfEuV2.getFieldValue("VendorConsents"));
 
-    Assertions.assertEquals(Arrays.asList(2, 6, 8, 12, 18, 23, 37, 42),
+    Assertions.assertEquals(Set.of(2, 6, 8, 12, 18, 23, 37, 42),
         tcfEuV2.getFieldValue("VendorLegitimateInterests"));
   }
   
@@ -393,16 +396,16 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
     Assertions.assertEquals("GB", tcfEuV2.getFieldValue("PublisherCountryCode"));
 
-    Assertions.assertEquals(Arrays.asList(1, 2, 3, 755), tcfEuV2.getFieldValue("VendorConsents"));
+    Assertions.assertEquals(Set.of(1, 2, 3, 755), tcfEuV2.getFieldValue("VendorConsents"));
 
-    Assertions.assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
+    Assertions.assertEquals(Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9),
         tcfEuV2.getFieldValue("VendorLegitimateInterests"));
     
     Assertions.assertEquals(1, ((List<RangeEntry>)tcfEuV2.getFieldValue("PublisherRestrictions")).size());
     RangeEntry rangeEntry = ((List<RangeEntry>)tcfEuV2.getFieldValue("PublisherRestrictions")).get(0);
     Assertions.assertEquals(1, rangeEntry.getKey());
     Assertions.assertEquals(0, rangeEntry.getType());
-    Assertions.assertEquals(Arrays.asList(10), rangeEntry.getIds());
+    Assertions.assertEquals(Set.of(10), rangeEntry.getIds());
   }
   
   @Test()

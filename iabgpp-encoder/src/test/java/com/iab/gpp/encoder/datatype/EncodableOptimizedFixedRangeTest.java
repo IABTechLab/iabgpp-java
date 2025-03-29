@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.Arrays;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -47,25 +48,25 @@ public class EncodableOptimizedFixedRangeTest {
   @Test
   public void testDecode1() {
     encodableOptimizedFixedRange.decode(BitString.of("00000000001100000000000000001000000000001000000000000000000000001"));
-    Assertions.assertEquals(Arrays.asList(12, 24, 48), encodableOptimizedFixedRange.getValue());
+    Assertions.assertEquals(Set.of(12, 24, 48), encodableOptimizedFixedRange.getValue());
   }
 
   @Test
   public void testDecode2() {
     encodableOptimizedFixedRange.decode(BitString.of("00000000000111100000000000000000001000000000001"));
-    Assertions.assertEquals(Arrays.asList(18, 30), encodableOptimizedFixedRange.getValue());
+    Assertions.assertEquals(Set.of(18, 30), encodableOptimizedFixedRange.getValue());
   }
 
   @Test
   public void testDecode3() {
     encodableOptimizedFixedRange.decode(BitString.of("000000000001110000000000000000000000000000001"));
-    Assertions.assertEquals(Arrays.asList(28), encodableOptimizedFixedRange.getValue());
+    Assertions.assertEquals(Set.of(28), encodableOptimizedFixedRange.getValue());
   }
 
   @Test
   public void testDecode4() {
     encodableOptimizedFixedRange.decode(BitString.of("0000000000011101100000000000100000000000011101"));
-    Assertions.assertEquals(Arrays.asList(29), encodableOptimizedFixedRange.getValue());
+    Assertions.assertEquals(Set.of(29), encodableOptimizedFixedRange.getValue());
   }
 
   @Test

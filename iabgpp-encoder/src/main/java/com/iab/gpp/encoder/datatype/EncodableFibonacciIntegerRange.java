@@ -1,32 +1,23 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
-import java.util.TreeSet;
-
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.datatype.encoder.BitStringSet;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
+import com.iab.gpp.encoder.datatype.encoder.ManagedSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDataType<List<Integer>> {
+public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDataType<IntegerSet> {
 
-  protected EncodableFibonacciIntegerRange() {
+  public EncodableFibonacciIntegerRange() {
     super(true);
-  }
-
-  public EncodableFibonacciIntegerRange(List<Integer> value) {
-    super(true);
-    setValue(value);
-  }
-
-  public EncodableFibonacciIntegerRange(List<Integer> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
+    this.value = new BitStringSet();
   }
 
   public void encode(BitStringBuilder builder) {
@@ -65,11 +56,12 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
   @SuppressWarnings("unchecked")
   @Override
   public void setValue(Object value) {
-    super.setValue(new ArrayList<>(new TreeSet<>((List<Integer>) value)));
+    this.value.clear();
+    this.value.addAll((Collection<Integer>) value);
   }
 
   @Override
-  public List<Integer> getValue() {
-    return Collections.unmodifiableList(super.getValue());
+  public IntegerSet getValue() {
+    return new ManagedSet(this, super.getValue());
   }
 }

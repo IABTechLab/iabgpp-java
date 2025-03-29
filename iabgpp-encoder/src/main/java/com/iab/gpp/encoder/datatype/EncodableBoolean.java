@@ -8,17 +8,8 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
 
-  protected EncodableBoolean() {
-    super(true);
-  }
-
   public EncodableBoolean(Boolean value) {
     super(true);
-    setValue(value);
-  }
-
-  public EncodableBoolean(Boolean value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
     setValue(value);
   }
 

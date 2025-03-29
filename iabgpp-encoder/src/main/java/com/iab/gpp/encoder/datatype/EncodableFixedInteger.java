@@ -21,12 +21,6 @@ public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<In
     setValue(value);
   }
 
-  public EncodableFixedInteger(int bitStringLength, Integer value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    this.bitStringLength = bitStringLength;
-    setValue(value);
-  }
-
   public void encode(BitStringBuilder builder) {
     try {
       FixedIntegerEncoder.encode(builder, this.value, this.bitStringLength);

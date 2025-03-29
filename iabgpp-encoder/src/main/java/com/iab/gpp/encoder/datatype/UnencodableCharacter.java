@@ -54,8 +54,8 @@ public class UnencodableCharacter implements DataType<Character> {
   }
 
   @Override
-  public void markClean() {
-    dirty = false;
+  public void setDirty(boolean dirty) {
+    this.dirty = dirty;
   }
 
 }
