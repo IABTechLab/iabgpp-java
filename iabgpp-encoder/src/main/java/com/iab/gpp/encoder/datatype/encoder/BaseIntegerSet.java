@@ -2,11 +2,6 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.AbstractSet;
 import java.util.Collection;
-import java.util.PrimitiveIterator;
-import java.util.Spliterator;
-import java.util.Spliterators;
-import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 public abstract class BaseIntegerSet extends AbstractSet<Integer> implements IntegerSet {
   

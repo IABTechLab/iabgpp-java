@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.datatype.encoder;
 import java.util.Collection;
 import java.util.PrimitiveIterator;
 import java.util.Set;
-import java.util.Spliterator;
 import java.util.stream.IntStream;
 
 public interface IntegerSet extends Set<Integer> {
