@@ -55,7 +55,7 @@ public final class BitStringSet extends IntegerSet {
   
   @Override
   public boolean isEmpty() {
-    return bitSet.nextSetBit(from) != -1;
+    return bitSet.nextSetBit(from) == -1;
   }
 
   @Override

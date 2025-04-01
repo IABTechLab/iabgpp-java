@@ -57,4 +57,8 @@ public final class ManagedSet extends IntegerSet {
     return modified;
   }
 
+  @Override
+  public String toString() {
+    return delegate.toString();
+  }
 }

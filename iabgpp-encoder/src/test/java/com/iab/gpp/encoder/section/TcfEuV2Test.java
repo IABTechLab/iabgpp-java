@@ -32,16 +32,14 @@ public class TcfEuV2Test {
 
     Assertions.assertEquals(3, tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE));
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CONSENTS));
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS));
     Assertions.assertEquals(0, tcfEuV2.getFieldValue(TcfEuV2Field.NUM_CUSTOM_PURPOSES));
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS));
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS));
+    Assertions.assertEquals(Set.of(), tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS));
+    Assertions.assertEquals(Set.of(), tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS));
 
     Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA", tcfEuV2.encode());
   }
@@ -62,16 +60,14 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getIsServiceSpecific());
     Assertions.assertEquals(false, tcfEuV2.getUseNonStandardStacks());
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfEuV2.getSpecialFeatureOptins());
     Assertions
         .assertEquals(
-            Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false, false, false),
+            Set.of(),
             tcfEuV2.getPurposeConsents());
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfEuV2.getPurposeLegitimateInterests());
     Assertions.assertEquals(false, tcfEuV2.getPurposeOneTreatment());
     Assertions.assertEquals("AA", tcfEuV2.getPublisherCountryCode());
@@ -81,16 +77,14 @@ public class TcfEuV2Test {
     Assertions.assertEquals(3, tcfEuV2.getPublisherPurposesSegmentType());
     Assertions
         .assertEquals(
-            Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false, false, false),
+            Set.of(),
             tcfEuV2.getPublisherConsents());
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfEuV2.getPublisherLegitimateInterests());
     Assertions.assertEquals(0, tcfEuV2.getNumCustomPurposes());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomConsents());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomLegitimateInterests());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getPublisherCustomConsents());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getPublisherCustomLegitimateInterests());
     Assertions.assertEquals(2, tcfEuV2.getVendorsAllowedSegmentType());
     Assertions.assertEquals(Set.of(), tcfEuV2.getVendorsAllowed());
     Assertions.assertEquals(1, tcfEuV2.getVendorsDisclosedSegmentType());
@@ -115,16 +109,14 @@ public class TcfEuV2Test {
     Assertions.assertEquals(true, tcfEuV2.getIsServiceSpecific());
     Assertions.assertEquals(false, tcfEuV2.getUseNonStandardStacks());
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfEuV2.getSpecialFeatureOptins());
     Assertions
         .assertEquals(
-            Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false, false, false),
+            Set.of(),
             tcfEuV2.getPurposeConsents());
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfEuV2.getPurposeLegitimateInterests());
     Assertions.assertEquals(false, tcfEuV2.getPurposeOneTreatment());
     Assertions.assertEquals("AA", tcfEuV2.getPublisherCountryCode());
@@ -134,16 +126,14 @@ public class TcfEuV2Test {
     Assertions.assertEquals(3, tcfEuV2.getPublisherPurposesSegmentType());
     Assertions
         .assertEquals(
-            Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false, false, false),
+            Set.of(),
             tcfEuV2.getPublisherConsents());
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfEuV2.getPublisherLegitimateInterests());
     Assertions.assertEquals(0, tcfEuV2.getNumCustomPurposes());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomConsents());
-    Assertions.assertEquals(Arrays.asList(), tcfEuV2.getPublisherCustomLegitimateInterests());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getPublisherCustomConsents());
+    Assertions.assertEquals(Set.of(), tcfEuV2.getPublisherCustomLegitimateInterests());
     Assertions.assertEquals(2, tcfEuV2.getVendorsAllowedSegmentType());
     Assertions.assertEquals(Set.of(), tcfEuV2.getVendorsAllowed());
     Assertions.assertEquals(1, tcfEuV2.getVendorsDisclosedSegmentType());
@@ -272,16 +262,14 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
 
     Assertions.assertEquals(
-        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false),
+        Set.of(0),
         tcfEuV2.getFieldValue("SpecialFeatureOptins"));
     Assertions
         .assertEquals(
-            Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false),
+            Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
             tcfEuV2.getFieldValue("PurposeConsents"));
     Assertions.assertEquals(
-        Arrays.asList(false, true, false, false, false, true, true, true, true, true, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false),
+        Set.of(1, 5, 6, 7, 8, 9),
         tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
 
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
@@ -309,16 +297,14 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
 
     Assertions.assertEquals(
-        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false),
+        Set.of(0),
         tcfEuV2.getFieldValue("SpecialFeatureOptins"));
     Assertions
         .assertEquals(
-            Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false),
+            Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
             tcfEuV2.getFieldValue("PurposeConsents"));
     Assertions.assertEquals(
-        Arrays.asList(false, true, false, false, false, true, true, true, true, true, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false),
+        Set.of(1, 5, 6, 7, 8, 9),
         tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
 
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
@@ -344,16 +330,14 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
 
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfEuV2.getFieldValue("SpecialFeatureOptins"));
     Assertions
         .assertEquals(
-            Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false),
+            Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
             tcfEuV2.getFieldValue("PurposeConsents"));
     Assertions.assertEquals(
-        Arrays.asList(false, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false),
+        Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9),
         tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
 
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
@@ -382,15 +366,13 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
 
     Assertions.assertEquals(
-        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false),
+        Set.of(0),
         tcfEuV2.getFieldValue("SpecialFeatureOptins"));
     Assertions.assertEquals(
-        Arrays.asList(true, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(0),
         tcfEuV2.getFieldValue("PurposeConsents"));
     Assertions.assertEquals(
-        Arrays.asList(false, true, false, false, false, false, true, false, true, true, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(1, 6, 8, 9),
         tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
 
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));

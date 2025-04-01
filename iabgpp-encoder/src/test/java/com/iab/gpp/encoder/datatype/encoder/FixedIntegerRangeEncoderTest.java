@@ -49,7 +49,7 @@ public class FixedIntegerRangeEncoderTest {
     BitStringBuilder builder = new BitStringBuilder();
     IntegerSet set = new BitStringSet();
     set.addAll(Arrays.asList(6, 7, 2, 5));
-    FibonacciIntegerRangeEncoder.encode(builder, set);
+    FixedIntegerRangeEncoder.encode(builder, set);
     Assertions.assertEquals("00000000001000000000000000010100000000000001010000000000000111",
         builder.build().toString());
   }

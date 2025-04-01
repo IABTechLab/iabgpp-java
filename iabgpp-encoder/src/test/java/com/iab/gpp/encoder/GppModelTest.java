@@ -347,21 +347,17 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.VENDOR_LIST_VERSION, 413);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.USE_NON_STANDARD_STACKS, true);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT,
-        Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true));
+        Arrays.asList(6, 7, 8, 9, 10, 11));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(true, true, true, true, true, true, false, false, false, false, false, false, true, true, true,
-            true, true, true, false, false, false, false, false, false));
+        Arrays.asList(0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16, 17));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true, false, false, false,
-            false, false, false, true, true, true, true, true, true));
+        Arrays.asList(6, 7, 8, 9, 10, 11, 18, 19, 20, 21, 22, 23));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.VENDOR_EXPRESS_CONSENT, Arrays.asList(12, 24, 48));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.VENDOR_IMPLIED_CONSENT, Arrays.asList(18, 30));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true, true,
-            false, false, false, true, true, true, false, false, false));
+        Arrays.asList(0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false, false,
-            true, true, true, false, false, false, true, true, true));
+        Arrays.asList(3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.NUM_CUSTOM_PURPOSES, 3);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
         BitStringSet.of(1));
@@ -757,7 +753,7 @@ public class GppModelTest {
     GppModel fromObjectModel = new GppModel();
 
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS,
-        Arrays.asList(true, true, true, true, true, true, true, true, true, true));
+        Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS,
         Arrays.asList(32, 128, 81, 210, 755, 21, 173, 238));
 
@@ -768,8 +764,7 @@ public class GppModelTest {
     GppModel decodedModel = new GppModel(fromObjectModel.encode());
 
     Assertions.assertEquals(
-        Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false),
+        Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS));
     Assertions.assertEquals(Set.of(21, 32, 81, 128, 173, 210, 238, 755),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));

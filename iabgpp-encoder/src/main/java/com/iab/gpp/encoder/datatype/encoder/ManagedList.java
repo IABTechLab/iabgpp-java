@@ -32,4 +32,9 @@ public final class ManagedList<T> extends AbstractList<T> {
     }
     return prior;
   }
+  
+  @Override
+  public String toString() {
+    return delegate.toString();
+  }
 }
