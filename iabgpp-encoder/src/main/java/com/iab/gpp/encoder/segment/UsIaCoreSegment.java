@@ -10,26 +10,27 @@ import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
-import com.iab.gpp.encoder.field.UsFlField;
-import com.iab.gpp.encoder.section.UsFl;
+import com.iab.gpp.encoder.field.UsIaField;
+import com.iab.gpp.encoder.field.UsVaField;
+import com.iab.gpp.encoder.section.UsIa;
 
-public class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public class UsIaCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
   private AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
   private BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
-  public UsFlCoreSegment() {
+  public UsIaCoreSegment() {
     super();
   }
 
-  public UsFlCoreSegment(String encodedString) {
+  public UsIaCoreSegment(String encodedString) {
     super();
     this.decode(encodedString);
   }
 
   @Override
   public List<String> getFieldNames() {
-    return UsFlField.USFL_CORE_SEGMENT_FIELD_NAMES;
+    return UsIaField.USIA_CORE_SEGMENT_FIELD_NAMES;
   }
 
   @Override
@@ -46,29 +47,29 @@ public class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
     });
 
     EncodableBitStringFields fields = new EncodableBitStringFields();
-    fields.put(UsFlField.VERSION, new EncodableFixedInteger(6, UsFl.VERSION));
-    fields.put(UsFlField.PROCESSING_NOTICE,
+    fields.put(UsIaField.VERSION, new EncodableFixedInteger(6, UsIa.VERSION));
+    fields.put(UsIaField.PROCESSING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.SALE_OPT_OUT_NOTICE,
+    fields.put(UsIaField.SALE_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+    fields.put(UsIaField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.SALE_OPT_OUT,
+    fields.put(UsIaField.SENSITIVE_DATA_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.TARGETED_ADVERTISING_OPT_OUT,
+    fields.put(UsIaField.SALE_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.SENSITIVE_DATA_PROCESSING,
+    fields.put(UsIaField.TARGETED_ADVERTISING_OPT_OUT,
+        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsIaField.SENSITIVE_DATA_PROCESSING,
         new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsFlField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0))
-        .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsFlField.ADDITIONAL_DATA_PROCESSING_CONSENT,
+    fields.put(UsVaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.MSPA_COVERED_TRANSACTION,
+    fields.put(UsIaField.MSPA_COVERED_TRANSACTION,
         new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.MSPA_OPT_OUT_OPTION_MODE,
+    fields.put(UsIaField.MSPA_OPT_OUT_OPTION_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.MSPA_SERVICE_PROVIDER_MODE,
+    fields.put(UsIaField.MSPA_SERVICE_PROVIDER_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     return fields;
   }
@@ -89,7 +90,8 @@ public class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
       String bitString = base64UrlEncoder.decode(encodedString);
       bitStringEncoder.decode(bitString, getFieldNames(), fields);
     } catch (Exception e) {
-      throw new DecodingException("Unable to decode UsFlCoreSegment '" + encodedString + "'", e);
+      throw new DecodingException("Unable to decode UsIaCoreSegment '" + encodedString + "'", e);
     }
   }
+
 }

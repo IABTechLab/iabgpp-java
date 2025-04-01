@@ -9,7 +9,6 @@ import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsCoField;
 import com.iab.gpp.encoder.section.UsCo;
@@ -58,9 +57,8 @@ public class UsCoCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsCoField.TARGETED_ADVERTISING_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsCoField.SENSITIVE_DATA_PROCESSING,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0))
-            .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
+    fields.put(UsCoField.SENSITIVE_DATA_PROCESSING, new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0))
+        .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
     fields.put(UsCoField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsCoField.MSPA_COVERED_TRANSACTION,
@@ -91,76 +89,5 @@ public class UsCoCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
       throw new DecodingException("Unable to decode UsCoCoreSegment '" + encodedString + "'", e);
     }
   }
-
-  @Override
-  public void validate() {
-    Integer saleOptOutNotice = ((EncodableFixedInteger) fields.get(UsCoField.SALE_OPT_OUT_NOTICE)).getValue();
-    Integer saleOptOut = ((EncodableFixedInteger) fields.get(UsCoField.SALE_OPT_OUT)).getValue();
-    Integer targetedAdvertisingOptOutNotice =
-        ((EncodableFixedInteger) fields.get(UsCoField.TARGETED_ADVERTISING_OPT_OUT_NOTICE)).getValue();
-    Integer targetedAdvertisingOptOut =
-        ((EncodableFixedInteger) fields.get(UsCoField.TARGETED_ADVERTISING_OPT_OUT)).getValue();
-    Integer mspaServiceProviderMode =
-        ((EncodableFixedInteger) fields.get(UsCoField.MSPA_SERVICE_PROVIDER_MODE)).getValue();
-    Integer mspaOptOutOptionMode =
-        ((EncodableFixedInteger) fields.get(UsCoField.MSPA_OPT_OUT_OPTION_MODE)).getValue();
-
-    if (saleOptOutNotice == 0) {
-      if (saleOptOut != 0) {
-        throw new ValidationException(
-            "Invalid usco sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
-      }
-    } else if (saleOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
-        throw new ValidationException(
-            "Invalid usco sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
-      }
-    } else if (saleOptOutNotice == 2) {
-      if (saleOptOut != 1) {
-        throw new ValidationException(
-            "Invalid usco sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}");
-      }
-    }
-
-    if (targetedAdvertisingOptOutNotice == 0) {
-      if (targetedAdvertisingOptOut != 0) {
-        throw new ValidationException("Invalid usco targeted advertising notice / opt out combination: {"
-            + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
-      }
-    } else if (targetedAdvertisingOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
-        throw new ValidationException("Invalid usco targeted advertising notice / opt out combination: {"
-            + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
-      }
-    } else if (targetedAdvertisingOptOutNotice == 2) {
-      if (saleOptOut != 1) {
-        throw new ValidationException("Invalid usco targeted advertising notice / opt out combination: {"
-            + targetedAdvertisingOptOutNotice + " / " + targetedAdvertisingOptOut + "}");
-      }
-    }
-
-    if (mspaServiceProviderMode == 0) {
-      if (saleOptOutNotice != 0) {
-        throw new ValidationException("Invalid usco mspa service provider mode / sale opt out notice combination: {"
-            + mspaServiceProviderMode + " / " + saleOptOutNotice + "}");
-      }
-    } else if (mspaServiceProviderMode == 1) {
-      if (mspaOptOutOptionMode != 2) {
-        throw new ValidationException("Invalid usco mspa service provider / opt out option modes combination: {"
-            + mspaServiceProviderMode + " / " + mspaServiceProviderMode + "}");
-      }
-
-      if (saleOptOutNotice != 0) {
-        throw new ValidationException("Invalid usco mspa service provider mode / sale opt out notice combination: {"
-            + mspaServiceProviderMode + " / " + saleOptOutNotice + "}");
-      }
-    } else if (mspaServiceProviderMode == 2) {
-      if (mspaOptOutOptionMode != 1) {
-        throw new ValidationException("Invalid usco mspa service provider / opt out option modes combination: {"
-            + mspaServiceProviderMode + " / " + mspaOptOutOptionMode + "}");
-      }
-    }
-  }
-
 
 }
