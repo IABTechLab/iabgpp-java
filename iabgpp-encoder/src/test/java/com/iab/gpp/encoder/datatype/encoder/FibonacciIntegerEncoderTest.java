@@ -103,7 +103,7 @@ public class FibonacciIntegerEncoderTest {
 
   @Test
   public void testDecodeTooLarge() {
-    String large = FibonacciIntegerEncoder.encode(65536);
+    String large = FibonacciIntegerEncoder.encode(2 << 17);
     assertThrows(DecodingException.class, () -> FibonacciIntegerEncoder.decode(large));
   }
 }
