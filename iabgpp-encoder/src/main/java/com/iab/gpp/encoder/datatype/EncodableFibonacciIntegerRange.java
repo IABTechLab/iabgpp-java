@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.Collection;
-import java.util.List;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.BitStringSet;
@@ -9,7 +8,6 @@ import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
-import com.iab.gpp.encoder.datatype.encoder.ManagedSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -62,6 +60,6 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
 
   @Override
   public IntegerSet getValue() {
-    return new ManagedSet(this, super.getValue());
+    return new ManagedIntegerSet(this, super.getValue());
   }
 }

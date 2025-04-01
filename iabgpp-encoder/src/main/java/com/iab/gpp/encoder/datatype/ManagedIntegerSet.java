@@ -1,14 +1,15 @@
-package com.iab.gpp.encoder.datatype.encoder;
+package com.iab.gpp.encoder.datatype;
 
 import java.util.PrimitiveIterator;
-import com.iab.gpp.encoder.datatype.DataType;
+import com.iab.gpp.encoder.datatype.encoder.BaseIntegerSet;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 
-public final class ManagedSet extends IntegerSet {
+final class ManagedIntegerSet extends BaseIntegerSet {
   
   private final DataType<?> parent;
   private final IntegerSet delegate;
   
-  public ManagedSet(DataType<?> parent, IntegerSet delegate) {
+  ManagedIntegerSet(DataType<?> parent, IntegerSet delegate) {
     this.parent = parent;
     this.delegate = delegate;
   }

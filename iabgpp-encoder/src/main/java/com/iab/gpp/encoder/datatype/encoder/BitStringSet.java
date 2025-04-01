@@ -4,7 +4,7 @@ import java.util.BitSet;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator.OfInt;
 
-public final class BitStringSet extends IntegerSet {
+public final class BitStringSet extends BaseIntegerSet {
   static final int MAX_COLLECTION_SIZE = 16384;
 
   protected final BitSet bitSet;

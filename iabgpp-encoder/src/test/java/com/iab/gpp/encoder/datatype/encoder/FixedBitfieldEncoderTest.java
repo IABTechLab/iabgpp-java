@@ -1,7 +1,5 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedBitfieldEncoderTest {
 

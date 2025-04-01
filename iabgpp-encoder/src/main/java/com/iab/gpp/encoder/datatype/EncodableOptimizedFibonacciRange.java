@@ -6,7 +6,6 @@ import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
-import com.iab.gpp.encoder.datatype.encoder.ManagedSet;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFibonacciRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -68,6 +67,6 @@ public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitString
 
   @Override
   public IntegerSet getValue() {
-    return new ManagedSet(this, super.getValue());
+    return new ManagedIntegerSet(this, super.getValue());
   }
 }

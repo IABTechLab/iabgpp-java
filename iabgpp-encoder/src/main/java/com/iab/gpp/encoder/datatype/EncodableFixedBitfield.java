@@ -1,15 +1,11 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.BitStringSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
-import com.iab.gpp.encoder.datatype.encoder.ManagedSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -56,6 +52,6 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<I
 
   @Override
   public IntegerSet getValue() {
-    return new ManagedSet(this, super.getValue());
+    return new ManagedIntegerSet(this, super.getValue());
   }
 }

@@ -142,7 +142,6 @@ public class TcfEuV2Test {
     Assertions.assertEquals(2, tcfEuV2.getId());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testDecode3() {
     TcfEuV2 tcfEuV2 = new TcfEuV2(
@@ -245,7 +244,6 @@ public class TcfEuV2Test {
     Assertions.assertEquals(tcfEuV2.getFieldValue("VendorsDisclosed"), tcfEuV2.getVendorsDisclosed());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testDecode4() {
     TcfEuV2 tcfEuV2 = new TcfEuV2(
@@ -280,7 +278,6 @@ public class TcfEuV2Test {
     Assertions.assertEquals(280, ((IntegerSet) tcfEuV2.getFieldValue("VendorLegitimateInterests")).size());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testDecode5() {
     TcfEuV2 tcfEuV2 = new TcfEuV2(
@@ -349,6 +346,7 @@ public class TcfEuV2Test {
         tcfEuV2.getFieldValue("VendorLegitimateInterests"));
   }
   
+  @SuppressWarnings("unchecked")
   @Test
   public void testDecode7() throws DecodingException {
     TcfEuV2 tcfEuV2 = new TcfEuV2("COoC-kUOoC-kUAHABAENAwCoAIAAAELAAAwIF5wAoAAgAGAvMACX_ABBAAQAFA");

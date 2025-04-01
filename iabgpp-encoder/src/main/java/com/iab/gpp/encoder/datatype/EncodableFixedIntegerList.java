@@ -6,7 +6,6 @@ import java.util.List;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
-import com.iab.gpp.encoder.datatype.encoder.ManagedList;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -67,6 +66,6 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
 
   @Override
   public List<Integer> getValue() {
-    return new ManagedList<>(this, super.getValue());
+    return new ManagedFixedList<>(this, super.getValue());
   }
 }

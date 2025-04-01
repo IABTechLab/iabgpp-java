@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.ArrayList;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;

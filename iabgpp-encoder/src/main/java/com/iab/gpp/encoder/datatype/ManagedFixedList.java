@@ -1,15 +1,14 @@
-package com.iab.gpp.encoder.datatype.encoder;
+package com.iab.gpp.encoder.datatype;
 
 import java.util.AbstractList;
 import java.util.List;
-import com.iab.gpp.encoder.datatype.DataType;
 
-public final class ManagedList<T> extends AbstractList<T> {
+final class ManagedFixedList<T> extends AbstractList<T> {
   
   private final DataType<?> parent;
   private final List<T> delegate;
   
-  public ManagedList(DataType<?> parent, List<T> delegate) {
+  ManagedFixedList(DataType<?> parent, List<T> delegate) {
     this.parent = parent;
     this.delegate = delegate;
   }
