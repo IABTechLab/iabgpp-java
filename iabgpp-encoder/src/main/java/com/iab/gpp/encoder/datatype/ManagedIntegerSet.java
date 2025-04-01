@@ -1,6 +1,8 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.PrimitiveIterator;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import com.iab.gpp.encoder.datatype.encoder.BaseIntegerSet;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 
@@ -33,6 +35,16 @@ final class ManagedIntegerSet extends BaseIntegerSet {
   @Override
   public PrimitiveIterator.OfInt iterator() {
     return delegate.iterator();
+  }
+  
+  @Override
+  public Stream<Integer> stream(){
+    return delegate.stream();
+  }
+  
+  @Override
+  public IntStream intStream() {
+    return delegate.intStream();
   }
   
   @Override

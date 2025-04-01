@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.iab.gpp.encoder.datatype.encoder.BitStringSet;
+import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
@@ -360,9 +360,9 @@ public class GppModelTest {
         Arrays.asList(3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.NUM_CUSTOM_PURPOSES, 3);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
-        BitStringSet.of(1));
+        IntegerBitSet.of(1));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
-        BitStringSet.of(0,2));
+        IntegerBitSet.of(0,2));
 
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.LAST_UPDATED, utcDateTime);
@@ -611,6 +611,7 @@ public class GppModelTest {
     Assertions.assertEquals(2, tcfCaV1Section.getCmpVersion());
     Assertions.assertEquals(413, tcfCaV1Section.getVendorListVersion());
     Assertions.assertEquals(true, tcfCaV1Section.getUseNonStandardStacks());
+    Assertions.assertTrue(tcfCaV1Section.getSpecialFeatureExpressConsent().intStream().anyMatch(x -> x== 7));
     Assertions.assertEquals(Set.of(6, 7, 8, 9, 10, 11),
         tcfCaV1Section.getSpecialFeatureExpressConsent());
     Assertions

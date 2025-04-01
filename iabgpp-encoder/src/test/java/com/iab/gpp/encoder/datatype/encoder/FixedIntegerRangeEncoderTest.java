@@ -46,7 +46,7 @@ public class FixedIntegerRangeEncoderTest {
   @Test
   public void testEncode5() {
     BitStringBuilder builder = new BitStringBuilder();
-    IntegerSet set = new BitStringSet();
+    IntegerSet set = new IntegerBitSet();
     set.addAll(Arrays.asList(6, 7, 2, 5));
     FixedIntegerRangeEncoder.encode(builder, set);
     Assertions.assertEquals("00000000001000000000000000010100000000000001010000000000000111",

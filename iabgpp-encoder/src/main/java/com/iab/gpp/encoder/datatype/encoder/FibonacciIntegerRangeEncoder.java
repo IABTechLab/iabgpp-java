@@ -52,7 +52,7 @@ public class FibonacciIntegerRangeEncoder {
     }
 
     int count = FixedIntegerEncoder.decode(bitString, 0, 12);
-    BitStringSet value = new BitStringSet();
+    IntegerBitSet value = new IntegerBitSet();
 
     int offset = 0;
     int startIndex = 12;

@@ -48,7 +48,7 @@ public class FixedIntegerRangeEncoder {
     }
 
     int count = FixedIntegerEncoder.decode(bitString, 0, 12);
-    BitStringSet value = new BitStringSet();
+    IntegerBitSet value = new IntegerBitSet();
     int startIndex = 12;
     for (int i = 0; i < count; i++) {
       boolean group = BooleanEncoder.decode(bitString, startIndex, 1);

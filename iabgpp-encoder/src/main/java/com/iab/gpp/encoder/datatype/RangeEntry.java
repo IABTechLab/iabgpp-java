@@ -2,7 +2,7 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.Collection;
 import java.util.Set;
-import com.iab.gpp.encoder.datatype.encoder.BitStringSet;
+import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 
 public class RangeEntry {
 
@@ -14,7 +14,7 @@ public class RangeEntry {
     super();
     this.key = key;
     this.type = type;
-    this.ids = new BitStringSet();
+    this.ids = new IntegerBitSet();
     this.ids.addAll(ids);
   }
 

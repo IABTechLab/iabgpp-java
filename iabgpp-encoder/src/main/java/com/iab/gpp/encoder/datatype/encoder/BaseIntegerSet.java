@@ -3,9 +3,12 @@ package com.iab.gpp.encoder.datatype.encoder;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.PrimitiveIterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 public abstract class BaseIntegerSet extends AbstractSet<Integer> implements IntegerSet {
-  public abstract boolean containsInt(int value);
   
   @Override
   public final boolean contains(Object value) {
@@ -22,8 +25,6 @@ public abstract class BaseIntegerSet extends AbstractSet<Integer> implements Int
     }
     return addInt((Integer) value);
   }
-  
-  public abstract boolean addInt(int value);
   
   @Override
   public final boolean remove(Object value) {
@@ -57,8 +58,4 @@ public abstract class BaseIntegerSet extends AbstractSet<Integer> implements Int
     return modified;
   }
 
-  public abstract boolean removeInt(int value);
-  
-  @Override
-  public abstract PrimitiveIterator.OfInt iterator();
 }

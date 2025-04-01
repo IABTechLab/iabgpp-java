@@ -41,7 +41,7 @@ public class OptimizedFixedRangeEncoder {
     } else {
       BitString bits = bitString.substring(17);
       int length = bits.length();
-      BitStringSet value = new BitStringSet(length + 1);
+      IntegerBitSet value = new IntegerBitSet(length + 1);
       for (int i = 0; i < length; i++) {
         if (bits.getValue(i)) {
           value.addInt(i + 1);

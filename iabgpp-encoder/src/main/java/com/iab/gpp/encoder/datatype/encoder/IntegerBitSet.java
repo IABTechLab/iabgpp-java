@@ -2,35 +2,39 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.BitSet;
 import java.util.NoSuchElementException;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.PrimitiveIterator.OfInt;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
-public final class BitStringSet extends BaseIntegerSet {
+public final class IntegerBitSet extends BaseIntegerSet {
   static final int MAX_COLLECTION_SIZE = 16384;
 
   protected final BitSet bitSet;
   protected final int from;
   protected final int to;
 
-  public BitStringSet(BitSet bitSet, int from, int to) {
+  public IntegerBitSet(BitSet bitSet, int from, int to) {
     this.bitSet = bitSet;
     this.from = from;
     this.to = to;
   }
   
-  public static final BitStringSet withLimit(int limit) {
-    return new BitStringSet(new BitSet(0), 0, limit);
+  public static final IntegerBitSet withLimit(int limit) {
+    return new IntegerBitSet(new BitSet(0), 0, limit);
   }
   
-  public BitStringSet(int size) {
+  public IntegerBitSet(int size) {
     this(new BitSet(size), 0, MAX_COLLECTION_SIZE);
   }
   
-  public BitStringSet() {
+  public IntegerBitSet() {
     this(0);
   }
 
-  public static final BitStringSet of(int... values) {
-    BitStringSet out = new BitStringSet();
+  public static final IntegerBitSet of(int... values) {
+    IntegerBitSet out = new IntegerBitSet();
     for (int value : values) {
       out.addInt(value);
     }
@@ -91,6 +95,18 @@ public final class BitStringSet extends BaseIntegerSet {
     };
   }
 
+  @Override
+  public Spliterator.OfInt spliterator(){
+    return Spliterators.spliteratorUnknownSize(
+        iterator(),
+        Spliterator.ORDERED | Spliterator.DISTINCT | Spliterator.IMMUTABLE | Spliterator.NONNULL);
+  }
+
+  @Override
+  public IntStream intStream() {
+    return StreamSupport.intStream(spliterator(), false);
+  }
+  
   public void addRange(int start, int end) {
     int realStart = from + start;
     int realEnd = from + end;
