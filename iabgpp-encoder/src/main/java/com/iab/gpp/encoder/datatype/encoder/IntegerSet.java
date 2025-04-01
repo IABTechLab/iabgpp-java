@@ -15,7 +15,6 @@ public interface IntegerSet extends Set<Integer> {
           return false;
       }
     }
-    String.join(null, null)
     return true;
   }
 
