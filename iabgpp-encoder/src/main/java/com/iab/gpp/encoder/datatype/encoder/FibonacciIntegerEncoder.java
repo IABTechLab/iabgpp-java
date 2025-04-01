@@ -39,6 +39,11 @@ public class FibonacciIntegerEncoder {
   }
 
   public static int decode(String bitString) throws DecodingException {
+    // enforce a length restriction to avoid overflows
+    // 2^16 has a bit string length of 24
+    if (bitString.length() > 24) {
+      throw new DecodingException("FibonacciInteger too long");
+    }
     if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() < 2
         || bitString.indexOf("11") != bitString.length() - 2) {
       throw new DecodingException("Undecodable FibonacciInteger '" + bitString + "'");
