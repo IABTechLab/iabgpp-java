@@ -1,0 +1,86 @@
+name: IABGPP-Java Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The release version (e.g., 3.x.x)'
+        required: true
+        default: ''
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository with full history for tagging
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Set up Java (assuming Java 11, adjust if different)
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      # Import GPG secret key for signing
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_SECRET_KEY }}" > secret_key.asc
+          gpg --import --no-tty --batch secret_key.asc || { echo "GPG import failed"; cat secret_key.asc; exit 1; }
+          gpg --list-secret-keys
+
+      # Generate settings.xml with Maven repository credentials
+      - name: Create settings.xml
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml << EOF
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <localRepository>~/.m2</localRepository> <interactiveMode>false</interactiveMode> <offline>false</offline><pluginGroups> <pluginGroup>org.sonatype.plugins</pluginGroup> </pluginGroups> <servers> <server> <id>sonatype-nexus-snapshots</id> <username>TiW/t45q</username> <password>${{ secrets.SONATYPE_PWD }}</password> </server> <server> <id>sonatype-nexus-staging</id> <username>TiW/t45q</username> <password>${{ secrets.SONATYPE_PWD_STAGING }}</password> </server> </servers>
+          </settings>
+          EOF
+
+      # Pull latest changes from master
+      - name: Pull latest changes
+        run: git pull origin master
+
+      # Set the release version in pom.xml
+      - name: Set release version
+        run: mvn versions:set -DnewVersion=${{ github.event.inputs.version }} -DgenerateBackupPoms=false
+
+      # Build and deploy the release
+      - name: Deploy release
+        run: |
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          export GPG_TTY=$(tty || echo /dev/tty)
+          mvn clean deploy --settings ~/.m2/settings.xml -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}" -Prelease -Dmaven.javadoc.skip=true
+
+      # Commit the release version and create a tag
+      - name: Commit and tag release
+        run: |
+          git config user.email "mayank@iabtechlab.com"
+          git config user.name "Mayank Mishra"
+          git add .
+          git commit -m "${{ github.event.inputs.version }}"
+          git tag "${{ github.event.inputs.version }}"
+
+      # Set the next snapshot version
+      - name: Set next snapshot version
+        run: mvn versions:set -DnextSnapshot=true -DgenerateBackupPoms=false
+
+      # Commit the snapshot version
+      - name: Commit snapshot version
+        run: |
+          git add .
+          git commit -m "${{ github.event.inputs.version }}-SNAPSHOT"
+
+      # Push commits and tags to GitHub
+      - name: Push changes
+        run: |
+          git status
+          git push; git push --tags
+        env:
+          GITHUB_TOKEN: ${{secrets.PAT}}
