@@ -8,7 +8,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedIntegerRangeEncoder {
 
-  private static final int MAX_SIZE = 4096;
+  private static final int MAX_SIZE = 8192;
   private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
   public static String encode(List<Integer> value) {
