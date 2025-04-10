@@ -4,11 +4,14 @@ import java.util.BitSet;
 import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.logging.Logger;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 public final class IntegerBitSet extends BaseIntegerSet {
+  private static final Logger LOGGER = Logger.getLogger(IntegerBitSet.class.getName());
+
   static final int MAX_COLLECTION_SIZE = 8192;
 
   protected final BitSet bitSet;
@@ -98,12 +101,21 @@ public final class IntegerBitSet extends BaseIntegerSet {
   public IntStream intStream() {
     return StreamSupport.intStream(spliterator(), false);
   }
+  
+  private static final void logOutOfRange(int value) {
+    LOGGER.warning("Exceeding IntegerBitSet.MAX_COLLECTION_SIZE: "+ value);
+  }
 
   public void addRange(int start, int end) {
     int realStart = from + start;
     int realEnd = from + end;
-    if (realStart >= to || realEnd > to) {
-      throw new IndexOutOfBoundsException();
+    if (realStart >= to) {
+      logOutOfRange(start);
+      return;
+    }
+    if (realEnd > to) {
+      logOutOfRange(end);
+      realEnd = to;
     }
     bitSet.set(realStart, realEnd);
   }
@@ -111,7 +123,8 @@ public final class IntegerBitSet extends BaseIntegerSet {
   public boolean addInt(int value) {
     int offset = from + value;
     if (offset >= to) {
-      throw new IndexOutOfBoundsException();
+      logOutOfRange(value);
+      return false;
     }
     boolean present = bitSet.get(offset);
     if (present) {
@@ -124,7 +137,8 @@ public final class IntegerBitSet extends BaseIntegerSet {
   public boolean removeInt(int value) {
     int offset = from + value;
     if (offset >= to) {
-      throw new IndexOutOfBoundsException();
+      logOutOfRange(value);
+      return false;
     }
     boolean present = bitSet.get(offset);
     if (!present) {
