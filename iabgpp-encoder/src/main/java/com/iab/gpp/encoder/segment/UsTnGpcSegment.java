@@ -43,7 +43,7 @@ public final class UsTnGpcSegment extends AbstractLazilyEncodableSegment<Encodab
 
   @Override
   protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields fields) {
-    if(encodedString == null || encodedString.isEmpty()) {
+    if(encodedString == null || encodedString.length() == 0) {
       this.fields.reset(fields);
     }
     try {

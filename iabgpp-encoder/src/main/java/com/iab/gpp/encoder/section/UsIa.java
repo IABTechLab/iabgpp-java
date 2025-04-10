@@ -45,7 +45,7 @@ public class UsIa extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
-    if (encodedString != null && !encodedString.isEmpty()) {
+    if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
 
       if (encodedSegments.size() > 0) {
