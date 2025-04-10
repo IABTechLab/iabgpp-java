@@ -3,7 +3,7 @@ package com.iab.gpp.encoder.datatype;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 
-public class UnencodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
+public final class UnencodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
 
   protected UnencodableBoolean() {
     super(true);

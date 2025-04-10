@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.field;
 
-public class TcfEuV2Field {
+public final class TcfEuV2Field {
+  private TcfEuV2Field() {}
 
   public static final String VERSION = "Version";
   public static final String CREATED = "Created";

@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.field;
 
-public class UsMtField {
+public final class UsMtField {
+  private UsMtField() {}
 
   public static final String VERSION = "Version";
   public static final String SHARING_NOTICE = "SharingNotice";

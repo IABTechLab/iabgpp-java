@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Sections {
+public final class Sections {
+  private Sections() {}
 
   public static final List<String> SECTION_ORDER;
 

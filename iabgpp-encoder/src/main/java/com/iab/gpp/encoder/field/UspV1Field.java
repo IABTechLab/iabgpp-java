@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.field;
 
-public class UspV1Field {
+public final class UspV1Field {
+  private UspV1Field() {}
 
   public static final String VERSION = "Version";
   public static final String NOTICE = "Notice";

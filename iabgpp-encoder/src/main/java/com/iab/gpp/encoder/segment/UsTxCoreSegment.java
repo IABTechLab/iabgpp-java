@@ -11,10 +11,9 @@ import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsTxField;
-import com.iab.gpp.encoder.field.UsVaField;
 import com.iab.gpp.encoder.section.UsTx;
 
-public class UsTxCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public final class UsTxCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
   private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
   private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
@@ -45,7 +44,7 @@ public class UsTxCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
     fields.put(UsTxField.SENSITIVE_DATA_PROCESSING,
         new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsVaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+    fields.put(UsTxField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsTxField.ADDITIONAL_DATA_PROCESSING_CONSENT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));

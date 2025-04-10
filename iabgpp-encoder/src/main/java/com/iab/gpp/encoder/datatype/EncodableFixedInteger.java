@@ -6,7 +6,7 @@ import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<Integer> {
+public final class EncodableFixedInteger extends AbstractEncodableBitStringDataType<Integer> {
 
   private int bitStringLength;
 

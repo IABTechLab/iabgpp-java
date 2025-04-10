@@ -22,11 +22,7 @@ public class OptimizedFixedRangeEncoder {
       FixedIntegerEncoder.encode(builder, max, 16);
       builder.append(false);
       for (int i = 0; i < max; i++) {
-        if (value.containsInt(i + 1)) {
-          builder.append(true);
-        } else {
-          builder.append(false);
-        }
+        builder.append(value.containsInt(i + 1));
       }
     }
   }

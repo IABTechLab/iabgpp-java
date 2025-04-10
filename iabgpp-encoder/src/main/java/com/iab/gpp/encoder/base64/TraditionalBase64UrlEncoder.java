@@ -2,7 +2,7 @@ package com.iab.gpp.encoder.base64;
 
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 
-public class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder {
+public final class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder {
 
   private static final TraditionalBase64UrlEncoder instance = new TraditionalBase64UrlEncoder();
 

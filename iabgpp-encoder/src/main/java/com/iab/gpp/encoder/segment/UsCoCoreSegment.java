@@ -13,7 +13,7 @@ import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsCoField;
 import com.iab.gpp.encoder.section.UsCo;
 
-public class UsCoCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public final class UsCoCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
   private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
   private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();

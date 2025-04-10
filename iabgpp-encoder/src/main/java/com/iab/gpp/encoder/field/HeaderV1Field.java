@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.field;
 
-public class HeaderV1Field {
+public final class HeaderV1Field {
+  private HeaderV1Field() {}
 
   public static final String ID = "Id";
   public static final String VERSION = "Version";

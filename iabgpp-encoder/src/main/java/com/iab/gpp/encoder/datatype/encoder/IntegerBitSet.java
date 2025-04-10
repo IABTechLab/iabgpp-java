@@ -33,14 +33,6 @@ public final class IntegerBitSet extends BaseIntegerSet {
     this(0);
   }
 
-  public static final IntegerBitSet of(int... values) {
-    IntegerBitSet out = new IntegerBitSet();
-    for (int value : values) {
-      out.addInt(value);
-    }
-    return out;
-  }
-
   @Override
   public int size() {
     OfInt it = iterator();

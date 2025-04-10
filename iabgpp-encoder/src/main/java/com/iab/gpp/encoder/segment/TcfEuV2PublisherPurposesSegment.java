@@ -13,7 +13,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 
-public class TcfEuV2PublisherPurposesSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public final class TcfEuV2PublisherPurposesSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
   private static final AbstractBase64UrlEncoder base64UrlEncoder = TraditionalBase64UrlEncoder.getInstance();
   private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();

@@ -3,7 +3,7 @@ package com.iab.gpp.encoder.datatype;
 import java.util.function.Predicate;
 import com.iab.gpp.encoder.error.ValidationException;
 
-public class UnencodableCharacter implements DataType<Character> {
+public final class UnencodableCharacter implements DataType<Character> {
 
   private boolean dirty = false;
   private Predicate<Character> validator;

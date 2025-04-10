@@ -7,7 +7,7 @@ import com.iab.gpp.encoder.field.GenericFields;
 import com.iab.gpp.encoder.field.UspV1Field;
 import com.iab.gpp.encoder.section.UspV1;
 
-public class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFields> {
+public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFields> {
 
   public UspV1CoreSegment() {
     super();

@@ -8,7 +8,7 @@ import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedDateTime> {
+public final class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedDateTime> {
 
   protected EncodableDatetime() {
     super(true);

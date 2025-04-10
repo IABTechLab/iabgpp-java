@@ -6,7 +6,7 @@ import com.iab.gpp.encoder.datatype.encoder.BooleanEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
+public final class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
 
   public EncodableBoolean(Boolean value) {
     super(true);

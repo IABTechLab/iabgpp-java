@@ -11,7 +11,7 @@ import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<IntegerSet> {
 
   private IntSupplier getLengthSupplier;
 

@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.field;
 
-public class UsTnField {
+public final class UsTnField {
+  private UsTnField() {}
 
   public static final String VERSION = "Version";
   public static final String PROCESSING_NOTICE = "ProcessingNotice";

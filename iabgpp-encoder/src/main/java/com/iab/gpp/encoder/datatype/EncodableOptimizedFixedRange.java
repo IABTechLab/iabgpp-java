@@ -11,7 +11,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 
-public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<IntegerSet> {
 
   public EncodableOptimizedFixedRange() {
     super(true);

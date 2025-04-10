@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.field;
 
-public class UsCaField {
+public final class UsCaField {
+  private UsCaField() {}
 
   public static final String VERSION = "Version";
   public static final String SALE_OPT_OUT_NOTICE = "SaleOptOutNotice";

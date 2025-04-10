@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<List<Integer>> {
+public final class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<List<Integer>> {
 
   private int elementBitStringLength;
   private int numElements;

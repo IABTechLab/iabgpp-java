@@ -7,7 +7,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 
-public class BitStringEncoder {
+public final class BitStringEncoder {
 
   private static final BitStringEncoder instance = new BitStringEncoder();
 

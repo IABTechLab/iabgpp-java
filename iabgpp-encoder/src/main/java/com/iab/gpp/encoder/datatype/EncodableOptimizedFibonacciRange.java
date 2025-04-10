@@ -10,7 +10,7 @@ import com.iab.gpp.encoder.datatype.encoder.OptimizedFibonacciRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<IntegerSet> {
 
   protected EncodableOptimizedFibonacciRange() {
     super(true);

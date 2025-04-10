@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<IntegerSet> {
 
   private final int numElements;
 

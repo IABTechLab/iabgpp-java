@@ -2,7 +2,7 @@ package com.iab.gpp.encoder.base64;
 
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 
-public class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
+public final class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
 
   private static final CompressedBase64UrlEncoder instance = new CompressedBase64UrlEncoder();
 
