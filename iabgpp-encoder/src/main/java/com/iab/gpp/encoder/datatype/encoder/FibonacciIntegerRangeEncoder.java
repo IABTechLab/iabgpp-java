@@ -8,6 +8,8 @@ import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerRangeEncoder {
 
+  // NOTE: This is a value roughly the 2x the size of this list
+  // https://tools.iabtechlab.com/transparencycenter/explorer/business/gpp
   static final int MAX_SIZE = 8192;
   private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
