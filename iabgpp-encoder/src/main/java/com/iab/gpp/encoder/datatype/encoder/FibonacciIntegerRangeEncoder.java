@@ -3,11 +3,13 @@ package com.iab.gpp.encoder.datatype.encoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerRangeEncoder {
 
+  private static final Logger LOGGER = Logger.getLogger(FibonacciIntegerRangeEncoder.class.getName());
   // NOTE: This is a value roughly the 2x the size of this list
   // https://tools.iabtechlab.com/transparencycenter/explorer/business/gpp
   static final int MAX_SIZE = 8192;
@@ -74,7 +76,8 @@ public class FibonacciIntegerRangeEncoder {
         startIndex = index + 2;
 
         if (value.size() + (end - start) > MAX_SIZE) {
-          throw new DecodingException("FibonacciIntegerRange has too many values");
+          LOGGER.warning("FibonacciIntegerRange has too many values");
+          break;
         }
         for (int j = start; j <= end; j++) {
           value.add(j);
@@ -84,7 +87,8 @@ public class FibonacciIntegerRangeEncoder {
         int val = FibonacciIntegerEncoder.decode(bitString.substring(startIndex, index + 2)) + offset;
         offset = val;
         if (value.size() == MAX_SIZE) {
-          throw new DecodingException("FibonacciIntegerRange has too many values");
+          LOGGER.warning("FibonacciIntegerRange has too many values");
+          break;
         }
         value.add(val);
         startIndex = index + 2;
