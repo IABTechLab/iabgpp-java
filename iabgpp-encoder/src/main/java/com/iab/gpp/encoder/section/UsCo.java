@@ -47,11 +47,11 @@ public class UsCo extends AbstractLazilyEncodableSection {
   protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-      
+
       if (encodedSegments.size() > 0) {
         segments.get(0).decode(encodedSegments.get(0));
       }
-      
+
       if (encodedSegments.size() > 1) {
         segments.get(1).setFieldValue(UsCoField.GPC_SEGMENT_INCLUDED, true);
         segments.get(1).decode(encodedSegments.get(1));
@@ -59,25 +59,25 @@ public class UsCo extends AbstractLazilyEncodableSection {
         segments.get(1).setFieldValue(UsCoField.GPC_SEGMENT_INCLUDED, false);
       }
     }
-    
+
     return segments;
   }
 
   @Override
   protected CharSequence encodeSection(List<EncodableSegment> segments) {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
-    
+
     if(!segments.isEmpty()) {
       encodedSegments.add(segments.get(0).encodeCharSequence());
       if(segments.size() >= 2 && segments.get(1).getFieldValue(UsCoField.GPC_SEGMENT_INCLUDED).equals(true)) {
         encodedSegments.add(segments.get(1).encodeCharSequence());
       }
     }
-    
+
     return SlicedCharSequence.join('.',  encodedSegments);
   }
 
-  
+
   public Integer getSharingNotice() {
     return (Integer) this.getFieldValue(UsCoField.SHARING_NOTICE);
   }

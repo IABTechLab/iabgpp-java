@@ -12,23 +12,23 @@ public abstract class Fields<T extends DataType<?>> {
     this.fieldNames = fieldNames;
     this.values = new Object[fieldNames.getNames().size()];
   }
-  
+
   public List<String> getNames() {
     return fieldNames.getNames();
   }
-  
+
   public boolean containsKey(String key) {
     Integer index = fieldNames.convertKey(key);
     return index != null && values[index] != null;
   }
-  
+
   public void put(String key, T value) {
     Integer index = fieldNames.convertKey(key);
     if (index != null) {
       values[index] = value;
     }
   }
-  
+
   @SuppressWarnings("unchecked")
   public T get(int index) {
     return (T) values[index];

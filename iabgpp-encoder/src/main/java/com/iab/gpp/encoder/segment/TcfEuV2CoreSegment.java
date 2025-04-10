@@ -35,7 +35,7 @@ public class TcfEuV2CoreSegment extends AbstractLazilyEncodableSegment<Encodable
   @Override
   protected EncodableBitStringFields initializeFields() {
     ZonedDateTime date = ZonedDateTime.now();
-    
+
     EncodableBitStringFields fields = new EncodableBitStringFields(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES);
     fields.put(TcfEuV2Field.VERSION, new EncodableFixedInteger(6, TcfEuV2.VERSION));
     fields.put(TcfEuV2Field.CREATED, new EncodableDatetime(date));

@@ -56,7 +56,7 @@ public class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
     this.value.clear();
     this.value.addAll((Collection<Integer>) value);
   }
-  
+
   @Override
   public IntegerSet getValue() {
     return new ManagedIntegerSet(this, super.getValue());

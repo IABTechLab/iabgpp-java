@@ -47,11 +47,11 @@ public class UsIa extends AbstractLazilyEncodableSection {
   protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     if (encodedString != null && !encodedString.isEmpty()) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-      
+
       if (encodedSegments.size() > 0) {
         segments.get(0).decode(encodedSegments.get(0));
       }
-      
+
       if (encodedSegments.size() > 1) {
         segments.get(1).setFieldValue(UsIaField.GPC_SEGMENT_INCLUDED, true);
         segments.get(1).decode(encodedSegments.get(1));

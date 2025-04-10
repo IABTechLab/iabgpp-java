@@ -10,15 +10,15 @@ import com.iab.gpp.encoder.field.EncodableBitStringFields;
 public class BitStringEncoder {
 
   private static final BitStringEncoder instance = new BitStringEncoder();
-  
+
   private BitStringEncoder() {
-    
+
   }
-  
+
   public static BitStringEncoder getInstance() {
     return instance;
   }
-  
+
   public BitStringBuilder encode(EncodableBitStringFields fields) {
     BitStringBuilder bitString = new BitStringBuilder();
     List<String> fieldNames = fields.getNames();

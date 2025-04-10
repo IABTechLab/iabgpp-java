@@ -55,7 +55,7 @@ public class TcfEuV2Field {
       TcfEuV2Field.PUBLISHER_RESTRICTIONS
   );
   //@formatter:on
-  
+
   //@formatter:off
   public static final FieldNames TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE,
@@ -66,14 +66,14 @@ public class TcfEuV2Field {
       TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS
   );
   //@formatter:on
-  
+
   //@formatter:off
   public static final FieldNames TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE,
       TcfEuV2Field.VENDORS_ALLOWED
   );
   //@formatter:on
-  
+
   //@formatter:off
   public static final FieldNames TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE,

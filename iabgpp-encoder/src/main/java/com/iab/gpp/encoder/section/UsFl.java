@@ -46,7 +46,7 @@ public class UsFl extends AbstractLazilyEncodableSection {
   protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     if(encodedString != null && !encodedString.isEmpty()) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-  
+
       for (int i = 0; i < segments.size(); i++) {
         if (encodedSegments.size() > i) {
           segments.get(i).decode(encodedSegments.get(i));

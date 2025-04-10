@@ -18,12 +18,12 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
   protected AbstractEncodableBitStringDataType(boolean hardFailIfMissing) {
     this.hardFailIfMissing = hardFailIfMissing;
   }
-  
+
   public AbstractEncodableBitStringDataType<T> withValidator(Predicate<T> validator) {
     this.validator = validator;
     return this;
   }
-  
+
   public boolean hasValue() {
     return this.value != null;
   }

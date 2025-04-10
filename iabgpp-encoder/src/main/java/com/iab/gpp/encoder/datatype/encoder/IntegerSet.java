@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public interface IntegerSet extends Set<Integer> {
   boolean containsInt(int value);
-  
+
   default boolean containsAny(Collection<?> c) {
     for (Object e : c) {
       if (!contains(e)) {
@@ -20,9 +20,9 @@ public interface IntegerSet extends Set<Integer> {
   boolean addInt(int value);
 
   boolean removeInt(int value);
-  
+
   IntStream intStream();
-  
+
   @Override
   PrimitiveIterator.OfInt iterator();
 }

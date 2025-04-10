@@ -18,7 +18,7 @@ public class UsTnField {
   public static final String GPC_SEGMENT_TYPE = "GpcSegmentType";
   public static final String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
   public static final String GPC = "Gpc";
-  
+
   //@formatter:off
   public static final FieldNames USTN_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsTnField.VERSION,
@@ -35,7 +35,7 @@ public class UsTnField {
       UsTnField.MSPA_SERVICE_PROVIDER_MODE
   );
   //@formatter:on
-  
+
   //@formatter:off
   public static final FieldNames USTN_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsTnField.GPC_SEGMENT_TYPE,

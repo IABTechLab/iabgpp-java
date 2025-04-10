@@ -44,7 +44,7 @@ public final class BitString {
     }
     return builder.build();
   }
-  
+
   public IntegerSet toIntegerSet() {
     return new IntegerBitSet(bitSet, from, to);
   }

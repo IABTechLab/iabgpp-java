@@ -15,7 +15,7 @@ public interface EncodableSection {
   void setFieldValue(String fieldName, Object value);
 
   String encode();
-  
+
   CharSequence encodeCharSequence();
 
   void decode(CharSequence encodedString);

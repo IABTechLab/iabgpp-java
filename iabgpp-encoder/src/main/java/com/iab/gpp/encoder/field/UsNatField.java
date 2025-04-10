@@ -43,7 +43,7 @@ public class UsNatField {
       UsNatField.MSPA_SERVICE_PROVIDER_MODE
    );
   //@formatter:on
-  
+
   //@formatter:off
   public static final FieldNames USNAT_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsNatField.GPC_SEGMENT_TYPE,

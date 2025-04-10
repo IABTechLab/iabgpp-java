@@ -17,7 +17,7 @@ import com.iab.gpp.encoder.segment.TcfEuV2VendorsAllowedSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2VendorsDisclosedSegment;
 
 public class TcfEuV2 extends AbstractLazilyEncodableSection {
-  
+
   public static final int ID = 2;
   public static final int VERSION = 2;
   public static final String NAME = "tcfeuv2";
@@ -50,29 +50,29 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
   protected List<EncodableSegment> initializeSegments() {
     return Arrays.asList(new TcfEuV2CoreSegment(), new TcfEuV2PublisherPurposesSegment(), new TcfEuV2VendorsAllowedSegment(), new TcfEuV2VendorsDisclosedSegment());
   }
-  
+
   @Override
   public List<EncodableSegment> decodeSection(CharSequence encodedString) {
     if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
       for (int i = 0; i < encodedSegments.size(); i++) {
-        
+
         /**
          * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
-         * 
+         *
          * A-H     = '000' = 0
          * I-P     = '001' = 1
          * Q-X     = '010' = 2
          * Y-Z,a-f = '011' = 3
-         * 
-         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved 
+         *
+         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
          * for the encoding version which only coincidentally works here because the version value is less than 8.
          */
-        
+
         CharSequence encodedSegment = encodedSegments.get(i);
         if (encodedSegment.length() > 0) {
           char firstChar = encodedSegment.charAt(0);
-          
+
           // unfortunately, the segment ordering doesn't match the segment ids
           if(firstChar >= 'A' && firstChar <= 'H') {
             segments.get(0).decode(encodedSegment);
@@ -88,7 +88,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
         }
       }
     }
-    
+
     return segments;
   }
 
@@ -129,7 +129,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
     }
   }
 
-  
+
   public ZonedDateTime getCreated() {
     return (ZonedDateTime) this.getFieldValue(TcfEuV2Field.CREATED);
   }
@@ -242,6 +242,6 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
   public IntegerSet getVendorsDisclosed() {
     return (IntegerSet) this.getFieldValue(TcfEuV2Field.VENDORS_DISCLOSED);
   }
-  
-  
+
+
 }

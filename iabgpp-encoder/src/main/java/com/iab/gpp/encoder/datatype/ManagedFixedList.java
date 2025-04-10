@@ -4,10 +4,10 @@ import java.util.AbstractList;
 import java.util.List;
 
 final class ManagedFixedList<T> extends AbstractList<T> {
-  
+
   private final DataType<?> parent;
   private final List<T> delegate;
-  
+
   ManagedFixedList(DataType<?> parent, List<T> delegate) {
     this.parent = parent;
     this.delegate = delegate;
@@ -31,7 +31,7 @@ final class ManagedFixedList<T> extends AbstractList<T> {
     }
     return prior;
   }
-  
+
   @Override
   public String toString() {
     return delegate.toString();

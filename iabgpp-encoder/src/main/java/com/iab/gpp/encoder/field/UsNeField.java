@@ -18,7 +18,7 @@ public class UsNeField {
   public static final String GPC_SEGMENT_TYPE = "GpcSegmentType";
   public static final String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
   public static final String GPC = "Gpc";
-  
+
   //@formatter:off
   public static final FieldNames USNE_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsNeField.VERSION,
@@ -35,7 +35,7 @@ public class UsNeField {
       UsNeField.MSPA_SERVICE_PROVIDER_MODE
   );
   //@formatter:on
-  
+
   //@formatter:off
   public static final FieldNames USNE_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsNeField.GPC_SEGMENT_TYPE,

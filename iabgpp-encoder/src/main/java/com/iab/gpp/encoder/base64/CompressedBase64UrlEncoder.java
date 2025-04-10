@@ -5,15 +5,15 @@ import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 public class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
 
   private static final CompressedBase64UrlEncoder instance = new CompressedBase64UrlEncoder();
-  
+
   private CompressedBase64UrlEncoder() {
-    
+
   }
-  
+
   public static CompressedBase64UrlEncoder getInstance() {
     return instance;
   }
-  
+
   @Override
   protected void pad(BitStringBuilder bitString) {
     int remainder = bitString.length() % 8;

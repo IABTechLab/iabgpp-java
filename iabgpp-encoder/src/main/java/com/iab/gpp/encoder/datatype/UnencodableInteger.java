@@ -12,7 +12,7 @@ public class UnencodableInteger implements DataType<Integer> {
   public UnencodableInteger() {
     this.validator = v -> true;
   }
-  
+
   public UnencodableInteger(Integer value) {
     this.validator = v -> true;
     setValue(value);
@@ -26,7 +26,7 @@ public class UnencodableInteger implements DataType<Integer> {
   public void setValidator(Predicate<Integer> validator) {
     this.validator = validator;
   }
-  
+
   @Override
   public boolean hasValue() {
     return this.value != null;

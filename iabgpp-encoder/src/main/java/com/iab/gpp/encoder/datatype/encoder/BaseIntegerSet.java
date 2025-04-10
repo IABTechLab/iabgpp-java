@@ -4,15 +4,15 @@ import java.util.AbstractSet;
 import java.util.Collection;
 
 public abstract class BaseIntegerSet extends AbstractSet<Integer> implements IntegerSet {
-  
+
   @Override
   public final boolean contains(Object value) {
     if (value instanceof Integer) {
       return containsInt((Integer) value);
     }
-    return false; 
+    return false;
   }
-  
+
   @Override
   public final boolean add(Integer value) {
     if (value == null) {
@@ -20,7 +20,7 @@ public abstract class BaseIntegerSet extends AbstractSet<Integer> implements Int
     }
     return addInt(value);
   }
-  
+
   @Override
   public final boolean remove(Object value) {
     if (value instanceof Integer) {
@@ -28,7 +28,7 @@ public abstract class BaseIntegerSet extends AbstractSet<Integer> implements Int
     }
     return false;
   }
-  
+
   @Override
   public boolean removeAll(Collection<?> c) {
     boolean modified = false;
@@ -40,7 +40,7 @@ public abstract class BaseIntegerSet extends AbstractSet<Integer> implements Int
     }
     return modified;
   }
-  
+
   @Override
   public boolean retainAll(Collection<?> c) {
     boolean modified = false;

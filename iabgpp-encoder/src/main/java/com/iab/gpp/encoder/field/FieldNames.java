@@ -18,7 +18,7 @@ public final class FieldNames {
       this.map.put(names[i], i);
     }
   }
-  
+
   public boolean contains(String name) {
     return map.containsKey(name);
   }

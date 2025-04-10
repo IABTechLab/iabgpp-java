@@ -46,7 +46,7 @@ public class UsVa extends AbstractLazilyEncodableSection {
   protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-  
+
       for (int i = 0; i < segments.size(); i++) {
         if (encodedSegments.size() > i) {
           segments.get(i).decode(encodedSegments.get(i));

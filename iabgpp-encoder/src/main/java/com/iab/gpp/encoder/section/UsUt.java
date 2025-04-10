@@ -8,7 +8,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsUtCoreSegment;
 
 public class UsUt extends AbstractLazilyEncodableSection {
-  
+
   public static final int ID = 11;
   public static final int VERSION = 1;
   public static final String NAME = "usut";
@@ -41,19 +41,19 @@ public class UsUt extends AbstractLazilyEncodableSection {
   protected List<EncodableSegment> initializeSegments() {
     return Collections.singletonList(new UsUtCoreSegment());
   }
-  
+
   @Override
   protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-      
+
       for (int i = 0; i < segments.size(); i++) {
         if (encodedSegments.size() > i) {
           segments.get(i).decode(encodedSegments.get(i));
         }
       }
     }
-    
+
     return segments;
   }
 
@@ -66,7 +66,7 @@ public class UsUt extends AbstractLazilyEncodableSection {
     return SlicedCharSequence.join('.',  encodedSegments);
   }
 
-  
+
   public Integer getSharingNotice() {
     return (Integer) this.getFieldValue(UsUtField.SHARING_NOTICE);
   }
@@ -111,6 +111,6 @@ public class UsUt extends AbstractLazilyEncodableSection {
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE);
   }
-  
-  
+
+
 }

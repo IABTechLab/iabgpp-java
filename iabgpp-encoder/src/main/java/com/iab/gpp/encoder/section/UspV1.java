@@ -8,7 +8,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UspV1CoreSegment;
 
 public class UspV1 extends AbstractLazilyEncodableSection {
-  
+
   public static final int ID = 6;
   public static final int VERSION = 1;
   public static final String NAME = "uspv1";
@@ -41,19 +41,19 @@ public class UspV1 extends AbstractLazilyEncodableSection {
   protected List<EncodableSegment> initializeSegments() {
     return Collections.singletonList(new UspV1CoreSegment());
   }
-  
+
   @Override
   protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
     if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-      
+
       for (int i=0; i < segments.size(); i++) {
         if (encodedSegments.size() > i) {
           segments.get(i).decode(encodedSegments.get(i));
         }
       }
     }
-    
+
     return segments;
   }
 
@@ -66,7 +66,7 @@ public class UspV1 extends AbstractLazilyEncodableSection {
     return SlicedCharSequence.join('.',  encodedSegments);
   }
 
-  
+
   public Character getNotice() {
     return (Character) this.getFieldValue(UspV1Field.NOTICE);
   }

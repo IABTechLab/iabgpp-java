@@ -28,7 +28,7 @@ public class TcfCaV1Field {
 
   public static final String DISCLOSED_VENDORS_SEGMENT_TYPE = "DisclosedVendorsSegmentType";
   public static final String DISCLOSED_VENDORS = "DisclosedVendors";
-  
+
   //@formatter:off
   public static final FieldNames TCFCAV1_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfCaV1Field.VERSION,
@@ -60,7 +60,7 @@ public class TcfCaV1Field {
     TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT
   );
   //@formatter:on
-  
+
   //@formatter:off
   public static final FieldNames TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES = FieldNames.of(
     TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE,

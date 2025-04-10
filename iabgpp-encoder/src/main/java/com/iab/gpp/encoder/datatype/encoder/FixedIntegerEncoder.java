@@ -23,7 +23,7 @@ public class FixedIntegerEncoder {
   public static int decode(BitString bitString) throws DecodingException {
     return decode(bitString, 0, bitString.length());
   }
-  
+
   public static int decode(BitString bitString, int fromIndex, int length) throws DecodingException {
     int value = 0;
 

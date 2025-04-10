@@ -16,7 +16,7 @@ public class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStri
 
   private int keyBitStringLength;
   private int typeBitStringLength;
-  
+
   public EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
     this.keyBitStringLength = keyBitStringLength;

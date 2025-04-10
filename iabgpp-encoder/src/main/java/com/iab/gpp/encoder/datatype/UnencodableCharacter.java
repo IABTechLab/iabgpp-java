@@ -12,7 +12,7 @@ public class UnencodableCharacter implements DataType<Character> {
   public UnencodableCharacter() {
     this.validator = v -> true;
   }
-  
+
   public UnencodableCharacter(Character value) {
     this.validator = v -> true;
     setValue(value);
@@ -26,7 +26,7 @@ public class UnencodableCharacter implements DataType<Character> {
   public void setValidator(Predicate<Character> validator) {
     this.validator = validator;
   }
-  
+
   @Override
   public boolean hasValue() {
     return this.value != null;

@@ -7,7 +7,7 @@ import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.Fields;
 
 public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implements EncodableSegment {
-  
+
   protected static final Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
   protected static final Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
   protected static final Predicate<List<Integer>> nullableBooleanAsTwoBitIntegerListValidator = (l -> {

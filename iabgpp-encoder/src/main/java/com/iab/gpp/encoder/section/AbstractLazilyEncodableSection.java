@@ -7,7 +7,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 public abstract class AbstractLazilyEncodableSection implements EncodableSection {
 
   protected List<EncodableSegment> segments;
-  
+
   private CharSequence encodedString = null;
 
   private boolean dirty = false;
@@ -18,24 +18,24 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
   }
 
   protected abstract List<EncodableSegment> initializeSegments();
-  
+
   protected abstract CharSequence encodeSection(List<EncodableSegment> segments);
 
   protected abstract List<EncodableSegment> decodeSection(CharSequence encodedString);
-  
+
   public boolean hasField(String fieldName) {
     if (!this.decoded) {
       this.segments = this.decodeSection(this.encodedString);
       this.dirty = false;
       this.decoded = true;
     }
-    
+
     for(EncodableSegment segment : segments) {
       if (segment.hasField(fieldName)) {
         return true;
       }
     }
-    
+
     return false;
   }
 
@@ -76,7 +76,7 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
   public String encode() {
     return encodeCharSequence().toString();
   }
-  
+
   public CharSequence encodeCharSequence() {
     if (this.encodedString == null || this.encodedString.length() == 0 || this.dirty) {
       this.encodedString = this.encodeSection(this.segments);
@@ -92,5 +92,5 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
     this.dirty = false;
     this.decoded = false;
   }
-  
+
 }
