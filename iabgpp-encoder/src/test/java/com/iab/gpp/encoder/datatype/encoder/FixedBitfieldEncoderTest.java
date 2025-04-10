@@ -73,16 +73,20 @@ public class FixedBitfieldEncoderTest {
 
   @Test
   public void testEncode8() {
-    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-      BitStringBuilder builder = new BitStringBuilder();
-      IntegerSet set = new IntegerBitSet(IntegerBitSet.MAX_COLLECTION_SIZE);
-      for(int i = 0; i <= IntegerBitSet.MAX_COLLECTION_SIZE; i++) {
-        set.addInt(i);
-      }
-      FixedBitfieldEncoder.encode(builder, set, 2);
-    });
+    IntegerSet set = IntegerBitSet.withLimit(5);
+    for(int i = 0; i <= 10; i++) {
+      set.addInt(i);
+    }
+    Assertions.assertEquals(Set.of(0,1,2,3,4), set);
   }
-  
+
+  @Test
+  public void testEncode9() {
+    IntegerBitSet set = IntegerBitSet.withLimit(5);
+    set.addRange(0,10);
+    Assertions.assertEquals(Set.of(0,1,2,3,4), set);
+  }
+
   @Test
   public void testDecode1() {
     Assertions.assertEquals(Set.of(), FixedBitfieldEncoder.decode(BitString.of("")));
