@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 public final class IntegerBitSet extends BaseIntegerSet {
-  static final int MAX_COLLECTION_SIZE = 16384;
+  static final int MAX_COLLECTION_SIZE = 8192;
 
   protected final BitSet bitSet;
   protected final int from;
