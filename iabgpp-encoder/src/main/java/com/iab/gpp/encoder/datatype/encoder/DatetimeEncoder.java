@@ -10,6 +10,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 
 public class DatetimeEncoder {
 
+  private DatetimeEncoder() {}
   public static final ZoneId UTC = ZoneId.of("UTC");
 
   public static void encode(BitStringBuilder builder, ZonedDateTime value) {

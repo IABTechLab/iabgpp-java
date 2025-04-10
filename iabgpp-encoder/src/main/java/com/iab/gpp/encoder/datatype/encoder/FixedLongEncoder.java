@@ -6,6 +6,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedLongEncoder {
+  private FixedLongEncoder() {}
 
   public static void encode(BitStringBuilder builder, long value, int bitStringLength) {
     long mask = 1L << bitStringLength;

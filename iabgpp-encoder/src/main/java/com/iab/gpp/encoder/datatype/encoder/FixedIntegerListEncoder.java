@@ -9,6 +9,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedIntegerListEncoder {
+  private FixedIntegerListEncoder() {}
 
   public static void encode(BitStringBuilder builder, List<Integer> value, int elementBitStringLength, int numElements) {
     int length = value.size();

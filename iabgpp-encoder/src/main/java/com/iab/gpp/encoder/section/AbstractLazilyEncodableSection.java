@@ -13,7 +13,7 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
   private boolean dirty = false;
   private boolean decoded = true;
 
-  public AbstractLazilyEncodableSection() {
+  protected AbstractLazilyEncodableSection() {
     this.segments = initializeSegments();
   }
 

@@ -6,6 +6,7 @@ import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerRangeEncoder {
+  private FibonacciIntegerRangeEncoder() {}
 
   public static int encode(BitStringBuilder builder, Collection<Integer> value) {
     BitStringBuilder rangeBuilder = new BitStringBuilder();
@@ -60,7 +61,7 @@ public class FibonacciIntegerRangeEncoder {
       boolean group = BooleanEncoder.decode(bitString, startIndex, 1);
       startIndex++;
 
-      if (group == true) {
+      if (group) {
         int index = FibonacciIntegerEncoder.indexOfEndTag(bitString, startIndex);
         int start = FibonacciIntegerEncoder.decode(bitString, startIndex, index + 2 - startIndex) + offset;
         offset = start;

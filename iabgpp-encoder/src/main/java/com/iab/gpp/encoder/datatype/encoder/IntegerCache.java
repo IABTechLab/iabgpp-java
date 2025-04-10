@@ -1,17 +1,18 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
+import static com.iab.gpp.encoder.datatype.encoder.IntegerBitSet.MAX_COLLECTION_SIZE;
+
 final class IntegerCache {
-  // should be greater than the greatest vendor id in the global vendor list
-  private static final int CACHE_SIZE = 8096;
-  private static final Integer[] CACHE = new Integer[CACHE_SIZE];
+  private IntegerCache() {}
+  private static final Integer[] CACHE = new Integer[MAX_COLLECTION_SIZE];
   static {
-    for (int i = 0; i < CACHE_SIZE; i++) {
+    for (int i = 0; i < MAX_COLLECTION_SIZE; i++) {
       CACHE[i] = i;
     }
   }
 
   static Integer valueOf(int i) {
-    if (i >=0 && i < CACHE_SIZE) {
+    if (i >=0 && i < MAX_COLLECTION_SIZE) {
       return CACHE[i];
     }
     return i;

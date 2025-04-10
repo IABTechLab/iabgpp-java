@@ -25,7 +25,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   private boolean decoded = true;
 
-  public AbstractLazilyEncodableSegment() {
+  protected AbstractLazilyEncodableSegment() {
     this.fields = initializeFields();
   }
 
@@ -33,7 +33,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   protected abstract StringBuilder encodeSegment(T fields);
 
-  protected abstract void decodeSegment(CharSequence encodedString, T Fields);
+  protected abstract void decodeSegment(CharSequence encodedString, T fields);
 
   public boolean hasField(String fieldName) {
     return this.fields.containsKey(fieldName);

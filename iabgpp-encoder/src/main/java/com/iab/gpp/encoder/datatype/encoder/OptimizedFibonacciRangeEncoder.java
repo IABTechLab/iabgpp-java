@@ -6,6 +6,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class OptimizedFibonacciRangeEncoder {
+  private OptimizedFibonacciRangeEncoder() {}
 
   public static void encode(BitStringBuilder builder, IntegerSet value) throws EncodingException {
     // TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
@@ -22,11 +23,7 @@ public class OptimizedFibonacciRangeEncoder {
       FixedIntegerEncoder.encode(builder, max, 16);
       builder.append(false);
       for (int i = 0; i < max; i++) {
-        if (value.contains(i + 1)) {
-          builder.append(true);
-        } else {
-          builder.append(false);
-        }
+        builder.append(value.contains(i + 1));
       }
     }
   }

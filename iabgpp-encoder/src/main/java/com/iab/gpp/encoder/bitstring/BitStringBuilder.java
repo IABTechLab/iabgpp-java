@@ -27,8 +27,8 @@ public final class BitStringBuilder {
   }
 
   public BitStringBuilder append(BitString other) {
-    int length = other.length();
-    for (int i = 0; i < length; i++) {
+    int otherLength = other.length();
+    for (int i = 0; i < otherLength; i++) {
       append(other.getValue(i));
     }
     return this;
@@ -38,10 +38,10 @@ public final class BitStringBuilder {
     return length;
   }
 
-  public BitStringBuilder append(BitStringBuilder rangeBitString) {
-    int length = rangeBitString.length();
-    for (int i = 0; i < length; i++) {
-      append(rangeBitString.bitSet.get(i));
+  public BitStringBuilder append(BitStringBuilder other) {
+    int otherLength = other.length();
+    for (int i = 0; i < otherLength; i++) {
+      append(other.bitSet.get(i));
     }
     return this;
   }

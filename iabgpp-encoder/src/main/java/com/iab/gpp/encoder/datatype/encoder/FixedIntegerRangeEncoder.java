@@ -6,6 +6,7 @@ import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedIntegerRangeEncoder {
+  private FixedIntegerRangeEncoder() {}
 
   public static int encode(BitStringBuilder builder, Collection<Integer> value) {
     BitStringBuilder rangeBuilder = new BitStringBuilder();
@@ -54,7 +55,7 @@ public class FixedIntegerRangeEncoder {
       boolean group = BooleanEncoder.decode(bitString, startIndex, 1);
       startIndex++;
 
-      if (group == true) {
+      if (group) {
         int start = FixedIntegerEncoder.decode(bitString, startIndex, 16);
         startIndex += 16;
 

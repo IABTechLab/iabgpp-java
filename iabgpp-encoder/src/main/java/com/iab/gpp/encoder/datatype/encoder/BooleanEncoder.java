@@ -6,14 +6,12 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class BooleanEncoder {
+  private BooleanEncoder() {}
   public static void encode(BitStringBuilder builder, Boolean value) {
-    if (value == true) {
-      builder.append(true);
-    } else if (value == false) {
-      builder.append(false);
-    } else {
+    if (value == null) {
       throw new EncodingException("Unencodable Boolean '" + value + "'");
     }
+    builder.append(value);
   }
 
   public static boolean decode(BitString bitString) {

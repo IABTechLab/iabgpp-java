@@ -18,7 +18,7 @@ public abstract class BaseIntegerSet extends AbstractSet<Integer> implements Int
     if (value == null) {
       return false;
     }
-    return addInt((Integer) value);
+    return addInt(value);
   }
   
   @Override

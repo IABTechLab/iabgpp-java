@@ -4,6 +4,7 @@ import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 
 public class FixedBitfieldEncoder {
+  private FixedBitfieldEncoder() {}
 
   public static void encode(BitStringBuilder builder, IntegerSet value, int bitStringLength) {
     for (int i = 0; i < bitStringLength; i++) {

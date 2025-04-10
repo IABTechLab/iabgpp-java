@@ -41,7 +41,7 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
     } else {
       if (v instanceof Collection) {
         throw new ValidationException("Invalid value '"
-            + ((Collection<?>) v).stream().map(i -> i.toString()).collect(Collectors.joining(",")) + "'");
+            + ((Collection<?>) v).stream().map(Object::toString).collect(Collectors.joining(",")) + "'");
       } else {
         throw new ValidationException("Invalid value '" + v + "'");
       }
@@ -52,10 +52,6 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
   public boolean getHardFailIfMissing() {
     return this.hardFailIfMissing;
   }
-
-  public abstract void encode(BitStringBuilder builder);
-
-  public abstract void decode(BitString bitString);
 
   public abstract BitString substring(BitString bitString, int fromIndex) throws SubstringException;
 

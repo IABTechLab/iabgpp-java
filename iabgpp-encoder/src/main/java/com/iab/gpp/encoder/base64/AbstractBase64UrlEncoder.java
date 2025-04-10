@@ -8,7 +8,7 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public abstract class AbstractBase64UrlEncoder {
 
-  abstract protected void pad(BitStringBuilder bitString);
+  protected abstract void pad(BitStringBuilder bitString);
 
   private static final int BASE64_BITS = 6;
   /**

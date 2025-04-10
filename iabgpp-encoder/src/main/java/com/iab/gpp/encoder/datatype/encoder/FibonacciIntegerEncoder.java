@@ -6,6 +6,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FibonacciIntegerEncoder {
+  private FibonacciIntegerEncoder() {}
 
   // this is the length of the longest fibonacci encoded string of all 1's
   // which does not overflow a 32-bit integer

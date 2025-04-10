@@ -6,6 +6,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedIntegerEncoder {
+  private FixedIntegerEncoder() {}
 
   public static void encode(BitStringBuilder builder, int value, int bitStringLength) {
     int mask = 1 << bitStringLength;
