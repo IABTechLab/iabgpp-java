@@ -101,12 +101,15 @@ public final class IntegerBitSet extends BaseIntegerSet {
   public IntStream intStream() {
     return StreamSupport.intStream(spliterator(), false);
   }
-  
+
   private static final void logOutOfRange(int value) {
     LOGGER.warning("Exceeding IntegerBitSet.MAX_COLLECTION_SIZE: "+ value);
   }
 
   public void addRange(int start, int end) {
+    if (end < start) {
+      throw new IllegalArgumentException("Negative length range");
+    }
     int realStart = from + start;
     int realEnd = from + end;
     if (realStart >= to) {
