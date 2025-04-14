@@ -18,8 +18,8 @@ public class TcfEuV2Test {
   @Test
   public void testEncode1() {
     TcfEuV2 tcfEuV2 = new TcfEuV2();
-    tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
+    tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
     Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
   }
 
@@ -27,8 +27,8 @@ public class TcfEuV2Test {
   public void testEncode2() {
     TcfEuV2 tcfEuV2 = new TcfEuV2();
     tcfEuV2.setFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC, true);
-    tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
+    tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
 
     Assertions.assertEquals(3, tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE));
     Assertions.assertEquals(
@@ -49,8 +49,8 @@ public class TcfEuV2Test {
     TcfEuV2 tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
 
     Assertions.assertEquals(2, tcfEuV2.getVersion());
-    Assertions.assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getCreated());
-    Assertions.assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getLastUpdated());
+    Assertions.assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), tcfEuV2.getCreated());
+    Assertions.assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), tcfEuV2.getLastUpdated());
     Assertions.assertEquals(0, tcfEuV2.getCmpId());
     Assertions.assertEquals(0, tcfEuV2.getCmpVersion());
     Assertions.assertEquals(0, tcfEuV2.getConsentScreen());
@@ -98,8 +98,8 @@ public class TcfEuV2Test {
     TcfEuV2 tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
 
     Assertions.assertEquals(2, tcfEuV2.getVersion());
-    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getCreated());
-    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getLastUpdated());
+    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), tcfEuV2.getCreated());
+    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), tcfEuV2.getLastUpdated());
     Assertions.assertEquals(0, tcfEuV2.getCmpId());
     Assertions.assertEquals(0, tcfEuV2.getCmpVersion());
     Assertions.assertEquals(0, tcfEuV2.getConsentScreen());
@@ -352,8 +352,8 @@ public class TcfEuV2Test {
     TcfEuV2 tcfEuV2 = new TcfEuV2("COoC-kUOoC-kUAHABAENAwCoAIAAAELAAAwIF5wAoAAgAGAvMACX_ABBAAQAFA");
 
     Assertions.assertEquals(2, tcfEuV2.getFieldValue("Version"));
-    Assertions.assertEquals("2019-10-07T05:17:54Z[UTC]", tcfEuV2.getFieldValue("Created").toString());
-    Assertions.assertEquals("2019-10-07T05:17:54Z[UTC]", tcfEuV2.getFieldValue("LastUpdated").toString());
+    Assertions.assertEquals("2019-10-07T05:17:54Z", tcfEuV2.getFieldValue("Created").toString());
+    Assertions.assertEquals("2019-10-07T05:17:54Z", tcfEuV2.getFieldValue("LastUpdated").toString());
     Assertions.assertEquals(7, tcfEuV2.getFieldValue("CmpId"));
     Assertions.assertEquals(1, tcfEuV2.getFieldValue("CmpVersion"));
     Assertions.assertEquals(0, tcfEuV2.getFieldValue("ConsentScreen"));

@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -34,7 +34,7 @@ public final class TcfEuV2CoreSegment extends AbstractLazilyEncodableSegment<Enc
 
   @Override
   protected EncodableBitStringFields initializeFields() {
-    ZonedDateTime date = ZonedDateTime.now();
+    Instant date = Instant.now();
 
     EncodableBitStringFields fields = new EncodableBitStringFields(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES);
     fields.put(TcfEuV2Field.VERSION, new EncodableFixedInteger(6, TcfEuV2.VERSION));

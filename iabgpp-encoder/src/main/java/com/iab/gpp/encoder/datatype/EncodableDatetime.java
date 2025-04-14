@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
@@ -8,13 +8,13 @@ import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public final class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedDateTime> {
+public final class EncodableDatetime extends AbstractEncodableBitStringDataType<Instant> {
 
   protected EncodableDatetime() {
     super(true);
   }
 
-  public EncodableDatetime(ZonedDateTime value) {
+  public EncodableDatetime(Instant value) {
     super(true);
     setValue(value);
   }

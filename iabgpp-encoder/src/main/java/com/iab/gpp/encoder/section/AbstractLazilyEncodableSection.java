@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.List;
-import javax.swing.plaf.synth.SynthProgressBarUI;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 

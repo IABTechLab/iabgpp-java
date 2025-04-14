@@ -1,11 +1,10 @@
 package com.iab.gpp.encoder.section;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
-import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
@@ -105,7 +104,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfCaV1Field.CREATED) && !fieldName.equals(TcfCaV1Field.LAST_UPDATED)) {
-      ZonedDateTime utcDateTime = ZonedDateTime.now(DatetimeEncoder.UTC);
+      Instant utcDateTime = Instant.now();
 
       super.setFieldValue(TcfCaV1Field.CREATED, utcDateTime);
       super.setFieldValue(TcfCaV1Field.LAST_UPDATED, utcDateTime);
@@ -113,12 +112,12 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   }
 
 
-  public ZonedDateTime getCreated() {
-    return (ZonedDateTime) this.getFieldValue(TcfCaV1Field.CREATED);
+  public Instant getCreated() {
+    return (Instant) this.getFieldValue(TcfCaV1Field.CREATED);
   }
 
-  public ZonedDateTime getLastUpdated() {
-    return (ZonedDateTime) this.getFieldValue(TcfCaV1Field.LAST_UPDATED);
+  public Instant getLastUpdated() {
+    return (Instant) this.getFieldValue(TcfCaV1Field.LAST_UPDATED);
   }
 
   public Integer getCmpId() {
