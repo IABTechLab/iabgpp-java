@@ -17,23 +17,21 @@ public final class IntegerBitSet extends BaseIntegerSet {
   protected final BitSet bitSet;
   protected final int from;
   protected final int to;
+  private final int adjustment;
 
-  public IntegerBitSet(BitSet bitSet, int from, int to) {
+  public IntegerBitSet(BitSet bitSet, int from, int to, int adjustment) {
     this.bitSet = bitSet;
     this.from = from;
     this.to = to;
+    this.adjustment = adjustment;
   }
 
-  public static final IntegerBitSet withLimit(int limit) {
-    return new IntegerBitSet(new BitSet(0), 0, limit);
-  }
-
-  public IntegerBitSet(int size) {
-    this(new BitSet(size), 0, MAX_COLLECTION_SIZE);
+  public  IntegerBitSet(int limit) {
+    this(new BitSet(0), 0, limit, 0);
   }
 
   public IntegerBitSet() {
-    this(0);
+    this(MAX_COLLECTION_SIZE);
   }
 
   @Override
@@ -45,6 +43,14 @@ public final class IntegerBitSet extends BaseIntegerSet {
       count++;
     }
     return count;
+  }
+
+  private int getOffset(int value) {
+    int offset  = from - adjustment + value;
+    if (offset < from) {
+      throw new IndexOutOfBoundsException();
+    }
+    return offset;
   }
 
   @Override
@@ -59,7 +65,7 @@ public final class IntegerBitSet extends BaseIntegerSet {
 
   @Override
   public boolean containsInt(int value) {
-    int offset = from + value;
+    int offset = getOffset(value);
     return offset < to && bitSet.get(offset);
   }
 
@@ -85,7 +91,7 @@ public final class IntegerBitSet extends BaseIntegerSet {
         }
         int next = cursor;
         cursor = bitSet.nextSetBit(cursor + 1);
-        return next - from;
+        return next - from + adjustment;
       }
     };
   }
@@ -110,8 +116,8 @@ public final class IntegerBitSet extends BaseIntegerSet {
     if (end < start) {
       throw new IllegalArgumentException("Negative length range");
     }
-    int realStart = from + start;
-    int realEnd = from + end;
+    int realStart = getOffset(start);
+    int realEnd = getOffset(end);
     if (realStart >= to) {
       logOutOfRange(start);
       return;
@@ -124,7 +130,7 @@ public final class IntegerBitSet extends BaseIntegerSet {
   }
 
   public boolean addInt(int value) {
-    int offset = from + value;
+    int offset = getOffset(value);
     if (offset >= to) {
       logOutOfRange(value);
       return false;
@@ -138,7 +144,7 @@ public final class IntegerBitSet extends BaseIntegerSet {
   }
 
   public boolean removeInt(int value) {
-    int offset = from + value;
+    int offset = getOffset(value);
     if (offset >= to) {
       logOutOfRange(value);
       return false;

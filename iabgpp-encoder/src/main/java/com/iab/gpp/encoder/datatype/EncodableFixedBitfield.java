@@ -16,7 +16,7 @@ public final class EncodableFixedBitfield extends AbstractEncodableBitStringData
   public EncodableFixedBitfield(int numElements) {
     super(true);
     this.numElements = numElements;
-    this.value = IntegerBitSet.withLimit(numElements);
+    this.value = new IntegerBitSet(numElements);
   }
 
   public void encode(BitStringBuilder builder) {

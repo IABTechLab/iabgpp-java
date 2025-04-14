@@ -73,7 +73,7 @@ public class FixedBitfieldEncoderTest {
 
   @Test
   public void testEncode8() {
-    IntegerSet set = IntegerBitSet.withLimit(5);
+    IntegerSet set = new IntegerBitSet(5);
     for(int i = 0; i <= 10; i++) {
       set.addInt(i);
     }
@@ -82,7 +82,7 @@ public class FixedBitfieldEncoderTest {
 
   @Test
   public void testEncode9() {
-    IntegerBitSet set = IntegerBitSet.withLimit(5);
+    IntegerBitSet set = new IntegerBitSet(5);
     set.addRange(0,10);
     Assertions.assertEquals(Set.of(0,1,2,3,4), set);
   }
