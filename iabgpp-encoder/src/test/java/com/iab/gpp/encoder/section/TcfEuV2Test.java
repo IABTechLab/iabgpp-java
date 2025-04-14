@@ -260,14 +260,14 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
 
     Assertions.assertEquals(
-        Set.of(0),
+        Set.of(1),
         tcfEuV2.getFieldValue("SpecialFeatureOptins"));
     Assertions
         .assertEquals(
-            Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
+            Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
             tcfEuV2.getFieldValue("PurposeConsents"));
     Assertions.assertEquals(
-        Set.of(1, 5, 6, 7, 8, 9),
+        Set.of(2, 6, 7, 8, 9, 10),
         tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
 
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
@@ -294,14 +294,14 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
 
     Assertions.assertEquals(
-        Set.of(0),
+        Set.of(1),
         tcfEuV2.getFieldValue("SpecialFeatureOptins"));
     Assertions
         .assertEquals(
-            Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
+            Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
             tcfEuV2.getFieldValue("PurposeConsents"));
     Assertions.assertEquals(
-        Set.of(1, 5, 6, 7, 8, 9),
+        Set.of(2, 6, 7, 8, 9, 10),
         tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
 
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
@@ -331,10 +331,10 @@ public class TcfEuV2Test {
         tcfEuV2.getFieldValue("SpecialFeatureOptins"));
     Assertions
         .assertEquals(
-            Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
+            Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
             tcfEuV2.getFieldValue("PurposeConsents"));
     Assertions.assertEquals(
-        Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9),
+        Set.of(2, 3, 4, 5, 6, 7, 8, 9, 10),
         tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
 
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));
@@ -364,13 +364,13 @@ public class TcfEuV2Test {
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("UseNonStandardStacks"));
 
     Assertions.assertEquals(
-        Set.of(0),
+        Set.of(1),
         tcfEuV2.getFieldValue("SpecialFeatureOptins"));
     Assertions.assertEquals(
-        Set.of(0),
+        Set.of(1),
         tcfEuV2.getFieldValue("PurposeConsents"));
     Assertions.assertEquals(
-        Set.of(1, 6, 8, 9),
+        Set.of(2, 7, 9, 10),
         tcfEuV2.getFieldValue("PurposeLegitimateInterests"));
 
     Assertions.assertEquals(false, tcfEuV2.getFieldValue("PurposeOneTreatment"));

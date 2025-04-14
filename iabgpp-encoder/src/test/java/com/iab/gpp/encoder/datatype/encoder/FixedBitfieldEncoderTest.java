@@ -99,7 +99,7 @@ public class FixedBitfieldEncoderTest {
 
   @Test
   public void testDecode3() {
-    Assertions.assertEquals(Set.of(0), FixedBitfieldEncoder.decode(BitString.of("1")));
+    Assertions.assertEquals(Set.of(1), FixedBitfieldEncoder.decode(BitString.of("1")));
   }
 
   @Test
@@ -109,17 +109,17 @@ public class FixedBitfieldEncoderTest {
 
   @Test
   public void testDecode5() {
-    Assertions.assertEquals(Set.of(1), FixedBitfieldEncoder.decode(BitString.of("01")));
+    Assertions.assertEquals(Set.of(2), FixedBitfieldEncoder.decode(BitString.of("01")));
   }
 
   @Test
   public void testDecode6() {
-    Assertions.assertEquals(Set.of(0), FixedBitfieldEncoder.decode(BitString.of("10")));
+    Assertions.assertEquals(Set.of(1), FixedBitfieldEncoder.decode(BitString.of("10")));
   }
 
   @Test
   public void testDecode7() {
-    Assertions.assertEquals(Set.of(0, 1), FixedBitfieldEncoder.decode(BitString.of("11")));
+    Assertions.assertEquals(Set.of(1, 2), FixedBitfieldEncoder.decode(BitString.of("11")));
   }
 
   @Test

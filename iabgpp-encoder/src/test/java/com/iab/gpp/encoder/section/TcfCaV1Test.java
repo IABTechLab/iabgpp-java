@@ -128,25 +128,25 @@ public class TcfCaV1Test {
     Assertions.assertEquals(2, tcfCaV1.getCmpVersion());
     Assertions.assertEquals(413, tcfCaV1.getVendorListVersion());
     Assertions.assertEquals(true, tcfCaV1.getUseNonStandardStacks());
-    Assertions.assertEquals(Set.of(6, 7, 8, 9, 10, 11),
+    Assertions.assertEquals(Set.of(7, 8, 9, 10, 11, 12),
         tcfCaV1.getSpecialFeatureExpressConsent());
-    Assertions.assertEquals(Set.of(0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16, 17),
+    Assertions.assertEquals(Set.of(1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18),
         tcfCaV1.getPurposesExpressConsent());
-    Assertions.assertEquals(Set.of(6, 7, 8, 9, 10, 11, 18, 19, 20, 21, 22, 23),
+    Assertions.assertEquals(Set.of(7, 8, 9, 10, 11, 12, 19, 20, 21, 22, 23, 24),
         tcfCaV1.getPurposesImpliedConsent());
     Assertions.assertEquals(Set.of(12, 24, 48), tcfCaV1.getVendorExpressConsent());
     Assertions.assertEquals(Set.of(18, 30), tcfCaV1.getVendorImpliedConsent());
     Assertions
         .assertEquals(
-            Set.of(0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20),
+            Set.of(1, 2, 3, 7, 8, 9, 13, 14, 15, 19, 20, 21),
             tcfCaV1.getPubPurposesExpressConsent());
     Assertions
         .assertEquals(
-            Set.of(3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23),
+            Set.of(4, 5, 6, 10, 11, 12, 16, 17, 18, 22, 23, 24),
             tcfCaV1.getPubPurposesImpliedConsent());
     Assertions.assertEquals(3, tcfCaV1.getNumCustomPurposes());
-    Assertions.assertEquals(Set.of(1), tcfCaV1.getCustomPurposesExpressConsent());
-    Assertions.assertEquals(Set.of(0, 2), tcfCaV1.getCustomPurposesImpliedConsent());
+    Assertions.assertEquals(Set.of(2), tcfCaV1.getCustomPurposesExpressConsent());
+    Assertions.assertEquals(Set.of(1, 3), tcfCaV1.getCustomPurposesImpliedConsent());
     Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfCaV1.getCreated());
     Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfCaV1.getLastUpdated());
 

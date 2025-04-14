@@ -613,29 +613,29 @@ public class GppModelTest {
     Assertions.assertEquals(413, tcfCaV1Section.getVendorListVersion());
     Assertions.assertEquals(true, tcfCaV1Section.getUseNonStandardStacks());
     Assertions.assertTrue(tcfCaV1Section.getSpecialFeatureExpressConsent().intStream().anyMatch(x -> x== 7));
-    Assertions.assertEquals(Set.of(6, 7, 8, 9, 10, 11),
+    Assertions.assertEquals(Set.of(7, 8, 9, 10, 11, 12),
         tcfCaV1Section.getSpecialFeatureExpressConsent());
     Assertions
         .assertEquals(
-            Set.of(0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16, 17),
+            Set.of(1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18),
             tcfCaV1Section.getPurposesExpressConsent());
     Assertions
         .assertEquals(
-            Set.of(6, 7, 8, 9, 10, 11, 18, 19, 20, 21, 22, 23),
+            Set.of(7, 8, 9, 10, 11, 12, 19, 20, 21, 22, 23, 24),
             tcfCaV1Section.getPurposesImpliedConsent());
     Assertions.assertEquals(Set.of(12, 24, 48), tcfCaV1Section.getVendorExpressConsent());
     Assertions.assertEquals(Set.of(18, 30), tcfCaV1Section.getVendorImpliedConsent());
     Assertions
         .assertEquals(
-            Set.of(0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20),
+            Set.of(1, 2, 3, 7, 8, 9, 13, 14, 15, 19, 20, 21),
             tcfCaV1Section.getPubPurposesExpressConsent());
     Assertions
         .assertEquals(
-            Set.of(3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23),
+            Set.of(4, 5, 6, 10, 11, 12, 16, 17, 18, 22, 23, 24),
             tcfCaV1Section.getPubPurposesImpliedConsent());
     Assertions.assertEquals(3, tcfCaV1Section.getNumCustomPurposes());
-    Assertions.assertEquals(Set.of(1), tcfCaV1Section.getCustomPurposesExpressConsent());
-    Assertions.assertEquals(Set.of(0,2), tcfCaV1Section.getCustomPurposesImpliedConsent());
+    Assertions.assertEquals(Set.of(2), tcfCaV1Section.getCustomPurposesExpressConsent());
+    Assertions.assertEquals(Set.of(1, 3), tcfCaV1Section.getCustomPurposesImpliedConsent());
     Assertions.assertEquals(utcDateTime, tcfCaV1Section.getCreated());
     Assertions.assertEquals(utcDateTime, tcfCaV1Section.getLastUpdated());
 
@@ -766,7 +766,7 @@ public class GppModelTest {
     GppModel decodedModel = new GppModel(fromObjectModel.encode());
 
     Assertions.assertEquals(
-        Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
+        Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS));
     Assertions.assertEquals(Set.of(21, 32, 81, 128, 173, 210, 238, 755),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
