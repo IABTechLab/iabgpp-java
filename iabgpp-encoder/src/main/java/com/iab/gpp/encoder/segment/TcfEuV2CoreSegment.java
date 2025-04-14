@@ -34,7 +34,8 @@ public final class TcfEuV2CoreSegment extends AbstractLazilyEncodableSegment<Enc
 
   @Override
   protected EncodableBitStringFields initializeFields() {
-    Instant date = Instant.now();
+    // NOTE: TcfEuV2.setFieldValue records modifications
+    Instant date = Instant.EPOCH;
 
     EncodableBitStringFields fields = new EncodableBitStringFields(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES);
     fields.put(TcfEuV2Field.VERSION, new EncodableFixedInteger(6, TcfEuV2.VERSION));
