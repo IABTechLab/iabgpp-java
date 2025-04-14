@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.List;
+import javax.swing.plaf.synth.SynthProgressBarUI;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 
@@ -93,4 +94,13 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
     this.decoded = false;
   }
 
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("{id=").append(getId()).append(", name=").append(getName()).append(", version=").append(getVersion());
+    for (EncodableSegment segment: segments) {
+      sb.append(", ").append(segment.toString());
+    }
+    sb.append('}');
+    return sb.toString();
+  }
 }

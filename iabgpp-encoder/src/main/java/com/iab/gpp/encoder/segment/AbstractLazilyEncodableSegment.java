@@ -85,5 +85,16 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
     this.decoded = false;
   }
 
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("{name=").append(getClass().getSimpleName());
+    for (String field : fields.getNames()) {
+      if (hasField(field)) {
+        sb.append(", ").append(field).append('=').append(getFieldValue(field));
+      }
+    }
+    sb.append('}');
+    return sb.toString();
+  }
 
 }

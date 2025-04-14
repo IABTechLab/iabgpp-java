@@ -472,5 +472,14 @@ public class GppModel {
     this.decoded = false;
   }
 
+  public String toString() {
+    List<Integer> sectionIds = getSectionIds();
+    List<String> pieces = new ArrayList<>(sectionIds.size());
+    for (Integer sectionId : sectionIds) {
+      pieces.add(getSection(sectionId).toString());
+    }
+    return pieces.toString();
+  }
+
 
 }
