@@ -48,7 +48,7 @@ public final class IntegerBitSet extends BaseIntegerSet {
   private int getOffset(int value) {
     int offset  = from - adjustment + value;
     if (offset < from) {
-      throw new IndexOutOfBoundsException();
+      throw new IndexOutOfBoundsException("Negative index provided");
     }
     return offset;
   }
