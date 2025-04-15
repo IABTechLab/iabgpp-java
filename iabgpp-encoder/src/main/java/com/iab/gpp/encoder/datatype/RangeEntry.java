@@ -3,12 +3,13 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import java.util.Set;
 import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 
 public class RangeEntry {
 
   private int key;
   private int type;
-  private Set<Integer> ids;
+  private final IntegerSet ids;
 
   public RangeEntry(int key, int type, Set<Integer> ids) {
     super();
@@ -34,7 +35,7 @@ public class RangeEntry {
     this.type = type;
   }
 
-  public Set<Integer> getIds() {
+  public IntegerSet getIds() {
     return ids;
   }
 
