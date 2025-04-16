@@ -1,47 +1,52 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.regex.Pattern;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedIntegerEncoder {
+  private FixedIntegerEncoder() {}
 
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
-
-  public static String encode(int value, int bitStringLength) {
-    // let bitString = value.toString(2);
-
-    String bitString = "";
-    while (value > 0) {
-      if ((value & 1) == 1) {
-        bitString = "1" + bitString;
-      } else {
-        bitString = "0" + bitString;
-      }
-      value = value >> 1;
-    }
-
-    if (bitString.length() > bitStringLength) {
+  public static void encode(BitStringBuilder builder, int value, int bitStringLength) {
+    int mask = 1 << bitStringLength;
+    if (value >= mask) {
       throw new EncodingException(
-          "Numeric value '" + value + "' is too large for a bit string length of '" + bitStringLength + "'");
+        "Numeric value '" + value + "' is too large for a bit string length of '" + bitStringLength + "'");
     }
-    
-    while (bitString.length() < bitStringLength) {
-      bitString = "0" + bitString;
+    for (int i = 0; i < bitStringLength; i++) {
+      mask >>= 1;
+      builder.append((value & mask) > 0);
     }
-
-    return bitString;
   }
 
-  public static int decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches()) {
-      throw new DecodingException("Undecodable FixedInteger '" + bitString + "'");
-    }
+  public static int decode(BitString bitString) throws DecodingException {
+    return decode(bitString, 0, bitString.length());
+  }
+
+  public static int decode(BitString bitString, int fromIndex, int length) throws DecodingException {
     int value = 0;
 
-    for (int i = 0; i < bitString.length(); i++) {
-      if (bitString.charAt(bitString.length() - (i + 1)) == '1') {
+    int base = fromIndex + length - 1;
+    for (int i = 0; i < length; i++) {
+      if (bitString.getValue(base - i)) {
         value += 1 << i;
+      }
+    }
+
+    return value;
+  }
+
+  public static int decode(String bitString, int fromIndex, int length) throws DecodingException {
+    int value = 0;
+
+    int base = fromIndex + length - 1;
+    for (int i = 0; i < length; i++) {
+      char c = bitString.charAt(base - i);
+      if (c == BitString.TRUE) {
+        value += 1 << i;
+      } else if (c != BitString.FALSE) {
+        throw new DecodingException("Unencodable Base64Url '" + bitString + "'");
       }
     }
 

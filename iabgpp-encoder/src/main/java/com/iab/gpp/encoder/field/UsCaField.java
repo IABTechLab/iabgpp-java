@@ -1,29 +1,27 @@
 package com.iab.gpp.encoder.field;
 
-import java.util.Arrays;
-import java.util.List;
+public final class UsCaField {
+  private UsCaField() {}
 
-public class UsCaField {
+  public static final String VERSION = "Version";
+  public static final String SALE_OPT_OUT_NOTICE = "SaleOptOutNotice";
+  public static final String SHARING_OPT_OUT_NOTICE = "SharingOptOutNotice";
+  public static final String SENSITIVE_DATA_LIMIT_USE_NOTICE = "SensitiveDataLimitUseNotice";
+  public static final String SALE_OPT_OUT = "SaleOptOut";
+  public static final String SHARING_OPT_OUT = "SharingOptOut";
+  public static final String SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing";
+  public static final String KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents";
+  public static final String PERSONAL_DATA_CONSENTS = "PersonalDataConsents";
+  public static final String MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction";
+  public static final String MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode";
+  public static final String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
 
-  public static String VERSION = "Version";
-  public static String SALE_OPT_OUT_NOTICE = "SaleOptOutNotice";
-  public static String SHARING_OPT_OUT_NOTICE = "SharingOptOutNotice";
-  public static String SENSITIVE_DATA_LIMIT_USE_NOTICE = "SensitiveDataLimitUseNotice";
-  public static String SALE_OPT_OUT = "SaleOptOut";
-  public static String SHARING_OPT_OUT = "SharingOptOut";
-  public static String SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing";
-  public static String KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents";
-  public static String PERSONAL_DATA_CONSENTS = "PersonalDataConsents";
-  public static String MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction";
-  public static String MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode";
-  public static String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
-
-  public static String GPC_SEGMENT_TYPE = "GpcSegmentType";
-  public static String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
-  public static String GPC = "Gpc";
+  public static final String GPC_SEGMENT_TYPE = "GpcSegmentType";
+  public static final String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
+  public static final String GPC = "Gpc";
 
   //@formatter:off
-  public static List<String> USCA_CORE_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames USCA_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsCaField.VERSION,
       UsCaField.SALE_OPT_OUT_NOTICE,
       UsCaField.SHARING_OPT_OUT_NOTICE,
@@ -36,13 +34,14 @@ public class UsCaField {
       UsCaField.MSPA_COVERED_TRANSACTION,
       UsCaField.MSPA_OPT_OUT_OPTION_MODE,
       UsCaField.MSPA_SERVICE_PROVIDER_MODE
-  });
+  );
   //@formatter:on
 
   //@formatter:off
-  public static List<String> USCA_GPC_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
+  public static final FieldNames USCA_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsCaField.GPC_SEGMENT_TYPE,
+      UsCaField.GPC_SEGMENT_INCLUDED,
       UsCaField.GPC
-  });
+  );
   //@formatter:on
 }

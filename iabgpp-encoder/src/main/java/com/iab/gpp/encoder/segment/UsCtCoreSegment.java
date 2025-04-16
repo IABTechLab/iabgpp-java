@@ -1,10 +1,10 @@
 package com.iab.gpp.encoder.segment;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
@@ -13,10 +13,10 @@ import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsCtField;
 import com.iab.gpp.encoder.section.UsCt;
 
-public class UsCtCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public final class UsCtCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
-  private AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
-  private BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
+  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
+  private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
   public UsCtCoreSegment() {
     super();
@@ -28,24 +28,8 @@ public class UsCtCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
   }
 
   @Override
-  public List<String> getFieldNames() {
-    return UsCtField.USCT_CORE_SEGMENT_FIELD_NAMES;
-  }
-
-  @Override
   protected EncodableBitStringFields initializeFields() {
-    Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
-    Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
-    Predicate<List<Integer>> nullableBooleanAsTwoBitIntegerListValidator = (l -> {
-      for (int n : l) {
-        if (n < 0 || n > 2) {
-          return false;
-        }
-      }
-      return true;
-    });
-
-    EncodableBitStringFields fields = new EncodableBitStringFields();
+    EncodableBitStringFields fields = new EncodableBitStringFields(UsCtField.USCT_CORE_SEGMENT_FIELD_NAMES);
     fields.put(UsCtField.VERSION, new EncodableFixedInteger(6, UsCt.VERSION));
     fields.put(UsCtField.SHARING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
@@ -72,20 +56,19 @@ public class UsCtCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
   }
 
   @Override
-  protected String encodeSegment(EncodableBitStringFields fields) {
-    String bitString = bitStringEncoder.encode(fields, getFieldNames());
-    String encodedString = base64UrlEncoder.encode(bitString);
-    return encodedString;
+  protected StringBuilder encodeSegment(EncodableBitStringFields fields) {
+    BitStringBuilder bitString = bitStringEncoder.encode(fields);
+    return base64UrlEncoder.encode(bitString);
   }
 
   @Override
-  protected void decodeSegment(String encodedString, EncodableBitStringFields fields) {
-    if (encodedString == null || encodedString.isEmpty()) {
+  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields fields) {
+    if (encodedString == null || encodedString.length() == 0) {
       this.fields.reset(fields);
     }
     try {
-      String bitString = base64UrlEncoder.decode(encodedString);
-      bitStringEncoder.decode(bitString, getFieldNames(), fields);
+      BitString bitString = base64UrlEncoder.decode(encodedString);
+      bitStringEncoder.decode(bitString, fields);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode UsCtCoreSegment '" + encodedString + "'", e);
     }

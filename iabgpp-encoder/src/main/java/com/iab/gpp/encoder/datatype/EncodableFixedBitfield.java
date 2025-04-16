@@ -1,46 +1,33 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<List<Boolean>> {
+public final class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<IntegerSet> {
 
-  private int numElements;
+  private final int numElements;
 
-  protected EncodableFixedBitfield(int numElements) {
+  public EncodableFixedBitfield(int numElements) {
     super(true);
     this.numElements = numElements;
+    this.value = new IntegerBitSet(numElements);
   }
 
-  protected EncodableFixedBitfield(int numElements, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    this.numElements = numElements;
-  }
-
-  public EncodableFixedBitfield(List<Boolean> value) {
-    super(true);
-    this.numElements = value.size();
-    setValue(value);
-  }
-
-  public EncodableFixedBitfield(List<Boolean> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    this.numElements = value.size();
-    setValue(value);
-  }
-
-  public String encode() {
+  public void encode(BitStringBuilder builder) {
     try {
-      return FixedBitfieldEncoder.encode(this.value, this.numElements);
+      FixedBitfieldEncoder.encode(builder, this.value, this.numElements);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = FixedBitfieldEncoder.decode(bitString);
     } catch (Exception e) {
@@ -48,7 +35,7 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
       return bitString.substring(fromIndex, fromIndex + this.numElements);
     } catch (Exception e) {
@@ -59,18 +46,12 @@ public class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<L
   @SuppressWarnings("unchecked")
   @Override
   public void setValue(Object value) {
-    List<Boolean> v = new ArrayList<>((List<Boolean>) value);
-    for (int i = v.size(); i < numElements; i++) {
-      v.add(false);
-    }
-    if (v.size() > numElements) {
-      v = v.subList(0, numElements);
-    }
-    super.setValue(v);
+    this.value.clear();
+    this.value.addAll((Collection<Integer>) value);
   }
 
   @Override
-  public List<Boolean> getValue() {
-    return new ArrayList<>(super.getValue());
+  public IntegerSet getValue() {
+    return new ManagedIntegerSet(this, super.getValue());
   }
 }

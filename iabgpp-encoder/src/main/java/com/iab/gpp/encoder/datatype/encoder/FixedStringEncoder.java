@@ -1,50 +1,48 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.regex.Pattern;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedStringEncoder {
+  private FixedStringEncoder() {}
+  private static final char SPACE = ' ';
 
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
-
-  public static String encode(String value, int stringLength) {
-    while (value.length() < stringLength) {
-      value += " ";
-    }
-
-    String bitString = "";
-    for (int i = 0; i < value.length(); i++) {
-      int code = (int) value.charAt(i);
-      if (code == 32) {
-        // space
-        bitString += FixedIntegerEncoder.encode(63, 6);
+  public static void encode(BitStringBuilder builder, String value, int stringLength) {
+    int length = value.length();
+    for (int i = 0; i < stringLength; i++) {
+      int code = SPACE;
+      if (i < length) {
+        code = value.charAt(i);
+      }
+      if (code == SPACE) {
+        FixedIntegerEncoder.encode(builder, 63, 6);
       } else if (code >= 65) {
-        bitString += FixedIntegerEncoder.encode(((int) value.charAt(i)) - 65, 6);
+        FixedIntegerEncoder.encode(builder, ((int) value.charAt(i)) - 65, 6);
       } else {
         throw new EncodingException("Unencodable FixedString '" + value + "'");
       }
     }
-
-    return bitString;
   }
 
-  public static String decode(String bitString) {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() % 6 != 0) {
+  public static String decode(BitString bitString) {
+    int length = bitString.length();
+    if (length % 6 != 0) {
       throw new DecodingException("Undecodable FixedString '" + bitString + "'");
     }
 
-    String value = "";
+    StringBuilder value = new StringBuilder(length);
 
-    for (int i = 0; i < bitString.length(); i += 6) {
-      int code = FixedIntegerEncoder.decode(bitString.substring(i, i + 6));
+    for (int i = 0; i < length; i += 6) {
+      int code = FixedIntegerEncoder.decode(bitString, i, 6);
       if (code == 63) {
-        value += " ";
+        value.append(SPACE);
       } else {
-        value += (char) (code + 65);
+        value.append((char) (code + 65));
       }
     }
 
-    return value.trim();
+    return value.toString().trim();
   }
 }

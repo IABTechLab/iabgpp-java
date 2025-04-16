@@ -1,38 +1,32 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.Collection;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
+import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDataType<List<Integer>> {
+public final class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDataType<IntegerSet> {
 
-  protected EncodableFibonacciIntegerRange() {
+  public EncodableFibonacciIntegerRange() {
     super(true);
+    this.value = new IntegerBitSet();
   }
 
-  public EncodableFibonacciIntegerRange(List<Integer> value) {
-    super(true);
-    setValue(value);
-  }
-
-  public EncodableFibonacciIntegerRange(List<Integer> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
-  }
-  
-  public String encode() {
+  public void encode(BitStringBuilder builder) {
     try {
-      return FibonacciIntegerRangeEncoder.encode(this.value);
+      FibonacciIntegerRangeEncoder.encode(builder, this.value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = FibonacciIntegerRangeEncoder.decode(bitString);
     } catch (Exception e) {
@@ -40,15 +34,15 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
-      int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
+      int count = FixedIntegerEncoder.decode(bitString, fromIndex, 12);
       int index = fromIndex + 12;
       for (int i = 0; i < count; i++) {
-        if (bitString.charAt(index) == '1') {
-          index = bitString.indexOf("11", bitString.indexOf("11", index + 1) + 2) + 2;
+        if (bitString.getValue(index)) {
+          index = FibonacciIntegerEncoder.indexOfEndTag(bitString, FibonacciIntegerEncoder.indexOfEndTag(bitString, index + 1) + 2) + 2;
         } else {
-          index = bitString.indexOf("11", index + 1) + 2;
+          index = FibonacciIntegerEncoder.indexOfEndTag(bitString, index + 1) + 2;
         }
       }
       return bitString.substring(fromIndex, index);
@@ -60,11 +54,12 @@ public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDa
   @SuppressWarnings("unchecked")
   @Override
   public void setValue(Object value) {
-    super.setValue(new ArrayList<>(new TreeSet<>((List<Integer>) value)));
+    this.value.clear();
+    this.value.addAll((Collection<Integer>) value);
   }
 
   @Override
-  public List<Integer> getValue() {
-    return new ArrayList<>(super.getValue());
+  public IntegerSet getValue() {
+    return new ManagedIntegerSet(this, super.getValue());
   }
 }

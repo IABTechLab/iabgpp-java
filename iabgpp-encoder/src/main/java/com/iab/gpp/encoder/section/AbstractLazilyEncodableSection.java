@@ -6,36 +6,36 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 
 public abstract class AbstractLazilyEncodableSection implements EncodableSection {
 
-  private List<EncodableSegment> segments;
-  
-  private String encodedString = null;
+  protected List<EncodableSegment> segments;
+
+  private CharSequence encodedString = null;
 
   private boolean dirty = false;
   private boolean decoded = true;
 
-  public AbstractLazilyEncodableSection() {
+  protected AbstractLazilyEncodableSection() {
     this.segments = initializeSegments();
   }
 
   protected abstract List<EncodableSegment> initializeSegments();
-  
-  protected abstract String encodeSection(List<EncodableSegment> segments);
 
-  protected abstract List<EncodableSegment> decodeSection(String encodedString);
-  
+  protected abstract CharSequence encodeSection(List<EncodableSegment> segments);
+
+  protected abstract List<EncodableSegment> decodeSection(CharSequence encodedString);
+
   public boolean hasField(String fieldName) {
     if (!this.decoded) {
       this.segments = this.decodeSection(this.encodedString);
       this.dirty = false;
       this.decoded = true;
     }
-    
+
     for(EncodableSegment segment : segments) {
-      if(segment.getFieldNames().contains(fieldName)) {
-        return segment.hasField(fieldName);
+      if (segment.hasField(fieldName)) {
+        return true;
       }
     }
-    
+
     return false;
   }
 
@@ -74,7 +74,11 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
   }
 
   public String encode() {
-    if (this.encodedString == null || this.encodedString.isEmpty() || this.dirty) {
+    return encodeCharSequence().toString();
+  }
+
+  public CharSequence encodeCharSequence() {
+    if (this.encodedString == null || this.encodedString.length() == 0 || this.dirty) {
       this.encodedString = this.encodeSection(this.segments);
       this.dirty = false;
       this.decoded = true;
@@ -83,10 +87,19 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
     return this.encodedString;
   }
 
-  public void decode(String encodedString) {
+  public void decode(CharSequence encodedString) {
     this.encodedString = encodedString;
     this.dirty = false;
     this.decoded = false;
   }
-  
+
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("{id=").append(getId()).append(", name=").append(getName()).append(", version=").append(getVersion());
+    for (EncodableSegment segment: segments) {
+      sb.append(", ").append(segment.toString());
+    }
+    sb.append('}');
+    return sb.toString();
+  }
 }

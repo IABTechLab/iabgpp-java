@@ -1,58 +1,54 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.List;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
+import com.iab.gpp.encoder.datatype.UnencodableBoolean;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsTxField;
 
-public class UsTxGpcSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public final class UsTxGpcSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
-  private AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
-  private BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
+  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
+  private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
   public UsTxGpcSegment() {
     super();
   }
 
-  public UsTxGpcSegment(String encodedString) {
+  public UsTxGpcSegment(CharSequence encodedString) {
     super();
     this.decode(encodedString);
   }
 
   @Override
-  public List<String> getFieldNames() {
-    return UsTxField.USTX_GPC_SEGMENT_FIELD_NAMES;
-  }
-
-  @Override
   protected EncodableBitStringFields initializeFields() {
-    EncodableBitStringFields fields = new EncodableBitStringFields();
+    EncodableBitStringFields fields = new EncodableBitStringFields(UsTxField.USTX_GPC_SEGMENT_FIELD_NAMES);
     fields.put(UsTxField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    fields.put(UsTxField.GPC_SEGMENT_INCLUDED, new EncodableBoolean(true));
+    fields.put(UsTxField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
     fields.put(UsTxField.GPC, new EncodableBoolean(false));
     return fields;
   }
 
   @Override
-  protected String encodeSegment(EncodableBitStringFields fields) {
-    String bitString = bitStringEncoder.encode(fields, getFieldNames());
-    String encodedString = base64UrlEncoder.encode(bitString);
-    return encodedString;
+  protected StringBuilder encodeSegment(EncodableBitStringFields fields) {
+    BitStringBuilder bitString = bitStringEncoder.encode(fields);
+    return base64UrlEncoder.encode(bitString);
   }
 
   @Override
-  protected void decodeSegment(String encodedString, EncodableBitStringFields fields) {
-    if(encodedString == null || encodedString.isEmpty()) {
+  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields fields) {
+    if(encodedString == null || encodedString.length() == 0) {
       this.fields.reset(fields);
     }
     try {
-      String bitString = base64UrlEncoder.decode(encodedString);
-      bitStringEncoder.decode(bitString, getFieldNames(), fields);
+      BitString bitString = base64UrlEncoder.decode(encodedString);
+      bitStringEncoder.decode(bitString, fields);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode UsTxGpcSegment '" + encodedString + "'", e);
     }

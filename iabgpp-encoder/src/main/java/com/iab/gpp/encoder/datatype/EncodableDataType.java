@@ -1,7 +1,10 @@
 package com.iab.gpp.encoder.datatype;
 
-public interface EncodableDataType<T> extends DataType<T> {
-  String encode();
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 
-  void decode(String str);
+public interface EncodableDataType<T> extends DataType<T> {
+  void encode(BitStringBuilder builder);
+
+  void decode(BitString str);
 }

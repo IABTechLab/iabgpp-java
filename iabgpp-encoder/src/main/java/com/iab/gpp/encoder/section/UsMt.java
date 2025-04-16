@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.section;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsMtField;
@@ -9,15 +10,15 @@ import com.iab.gpp.encoder.segment.UsMtGpcSegment;
 
 public class UsMt extends AbstractLazilyEncodableSection {
 
-  public static int ID = 14;
-  public static int VERSION = 1;
-  public static String NAME = "usmt";
+  public static final int ID = 14;
+  public static final int VERSION = 1;
+  public static final String NAME = "usmt";
 
   public UsMt() {
     super();
   }
 
-  public UsMt(String encodedString) {
+  public UsMt(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -39,26 +40,21 @@ public class UsMt extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsMtCoreSegment());
-    segments.add(new UsMtGpcSegment());
-    return segments;
+    return Arrays.asList(new UsMtCoreSegment(), new UsMtGpcSegment());
   }
 
   @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
-    List<EncodableSegment> segments = initializeSegments();
+  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
+    if(encodedString != null && encodedString.length() > 0) {
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
 
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
-  
-      if(encodedSegments.length > 0) {
-        segments.get(0).decode(encodedSegments[0]);
+      if (encodedSegments.size() > 0) {
+        segments.get(0).decode(encodedSegments.get(0));
       }
-      
-      if(encodedSegments.length > 1) {
+
+      if (encodedSegments.size() > 1) {
         segments.get(1).setFieldValue(UsMtField.GPC_SEGMENT_INCLUDED, true);
-        segments.get(1).decode(encodedSegments[1]);
+        segments.get(1).decode(encodedSegments.get(1));
       } else {
         segments.get(1).setFieldValue(UsMtField.GPC_SEGMENT_INCLUDED, false);
       }
@@ -68,17 +64,17 @@ public class UsMt extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
-    
+  protected CharSequence encodeSection(List<EncodableSegment> segments) {
+    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
+
     if(!segments.isEmpty()) {
-      encodedSegments.add(segments.get(0).encode());
+      encodedSegments.add(segments.get(0).encodeCharSequence());
       if(segments.size() >= 2 && segments.get(1).getFieldValue(UsMtField.GPC_SEGMENT_INCLUDED).equals(true)) {
-        encodedSegments.add(segments.get(1).encode());
+        encodedSegments.add(segments.get(1).encodeCharSequence());
       }
     }
-    
-    return String.join(".", encodedSegments);
+
+    return SlicedCharSequence.join('.',  encodedSegments);
   }
 
 
@@ -115,7 +111,7 @@ public class UsMt extends AbstractLazilyEncodableSection {
   public Integer getAdditionalDataProcessingConsent() {
     return (Integer) this.getFieldValue(UsMtField.ADDITIONAL_DATA_PROCESSING_CONSENT);
   }
-  
+
   public Integer getMspaCoveredTransaction() {
     return (Integer) this.getFieldValue(UsMtField.MSPA_COVERED_TRANSACTION);
   }
