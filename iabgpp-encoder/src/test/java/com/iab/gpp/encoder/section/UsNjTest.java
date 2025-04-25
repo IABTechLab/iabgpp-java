@@ -13,7 +13,7 @@ public class UsNjTest {
   @Test
   public void testEncode1() {
     UsNj usNj = new UsNj();
-    Assertions.assertEquals("BAAAAAAAQA.QA", usNj.encode());
+    Assertions.assertEquals("BAAAAAAAQ.Q", usNj.encode());
   }
 
   @Test
@@ -33,7 +33,7 @@ public class UsNjTest {
     usNj.setFieldValue(UsNjField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNj.setFieldValue(UsNjField.GPC, true);
 
-    Assertions.assertEquals("BVWSSRklWA.YA", usNj.encode());
+    Assertions.assertEquals("BVWSSRklW.Y", usNj.encode());
   }
   
   @Test
@@ -122,11 +122,29 @@ public class UsNjTest {
   public void testEncodeWithGpcSegmentExcluded() {
     UsNj usNj = new UsNj();
     usNj.setFieldValue(UsNjField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAAAQA", usNj.encode());
+    Assertions.assertEquals("BAAAAAAAQ", usNj.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
+    UsNj usNj = new UsNj("BVWSSRklW.Y");
+
+    Assertions.assertEquals(1, usNj.getProcessingNotice());
+    Assertions.assertEquals(1, usNj.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usNj.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usNj.getSaleOptOut());
+    Assertions.assertEquals(1, usNj.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1, 0, 1), usNj.getSensitiveDataProcessing());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1), usNj.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usNj.getAdditionalDataProcessingConsent());
+    Assertions.assertEquals(1, usNj.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usNj.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usNj.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usNj.getGpc());
+  }
+
+  @Test
+  public void testDecode2() throws DecodingException {
     UsNj usNj = new UsNj("BVWSSRklWA.YA");
 
     Assertions.assertEquals(1, usNj.getProcessingNotice());
@@ -145,7 +163,7 @@ public class UsNjTest {
 
   @Test
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
-    UsNj usNj = new UsNj("BVWSSRklWA");
+    UsNj usNj = new UsNj("BVWSSRklW");
 
     Assertions.assertEquals(1, usNj.getProcessingNotice());
     Assertions.assertEquals(1, usNj.getSaleOptOutNotice());

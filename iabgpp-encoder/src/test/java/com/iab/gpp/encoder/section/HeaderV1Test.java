@@ -19,14 +19,14 @@ public class HeaderV1Test {
   public void testEncode2() {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2));
-    Assertions.assertEquals("DBABMA", headerV1.encode());
+    Assertions.assertEquals("DBABM", headerV1.encode());
   }
 
   @Test
   public void testEncode3() {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", Arrays.asList(2, 6));
-    Assertions.assertEquals("DBACNYA", headerV1.encode());
+    Assertions.assertEquals("DBACNY", headerV1.encode());
   }
 
   @Test
@@ -41,7 +41,7 @@ public class HeaderV1Test {
   @Test
   public void testDecode2() {
     HeaderV1 headerV1 = new HeaderV1();
-    headerV1.decode("DBABMA");
+    headerV1.decode("DBABM");
     Assertions.assertEquals(Arrays.asList(2), headerV1.getFieldValue("SectionIds"));
     Assertions.assertEquals(headerV1.getFieldValue("Version"), headerV1.getVersion());
     Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
@@ -49,6 +49,24 @@ public class HeaderV1Test {
 
   @Test
   public void testDecode3() {
+    HeaderV1 headerV1 = new HeaderV1();
+    headerV1.decode("DBABMA");
+    Assertions.assertEquals(Arrays.asList(2), headerV1.getFieldValue("SectionIds"));
+    Assertions.assertEquals(headerV1.getFieldValue("Version"), headerV1.getVersion());
+    Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
+  }
+
+  @Test
+  public void testDecode4() {
+    HeaderV1 headerV1 = new HeaderV1();
+    headerV1.decode("DBACNY");
+    Assertions.assertEquals(Arrays.asList(2, 6), headerV1.getFieldValue("SectionIds"));
+    Assertions.assertEquals(headerV1.getFieldValue("Version"), headerV1.getVersion());
+    Assertions.assertEquals(headerV1.getFieldValue("SectionIds"), headerV1.getSectionsIds());
+  }
+
+  @Test
+  public void testDecode5() {
     HeaderV1 headerV1 = new HeaderV1();
     headerV1.decode("DBACNYA");
     Assertions.assertEquals(Arrays.asList(2, 6), headerV1.getFieldValue("SectionIds"));

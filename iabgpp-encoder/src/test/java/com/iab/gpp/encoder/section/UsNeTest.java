@@ -13,7 +13,7 @@ public class UsNeTest {
   @Test
   public void testEncode1() {
     UsNe usNe = new UsNe();
-    Assertions.assertEquals("BAAAAAQA.QA", usNe.encode());
+    Assertions.assertEquals("BAAAAAQ.Q", usNe.encode());
   }
 
   @Test
@@ -33,7 +33,7 @@ public class UsNeTest {
     usNe.setFieldValue(UsNeField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNe.setFieldValue(UsNeField.GPC, true);
 
-    Assertions.assertEquals("BVWSSVWA.YA", usNe.encode());
+    Assertions.assertEquals("BVWSSVW.Y", usNe.encode());
   }
   
   @Test
@@ -122,7 +122,7 @@ public class UsNeTest {
   public void testEncodeWithGpcSegmentExcluded() {
     UsNe usNe = new UsNe();
     usNe.setFieldValue(UsNeField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAQA", usNe.encode());
+    Assertions.assertEquals("BAAAAAQ", usNe.encode());
   }
 
   @Test
@@ -144,8 +144,26 @@ public class UsNeTest {
   }
 
   @Test
+  public void testDecode2() throws DecodingException {
+    UsNe usNe = new UsNe("BVWSSVW.Y");
+
+    Assertions.assertEquals(1, usNe.getProcessingNotice());
+    Assertions.assertEquals(1, usNe.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usNe.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usNe.getSaleOptOut());
+    Assertions.assertEquals(1, usNe.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usNe.getSensitiveDataProcessing());
+    Assertions.assertEquals(1, usNe.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usNe.getAdditionalDataProcessingConsent());
+    Assertions.assertEquals(1, usNe.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usNe.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usNe.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usNe.getGpc());
+  }
+
+  @Test
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
-    UsNe usNe = new UsNe("BVWSSVWA");
+    UsNe usNe = new UsNe("BVWSSVW");
 
     Assertions.assertEquals(1, usNe.getProcessingNotice());
     Assertions.assertEquals(1, usNe.getSaleOptOutNotice());

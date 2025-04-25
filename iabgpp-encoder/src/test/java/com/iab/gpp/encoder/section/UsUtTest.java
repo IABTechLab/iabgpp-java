@@ -13,7 +13,7 @@ public class UsUtTest {
   @Test
   public void testEncode1() {
     UsUt usUt = new UsUt();
-    Assertions.assertEquals("BAAAAAQA", usUt.encode());
+    Assertions.assertEquals("BAAAAAQ", usUt.encode());
   }
 
   @Test
@@ -32,7 +32,7 @@ public class UsUtTest {
     usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 1);
     usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 2);
 
-    Assertions.assertEquals("BVVkklWA", usUt.encode());
+    Assertions.assertEquals("BVVkklW", usUt.encode());
   }
   
   @Test
@@ -120,6 +120,22 @@ public class UsUtTest {
 
   @Test
   public void testDecode1() throws DecodingException {
+    UsUt usUt = new UsUt("BVVkklW");
+
+    Assertions.assertEquals(1, usUt.getSharingNotice());
+    Assertions.assertEquals(1, usUt.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usUt.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usUt.getSaleOptOut());
+    Assertions.assertEquals(1, usUt.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usUt.getSensitiveDataProcessing());
+    Assertions.assertEquals(1, usUt.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usUt.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usUt.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usUt.getMspaServiceProviderMode());
+  }
+
+  @Test
+  public void testDecode2() throws DecodingException {
     UsUt usUt = new UsUt("BVVkklWA");
 
     Assertions.assertEquals(1, usUt.getSharingNotice());

@@ -14,7 +14,7 @@ public class UsNatTest {
   public void testEncode1() {
 
     UsNat usNat = new UsNat();
-    Assertions.assertEquals("BAAAAAAAAABA.QA", usNat.encode());
+    Assertions.assertEquals("BAAAAAAAAABA.Q", usNat.encode());
   }
 
   @Test
@@ -38,7 +38,7 @@ public class UsNatTest {
     usNat.setFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNat.setFieldValue(UsNatField.GPC, true);
 
-    Assertions.assertEquals("BVVVkkkkkpFY.YA", usNat.encode());
+    Assertions.assertEquals("BVVVkkkkkpFY.Y", usNat.encode());
   }
   
   @Test
@@ -174,7 +174,7 @@ public class UsNatTest {
     usNat.setFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNat.setFieldValue(UsNatField.GPC, true);
 
-    Assertions.assertEquals("BVVVkkkkkpFY.YA", usNat.encode());
+    Assertions.assertEquals("BVVVkkkkkpFY.Y", usNat.encode());
   }
 
   @Test
@@ -187,6 +187,28 @@ public class UsNatTest {
 
   @Test
   public void testDecode1() throws DecodingException {
+    UsNat usNat = new UsNat("BVVVkkkkkpFY.Y");
+
+    Assertions.assertEquals(1, usNat.getSharingNotice());
+    Assertions.assertEquals(1, usNat.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usNat.getSharingOptOutNotice());
+    Assertions.assertEquals(1, usNat.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usNat.getSensitiveDataProcessingOptOutNotice());
+    Assertions.assertEquals(1, usNat.getSensitiveDataLimitUseNotice());
+    Assertions.assertEquals(1, usNat.getSaleOptOut());
+    Assertions.assertEquals(1, usNat.getSharingOptOut());
+    Assertions.assertEquals(1, usNat.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2), usNat.getSensitiveDataProcessing());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0), usNat.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usNat.getPersonalDataConsents());
+    Assertions.assertEquals(1, usNat.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usNat.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usNat.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usNat.getGpc());
+  }
+
+  @Test
+  public void testDecode2() throws DecodingException {
     UsNat usNat = new UsNat("BVVVkkkkkpFY.YA");
 
     Assertions.assertEquals(1, usNat.getSharingNotice());

@@ -13,7 +13,7 @@ public class UsDeTest {
   @Test
   public void testEncode1() {
     UsDe usDe = new UsDe();
-    Assertions.assertEquals("BAAAAAABAA.QA", usDe.encode());
+    Assertions.assertEquals("BAAAAAABA.Q", usDe.encode());
   }
 
   @Test
@@ -33,7 +33,7 @@ public class UsDeTest {
     usDe.setFieldValue(UsDeField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usDe.setFieldValue(UsDeField.GPC, true);
 
-    Assertions.assertEquals("BVWSSSSVYA.YA", usDe.encode());
+    Assertions.assertEquals("BVWSSSSVY.Y", usDe.encode());
   }
   
   @Test
@@ -122,12 +122,12 @@ public class UsDeTest {
   public void testEncodeWithGpcSegmentExcluded() {
     UsDe usDe = new UsDe();
     usDe.setFieldValue(UsDeField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAABAA", usDe.encode());
+    Assertions.assertEquals("BAAAAAABA", usDe.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
-    UsDe usDe = new UsDe("BVWSSSSVYA.YA");
+    UsDe usDe = new UsDe("BVWSSSSVY.Y");
 
     Assertions.assertEquals(1, usDe.getProcessingNotice());
     Assertions.assertEquals(1, usDe.getSaleOptOutNotice());
@@ -144,8 +144,27 @@ public class UsDeTest {
   }
 
   @Test
+  public void testDecode2() throws DecodingException {
+    UsDe usDe = new UsDe("BVWSSSSVYA.YA");
+
+    Assertions.assertEquals(1, usDe.getProcessingNotice());
+    Assertions.assertEquals(1, usDe.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usDe.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usDe.getSaleOptOut());
+    Assertions.assertEquals(1, usDe.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1, 0), usDe.getSensitiveDataProcessing());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1), usDe.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usDe.getAdditionalDataProcessingConsent());
+    Assertions.assertEquals(1, usDe.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usDe.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usDe.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usDe.getGpc());
+  }
+
+
+  @Test
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
-    UsDe usDe = new UsDe("BVWSSSSVYA");
+    UsDe usDe = new UsDe("BVWSSSSVY");
 
     Assertions.assertEquals(1, usDe.getProcessingNotice());
     Assertions.assertEquals(1, usDe.getSaleOptOutNotice());
