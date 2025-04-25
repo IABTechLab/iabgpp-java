@@ -13,7 +13,7 @@ public class UsTnTest {
   @Test
   public void testEncode1() {
     UsTn usTn = new UsTn();
-    Assertions.assertEquals("BAAAAAQA.QA", usTn.encode());
+    Assertions.assertEquals("BAAAAAQ.Q", usTn.encode());
   }
 
   @Test
@@ -33,7 +33,7 @@ public class UsTnTest {
     usTn.setFieldValue(UsTnField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usTn.setFieldValue(UsTnField.GPC, true);
 
-    Assertions.assertEquals("BVWSSVWA.YA", usTn.encode());
+    Assertions.assertEquals("BVWSSVW.Y", usTn.encode());
   }
   
   @Test
@@ -122,11 +122,29 @@ public class UsTnTest {
   public void testEncodeWithGpcSegmentExcluded() {
     UsTn usTn = new UsTn();
     usTn.setFieldValue(UsTnField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAQA", usTn.encode());
+    Assertions.assertEquals("BAAAAAQ", usTn.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
+    UsTn usTn = new UsTn("BVWSSVW.Y");
+
+    Assertions.assertEquals(1, usTn.getProcessingNotice());
+    Assertions.assertEquals(1, usTn.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usTn.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usTn.getSaleOptOut());
+    Assertions.assertEquals(1, usTn.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usTn.getSensitiveDataProcessing());
+    Assertions.assertEquals(1, usTn.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usTn.getAdditionalDataProcessingConsent());
+    Assertions.assertEquals(1, usTn.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usTn.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usTn.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usTn.getGpc());
+  }
+
+  @Test
+  public void testDecode2() throws DecodingException {
     UsTn usTn = new UsTn("BVWSSVWA.YA");
 
     Assertions.assertEquals(1, usTn.getProcessingNotice());
@@ -145,7 +163,7 @@ public class UsTnTest {
 
   @Test
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
-    UsTn usTn = new UsTn("BVWSSVWA");
+    UsTn usTn = new UsTn("BVWSSVW");
 
     Assertions.assertEquals(1, usTn.getProcessingNotice());
     Assertions.assertEquals(1, usTn.getSaleOptOutNotice());

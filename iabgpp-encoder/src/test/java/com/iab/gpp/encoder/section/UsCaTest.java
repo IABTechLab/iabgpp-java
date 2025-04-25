@@ -14,7 +14,7 @@ public class UsCaTest {
   public void testEncode1() {
 
     UsCa usCa = new UsCa();
-    Assertions.assertEquals("BAAAAABA.QA", usCa.encode());
+    Assertions.assertEquals("BAAAAABA.Q", usCa.encode());
   }
 
   @Test
@@ -34,7 +34,7 @@ public class UsCaTest {
     usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usCa.setFieldValue(UsCaField.GPC, true);
 
-    Assertions.assertEquals("BVWSSSVY.YA", usCa.encode());
+    Assertions.assertEquals("BVWSSSVY.Y", usCa.encode());
   }
 
   @Test
@@ -54,7 +54,7 @@ public class UsCaTest {
     usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usCa.setFieldValue(UsCaField.GPC, true);
 
-    Assertions.assertEquals("BVWSSSVY.YA", usCa.encode());
+    Assertions.assertEquals("BVWSSSVY.Y", usCa.encode());
   }
   
   @Test
@@ -149,6 +149,24 @@ public class UsCaTest {
 
   @Test
   public void testDecode1() {
+    UsCa usCa = new UsCa("BVWSSSVY.Y");
+
+    Assertions.assertEquals(1, usCa.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usCa.getSharingOptOut());
+    Assertions.assertEquals(1, usCa.getSensitiveDataLimitUseNotice());
+    Assertions.assertEquals(1, usCa.getSaleOptOut());
+    Assertions.assertEquals(1, usCa.getSharingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1, 0), usCa.getSensitiveDataProcessing());
+    Assertions.assertEquals(Arrays.asList(2, 1), usCa.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usCa.getPersonalDataConsents());
+    Assertions.assertEquals(1, usCa.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usCa.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usCa.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usCa.getGpc());
+  }
+
+  @Test
+  public void testDecode2() {
     UsCa usCa = new UsCa("BVWSSSVY.YA");
 
     Assertions.assertEquals(1, usCa.getSaleOptOutNotice());

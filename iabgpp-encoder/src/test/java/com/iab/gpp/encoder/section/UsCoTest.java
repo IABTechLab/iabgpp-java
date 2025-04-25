@@ -13,7 +13,7 @@ public class UsCoTest {
   @Test
   public void testEncode1() {
     UsCo usCo = new UsCo();
-    Assertions.assertEquals("BAAAAEA.QA", usCo.encode());
+    Assertions.assertEquals("BAAAAEA.Q", usCo.encode());
   }
 
   @Test
@@ -32,7 +32,7 @@ public class UsCoTest {
     usCo.setFieldValue(UsCoField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usCo.setFieldValue(UsCoField.GPC, true);
 
-    Assertions.assertEquals("BVWSSVg.YA", usCo.encode());
+    Assertions.assertEquals("BVWSSVg.Y", usCo.encode());
   }
   
   @Test
@@ -120,6 +120,23 @@ public class UsCoTest {
 
   @Test
   public void testDecode1() {
+    UsCo usCo = new UsCo("BVWSSVg.Y");
+
+    Assertions.assertEquals(1, usCo.getSharingNotice());
+    Assertions.assertEquals(1, usCo.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usCo.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usCo.getSaleOptOut());
+    Assertions.assertEquals(1, usCo.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2), usCo.getSensitiveDataProcessing());
+    Assertions.assertEquals(1, usCo.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usCo.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usCo.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usCo.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usCo.getGpc());
+  }
+
+  @Test
+  public void testDecode2() {
     UsCo usCo = new UsCo("BVWSSVg.YA");
 
     Assertions.assertEquals(1, usCo.getSharingNotice());
