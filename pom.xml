@@ -6,7 +6,7 @@
 
     <groupId>com.iabgpp</groupId>
     <artifactId>iabgpp-core</artifactId>
-    <version>3.2.4</version>
+    <version>3.2.5-SNAPSHOT</version>
     <name>IAB GPP Core Library</name>
     <url>https://github.com/IABTechLabs/iabtcf-java</url>
     <description>Encode and decode consent information with the IAB GPP v3.0.</description>

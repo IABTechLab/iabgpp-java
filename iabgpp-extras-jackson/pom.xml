@@ -7,7 +7,7 @@
     <parent>
         <artifactId>iabgpp-core</artifactId>
         <groupId>com.iabgpp</groupId>
-        <version>3.2.4</version>
+        <version>3.2.5-SNAPSHOT</version>
     </parent>
 
     <artifactId>iabgpp-extras-jackson</artifactId>
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>com.iabgpp</groupId>
             <artifactId>iabgpp-extras</artifactId>
-            <version>3.2.4</version>
+            <version>3.2.5-SNAPSHOT</version>
         </dependency>
 
         <dependency>
