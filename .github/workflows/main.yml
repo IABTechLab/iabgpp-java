@@ -76,8 +76,10 @@ jobs:
       # Commit the snapshot version
       - name: Commit snapshot version
         run: |
+          NEW_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           git add .
-          git commit -m "${{ github.event.inputs.version }}-SNAPSHOT"
+          git commit -m "$NEW_VERSION"
+        # git commit -m "${{ github.event.inputs.version }}-SNAPSHOT"
 
       # Push commits and tags to GitHub
       - name: Push changes
