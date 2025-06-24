@@ -158,6 +158,18 @@ public class GppModelTest {
         "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA",
         gppString);
 
+  @Test
+  public void testDecodingException() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("invalid gpp string").getHeader();
+    });
+  }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("z").getUsCtSection();
+    });
   }
 
   @Test
@@ -832,4 +844,6 @@ public class GppModelTest {
 
     }
   }
+  
+  
 }

@@ -22,15 +22,17 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
           distribution: 'adopt'
+          java-version: '21'
 
       # Import GPG secret key for signing
       - name: Import GPG key
         run: |
           echo "${{ secrets.GPG_SECRET_KEY }}" > secret_key.asc
           gpg --import --no-tty --batch secret_key.asc || { echo "GPG import failed"; cat secret_key.asc; exit 1; }
-          gpg --list-secret-keys
+          rm -f secret_key.asc
+        # gpg --list-secret-keys
+
 
       # Generate settings.xml with Maven repository credentials
       - name: Create settings.xml
@@ -56,7 +58,8 @@ jobs:
           echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
           echo "use-agent" >> ~/.gnupg/gpg.conf
           export GPG_TTY=$(tty || echo /dev/tty)
-          mvn clean deploy --settings ~/.m2/settings.xml -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}" -Prelease -Dmaven.javadoc.skip=true
+          mvn clean deploy --settings ~/.m2/settings.xml -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}" -Prelease
+        # mvn clean deploy --settings ~/.m2/settings.xml -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}" -Prelease -Dmaven.javadoc.skip=true
 
       # Commit the release version and create a tag
       - name: Commit and tag release
@@ -74,8 +77,10 @@ jobs:
       # Commit the snapshot version
       - name: Commit snapshot version
         run: |
+          NEW_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           git add .
-          git commit -m "${{ github.event.inputs.version }}-SNAPSHOT"
+          git commit -m "$NEW_VERSION"
+        # git commit -m "${{ github.event.inputs.version }}-SNAPSHOT"
 
       # Push commits and tags to GitHub
       - name: Push changes

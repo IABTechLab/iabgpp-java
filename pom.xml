@@ -29,9 +29,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:IABTechLabs/iabgpp-java.git</connection>
-        <developerConnection>scm:git:git@github.com:IABTechLabs/iabgpp-java.git</developerConnection>
-        <url>https://github.com/IABTechLabs/iabgpp-java</url>
+        <connection>scm:git:git@github.com:IABTechLab/iabgpp-java.git</connection>
+        <developerConnection>scm:git:git@github.com:IABTechLab/iabgpp-java.git</developerConnection>
+        <url>https://github.com/IABTechLab/iabgpp-java</url>
     </scm>
 
     <distributionManagement>
