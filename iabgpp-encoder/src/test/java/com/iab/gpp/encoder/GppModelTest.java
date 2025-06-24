@@ -70,20 +70,6 @@ public class GppModelTest {
   }
 
   @Test
-  public void testDecodingException() {
-    Assertions.assertThrows(DecodingException.class, () -> {
-      new GppModel("invalid gpp string").getHeader();
-    });
-  }
-  
-  @Test()
-  public void testDecodeGarbage() {
-    Assertions.assertThrows(DecodingException.class, () -> {
-      new GppModel("z").getUsCtSection();
-    });
-  }
-
-  @Test
   public void testEncodeDefaultAll() {
     GppModel gppModel = new GppModel();
 
@@ -132,7 +118,6 @@ public class GppModelTest {
     gppModel.setFieldValue(UsTn.NAME, UsTxField.VERSION, UsTx.VERSION);
 
 
-
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(TcfCaV1.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(UspV1.NAME));
@@ -155,8 +140,9 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA",
-        gppString);
+            "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA",
+            gppString);
+  }
 
   @Test
   public void testDecodingException() {
