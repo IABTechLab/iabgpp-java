@@ -33,6 +33,7 @@ jobs:
           rm -f secret_key.asc
         # gpg --list-secret-keys
 
+
       # Generate settings.xml with Maven repository credentials
       - name: Create settings.xml
         run: |
