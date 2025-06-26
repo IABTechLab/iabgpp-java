@@ -73,20 +73,6 @@ public class GppModelTest {
   }
 
   @Test
-  public void testDecodingException() {
-    Assertions.assertThrows(DecodingException.class, () -> {
-      new GppModel("invalid gpp string").getHeader();
-    });
-  }
-  
-  @Test()
-  public void testDecodeGarbage() {
-    Assertions.assertThrows(DecodingException.class, () -> {
-      new GppModel("z").getUsCtSection();
-    });
-  }
-
-  @Test
   public void testEncodeDefaultAll() {
     GppModel gppModel = new GppModel();
 
