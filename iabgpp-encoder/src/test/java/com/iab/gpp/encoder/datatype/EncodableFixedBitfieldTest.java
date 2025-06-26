@@ -3,16 +3,18 @@ package com.iab.gpp.encoder.datatype;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import com.iab.gpp.encoder.bitstring.BitString;
+
 public class EncodableFixedBitfieldTest {
 
   @Test
   public void testSubstring1() throws SubstringException {
-    Assertions.assertEquals("000", new EncodableFixedBitfield(3).substring("10001", 1));
+    Assertions.assertEquals("000", new EncodableFixedBitfield(3).substring(BitString.of("10001"), 1).toString());
   }
 
   @Test
   public void testSubstring2() throws SubstringException {
-    Assertions.assertEquals("111", new EncodableFixedBitfield(3).substring("01110", 1));
+    Assertions.assertEquals("111", new EncodableFixedBitfield(3).substring(BitString.of("01110"), 1).toString());
   }
 
 }

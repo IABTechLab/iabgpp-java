@@ -2,11 +2,14 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<List<Integer>> {
+public final class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<List<Integer>> {
 
   private int elementBitStringLength;
   private int numElements;
@@ -24,22 +27,15 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
     setValue(value);
   }
 
-  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    this.elementBitStringLength = elementBitStringLength;
-    this.numElements = value.size();
-    setValue(value);
-  }
-
-  public String encode() {
+  public void encode(BitStringBuilder builder) {
     try {
-      return FixedIntegerListEncoder.encode(this.value, this.elementBitStringLength, this.numElements);
+      FixedIntegerListEncoder.encode(builder, this.value, this.elementBitStringLength, this.numElements);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements);
     } catch (Exception e) {
@@ -47,7 +43,7 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
       return bitString.substring(fromIndex, fromIndex + (this.elementBitStringLength * numElements));
     } catch (Exception e) {
@@ -70,6 +66,6 @@ public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
 
   @Override
   public List<Integer> getValue() {
-    return new ArrayList<>(super.getValue());
+    return new ManagedFixedList<>(this, super.getValue());
   }
 }

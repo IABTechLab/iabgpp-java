@@ -1,45 +1,31 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.regex.Pattern;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedLongEncoder {
+  private FixedLongEncoder() {}
 
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
-
-  public static String encode(long value, int bitStringLength) {
-    String bitString = "";
-    while (value > 0) {
-      if ((value & 1) == 1) {
-        bitString = "1" + bitString;
-      } else {
-        bitString = "0" + bitString;
-      }
-      value = value >> 1;
-    }
-
-    if (bitString.length() > bitStringLength) {
+  public static void encode(BitStringBuilder builder, long value, int bitStringLength) {
+    long mask = 1L << bitStringLength;
+    if (value >= mask) {
       throw new EncodingException(
-          "Numeric value '" + value + "' is too large for a bit string length of '" + bitStringLength + "'");
+        "Numeric value '" + value + "' is too large for a bit string length of '" + bitStringLength + "'");
     }
-
-    while (bitString.length() < bitStringLength) {
-      bitString = "0" + bitString;
+    for (int i = 0; i < bitStringLength; i++) {
+      mask >>= 1;
+      builder.append((value & mask) > 0);
     }
-
-    return bitString;
   }
 
-  public static long decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches()) {
-      throw new DecodingException("Undecodable FixedLong '" + bitString + "'");
-    }
-
+  public static long decode(BitString bitString) throws DecodingException {
     long value = 0;
 
-    for (int i = 0; i < bitString.length(); i++) {
-      if (bitString.charAt(bitString.length() - (i + 1)) == '1') {
+    int length = bitString.length();
+    for (int i = 0; i < length; i++) {
+      if (bitString.getValue(length - (i + 1))) {
         value += 1L << i;
       }
     }
