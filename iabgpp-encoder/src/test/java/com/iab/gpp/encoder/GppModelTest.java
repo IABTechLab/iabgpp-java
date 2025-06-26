@@ -73,6 +73,20 @@ public class GppModelTest {
   }
 
   @Test
+  public void testDecodingException() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("invalid gpp string").getHeader();
+    });
+  }
+  
+  @Test()
+  public void testDecodeGarbage() {
+    Assertions.assertThrows(DecodingException.class, () -> {
+      new GppModel("z").getUsCtSection();
+    });
+  }
+
+  @Test
   public void testEncodeDefaultAll() {
     GppModel gppModel = new GppModel();
 
@@ -119,6 +133,7 @@ public class GppModelTest {
     gppModel.setFieldValue(UsNh.NAME, UsTxField.VERSION, UsTx.VERSION);
     gppModel.setFieldValue(UsNj.NAME, UsTxField.VERSION, UsTx.VERSION);
     gppModel.setFieldValue(UsTn.NAME, UsTxField.VERSION, UsTx.VERSION);
+
 
 
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));

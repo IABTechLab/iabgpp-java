@@ -55,7 +55,6 @@ public class FibonacciIntegerEncoder {
   }
 
   public static int decode(BitString bitString, int fromIndex, int length) throws DecodingException {
-    // must end with "11"
     int limit = length - 1;
     int end = fromIndex + length;
     // must not overflow and must end with "11"

@@ -83,13 +83,13 @@ public final class UsNatCoreSegment extends AbstractLazilyEncodableSegment<Encod
       // length of 12 to 16 and known child sensitive data consents changed from a length of 2 to 3 in the
       // DE, IA, NE, NH, NJ, TN release
       if (bitString.length() == 66) {
-        BitStringBuilder b = new BitStringBuilder();
-        b.append(bitString.substring(0, 48));
-        b.append(BitString.empty(8));
-        b.append(bitString.substring(48, 52));
-        b.append(BitString.empty(2));
-        b.append(bitString.substring(52, 62));
-        bitString = b.build();
+        BitStringBuilder builder = new BitStringBuilder();
+        builder.append(bitString.substring(0, 48));
+        builder.append(BitString.of("00000000"));
+        builder.append(bitString.substring(48, 52));
+        builder.append(BitString.of("00"));
+        builder.append(bitString.substring(52, 62));
+        bitString = builder.build();
       }
 
       bitStringEncoder.decode(bitString, fields);

@@ -359,6 +359,7 @@ public class GppModel {
   protected Map<String, EncodableSection> decodeModel(String str) {
     if (str == null || str.isEmpty() || str.startsWith("DB")) {
       Map<String, EncodableSection> sections = new HashMap<>();
+
       if(str != null && !str.isEmpty()) {
         List<CharSequence> encodedSections = SlicedCharSequence.split(str, '~');
         HeaderV1 header = new HeaderV1(encodedSections.get(0));

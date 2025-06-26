@@ -71,6 +71,7 @@ public class FibonacciIntegerRangeEncoder {
         int end = FibonacciIntegerEncoder.decode(bitString, startIndex, index + 2 - startIndex) + offset;
         offset = end;
         startIndex = index + 2;
+
         value.addRange(start, end + 1);
       } else {
         int index = FibonacciIntegerEncoder.indexOfEndTag(bitString, startIndex);
