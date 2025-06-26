@@ -97,6 +97,24 @@ public class GppModel {
         case UsTx.NAME:
           section = new UsTx();
           break;
+        case UsDe.NAME:
+          section = new UsDe();
+          break;
+        case UsIa.NAME:
+          section = new UsIa();
+          break;
+        case UsNe.NAME:
+          section = new UsNe();
+          break;
+        case UsNh.NAME:
+          section = new UsNh();
+          break;
+        case UsNj.NAME:
+          section = new UsNj();
+          break;
+        case UsTn.NAME:
+          section = new UsTn();
+          break;
       }
       if (section != null) {
         this.sections.put(sectionName, section);
@@ -111,7 +129,6 @@ public class GppModel {
       this.dirty = false;
       this.decoded = true;
     }
-
     EncodableSection section = getOrCreateSection(sectionName);
     if (section != null) {
       section.setFieldValue(fieldName, value);
@@ -131,7 +148,6 @@ public class GppModel {
       this.dirty = false;
       this.decoded = true;
     }
-
     EncodableSection field = this.sections.get(sectionName);
     if (field != null) {
       return field.getFieldValue(fieldName);
@@ -150,7 +166,6 @@ public class GppModel {
       this.dirty = false;
       this.decoded = true;
     }
-
     EncodableSection field = this.sections.get(sectionName);
     if (field != null) {
       return field.hasField(fieldName);
@@ -199,7 +214,6 @@ public class GppModel {
       this.dirty = false;
       this.decoded = true;
     }
-
     return this.sections.get(sectionName);
   }
 
@@ -213,7 +227,6 @@ public class GppModel {
       this.dirty = false;
       this.decoded = true;
     }
-
     if (this.sections.remove(sectionName) != null) {
       this.dirty = true;
     }
@@ -308,7 +321,6 @@ public class GppModel {
       this.dirty = false;
       this.decoded = true;
     }
-
     int length = Sections.SECTION_ORDER.size();
     List<Integer> sectionIds = new ArrayList<>(length);
     for (int i = 0; i < length; i++) {
@@ -396,6 +408,24 @@ public class GppModel {
             case UsTx.ID:
               sections.put(UsTx.NAME, new UsTx(section));
               break;
+            case UsDe.ID:
+              sections.put(UsDe.NAME, new UsDe(section));
+              break;
+            case UsIa.ID:
+              sections.put(UsIa.NAME, new UsIa(section));
+              break;
+            case UsNe.ID:
+              sections.put(UsNe.NAME, new UsNe(section));
+              break;
+            case UsNh.ID:
+              sections.put(UsNh.NAME, new UsNh(section));
+              break;
+            case UsNj.ID:
+              sections.put(UsNj.NAME, new UsNj(section));
+              break;
+            case UsTn.ID:
+              sections.put(UsTn.NAME, new UsTn(section));
+              break;
           }
         }
       }
@@ -428,7 +458,6 @@ public class GppModel {
       this.dirty = false;
       this.decoded = true;
     }
-
     EncodableSection section = this.sections.get(sectionName);
     if (section != null) {
       return section.encode();
@@ -449,7 +478,6 @@ public class GppModel {
     }
 
     EncodableSection section = getOrCreateSection(sectionName);
-
     if (section != null) {
       section.decode(encodedString);
       this.dirty = true;

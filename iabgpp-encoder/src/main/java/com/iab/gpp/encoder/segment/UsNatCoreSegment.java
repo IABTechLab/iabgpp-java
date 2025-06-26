@@ -4,6 +4,7 @@ import java.util.Arrays;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
@@ -82,8 +83,13 @@ public final class UsNatCoreSegment extends AbstractLazilyEncodableSegment<Encod
       // length of 12 to 16 and known child sensitive data consents changed from a length of 2 to 3 in the
       // DE, IA, NE, NH, NJ, TN release
       if (bitString.length() == 66) {
-        bitString =
-            bitString.substring(0, 48) + "00000000" + bitString.substring(48, 52) + "00" + bitString.substring(52, 62);
+        BitStringBuilder b = new BitStringBuilder();
+        b.append(bitString.substring(0, 48));
+        b.append(BitString.empty(8));
+        b.append(bitString.substring(48, 52));
+        b.append(BitString.empty(2));
+        b.append(bitString.substring(52, 62));
+        bitString = b.build();
       }
 
       bitStringEncoder.decode(bitString, fields);
