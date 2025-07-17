@@ -1,53 +1,47 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class OptimizedFibonacciRangeEncoder {
+  private OptimizedFibonacciRangeEncoder() {}
 
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
-
-  public static String encode(List<Integer> value) throws EncodingException {
+  public static void encode(BitStringBuilder builder, IntegerSet value) throws EncodingException {
     // TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
     // to identify in advance which will be shorter based on the array length and values
-    int max = value.size() > 0 ? value.get(value.size() - 1) : 0;
-    String rangeBitString = FibonacciIntegerRangeEncoder.encode(value);
+    BitStringBuilder rangeBitString = new BitStringBuilder();
+    int max = FibonacciIntegerRangeEncoder.encode(rangeBitString, value);
     int rangeLength = rangeBitString.length();
     int bitFieldLength = max;
 
     if (rangeLength <= bitFieldLength) {
-      return FixedIntegerEncoder.encode(max, 16) + "1" + rangeBitString;
+      FixedIntegerEncoder.encode(builder, max, 16);
+      builder.append(true).append(rangeBitString);
     } else {
-      List<Boolean> bits = new ArrayList<>();
-      int index = 0;
+      FixedIntegerEncoder.encode(builder, max, 16);
+      builder.append(false);
       for (int i = 0; i < max; i++) {
-        if (i == value.get(index) - 1) {
-          bits.add(true);
-          index++;
-        } else {
-          bits.add(false);
-        }
+        builder.append(value.contains(i + 1));
       }
-      return FixedIntegerEncoder.encode(max, 16) + "0" + FixedBitfieldEncoder.encode(bits, bitFieldLength);
     }
   }
 
-  public static List<Integer> decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() < 12) {
+  public static IntegerSet decode(BitString bitString) throws DecodingException {
+    if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FibonacciIntegerRange '" + bitString + "'");
     }
 
-    if (bitString.charAt(16) == '1') {
+    if (bitString.getValue(16)) {
       return FibonacciIntegerRangeEncoder.decode(bitString.substring(17));
     } else {
-      List<Integer> value = new ArrayList<>();
-      List<Boolean> bits = FixedBitfieldEncoder.decode(bitString.substring(17));
-      for (int i = 0; i < bits.size(); i++) {
-        if (bits.get(i) == true) {
-          value.add(i + 1);
+      BitString bits = bitString.substring(17);
+      int length = bits.length();
+      IntegerBitSet value = new IntegerBitSet();
+      for (int i = 0; i < length; i++) {
+        if (bits.getValue(i)) {
+          value.addInt(i + 1);
         }
       }
       return value;

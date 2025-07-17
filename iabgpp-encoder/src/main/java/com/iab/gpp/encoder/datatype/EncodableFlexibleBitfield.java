@@ -1,42 +1,35 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.function.IntSupplier;
+
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<List<Boolean>> {
+public final class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<IntegerSet> {
 
   private IntSupplier getLengthSupplier;
 
-  protected EncodableFlexibleBitfield(IntSupplier getLengthSupplier) {
+  public EncodableFlexibleBitfield(IntSupplier getLengthSupplier) {
     super(true);
     this.getLengthSupplier = getLengthSupplier;
+    this.value = new IntegerBitSet();
   }
 
-  public EncodableFlexibleBitfield(IntSupplier getLengthSupplier, List<Boolean> value) {
-    super(true);
-    this.getLengthSupplier = getLengthSupplier;
-    this.setValue(value);
-  }
-
-  public EncodableFlexibleBitfield(IntSupplier getLengthSupplier, List<Boolean> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    this.getLengthSupplier = getLengthSupplier;
-    this.setValue(value);
-  }
-
-  public String encode() {
+  public void encode(BitStringBuilder builder) {
     try {
-      return FixedBitfieldEncoder.encode(this.value, this.getLengthSupplier.getAsInt());
+      FixedBitfieldEncoder.encode(builder, this.value, this.getLengthSupplier.getAsInt());
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(String bitString) {
+  public void decode(BitString bitString) {
     try {
       this.value = FixedBitfieldEncoder.decode(bitString);
     } catch (Exception e) {
@@ -44,7 +37,7 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
     }
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
+  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
     try {
       return bitString.substring(fromIndex, fromIndex + this.getLengthSupplier.getAsInt());
     } catch (Exception e) {
@@ -55,19 +48,12 @@ public class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
   @SuppressWarnings("unchecked")
   @Override
   public void setValue(Object value) {
-    int numElements = this.getLengthSupplier.getAsInt();
-    List<Boolean> v = new ArrayList<>((List<Boolean>) value);
-    for (int i = v.size(); i < numElements; i++) {
-      v.add(false);
-    }
-    if (v.size() > numElements) {
-      v = v.subList(0, numElements);
-    }
-    super.setValue(v);
+    this.value.clear();
+    this.value.addAll((Collection<Integer>) value);
   }
 
   @Override
-  public List<Boolean> getValue() {
-    return new ArrayList<>(super.getValue());
+  public IntegerSet getValue() {
+    return new ManagedIntegerSet(this, super.getValue());
   }
 }

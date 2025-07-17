@@ -1,72 +1,94 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 
 public class FibonacciIntegerEncoder {
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
+  private FibonacciIntegerEncoder() {}
 
-  public static String encode(int value) {
-    List<Integer> fib = new ArrayList<Integer>();
-    if (value >= 1) {
-      fib.add(1);
-
-      if (value >= 2) {
-        fib.add(2);
-
-        int i = 2;
-        while (value >= fib.get(i - 1) + fib.get(i - 2)) {
-          fib.add(fib.get(i - 1) + fib.get(i - 2));
-          i++;
-        }
-      }
-    }
-
-    String bitString = "1";
-    for (int i = fib.size() - 1; i >= 0; i--) {
-      int f = fib.get(i);
-      if (value >= f) {
-        bitString = "1" + bitString;
-        value -= f;
+  // this is the length of the longest fibonacci encoded string of all 1's
+  // which does not overflow a 32-bit integer
+  private static final int FIBONACCI_LIMIT = 42;
+  private static final int[] FIBONACCI_NUMBERS = new int[FIBONACCI_LIMIT];
+  static {
+    for (int i = 0; i < FIBONACCI_LIMIT; i++) {
+      if (i == 0) {
+        FIBONACCI_NUMBERS[i] = 1;
+      } else if (i == 1) {
+        FIBONACCI_NUMBERS[i] = 2;
       } else {
-        bitString = "0" + bitString;
+        FIBONACCI_NUMBERS[i] = FIBONACCI_NUMBERS[i - 1] + FIBONACCI_NUMBERS[i - 2];
       }
     }
-
-    return bitString;
   }
 
-  public static int decode(String bitString) throws DecodingException {
-    // enforce a length restriction to avoid overflows
-    // 2^16 has a bit string length of 24
-    if (bitString.length() > 24) {
-      throw new DecodingException("FibonacciInteger too long");
+  public static void encode(BitStringBuilder builder, int value) {
+    int largestIndex = 0;
+    for (int i = 0; i < FIBONACCI_LIMIT; i++) {
+      if (value >= FIBONACCI_NUMBERS[i]) {
+        largestIndex++;
+      } else {
+        break;
+      }
     }
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() < 2
-        || bitString.indexOf("11") != bitString.length() - 2) {
+    if (largestIndex == FIBONACCI_LIMIT) {
+      throw new EncodingException("Unencodable FibonacciInteger " + value);
+    }
+
+    int out = 1;
+    int mask = 1;
+    for (int i = largestIndex - 1; i >= 0; i--) {
+      mask <<= 1;
+      int f = FIBONACCI_NUMBERS[i];
+      if (value >= f) {
+        out |= mask;
+        value -= f;
+      }
+    }
+    FixedIntegerEncoder.encode(builder, out, largestIndex + 1);
+  }
+
+  public static int decode(BitString bitString) throws DecodingException {
+    return decode(bitString, 0, bitString.length());
+  }
+
+  public static int decode(BitString bitString, int fromIndex, int length) throws DecodingException {
+    int limit = length - 1;
+    int end = fromIndex + length;
+    // must not overflow and must end with "11"
+    if (length < 2 || limit > FIBONACCI_LIMIT || !bitString.getValue(end - 2) || !bitString.getValue(end - 1)) {
       throw new DecodingException("Undecodable FibonacciInteger '" + bitString + "'");
     }
 
     int value = 0;
-
-    List<Integer> fib = new ArrayList<>();
-    for (int i = 0; i < bitString.length() - 1; i++) {
-      if (i == 0) {
-        fib.add(1);
-      } else if (i == 1) {
-        fib.add(2);
-      } else {
-        fib.add(fib.get(i - 1) + fib.get(i - 2));
-      }
-    }
-
-    for (int i = 0; i < bitString.length() - 1; i++) {
-      if (bitString.charAt(i) == '1') {
-        value += fib.get(i);
+    for (int i = 0; i < limit; i++) {
+      if (bitString.getValue(fromIndex + i)) {
+        value += FIBONACCI_NUMBERS[i];
       }
     }
     return value;
+  }
+
+  public static int indexOfEndTag(BitString bitString, int fromIndex) {
+    int limit = bitString.length() - 1;
+    int i = fromIndex;
+    while (i < limit) {
+      if (bitString.getValue(i)) {
+        // 1X
+        if (bitString.getValue(i + 1)) {
+          // 11
+          return i;
+        } else {
+          // 10, the next can be skipped
+          i += 2;
+        }
+      } else {
+        // 0, next
+        i++;
+      }
+    }
+    return -1;
   }
 }

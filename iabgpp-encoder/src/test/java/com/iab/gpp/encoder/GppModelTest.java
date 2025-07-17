@@ -1,9 +1,12 @@
 package com.iab.gpp.encoder;
 
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -42,7 +45,7 @@ import com.iab.gpp.encoder.section.UspV1;
 
 public class GppModelTest {
 
-  private ZonedDateTime utcDateTime = ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
+  private Instant utcDateTime = ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
 
   @Test
   public void testEncodeDefault() {
@@ -116,6 +119,7 @@ public class GppModelTest {
     gppModel.setFieldValue(UsNh.NAME, UsTxField.VERSION, UsTx.VERSION);
     gppModel.setFieldValue(UsNj.NAME, UsTxField.VERSION, UsTx.VERSION);
     gppModel.setFieldValue(UsTn.NAME, UsTxField.VERSION, UsTx.VERSION);
+
 
 
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));
@@ -345,26 +349,22 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.VENDOR_LIST_VERSION, 413);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.USE_NON_STANDARD_STACKS, true);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT,
-        Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true));
+        Arrays.asList(6, 7, 8, 9, 10, 11));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(true, true, true, true, true, true, false, false, false, false, false, false, true, true, true,
-            true, true, true, false, false, false, false, false, false));
+        Arrays.asList(0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16, 17));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true, false, false, false,
-            false, false, false, true, true, true, true, true, true));
+        Arrays.asList(6, 7, 8, 9, 10, 11, 18, 19, 20, 21, 22, 23));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.VENDOR_EXPRESS_CONSENT, Arrays.asList(12, 24, 48));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.VENDOR_IMPLIED_CONSENT, Arrays.asList(18, 30));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true, true,
-            false, false, false, true, true, true, false, false, false));
+        Arrays.asList(0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false, false,
-            true, true, true, false, false, false, true, true, true));
+        Arrays.asList(3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.NUM_CUSTOM_PURPOSES, 3);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(false, true, false));
+        List.of(1));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(true, false, true));
+        List.of(0,2));
 
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.LAST_UPDATED, utcDateTime);
@@ -613,33 +613,30 @@ public class GppModelTest {
     Assertions.assertEquals(2, tcfCaV1Section.getCmpVersion());
     Assertions.assertEquals(413, tcfCaV1Section.getVendorListVersion());
     Assertions.assertEquals(true, tcfCaV1Section.getUseNonStandardStacks());
-    Assertions.assertEquals(Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true),
+    Assertions.assertTrue(tcfCaV1Section.getSpecialFeatureExpressConsent().intStream().anyMatch(x -> x== 7));
+    Assertions.assertEquals(Set.of(7, 8, 9, 10, 11, 12),
         tcfCaV1Section.getSpecialFeatureExpressConsent());
     Assertions
         .assertEquals(
-            Arrays.asList(true, true, true, true, true, true, false, false, false, false, false, false, true, true,
-                true, true, true, true, false, false, false, false, false, false),
+            Set.of(1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18),
             tcfCaV1Section.getPurposesExpressConsent());
     Assertions
         .assertEquals(
-            Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true, false, false,
-                false, false, false, false, true, true, true, true, true, true),
+            Set.of(7, 8, 9, 10, 11, 12, 19, 20, 21, 22, 23, 24),
             tcfCaV1Section.getPurposesImpliedConsent());
-    Assertions.assertEquals(Arrays.asList(12, 24, 48), tcfCaV1Section.getVendorExpressConsent());
-    Assertions.assertEquals(Arrays.asList(18, 30), tcfCaV1Section.getVendorImpliedConsent());
+    Assertions.assertEquals(Set.of(12, 24, 48), tcfCaV1Section.getVendorExpressConsent());
+    Assertions.assertEquals(Set.of(18, 30), tcfCaV1Section.getVendorImpliedConsent());
     Assertions
         .assertEquals(
-            Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true,
-                true, false, false, false, true, true, true, false, false, false),
+            Set.of(1, 2, 3, 7, 8, 9, 13, 14, 15, 19, 20, 21),
             tcfCaV1Section.getPubPurposesExpressConsent());
     Assertions
         .assertEquals(
-            Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false,
-                false, true, true, true, false, false, false, true, true, true),
+            Set.of(4, 5, 6, 10, 11, 12, 16, 17, 18, 22, 23, 24),
             tcfCaV1Section.getPubPurposesImpliedConsent());
     Assertions.assertEquals(3, tcfCaV1Section.getNumCustomPurposes());
-    Assertions.assertEquals(Arrays.asList(false, true, false), tcfCaV1Section.getCustomPurposesExpressConsent());
-    Assertions.assertEquals(Arrays.asList(true, false, true), tcfCaV1Section.getCustomPurposesImpliedConsent());
+    Assertions.assertEquals(Set.of(2), tcfCaV1Section.getCustomPurposesExpressConsent());
+    Assertions.assertEquals(Set.of(1, 3), tcfCaV1Section.getCustomPurposesImpliedConsent());
     Assertions.assertEquals(utcDateTime, tcfCaV1Section.getCreated());
     Assertions.assertEquals(utcDateTime, tcfCaV1Section.getLastUpdated());
 
@@ -685,19 +682,19 @@ public class GppModelTest {
   @Test
   public void testDecode1() {
     GppModel gppModel = new GppModel("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOAAAABAAAAA.QAAA.IAAA");
-    Assertions.assertEquals(Arrays.asList(28), gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
+    Assertions.assertEquals(Set.of(28), gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
   }
 
   @Test
   public void testDecode2() {
     GppModel gppModel = new GppModel("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOwAQAOgAAAA.QAAA.IAAA");
-    Assertions.assertEquals(Arrays.asList(29), gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
+    Assertions.assertEquals(Set.of(29), gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
   }
 
   @Test
   public void testDecode3() {
     GppModel gppModel = new GppModel("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA");
-    Assertions.assertEquals(Arrays.asList(1, 173, 722),
+    Assertions.assertEquals(Set.of(1, 173, 722),
         gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
   }
   
@@ -759,7 +756,7 @@ public class GppModelTest {
     GppModel fromObjectModel = new GppModel();
 
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS,
-        Arrays.asList(true, true, true, true, true, true, true, true, true, true));
+        Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS,
         Arrays.asList(32, 128, 81, 210, 755, 21, 173, 238));
 
@@ -770,10 +767,9 @@ public class GppModelTest {
     GppModel decodedModel = new GppModel(fromObjectModel.encode());
 
     Assertions.assertEquals(
-        Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false),
+        Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS));
-    Assertions.assertEquals(Arrays.asList(21, 32, 81, 128, 173, 210, 238, 755),
+    Assertions.assertEquals(Set.of(21, 32, 81, 128, 173, 210, 238, 755),
         decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
 
   }

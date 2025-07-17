@@ -1,10 +1,11 @@
 package com.iab.gpp.encoder.section;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
@@ -14,16 +15,16 @@ import com.iab.gpp.encoder.segment.TcfCaV1DisclosedVendorsSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1PublisherPurposesSegment;
 
 public class TcfCaV1 extends AbstractLazilyEncodableSection {
-  
-  public static int ID = 5;
-  public static int VERSION = 1;
-  public static String NAME = "tcfcav1";
+
+  public static final int ID = 5;
+  public static final int VERSION = 1;
+  public static final String NAME = "tcfcav1";
 
   public TcfCaV1() {
     super();
   }
 
-  public TcfCaV1(String encodedString) {
+  public TcfCaV1(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -45,63 +46,57 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new TcfCaV1CoreSegment());
-    segments.add(new TcfCaV1PublisherPurposesSegment());
-    segments.add(new TcfCaV1DisclosedVendorsSegment());
-    return segments;
+    return Arrays.asList(new TcfCaV1CoreSegment(), new TcfCaV1PublisherPurposesSegment(), new TcfCaV1DisclosedVendorsSegment());
   }
-  
+
   @Override
-  public List<EncodableSegment> decodeSection(String encodedString) {
-    List<EncodableSegment> segments = initializeSegments();
-    
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
-      for (int i = 0; i < encodedSegments.length; i++) {
-        
+  public List<EncodableSegment> decodeSection(CharSequence encodedString) {
+    if (encodedString != null && encodedString.length() > 0) {
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+      for (int i = 0; i < encodedSegments.size(); i++) {
+
         /**
          * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
-         * 
+         *
          * A-H     = '000' = 0
          * I-P     = '001' = 1
          * Y-Z,a-f = '011' = 3
-         * 
-         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved 
+         *
+         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
          * for the encoding version which only coincidentally works here because the version value is less than 8.
          */
-        
-        String encodedSegment = encodedSegments[i];
-        if(!encodedSegment.isEmpty()) {
+
+        CharSequence encodedSegment = encodedSegments.get(i);
+        if (encodedSegment.length() > 0) {
           char firstChar = encodedSegment.charAt(0);
-          
+
           if(firstChar >= 'A' && firstChar <= 'H') {
-            segments.get(0).decode(encodedSegments[i]);
+            segments.get(0).decode(encodedSegment);
           } else if(firstChar >= 'I' && firstChar <= 'P') {
-            segments.get(2).decode(encodedSegments[i]);
+            segments.get(2).decode(encodedSegment);
           } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
-            segments.get(1).decode(encodedSegments[i]);
+            segments.get(1).decode(encodedSegment);
           } else {
             throw new DecodingException("Invalid segment '" + encodedSegment + "'");
           }
         }
       }
     }
-    
+
     return segments;
   }
 
   @Override
-  public String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+  public CharSequence encodeSection(List<EncodableSegment> segments) {
+    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
-    encodedSegments.add(segments.get(0).encode());
-    encodedSegments.add(segments.get(1).encode());
+    encodedSegments.add(segments.get(0).encodeCharSequence());
+    encodedSegments.add(segments.get(1).encodeCharSequence());
     if(!this.getDisclosedVendors().isEmpty()) {
-      encodedSegments.add(segments.get(2).encode());
+      encodedSegments.add(segments.get(2).encodeCharSequence());
     }
-    
-    return String.join(".", encodedSegments);
+
+    return SlicedCharSequence.join('.',  encodedSegments);
   }
 
   @Override
@@ -109,20 +104,20 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfCaV1Field.CREATED) && !fieldName.equals(TcfCaV1Field.LAST_UPDATED)) {
-      ZonedDateTime utcDateTime = ZonedDateTime.now(ZoneId.of("UTC"));
+      Instant utcDateTime = Instant.now();
 
       super.setFieldValue(TcfCaV1Field.CREATED, utcDateTime);
       super.setFieldValue(TcfCaV1Field.LAST_UPDATED, utcDateTime);
     }
   }
 
-  
-  public ZonedDateTime getCreated() {
-    return (ZonedDateTime) this.getFieldValue(TcfCaV1Field.CREATED);
+
+  public Instant getCreated() {
+    return (Instant) this.getFieldValue(TcfCaV1Field.CREATED);
   }
 
-  public ZonedDateTime getLastUpdated() {
-    return (ZonedDateTime) this.getFieldValue(TcfCaV1Field.LAST_UPDATED);
+  public Instant getLastUpdated() {
+    return (Instant) this.getFieldValue(TcfCaV1Field.LAST_UPDATED);
   }
 
   public Integer getCmpId() {
@@ -153,71 +148,61 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
     return (Boolean) this.getFieldValue(TcfCaV1Field.USE_NON_STANDARD_STACKS);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getSpecialFeatureExpressConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT);
+  public IntegerSet getSpecialFeatureExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPurposesExpressConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT);
+  public IntegerSet getPurposesExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPurposesImpliedConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT);
+  public IntegerSet getPurposesImpliedConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getVendorExpressConsent() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT);
+  public IntegerSet getVendorExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getVendorImpliedConsent() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT);
+  public IntegerSet getVendorImpliedConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT);
   }
 
   @SuppressWarnings("unchecked")
   public List<RangeEntry> getPubRestrictions() {
     return (List<RangeEntry>) this.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS);
   }
-  
+
   public Integer getPubPurposesSegmentType() {
     return (Integer) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPubPurposesExpressConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT);
+  public IntegerSet getPubPurposesExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Boolean> getPubPurposesImpliedConsent() {
-    return (List<Boolean>) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT);
+  public IntegerSet getPubPurposesImpliedConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT);
   }
 
   public Integer getNumCustomPurposes() {
     return (Integer) this.getFieldValue(TcfCaV1Field.NUM_CUSTOM_PURPOSES);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getCustomPurposesExpressConsent() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT);
+  public IntegerSet getCustomPurposesExpressConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getCustomPurposesImpliedConsent() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT);
+  public IntegerSet getCustomPurposesImpliedConsent() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT);
   }
 
   public Integer getDisclosedVendorsSegmentType() {
     return (Integer) this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE);
   }
-  
-  @SuppressWarnings("unchecked")
-  public List<Integer> getDisclosedVendors() {
-    return (List<Integer>) this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS);
+
+  public IntegerSet getDisclosedVendors() {
+    return (IntegerSet) this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS);
   }
 
 }

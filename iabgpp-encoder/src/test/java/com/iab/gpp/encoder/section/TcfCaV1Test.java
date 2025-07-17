@@ -6,6 +6,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.datatype.RangeEntry;
@@ -20,8 +21,8 @@ public class TcfCaV1Test {
   public void testEncode1() {
 
     TcfCaV1 tcfCaV1 = new TcfCaV1();
-    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
+    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
     Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", tcfCaV1.encode());
   }
 
@@ -34,27 +35,23 @@ public class TcfCaV1Test {
     tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_LIST_VERSION, 413);
     tcfCaV1.setFieldValue(TcfCaV1Field.USE_NON_STANDARD_STACKS, true);
     tcfCaV1.setFieldValue(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT,
-        Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true));
+        Arrays.asList(6, 7, 8, 9, 10, 11));
     tcfCaV1.setFieldValue(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(true, true, true, true, true, true, false, false, false, false, false, false, true, true, true,
-            true, true, true, false, false, false, false, false, false));
+        Arrays.asList(0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16, 17));
     tcfCaV1.setFieldValue(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true, false, false, false,
-            false, false, false, true, true, true, true, true, true));
+        Arrays.asList(6, 7, 8, 9, 10, 11, 18, 19, 20, 21, 22, 23));
     tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, Arrays.asList(12, 24, 48));
     tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, Arrays.asList(18, 30));
     tcfCaV1.setFieldValue(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true, true,
-            false, false, false, true, true, true, false, false, false));
+        Arrays.asList(0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20));
     tcfCaV1.setFieldValue(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false, false,
-            true, true, true, false, false, false, true, true, true));
+        Arrays.asList(3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23));
     tcfCaV1.setFieldValue(TcfCaV1Field.NUM_CUSTOM_PURPOSES, 3);
-    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT, Arrays.asList(false, true, false));
-    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT, Arrays.asList(true, false, true));
+    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT, Set.of(1));
+    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT, Set.of(0,2));
 
-    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
+    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
 
     Assertions.assertEquals("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao", tcfCaV1.encode());
   }
@@ -65,8 +62,8 @@ public class TcfCaV1Test {
     TcfCaV1 tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.DISCLOSED_VENDORS, Arrays.asList(1, 2, 3, 5, 6, 7, 10, 11, 12));
 
-    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
+    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
 
     Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5w", tcfCaV1.encode());
   }
@@ -75,13 +72,13 @@ public class TcfCaV1Test {
   public void testEncode4() throws EncodingException, InvalidFieldException {
 
     List<RangeEntry> pubRestrictions = new ArrayList<>();
-    pubRestrictions.add(new RangeEntry(1, 1, Arrays.asList(1, 2, 3, 5, 6, 7, 9)));
+    pubRestrictions.add(new RangeEntry(1, 1, Set.of(1, 2, 3, 5, 6, 7, 9)));
 
     TcfCaV1 tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.PUB_RESTRICTIONS, pubRestrictions);
 
-    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
+    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
+    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
     Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", tcfCaV1.encode());
   }
 
@@ -94,33 +91,29 @@ public class TcfCaV1Test {
     Assertions.assertEquals(0, tcfCaV1.getVendorListVersion());
     Assertions.assertEquals(false, tcfCaV1.getUseNonStandardStacks());
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfCaV1.getSpecialFeatureExpressConsent());
     Assertions
         .assertEquals(
-            Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false, false, false),
+            Set.of(),
             tcfCaV1.getPurposesExpressConsent());
     Assertions
         .assertEquals(
-            Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false, false, false),
+            Set.of(),
             tcfCaV1.getPurposesImpliedConsent());
-    Assertions.assertEquals(Arrays.asList(), tcfCaV1.getVendorExpressConsent());
-    Assertions.assertEquals(Arrays.asList(), tcfCaV1.getVendorImpliedConsent());
+    Assertions.assertEquals(Set.of(), tcfCaV1.getVendorExpressConsent());
+    Assertions.assertEquals(Set.of(), tcfCaV1.getVendorImpliedConsent());
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfCaV1.getPubPurposesExpressConsent());
     Assertions.assertEquals(
-        Arrays.asList(false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false),
+        Set.of(),
         tcfCaV1.getPubPurposesImpliedConsent());
     Assertions.assertEquals(0, tcfCaV1.getNumCustomPurposes());
-    Assertions.assertEquals(Arrays.asList(), tcfCaV1.getCustomPurposesExpressConsent());
-    Assertions.assertEquals(Arrays.asList(), tcfCaV1.getCustomPurposesImpliedConsent());
-    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfCaV1.getCreated());
-    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfCaV1.getLastUpdated());
+    Assertions.assertEquals(Set.of(), tcfCaV1.getCustomPurposesExpressConsent());
+    Assertions.assertEquals(Set.of(), tcfCaV1.getCustomPurposesImpliedConsent());
+    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), tcfCaV1.getCreated());
+    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), tcfCaV1.getLastUpdated());
 
     Assertions.assertEquals("EN", tcfCaV1.getConsentLanguage());
     Assertions.assertEquals(5, tcfCaV1.getId());
@@ -135,31 +128,27 @@ public class TcfCaV1Test {
     Assertions.assertEquals(2, tcfCaV1.getCmpVersion());
     Assertions.assertEquals(413, tcfCaV1.getVendorListVersion());
     Assertions.assertEquals(true, tcfCaV1.getUseNonStandardStacks());
-    Assertions.assertEquals(Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true),
+    Assertions.assertEquals(Set.of(7, 8, 9, 10, 11, 12),
         tcfCaV1.getSpecialFeatureExpressConsent());
-    Assertions.assertEquals(Arrays.asList(true, true, true, true, true, true, false, false, false, false, false, false,
-        true, true, true, true, true, true, false, false, false, false, false, false),
+    Assertions.assertEquals(Set.of(1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18),
         tcfCaV1.getPurposesExpressConsent());
-    Assertions.assertEquals(Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true,
-        false, false, false, false, false, false, true, true, true, true, true, true),
+    Assertions.assertEquals(Set.of(7, 8, 9, 10, 11, 12, 19, 20, 21, 22, 23, 24),
         tcfCaV1.getPurposesImpliedConsent());
-    Assertions.assertEquals(Arrays.asList(12, 24, 48), tcfCaV1.getVendorExpressConsent());
-    Assertions.assertEquals(Arrays.asList(18, 30), tcfCaV1.getVendorImpliedConsent());
+    Assertions.assertEquals(Set.of(12, 24, 48), tcfCaV1.getVendorExpressConsent());
+    Assertions.assertEquals(Set.of(18, 30), tcfCaV1.getVendorImpliedConsent());
     Assertions
         .assertEquals(
-            Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true,
-                true, false, false, false, true, true, true, false, false, false),
+            Set.of(1, 2, 3, 7, 8, 9, 13, 14, 15, 19, 20, 21),
             tcfCaV1.getPubPurposesExpressConsent());
     Assertions
         .assertEquals(
-            Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false,
-                false, true, true, true, false, false, false, true, true, true),
+            Set.of(4, 5, 6, 10, 11, 12, 16, 17, 18, 22, 23, 24),
             tcfCaV1.getPubPurposesImpliedConsent());
     Assertions.assertEquals(3, tcfCaV1.getNumCustomPurposes());
-    Assertions.assertEquals(Arrays.asList(false, true, false), tcfCaV1.getCustomPurposesExpressConsent());
-    Assertions.assertEquals(Arrays.asList(true, false, true), tcfCaV1.getCustomPurposesImpliedConsent());
-    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfCaV1.getCreated());
-    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfCaV1.getLastUpdated());
+    Assertions.assertEquals(Set.of(2), tcfCaV1.getCustomPurposesExpressConsent());
+    Assertions.assertEquals(Set.of(1, 3), tcfCaV1.getCustomPurposesImpliedConsent());
+    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), tcfCaV1.getCreated());
+    Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), tcfCaV1.getLastUpdated());
 
     Assertions.assertEquals("EN", tcfCaV1.getConsentLanguage());
     Assertions.assertEquals(5, tcfCaV1.getId());
@@ -171,7 +160,7 @@ public class TcfCaV1Test {
     TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5w");
 
     Assertions.assertEquals(1, tcfCaV1.getDisclosedVendorsSegmentType());
-    Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 10, 11, 12), tcfCaV1.getDisclosedVendors());
+    Assertions.assertEquals(Set.of(1, 2, 3, 5, 6, 7, 10, 11, 12), tcfCaV1.getDisclosedVendors());
   }
 
   @Test
@@ -182,7 +171,7 @@ public class TcfCaV1Test {
     Assertions.assertEquals(1, pubRestictions.size());
     Assertions.assertEquals(1, pubRestictions.get(0).getKey());
     Assertions.assertEquals(1, pubRestictions.get(0).getType());
-    Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 9), pubRestictions.get(0).getIds());
+    Assertions.assertEquals(Set.of(1, 2, 3, 5, 6, 7, 9), pubRestictions.get(0).getIds());
   }
   
   @Test()

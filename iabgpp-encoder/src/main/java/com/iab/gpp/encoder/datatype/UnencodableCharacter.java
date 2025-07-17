@@ -3,15 +3,16 @@ package com.iab.gpp.encoder.datatype;
 import java.util.function.Predicate;
 import com.iab.gpp.encoder.error.ValidationException;
 
-public class UnencodableCharacter implements DataType<Character> {
+public final class UnencodableCharacter implements DataType<Character> {
 
+  private boolean dirty = false;
   private Predicate<Character> validator;
   private Character value = null;
 
   public UnencodableCharacter() {
     this.validator = v -> true;
   }
-  
+
   public UnencodableCharacter(Character value) {
     this.validator = v -> true;
     setValue(value);
@@ -25,7 +26,7 @@ public class UnencodableCharacter implements DataType<Character> {
   public void setValidator(Predicate<Character> validator) {
     this.validator = validator;
   }
-  
+
   @Override
   public boolean hasValue() {
     return this.value != null;
@@ -41,9 +42,20 @@ public class UnencodableCharacter implements DataType<Character> {
     Character c = (Character)value.toString().charAt(0);
     if(validator.test(c)) {
       this.value = c;
+      this.dirty = true;
     } else {
       throw new ValidationException("Invalid value '" + c + "'");
     }
+  }
+
+  @Override
+  public boolean isDirty() {
+    return dirty;
+  }
+
+  @Override
+  public void setDirty(boolean dirty) {
+    this.dirty = dirty;
   }
 
 }

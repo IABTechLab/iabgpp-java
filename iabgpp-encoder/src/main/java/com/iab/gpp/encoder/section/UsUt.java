@@ -1,22 +1,23 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.iab.gpp.encoder.field.UsUtField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsUtCoreSegment;
 
 public class UsUt extends AbstractLazilyEncodableSection {
-  
-  public static int ID = 11;
-  public static int VERSION = 1;
-  public static String NAME = "usut";
+
+  public static final int ID = 11;
+  public static final int VERSION = 1;
+  public static final String NAME = "usut";
 
   public UsUt() {
     super();
   }
 
-  public UsUt(String encodedString) {
+  public UsUt(CharSequence encodedString) {
     super();
     decode(encodedString);
   }
@@ -38,38 +39,34 @@ public class UsUt extends AbstractLazilyEncodableSection {
 
   @Override
   protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsUtCoreSegment());
-    return segments;
+    return Collections.singletonList(new UsUtCoreSegment());
   }
-  
+
   @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
-    List<EncodableSegment> segments = initializeSegments();
-    
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
-      
-      for(int i=0; i<segments.size(); i++) {
-        if(encodedSegments.length > i) {
-          segments.get(i).decode(encodedSegments[i]);
+  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
+    if (encodedString != null && encodedString.length() > 0) {
+      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+
+      for (int i = 0; i < segments.size(); i++) {
+        if (encodedSegments.size() > i) {
+          segments.get(i).decode(encodedSegments.get(i));
         }
       }
     }
-    
+
     return segments;
   }
 
   @Override
-  protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
+  protected CharSequence encodeSection(List<EncodableSegment> segments) {
+    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
     for(EncodableSegment segment : segments) {
-      encodedSegments.add(segment.encode());
+      encodedSegments.add(segment.encodeCharSequence());
     }
-    return String.join(".", encodedSegments);
+    return SlicedCharSequence.join('.',  encodedSegments);
   }
 
-  
+
   public Integer getSharingNotice() {
     return (Integer) this.getFieldValue(UsUtField.SHARING_NOTICE);
   }
@@ -114,6 +111,6 @@ public class UsUt extends AbstractLazilyEncodableSection {
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE);
   }
-  
-  
+
+
 }
