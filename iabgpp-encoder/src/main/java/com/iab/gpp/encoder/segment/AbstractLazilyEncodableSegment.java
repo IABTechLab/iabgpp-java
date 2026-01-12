@@ -1,8 +1,8 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.List;
 import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.DataType;
+import com.iab.gpp.encoder.datatype.FixedList;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.Fields;
 
@@ -10,7 +10,7 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   protected static final Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
   protected static final Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
-  protected static final Predicate<List<Integer>> nullableBooleanAsTwoBitIntegerListValidator = (l -> {
+  protected static final Predicate<FixedList<Integer>> nullableBooleanAsTwoBitIntegerListValidator = (l -> {
     for (int n : l) {
       if (n < 0 || n > 2) {
         return false;

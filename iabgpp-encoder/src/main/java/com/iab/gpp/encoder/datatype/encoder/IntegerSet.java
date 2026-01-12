@@ -5,7 +5,7 @@ import java.util.PrimitiveIterator;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-public interface IntegerSet extends Set<Integer> {
+public interface IntegerSet extends Set<Integer>, Dirtyable {
   boolean containsInt(int value);
 
   default boolean containsAny(Collection<?> c) {

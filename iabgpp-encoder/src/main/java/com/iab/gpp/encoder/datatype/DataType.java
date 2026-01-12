@@ -1,9 +1,9 @@
 package com.iab.gpp.encoder.datatype;
 
-public interface DataType<T> {
+import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
+
+public interface DataType<T> extends Dirtyable {
   boolean hasValue();
   T getValue();
   void setValue(Object value);
-  boolean isDirty();
-  void setDirty(boolean dirty);
 }

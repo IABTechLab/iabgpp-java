@@ -11,7 +11,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 
-public final class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableOptimizedFixedRange extends AbstractDirtyableBitStringDataType<IntegerSet> {
 
   public EncodableOptimizedFixedRange() {
     super(true);
@@ -55,10 +55,5 @@ public final class EncodableOptimizedFixedRange extends AbstractEncodableBitStri
   public void setValue(Object value) {
     this.value.clear();
     this.value.addAll((Collection<Integer>) value);
-  }
-
-  @Override
-  public IntegerSet getValue() {
-    return new ManagedIntegerSet(this, super.getValue());
   }
 }

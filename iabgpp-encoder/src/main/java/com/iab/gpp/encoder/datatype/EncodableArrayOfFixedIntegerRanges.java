@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -12,16 +11,18 @@ import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public final class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStringDataType<List<RangeEntry>> {
+public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableBitStringDataType<FixedList<RangeEntry>> {
 
   private int keyBitStringLength;
   private int typeBitStringLength;
+
+  private static final FixedList<RangeEntry> EMPTY = new FixedList<>(List.of());
 
   public EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
-    this.value = Collections.emptyList();
+    this.value = EMPTY;
   }
 
   @Override
@@ -58,11 +59,13 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableB
         IntegerSet ids = FixedIntegerRangeEncoder.decode(substring);
         index += substring.length();
 
-        entries.add(new RangeEntry(key, type, ids));
+        RangeEntry entry = new RangeEntry(key, type, ids);
+        entry.setDirty(false);
+        entries.add(entry);
       }
 
-      // NOTE: this requires that updates to structure be done using the setter
-      this.value = Collections.unmodifiableList(entries);
+      // NOTE: this requires that adding/removing ranges uses the setter
+      this.value = new FixedList<>(entries);
     } catch (Exception e) {
       throw new DecodingException(e);
     }
@@ -98,4 +101,9 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableB
     }
   }
 
+  @SuppressWarnings("unchecked")
+  @Override
+  public void setValue(Object value) {
+    super.setValue(new FixedList<>((List<RangeEntry>) value));
+  }
 }

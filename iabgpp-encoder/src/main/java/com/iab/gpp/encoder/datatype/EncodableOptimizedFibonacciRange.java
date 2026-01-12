@@ -10,7 +10,7 @@ import com.iab.gpp.encoder.datatype.encoder.OptimizedFibonacciRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public final class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableOptimizedFibonacciRange extends AbstractDirtyableBitStringDataType<IntegerSet> {
 
   protected EncodableOptimizedFibonacciRange() {
     super(true);
@@ -63,10 +63,5 @@ public final class EncodableOptimizedFibonacciRange extends AbstractEncodableBit
   public void setValue(Object value) {
     this.value.clear();
     this.value.addAll((Collection<Integer>) value);
-  }
-
-  @Override
-  public IntegerSet getValue() {
-    return new ManagedIntegerSet(this, super.getValue());
   }
 }

@@ -43,7 +43,7 @@ public class FixedIntegerRangeEncoder {
     }
   }
 
-  public static IntegerSet decode(BitString bitString) throws DecodingException {
+  public static IntegerBitSet decode(BitString bitString) throws DecodingException {
     if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FixedIntegerRange '" + bitString + "'");
     }
@@ -69,7 +69,7 @@ public class FixedIntegerRangeEncoder {
         startIndex += 16;
       }
     }
-
+    value.setDirty(false);
     return value;
   }
 }

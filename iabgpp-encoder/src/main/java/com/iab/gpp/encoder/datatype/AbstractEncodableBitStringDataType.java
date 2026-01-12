@@ -23,11 +23,11 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
     return this;
   }
 
-  public boolean hasValue() {
+  public final boolean hasValue() {
     return this.value != null;
   }
 
-  public T getValue() {
+  public final T getValue() {
     return this.value;
   }
 
@@ -48,7 +48,7 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
 
   }
 
-  public boolean getHardFailIfMissing() {
+  public final boolean getHardFailIfMissing() {
     return this.hardFailIfMissing;
   }
 

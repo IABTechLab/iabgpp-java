@@ -2,14 +2,14 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.AbstractList;
 import java.util.List;
+import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
 
-final class ManagedFixedList<T> extends AbstractList<T> {
+public final class FixedList<T> extends AbstractList<T> implements Dirtyable {
 
-  private final DataType<?> parent;
+  private boolean dirty;
   private final List<T> delegate;
 
-  ManagedFixedList(DataType<?> parent, List<T> delegate) {
-    this.parent = parent;
+  FixedList(List<T> delegate) {
     this.delegate = delegate;
   }
 
@@ -27,7 +27,7 @@ final class ManagedFixedList<T> extends AbstractList<T> {
   public T set(int index, T value) {
     T prior = delegate.set(index, value);
     if (prior != null) {
-      parent.setDirty(true);
+      dirty = true;
     }
     return prior;
   }
@@ -35,5 +35,15 @@ final class ManagedFixedList<T> extends AbstractList<T> {
   @Override
   public String toString() {
     return delegate.toString();
+  }
+
+  @Override
+  public boolean isDirty() {
+    return dirty;
+  }
+
+  @Override
+  public void setDirty(boolean dirty) {
+    this.dirty = dirty;
   }
 }

@@ -27,7 +27,7 @@ public class OptimizedFixedRangeEncoder {
     }
   }
 
-  public static IntegerSet decode(BitString bitString) throws DecodingException {
+  public static IntegerBitSet decode(BitString bitString) throws DecodingException {
     if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FixedIntegerRange '" + bitString + "'");
     }
@@ -43,6 +43,7 @@ public class OptimizedFixedRangeEncoder {
           value.addInt(i + 1);
         }
       }
+      value.setDirty(false);
       return value;
     }
   }

@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public final class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<List<Integer>> {
+public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringDataType<FixedList<Integer>> {
 
   private int elementBitStringLength;
   private int numElements;
@@ -37,7 +37,7 @@ public final class EncodableFixedIntegerList extends AbstractEncodableBitStringD
 
   public void decode(BitString bitString) {
     try {
-      this.value = FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements);
+      this.value = new FixedList<>(FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements));
     } catch (Exception e) {
       throw new DecodingException(e);
     }
@@ -61,11 +61,6 @@ public final class EncodableFixedIntegerList extends AbstractEncodableBitStringD
     if (v.size() > numElements) {
       v = v.subList(0, numElements);
     }
-    super.setValue(v);
-  }
-
-  @Override
-  public List<Integer> getValue() {
-    return new ManagedFixedList<>(this, super.getValue());
+    super.setValue(new FixedList<>(v));
   }
 }

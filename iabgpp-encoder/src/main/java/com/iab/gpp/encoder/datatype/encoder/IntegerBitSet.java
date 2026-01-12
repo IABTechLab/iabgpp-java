@@ -1,6 +1,8 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
+import java.util.AbstractSet;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -9,14 +11,15 @@ import java.util.PrimitiveIterator.OfInt;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
-public final class IntegerBitSet extends BaseIntegerSet {
+public final class IntegerBitSet extends AbstractSet<Integer> implements IntegerSet {
   private static final Logger LOGGER = Logger.getLogger(IntegerBitSet.class.getName());
 
   static final int MAX_COLLECTION_SIZE = 8192;
 
-  protected final BitSet bitSet;
-  protected final int from;
-  protected final int to;
+  private boolean dirty;
+  private final BitSet bitSet;
+  private final int from;
+  private final int to;
   private final int adjustment;
 
   public IntegerBitSet(BitSet bitSet, int from, int to, int adjustment) {
@@ -55,6 +58,7 @@ public final class IntegerBitSet extends BaseIntegerSet {
 
   @Override
   public void clear() {
+    dirty = true;
     bitSet.clear(from, to);
   }
 
@@ -126,6 +130,7 @@ public final class IntegerBitSet extends BaseIntegerSet {
       logOutOfRange(end);
       realEnd = to;
     }
+    dirty = true;
     bitSet.set(realStart, realEnd);
   }
 
@@ -140,6 +145,7 @@ public final class IntegerBitSet extends BaseIntegerSet {
       return false;
     }
     bitSet.set(offset, true);
+    dirty = true;
     return true;
   }
 
@@ -154,6 +160,65 @@ public final class IntegerBitSet extends BaseIntegerSet {
       return false;
     }
     bitSet.set(offset, false);
+    dirty = true;
     return true;
+  }
+
+  @Override
+  public final boolean contains(Object value) {
+    if (value instanceof Integer) {
+      return containsInt((Integer) value);
+    }
+    return false;
+  }
+
+  @Override
+  public final boolean add(Integer value) {
+    if (value == null) {
+      return false;
+    }
+    return addInt(value);
+  }
+
+  @Override
+  public final boolean remove(Object value) {
+    if (value instanceof Integer) {
+      return removeInt((Integer) value);
+    }
+    return false;
+  }
+
+  @Override
+  public boolean removeAll(Collection<?> c) {
+    boolean modified = false;
+    for (Integer i : this) {
+      if (c.contains(i)) {
+        remove(i);
+        modified = true;
+      }
+    }
+    return modified;
+  }
+
+  @Override
+  public boolean retainAll(Collection<?> c) {
+    boolean modified = false;
+    for (Integer i : this) {
+      if (!c.contains(i)) {
+        remove(i);
+        modified = true;
+      }
+    }
+    return modified;
+  }
+
+  @Override
+  public boolean isDirty() {
+    return dirty;
+  }
+
+  @Override
+  public void setDirty(boolean dirty) {
+    this.dirty = dirty;
   }
 }
