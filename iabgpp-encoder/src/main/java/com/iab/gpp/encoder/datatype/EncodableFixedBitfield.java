@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -16,7 +15,7 @@ public final class EncodableFixedBitfield extends AbstractDirtyableBitStringData
   public EncodableFixedBitfield(int numElements) {
     super(true);
     this.numElements = numElements;
-    this.value = new IntegerBitSet(numElements);
+    this.value = new IntegerSet(numElements);
   }
 
   public void encode(BitStringBuilder builder) {

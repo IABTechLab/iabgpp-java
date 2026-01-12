@@ -5,7 +5,6 @@ import java.util.function.IntSupplier;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -18,7 +17,7 @@ public final class EncodableFlexibleBitfield extends AbstractDirtyableBitStringD
   public EncodableFlexibleBitfield(IntSupplier getLengthSupplier) {
     super(true);
     this.getLengthSupplier = getLengthSupplier;
-    this.value = new IntegerBitSet();
+    this.value = new IntegerSet();
   }
 
   public void encode(BitStringBuilder builder) {

@@ -28,7 +28,7 @@ public class OptimizedFibonacciRangeEncoder {
     }
   }
 
-  public static IntegerBitSet decode(BitString bitString) throws DecodingException {
+  public static IntegerSet decode(BitString bitString) throws DecodingException {
     if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FibonacciIntegerRange '" + bitString + "'");
     }
@@ -38,7 +38,7 @@ public class OptimizedFibonacciRangeEncoder {
     } else {
       BitString bits = bitString.substring(17);
       int length = bits.length();
-      IntegerBitSet value = new IntegerBitSet();
+      IntegerSet value = new IntegerSet();
       for (int i = 0; i < length; i++) {
         if (bits.getValue(i)) {
           value.addInt(i + 1);

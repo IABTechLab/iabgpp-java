@@ -47,13 +47,13 @@ public class FibonacciIntegerRangeEncoder {
     }
   }
 
-  public static IntegerBitSet decode(BitString bitString) throws DecodingException {
+  public static IntegerSet decode(BitString bitString) throws DecodingException {
     if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FibonacciIntegerRange '" + bitString + "'");
     }
 
     int count = FixedIntegerEncoder.decode(bitString, 0, 12);
-    IntegerBitSet value = new IntegerBitSet();
+    IntegerSet value = new IntegerSet();
 
     int offset = 0;
     int startIndex = 12;

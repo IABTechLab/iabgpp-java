@@ -43,13 +43,13 @@ public class FixedIntegerRangeEncoder {
     }
   }
 
-  public static IntegerBitSet decode(BitString bitString) throws DecodingException {
+  public static IntegerSet decode(BitString bitString) throws DecodingException {
     if (bitString.length() < 12) {
       throw new DecodingException("Undecodable FixedIntegerRange '" + bitString + "'");
     }
 
     int count = FixedIntegerEncoder.decode(bitString, 0, 12);
-    IntegerBitSet value = new IntegerBitSet();
+    IntegerSet value = new IntegerSet();
     int startIndex = 12;
     for (int i = 0; i < count; i++) {
       boolean group = BooleanEncoder.decode(bitString, startIndex, 1);

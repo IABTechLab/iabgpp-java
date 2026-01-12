@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.bitstring;
 
 import java.util.BitSet;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 
@@ -46,7 +45,7 @@ public final class BitString {
   }
 
   public IntegerSet toIntegerSet() {
-    return new IntegerBitSet(bitSet, from, to, 1);
+    return new IntegerSet(bitSet, from, to, 1);
   }
 
   @Override

@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import static com.iab.gpp.encoder.datatype.encoder.IntegerBitSet.MAX_COLLECTION_SIZE;
+import static com.iab.gpp.encoder.datatype.encoder.IntegerSet.MAX_COLLECTION_SIZE;
 
 final class IntegerCache {
   private IntegerCache() {}

@@ -43,7 +43,7 @@ public class FibonacciIntegerRangeEncoderTest {
   @Test
   public void testEncode5() {
     BitStringBuilder builder = new BitStringBuilder();
-    IntegerSet set = new IntegerBitSet();
+    IntegerSet set = new IntegerSet();
     set.addAll(Arrays.asList(6, 7, 2, 5));
     FibonacciIntegerRangeEncoder.encode(builder, set);
     Assertions.assertEquals("000000000010001110011011", builder.build().toString());

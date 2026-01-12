@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
@@ -15,7 +14,7 @@ public final class EncodableFibonacciIntegerRange extends AbstractDirtyableBitSt
 
   public EncodableFibonacciIntegerRange() {
     super(true);
-    this.value = new IntegerBitSet();
+    this.value = new IntegerSet();
   }
 
   public void encode(BitStringBuilder builder) {

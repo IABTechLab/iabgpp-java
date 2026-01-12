@@ -13,7 +13,7 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode1() {
     BitStringBuilder builder = new BitStringBuilder();
-    IntegerSet set = new IntegerBitSet();
+    IntegerSet set = new IntegerSet();
     FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("00", builder.build().toString());
   }
@@ -21,7 +21,7 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode2() {
     BitStringBuilder builder = new BitStringBuilder();
-    IntegerSet set = new IntegerBitSet();
+    IntegerSet set = new IntegerSet();
     FixedBitfieldEncoder.encode(builder, set, 1);
     Assertions.assertEquals("0", builder.build().toString());
   }
@@ -29,7 +29,7 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode3() {
     BitStringBuilder builder = new BitStringBuilder();
-    IntegerSet set = new IntegerBitSet();
+    IntegerSet set = new IntegerSet();
     set.add(0);
     FixedBitfieldEncoder.encode(builder, set, 1);
     Assertions.assertEquals("1", builder.build().toString());
@@ -38,7 +38,7 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode4() {
     BitStringBuilder builder = new BitStringBuilder();
-    IntegerSet set = new IntegerBitSet();
+    IntegerSet set = new IntegerSet();
     FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("00", builder.build().toString());
   }
@@ -46,7 +46,7 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode5() {
     BitStringBuilder builder = new BitStringBuilder();
-    IntegerSet set = new IntegerBitSet();
+    IntegerSet set = new IntegerSet();
     set.addInt(1);
     FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("01", builder.build().toString());
@@ -55,7 +55,7 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode6() {
     BitStringBuilder builder = new BitStringBuilder();
-    IntegerSet set = new IntegerBitSet();
+    IntegerSet set = new IntegerSet();
     set.addInt(0);
     FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("10", builder.build().toString());
@@ -64,7 +64,7 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode7() {
     BitStringBuilder builder = new BitStringBuilder();
-    IntegerSet set = new IntegerBitSet();
+    IntegerSet set = new IntegerSet();
     set.addInt(0);
     set.addInt(1);
     FixedBitfieldEncoder.encode(builder, set, 2);
@@ -73,7 +73,7 @@ public class FixedBitfieldEncoderTest {
 
   @Test
   public void testEncode8() {
-    IntegerSet set = new IntegerBitSet(5);
+    IntegerSet set = new IntegerSet(5);
     for(int i = 0; i <= 10; i++) {
       set.addInt(i);
     }
@@ -82,7 +82,7 @@ public class FixedBitfieldEncoderTest {
 
   @Test
   public void testEncode9() {
-    IntegerBitSet set = new IntegerBitSet(5);
+    IntegerSet set = new IntegerSet(5);
     set.addRange(0,10);
     Assertions.assertEquals(Set.of(0,1,2,3,4), set);
   }

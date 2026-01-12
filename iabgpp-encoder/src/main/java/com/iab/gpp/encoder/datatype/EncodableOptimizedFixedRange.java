@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFixedRangeEncoder;
@@ -15,7 +14,7 @@ public final class EncodableOptimizedFixedRange extends AbstractDirtyableBitStri
 
   public EncodableOptimizedFixedRange() {
     super(true);
-    this.value = new IntegerBitSet();
+    this.value = new IntegerSet();
   }
 
   public void encode(BitStringBuilder builder) {

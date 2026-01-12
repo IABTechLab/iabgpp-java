@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import java.util.Set;
 import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 
 public class RangeEntry implements Dirtyable {
@@ -17,7 +16,7 @@ public class RangeEntry implements Dirtyable {
     super();
     this.key = key;
     this.type = type;
-    this.ids = new IntegerBitSet();
+    this.ids = new IntegerSet();
     this.ids.addAll(ids);
   }
 
