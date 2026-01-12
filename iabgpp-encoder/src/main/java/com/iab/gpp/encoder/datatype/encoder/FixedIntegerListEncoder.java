@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -41,16 +41,17 @@ public class FixedIntegerListEncoder {
 
     bitString = bitString.expandTo(elementBitStringLength * numElements);
 
-    List<Integer> value = new ArrayList<>(numElements);
+    Integer[] value = new Integer[numElements];
     length = bitString.length();
+    int idx = 0;
     for (int i = 0; i < length; i += elementBitStringLength) {
-      value.add(IntegerCache.valueOf(FixedIntegerEncoder.decode(bitString, i, elementBitStringLength)));
+      value[idx++] = IntegerCache.valueOf(FixedIntegerEncoder.decode(bitString, i, elementBitStringLength));
     }
 
-    while (value.size() < numElements) {
-      value.add(0);
+    while (idx < numElements) {
+      value[idx++] = 0;
     }
 
-    return value;
+    return Arrays.asList(value);
   }
 }

@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -54,13 +54,15 @@ public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringD
   @SuppressWarnings("unchecked")
   @Override
   public void setValue(Object value) {
-    List<Integer> v = new ArrayList<>((List<Integer>) value);
-    for (int i = v.size(); i < numElements; i++) {
-      v.add(0);
+    List<Integer> list = (List<Integer>) value;
+    int size = list.size();
+    if (size != numElements) {
+      Integer[] newList = new Integer[numElements];
+      for (int i = 0; i < numElements; i++) {
+          newList[i] = i < size ? list.get(i) : 0;
+      }
+      list = Arrays.asList(newList);
     }
-    if (v.size() > numElements) {
-      v = v.subList(0, numElements);
-    }
-    super.setValue(new FixedList<>(v));
+    super.setValue(new FixedList<>(list));
   }
 }

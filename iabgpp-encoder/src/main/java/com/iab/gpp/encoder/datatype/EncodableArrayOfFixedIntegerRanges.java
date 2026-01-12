@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -46,7 +46,7 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
   public void decode(BitString bitString) {
     try {
       int size = FixedIntegerEncoder.decode(bitString, 0, 12);
-      List<RangeEntry> entries = new ArrayList<>(size);
+      RangeEntry[] entries = new RangeEntry[size];
       int index = 12;
       for (int i = 0; i < size; i++) {
         int key = FixedIntegerEncoder.decode(bitString, index, keyBitStringLength);
@@ -61,11 +61,11 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
 
         RangeEntry entry = new RangeEntry(key, type, ids);
         entry.setDirty(false);
-        entries.add(entry);
+        entries[i] = entry;
       }
 
       // NOTE: this requires that adding/removing ranges uses the setter
-      this.value = new FixedList<>(entries);
+      this.value = new FixedList<>(Arrays.asList(entries));
     } catch (Exception e) {
       throw new DecodingException(e);
     }
