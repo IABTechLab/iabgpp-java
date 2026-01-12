@@ -69,7 +69,6 @@ public class FixedIntegerRangeEncoder {
         startIndex += 16;
       }
     }
-    value.setDirty(false);
     return value;
   }
 }

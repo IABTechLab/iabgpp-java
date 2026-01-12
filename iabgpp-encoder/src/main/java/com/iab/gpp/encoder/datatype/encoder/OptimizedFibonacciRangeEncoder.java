@@ -44,7 +44,6 @@ public class OptimizedFibonacciRangeEncoder {
           value.addInt(i + 1);
         }
       }
-      value.setDirty(false);
       return value;
     }
   }

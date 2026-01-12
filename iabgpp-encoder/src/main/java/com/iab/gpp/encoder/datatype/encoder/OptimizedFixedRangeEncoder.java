@@ -43,7 +43,6 @@ public class OptimizedFixedRangeEncoder {
           value.addInt(i + 1);
         }
       }
-      value.setDirty(false);
       return value;
     }
   }

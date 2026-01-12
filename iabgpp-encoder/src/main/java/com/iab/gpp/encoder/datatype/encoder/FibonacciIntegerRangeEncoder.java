@@ -81,7 +81,6 @@ public class FibonacciIntegerRangeEncoder {
         startIndex = index + 2;
       }
     }
-    value.setDirty(false);
     return value;
   }
 }

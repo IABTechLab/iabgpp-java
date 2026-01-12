@@ -60,7 +60,6 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
         index += substring.length();
 
         RangeEntry entry = new RangeEntry(key, type, ids);
-        entry.setDirty(false);
         entries[i] = entry;
       }
 

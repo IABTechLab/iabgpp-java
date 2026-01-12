@@ -39,11 +39,25 @@ public final class FixedList<T> extends AbstractList<T> implements Dirtyable {
 
   @Override
   public boolean isDirty() {
+    int size = delegate.size();
+    for (int i = 0; i < size; i++) {
+      T value = delegate.get(i);
+      if (value instanceof Dirtyable && ((Dirtyable) value).isDirty()) {
+        return true;
+      }
+    }
     return dirty;
   }
 
   @Override
   public void setDirty(boolean dirty) {
+    int size = delegate.size();
+    for (int i = 0; i < size; i++) {
+      T value = delegate.get(i);
+      if (value instanceof Dirtyable) {
+        ((Dirtyable) value).setDirty(dirty);
+      }
+    }
     this.dirty = dirty;
   }
 }
