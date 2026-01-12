@@ -1,10 +1,10 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -28,7 +28,13 @@ public class FixedIntegerListEncoder {
     }
   }
 
-  public static List<Integer> decode(BitString bitString, int elementBitStringLength, int numElements)
+  public static FixedIntegerList decode(BitString bitString, int elementBitStringLength, int numElements) {
+    FixedIntegerList out = new FixedIntegerList(numElements);
+    decode(out, bitString, elementBitStringLength, numElements);
+    return out;
+  }
+  
+  public static void decode(FixedIntegerList out, BitString bitString, int elementBitStringLength, int numElements)
       throws DecodingException {
     int length = bitString.length();
     if (length > elementBitStringLength * numElements) {
@@ -41,17 +47,14 @@ public class FixedIntegerListEncoder {
 
     bitString = bitString.expandTo(elementBitStringLength * numElements);
 
-    Integer[] value = new Integer[numElements];
     length = bitString.length();
     int idx = 0;
     for (int i = 0; i < length; i += elementBitStringLength) {
-      value[idx++] = IntegerCache.valueOf(FixedIntegerEncoder.decode(bitString, i, elementBitStringLength));
+      out.set(idx++, IntegerCache.valueOf(FixedIntegerEncoder.decode(bitString, i, elementBitStringLength)));
     }
 
     while (idx < numElements) {
-      value[idx++] = 0;
+      out.set(idx++, 0);
     }
-
-    return Arrays.asList(value);
   }
 }

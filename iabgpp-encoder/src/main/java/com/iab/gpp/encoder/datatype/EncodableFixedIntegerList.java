@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -9,22 +8,16 @@ import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringDataType<FixedList<Integer>> {
+public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringDataType<FixedIntegerList> {
 
   private int elementBitStringLength;
   private int numElements;
 
-  protected EncodableFixedIntegerList(int elementBitStringLength, int numElements) {
+  public EncodableFixedIntegerList(int elementBitStringLength, int numElements) {
     super(true);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = numElements;
-  }
-
-  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value) {
-    super(true);
-    this.elementBitStringLength = elementBitStringLength;
-    this.numElements = value.size();
-    setValue(value);
+    super.setValue(new FixedIntegerList(numElements));
   }
 
   public void encode(BitStringBuilder builder) {
@@ -37,7 +30,7 @@ public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringD
 
   public void decode(BitString bitString) {
     try {
-      this.value = new FixedList<>(FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements));
+      FixedIntegerListEncoder.decode(this.value, bitString, this.elementBitStringLength, this.numElements);
     } catch (Exception e) {
       throw new DecodingException(e);
     }
@@ -56,13 +49,10 @@ public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringD
   public void setValue(Object value) {
     List<Integer> list = (List<Integer>) value;
     int size = list.size();
-    if (size != numElements) {
-      Integer[] newList = new Integer[numElements];
-      for (int i = 0; i < numElements; i++) {
-          newList[i] = i < size ? list.get(i) : 0;
-      }
-      list = Arrays.asList(newList);
+    for (int i = 0; i < numElements; i++) {
+      this.value.set(i, i < size ? list.get(i) : 0);
     }
-    super.setValue(new FixedList<>(list));
+    // call validator
+    super.setValue(this.value);
   }
 }

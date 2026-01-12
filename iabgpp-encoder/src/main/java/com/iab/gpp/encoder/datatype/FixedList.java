@@ -26,9 +26,7 @@ public final class FixedList<T> extends AbstractList<T> implements Dirtyable {
   @Override
   public T set(int index, T value) {
     T prior = delegate.set(index, value);
-    if (prior != null) {
-      dirty = true;
-    }
+    dirty = true;
     return prior;
   }
 

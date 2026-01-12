@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.section;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsFlField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsFlCoreSegment;
@@ -87,14 +88,12 @@ public class UsFl extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.getFieldValue(UsFlField.SENSITIVE_DATA_PROCESSING);
+  public FixedIntegerList getSensitiveDataProcessing() {
+    return (FixedIntegerList) this.getFieldValue(UsFlField.SENSITIVE_DATA_PROCESSING);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getKnownChildSensitiveDataConsents() {
-    return (List<Integer>) this.getFieldValue(UsFlField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS);
+  public FixedIntegerList getKnownChildSensitiveDataConsents() {
+    return (FixedIntegerList) this.getFieldValue(UsFlField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS);
   }
 
   public Integer getAdditionalDataProcessingConsent() {

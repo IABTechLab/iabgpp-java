@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.Arrays;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -42,9 +41,9 @@ public final class UsCtCoreSegment extends AbstractLazilyEncodableSegment<Encoda
     fields.put(UsCtField.TARGETED_ADVERTISING_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsCtField.SENSITIVE_DATA_PROCESSING,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))
+        new EncodableFixedIntegerList(2, 8)
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsCtField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0))
+    fields.put(UsCtField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, 3)
         .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
     fields.put(UsCtField.MSPA_COVERED_TRANSACTION,
         new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator));

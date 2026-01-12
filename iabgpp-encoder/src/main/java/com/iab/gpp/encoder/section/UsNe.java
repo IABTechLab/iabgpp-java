@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.section;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsNeField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsNeCoreSegment;
@@ -98,9 +99,8 @@ public class UsNe extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(UsNeField.TARGETED_ADVERTISING_OPT_OUT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.getFieldValue(UsNeField.SENSITIVE_DATA_PROCESSING);
+  public FixedIntegerList getSensitiveDataProcessing() {
+    return (FixedIntegerList) this.getFieldValue(UsNeField.SENSITIVE_DATA_PROCESSING);
   }
 
   public Integer getKnownChildSensitiveDataConsents() {
