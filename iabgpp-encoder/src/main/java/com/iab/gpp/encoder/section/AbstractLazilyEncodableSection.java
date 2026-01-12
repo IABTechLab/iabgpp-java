@@ -30,7 +30,9 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
       this.decoded = true;
     }
 
-    for(EncodableSegment segment : segments) {
+    int numSegments = segments.size();
+    for (int i = 0; i < numSegments; i++) {
+      EncodableSegment segment = segments.get(i);
       if (segment.hasField(fieldName)) {
         return true;
       }
@@ -46,7 +48,9 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
       this.decoded = true;
     }
 
-    for(EncodableSegment segment : segments) {
+    int numSegments = segments.size();
+    for (int i = 0; i < numSegments; i++) {
+      EncodableSegment segment = segments.get(i);
       if(segment.hasField(fieldName)) {
         return segment.getFieldValue(fieldName);
       }
@@ -62,7 +66,9 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
       this.decoded = true;
     }
 
-    for(EncodableSegment segment : segments) {
+    int numSegments = segments.size();
+    for (int i = 0; i < numSegments; i++) {
+      EncodableSegment segment = segments.get(i);
       if(segment.hasField(fieldName)) {
         segment.setFieldValue(fieldName, value);
         this.dirty = true;
