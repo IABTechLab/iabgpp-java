@@ -15,7 +15,7 @@ class FixedIntegerListTest {
     list.set(2, 5);
     list.set(3, 8);
     list.set(4, 3);
-    assertThrows(IllegalArgumentException.class, () -> list.set(4, Integer.MAX_VALUE));
+    assertThrows(IllegalArgumentException.class, () -> list.set(4, 128));
     assertThrows(IllegalArgumentException.class, () -> list.set(4, -1));
     assertEquals(5, list.size());
     assertEquals(List.of(2,1,5,8,3), list);
