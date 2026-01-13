@@ -38,7 +38,7 @@ public final class FixedIntegerList extends AbstractList<Integer> implements Dir
 
   public int setInt(int index, int value) {
     // NOTE: int 128 is prevented since it would get turned into byte -128
-    if(value < 0 || value > 128) {
+    if(value < 0 || value >= 128) {
       throw new IllegalArgumentException("FixedIntegerList only supports positive integers less than 128.");
     }
     int prior = array[index];
