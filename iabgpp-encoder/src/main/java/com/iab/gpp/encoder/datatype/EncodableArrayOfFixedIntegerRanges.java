@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.iab.gpp.encoder.bitstring.BitString;
@@ -11,18 +10,16 @@ import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableBitStringDataType<FixedList<RangeEntry>> {
+public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableBitStringDataType<DirtyableList<RangeEntry>> {
 
   private int keyBitStringLength;
   private int typeBitStringLength;
-
-  private static final FixedList<RangeEntry> EMPTY = new FixedList<>(List.of());
 
   public EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
-    this.value = EMPTY;
+    this.value = new DirtyableList<>();
   }
 
   @Override
@@ -46,7 +43,7 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
   public void decode(BitString bitString) {
     try {
       int size = FixedIntegerEncoder.decode(bitString, 0, 12);
-      RangeEntry[] entries = new RangeEntry[size];
+      value.clear();
       int index = 12;
       for (int i = 0; i < size; i++) {
         int key = FixedIntegerEncoder.decode(bitString, index, keyBitStringLength);
@@ -60,11 +57,8 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
         index += substring.length();
 
         RangeEntry entry = new RangeEntry(key, type, ids);
-        entries[i] = entry;
+        value.add(entry);
       }
-
-      // NOTE: this requires that adding/removing ranges uses the setter
-      this.value = new FixedList<>(Arrays.asList(entries));
     } catch (Exception e) {
       throw new DecodingException(e);
     }
@@ -103,6 +97,7 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
   @SuppressWarnings("unchecked")
   @Override
   public void setValue(Object value) {
-    super.setValue(new FixedList<>((List<RangeEntry>) value));
+    this.value.clear();
+    this.value.addAll((List<RangeEntry>) value);
   }
 }
