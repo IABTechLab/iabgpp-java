@@ -4,7 +4,7 @@ import java.util.AbstractList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
 
-public final class FixedList<T> extends AbstractList<T> implements Dirtyable {
+public final class FixedList<T extends Dirtyable> extends AbstractList<T> implements Dirtyable {
 
   private boolean dirty;
   private final List<T> delegate;
@@ -40,7 +40,7 @@ public final class FixedList<T> extends AbstractList<T> implements Dirtyable {
     int size = delegate.size();
     for (int i = 0; i < size; i++) {
       T value = delegate.get(i);
-      if (value instanceof Dirtyable && ((Dirtyable) value).isDirty()) {
+      if (value.isDirty()) {
         return true;
       }
     }
@@ -51,10 +51,7 @@ public final class FixedList<T> extends AbstractList<T> implements Dirtyable {
   public void setDirty(boolean dirty) {
     int size = delegate.size();
     for (int i = 0; i < size; i++) {
-      T value = delegate.get(i);
-      if (value instanceof Dirtyable) {
-        ((Dirtyable) value).setDirty(dirty);
-      }
+      delegate.get(i).setDirty(dirty);
     }
     this.dirty = dirty;
   }
