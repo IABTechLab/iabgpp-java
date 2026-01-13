@@ -4,6 +4,10 @@ import java.util.AbstractList;
 import java.util.Arrays;
 import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
 
+/**
+ * An optimized implementation of {@literal List<Integer>} of fixed size.
+ * Use {@link #getInt(int)} and {@link #setInt(int, int)} for efficient access.
+ */
 public final class FixedIntegerList extends AbstractList<Integer> implements Dirtyable {
 
   private boolean dirty;

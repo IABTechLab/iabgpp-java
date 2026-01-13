@@ -11,6 +11,10 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
+/**
+ * An optimized implementation of {@literal Set<Integer>} backed by a {@link java.util.BitSet}.
+ * Use {@link #containsInt(int)}, {@link #addInt(int)}, and {@link #removeInt(int)} for efficient access.
+ */
 public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable {
   private static final Logger LOGGER = Logger.getLogger(IntegerSet.class.getName());
 
