@@ -2,7 +2,6 @@ package com.iab.gpp.encoder.bitstring;
 
 import java.util.List;
 import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
-import com.iab.gpp.encoder.datatype.SubstringException;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
@@ -35,21 +34,13 @@ public final class BitStringEncoder {
   }
 
   public void decode(BitString bitString, EncodableBitStringFields fields) {
-    int index = 0;
     List<String> fieldNames = fields.getNames();
+    BitStringReader reader = new BitStringReader(bitString);
     for (int i = 0; i < fieldNames.size(); i++) {
       AbstractEncodableBitStringDataType<?> field = fields.get(i);
       if (field != null) {
         try {
-          BitString substring = field.substring(bitString, index);
-          field.decode(substring);
-          index += substring.length();
-        } catch (SubstringException e) {
-          if(field.getHardFailIfMissing()) {
-            throw new DecodingException("Unable to decode " + fieldNames.get(i), e);
-          } else {
-            return;
-          }
+          field.decode(reader);
         } catch (Exception e) {
           throw new DecodingException("Unable to decode " + fieldNames.get(i), e);
         }

@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -50,13 +51,9 @@ public class FibonacciIntegerEncoder {
     FixedIntegerEncoder.encode(builder, out, largestIndex + 1);
   }
 
-  public static int decode(BitString bitString) throws DecodingException {
-    return decode(bitString, 0, bitString.length());
-  }
-
-  public static int decode(BitString bitString, int fromIndex, int length) throws DecodingException {
+  public static int decode(BitString bitString, int start, int end) throws DecodingException {
+    int length = end - start;
     int limit = length - 1;
-    int end = fromIndex + length;
     // must not overflow and must end with "11"
     if (length < 2 || limit > FIBONACCI_LIMIT || !bitString.getValue(end - 2) || !bitString.getValue(end - 1)) {
       throw new DecodingException("Undecodable FibonacciInteger '" + bitString + "'");
@@ -64,7 +61,7 @@ public class FibonacciIntegerEncoder {
 
     int value = 0;
     for (int i = 0; i < limit; i++) {
-      if (bitString.getValue(fromIndex + i)) {
+      if (bitString.getValue(start + i)) {
         value += FIBONACCI_NUMBERS[i];
       }
     }

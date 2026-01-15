@@ -52,8 +52,6 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
     return this.hardFailIfMissing;
   }
 
-  public abstract BitString substring(BitString bitString, int fromIndex) throws SubstringException;
-
   public boolean isDirty() {
     return dirty;
   }

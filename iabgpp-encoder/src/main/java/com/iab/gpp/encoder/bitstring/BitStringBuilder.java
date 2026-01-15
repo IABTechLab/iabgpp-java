@@ -15,7 +15,7 @@ public final class BitStringBuilder {
   }
 
   public BitString build() {
-    return new BitString(bitSet, 0, length);
+    return new BitString(bitSet, length);
   }
 
   public BitStringBuilder append(boolean value) {

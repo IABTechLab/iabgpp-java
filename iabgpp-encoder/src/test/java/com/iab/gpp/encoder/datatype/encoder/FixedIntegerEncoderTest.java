@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -56,38 +57,42 @@ public class FixedIntegerEncoderTest {
     }
   }
 
+  private int decode(String str) {
+    return new BitStringReader(BitString.of(str)).readInt(str.length());
+  }
+  
   @Test
   public void testDecode1() throws DecodingException {
-    Assertions.assertEquals(0, FixedIntegerEncoder.decode(BitString.of("")));
+    Assertions.assertEquals(0, decode(""));
   }
 
   @Test
   public void testDecode2() throws DecodingException {
-    Assertions.assertEquals(0, FixedIntegerEncoder.decode(BitString.of("0")));
+    Assertions.assertEquals(0, decode("0"));
   }
 
   @Test
   public void testDecode3() throws DecodingException {
-    Assertions.assertEquals(0, FixedIntegerEncoder.decode(BitString.of("000000")));
+    Assertions.assertEquals(0, decode("000000"));
   }
 
   @Test
   public void testDecode4() throws DecodingException {
-    Assertions.assertEquals(1, FixedIntegerEncoder.decode(BitString.of("1")));
+    Assertions.assertEquals(1, decode("1"));
   }
 
   @Test
   public void testDecode5() throws DecodingException {
-    Assertions.assertEquals(1, FixedIntegerEncoder.decode(BitString.of("000001")));
+    Assertions.assertEquals(1, decode("000001"));
   }
 
   @Test
   public void testDecode6() throws DecodingException {
-    Assertions.assertEquals(8, FixedIntegerEncoder.decode(BitString.of("1000")));
+    Assertions.assertEquals(8, decode("1000"));
   }
 
   @Test
   public void testDecode7() throws DecodingException {
-    Assertions.assertEquals(8, FixedIntegerEncoder.decode(BitString.of("0000001000")));
+    Assertions.assertEquals(8, decode("0000001000"));
   }
 }

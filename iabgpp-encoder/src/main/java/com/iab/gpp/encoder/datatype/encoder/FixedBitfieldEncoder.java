@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 
 public class FixedBitfieldEncoder {
   private FixedBitfieldEncoder() {}
@@ -10,9 +11,5 @@ public class FixedBitfieldEncoder {
     for (int i = 0; i < bitStringLength; i++) {
       BooleanEncoder.encode(builder, value.containsInt(i));
     }
-  }
-
-  public static IntegerSet decode(BitString bitString) {
-    return bitString.toIntegerSet();
   }
 }

@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFixedRangeEncoder;
@@ -25,27 +26,11 @@ public final class EncodableOptimizedFixedRange extends AbstractDirtyableBitStri
     }
   }
 
-  public void decode(BitString bitString) {
+  public void decode(BitStringReader reader) {
     try {
-      this.value = OptimizedFixedRangeEncoder.decode(bitString);
+      this.value = OptimizedFixedRangeEncoder.decode(reader);
     } catch (Exception e) {
       throw new DecodingException(e);
-    }
-  }
-
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      int max = FixedIntegerEncoder.decode(bitString, fromIndex, 16);
-      if (bitString.getValue(fromIndex + 16)) {
-        BitStringBuilder out = new BitStringBuilder();
-        out.append(bitString.substring(fromIndex, fromIndex + 17));
-        out.append(new EncodableFixedIntegerRange().substring(bitString, fromIndex + 17));
-        return out.build();
-      } else {
-        return bitString.substring(fromIndex, fromIndex + 17 + max);
-      }
-    } catch (Exception e) {
-      throw new SubstringException(e);
     }
   }
 

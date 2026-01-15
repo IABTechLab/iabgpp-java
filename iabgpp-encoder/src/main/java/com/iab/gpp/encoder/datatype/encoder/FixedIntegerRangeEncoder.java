@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.datatype.encoder;
 import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedIntegerRangeEncoder {
@@ -43,30 +44,17 @@ public class FixedIntegerRangeEncoder {
     }
   }
 
-  public static IntegerSet decode(BitString bitString) throws DecodingException {
-    if (bitString.length() < 12) {
-      throw new DecodingException("Undecodable FixedIntegerRange '" + bitString + "'");
-    }
-
-    int count = FixedIntegerEncoder.decode(bitString, 0, 12);
+  public static IntegerSet decode(BitStringReader reader) throws DecodingException {
+    int count = reader.readInt(12);
     IntegerSet value = new IntegerSet();
-    int startIndex = 12;
     for (int i = 0; i < count; i++) {
-      boolean group = BooleanEncoder.decode(bitString, startIndex, 1);
-      startIndex++;
-
+      boolean group = reader.readBool();
       if (group) {
-        int start = FixedIntegerEncoder.decode(bitString, startIndex, 16);
-        startIndex += 16;
-
-        int end = FixedIntegerEncoder.decode(bitString, startIndex, 16);
-        startIndex += 16;
-
+        int start = reader.readInt(16);
+        int end = reader.readInt(16);
         value.addRange(start, end + 1);
       } else {
-        int val = FixedIntegerEncoder.decode(bitString, startIndex, 16);
-        value.addInt(val);
-        startIndex += 16;
+        value.addInt(reader.readInt(16));
       }
     }
     return value;

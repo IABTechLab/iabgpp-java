@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class DatetimeEncoder {
@@ -18,11 +19,7 @@ public class DatetimeEncoder {
     }
   }
 
-  public static Instant decode(BitString bitString) throws DecodingException {
-    if (bitString.length() != 36) {
-      throw new DecodingException("Undecodable Datetime '" + bitString + "'");
-    }
-
-    return Instant.ofEpochMilli(FixedLongEncoder.decode(bitString) * 100L);
+  public static Instant decode(BitStringReader reader) throws DecodingException {
+    return Instant.ofEpochMilli(reader.readLong(36) * 100L);
   }
 }

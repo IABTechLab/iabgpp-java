@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
@@ -24,28 +25,11 @@ public final class EncodableFixedIntegerRange extends AbstractDirtyableBitString
     }
   }
 
-  public void decode(BitString bitString) {
+  public void decode(BitStringReader reader) {
     try {
-      this.value = FixedIntegerRangeEncoder.decode(bitString);
+      this.value = FixedIntegerRangeEncoder.decode(reader);
     } catch (Exception e) {
       throw new DecodingException(e);
-    }
-  }
-
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      int count = FixedIntegerEncoder.decode(bitString, fromIndex, 12);
-      int index = fromIndex + 12;
-      for (int i = 0; i < count; i++) {
-        if (bitString.getValue(index)) {
-          index += 33;
-        } else {
-          index += 17;
-        }
-      }
-      return bitString.substring(fromIndex, index);
-    } catch (Exception e) {
-      throw new SubstringException(e);
     }
   }
 

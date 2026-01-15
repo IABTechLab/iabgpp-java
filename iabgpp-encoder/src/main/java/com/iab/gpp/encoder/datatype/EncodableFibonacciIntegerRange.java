@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
@@ -25,28 +26,11 @@ public final class EncodableFibonacciIntegerRange extends AbstractDirtyableBitSt
     }
   }
 
-  public void decode(BitString bitString) {
+  public void decode(BitStringReader reader) {
     try {
-      this.value = FibonacciIntegerRangeEncoder.decode(bitString);
+      this.value = FibonacciIntegerRangeEncoder.decode(reader);
     } catch (Exception e) {
       throw new DecodingException(e);
-    }
-  }
-
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      int count = FixedIntegerEncoder.decode(bitString, fromIndex, 12);
-      int index = fromIndex + 12;
-      for (int i = 0; i < count; i++) {
-        if (bitString.getValue(index)) {
-          index = FibonacciIntegerEncoder.indexOfEndTag(bitString, FibonacciIntegerEncoder.indexOfEndTag(bitString, index + 1) + 2) + 2;
-        } else {
-          index = FibonacciIntegerEncoder.indexOfEndTag(bitString, index + 1) + 2;
-        }
-      }
-      return bitString.substring(fromIndex, index);
-    } catch (Exception e) {
-      throw new SubstringException(e);
     }
   }
 

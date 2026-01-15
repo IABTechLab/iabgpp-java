@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -27,19 +28,11 @@ public final class EncodableDatetime extends AbstractEncodableBitStringDataType<
     }
   }
 
-  public void decode(BitString bitString) {
+  public void decode(BitStringReader reader) {
     try {
-      this.value = DatetimeEncoder.decode(bitString);
+      this.value = DatetimeEncoder.decode(reader);
     } catch (Exception e) {
       throw new DecodingException(e);
-    }
-  }
-
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + 36);
-    } catch (Exception e) {
-      throw new SubstringException(e);
     }
   }
 }

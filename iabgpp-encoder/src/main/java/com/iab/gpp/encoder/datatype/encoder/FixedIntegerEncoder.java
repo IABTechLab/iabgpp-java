@@ -24,12 +24,12 @@ public class FixedIntegerEncoder {
     return decode(bitString, 0, bitString.length());
   }
 
-  public static int decode(BitString bitString, int fromIndex, int length) throws DecodingException {
+  public static int decode(BitString bitString, int from, int to) throws DecodingException {
     int value = 0;
 
-    int base = fromIndex + length - 1;
+    int length = to - from;
     for (int i = 0; i < length; i++) {
-      if (bitString.getValue(base - i)) {
+      if (bitString.getValue(to - (i + 1))) {
         value += 1 << i;
       }
     }

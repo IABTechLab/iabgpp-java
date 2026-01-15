@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedBitfieldEncoderTest {
@@ -87,45 +88,49 @@ public class FixedBitfieldEncoderTest {
     Assertions.assertEquals(Set.of(0,1,2,3,4), set);
   }
 
+  private IntegerSet decode(String str) {
+    return new BitStringReader(BitString.of(str)).readIntegerSet(str.length());
+  }
+
   @Test
   public void testDecode1() {
-    Assertions.assertEquals(Set.of(), FixedBitfieldEncoder.decode(BitString.of("")));
+    Assertions.assertEquals(Set.of(), decode(""));
   }
 
   @Test
   public void testDecode2() {
-    Assertions.assertEquals(Set.of(), FixedBitfieldEncoder.decode(BitString.of("0")));
+    Assertions.assertEquals(Set.of(), decode("0"));
   }
 
   @Test
   public void testDecode3() {
-    Assertions.assertEquals(Set.of(1), FixedBitfieldEncoder.decode(BitString.of("1")));
+    Assertions.assertEquals(Set.of(1), decode("1"));
   }
 
   @Test
   public void testDecode4() {
-    Assertions.assertEquals(Set.of(), FixedBitfieldEncoder.decode(BitString.of("00")));
+    Assertions.assertEquals(Set.of(), decode("00"));
   }
 
   @Test
   public void testDecode5() {
-    Assertions.assertEquals(Set.of(2), FixedBitfieldEncoder.decode(BitString.of("01")));
+    Assertions.assertEquals(Set.of(2), decode("01"));
   }
 
   @Test
   public void testDecode6() {
-    Assertions.assertEquals(Set.of(1), FixedBitfieldEncoder.decode(BitString.of("10")));
+    Assertions.assertEquals(Set.of(1), decode("10"));
   }
 
   @Test
   public void testDecode7() {
-    Assertions.assertEquals(Set.of(1, 2), FixedBitfieldEncoder.decode(BitString.of("11")));
+    Assertions.assertEquals(Set.of(1, 2), decode("11"));
   }
 
   @Test
   public void testDecode8() {
     try {
-      FixedBitfieldEncoder.decode(BitString.of("2"));
+      decode("2");
       Assertions.fail("DecodingException expected");
     } catch (DecodingException e) {
 

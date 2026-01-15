@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -26,16 +27,10 @@ public class FixedStringEncoder {
     }
   }
 
-  public static String decode(BitString bitString) {
-    int length = bitString.length();
-    if (length % 6 != 0) {
-      throw new DecodingException("Undecodable FixedString '" + bitString + "'");
-    }
-
+  public static String decode(BitStringReader reader, int length) {
     StringBuilder value = new StringBuilder(length);
-
     for (int i = 0; i < length; i += 6) {
-      int code = FixedIntegerEncoder.decode(bitString, i, 6);
+      int code = reader.readInt(6);
       if (code == 63) {
         value.append(SPACE);
       } else {
