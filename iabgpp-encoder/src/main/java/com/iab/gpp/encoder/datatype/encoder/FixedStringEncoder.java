@@ -29,7 +29,7 @@ public class FixedStringEncoder {
 
   public static String decode(BitStringReader reader, int length) {
     StringBuilder value = new StringBuilder(length);
-    for (int i = 0; i < length; i += 6) {
+    for (int i = 0; i < length; i++) {
       int code = reader.readInt(6);
       if (code == 63) {
         value.append(SPACE);

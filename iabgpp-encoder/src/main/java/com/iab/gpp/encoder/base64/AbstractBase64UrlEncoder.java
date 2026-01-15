@@ -35,7 +35,7 @@ public abstract class AbstractBase64UrlEncoder {
     int index = 0;
     while (index <= length - BASE64_BITS) {
       try {
-        int n = FixedIntegerEncoder.decode(bitString, index, BASE64_BITS);
+        int n = FixedIntegerEncoder.decode(bitString, index, index + BASE64_BITS);
         str.append(DICT.charAt(n));
         index += BASE64_BITS;
       } catch (DecodingException e) {

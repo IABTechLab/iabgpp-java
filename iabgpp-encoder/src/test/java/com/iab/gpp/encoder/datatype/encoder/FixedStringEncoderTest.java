@@ -37,7 +37,7 @@ public class FixedStringEncoderTest {
   }
 
   private String decode(String str) {
-    return FixedStringEncoder.decode(new BitStringReader(BitString.of(str)), str.length());
+    return FixedStringEncoder.decode(new BitStringReader(BitString.of(str)), str.length() / 6);
   }
   
   @Test

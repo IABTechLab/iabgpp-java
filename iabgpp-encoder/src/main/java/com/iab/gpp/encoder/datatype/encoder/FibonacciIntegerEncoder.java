@@ -55,7 +55,8 @@ public class FibonacciIntegerEncoder {
     int length = end - start;
     int limit = length - 1;
     // must not overflow and must end with "11"
-    if (length < 2 || limit > FIBONACCI_LIMIT || !bitString.getValue(end - 2) || !bitString.getValue(end - 1)) {
+    if (length < 2 || limit > FIBONACCI_LIMIT || !bitString.getValue(end - 2)
+        || !bitString.getValue(end - 1)) {
       throw new DecodingException("Undecodable FibonacciInteger '" + bitString + "'");
     }
 
@@ -86,6 +87,6 @@ public class FibonacciIntegerEncoder {
         i++;
       }
     }
-    return -1;
+    throw new DecodingException("fadf");
   }
 }

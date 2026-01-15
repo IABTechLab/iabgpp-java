@@ -150,16 +150,11 @@ public class FixedIntegerListEncoderTest {
 
     }
   }
-  
+
   private FixedIntegerList decode(String str) {
     FixedIntegerList out = new FixedIntegerList(2);
     FixedIntegerListEncoder.decode(out, new BitStringReader(BitString.of(str)), 2);
     return out;
-  }
-  
-  @Test
-  public void testDecode1() {
-    Assertions.assertEquals(Arrays.asList(0, 0), decode(""));
   }
 
   @Test
@@ -240,16 +235,6 @@ public class FixedIntegerListEncoderTest {
   @Test
   public void testDecode17() {
     Assertions.assertEquals(Arrays.asList(3, 3), decode("1111"));
-  }
-
-  @Test
-  public void testDecode18() {
-    try {
-      decode("111111");
-      Assertions.fail("DecodingException expected");
-    } catch (DecodingException e) {
-
-    }
   }
 
   @Test

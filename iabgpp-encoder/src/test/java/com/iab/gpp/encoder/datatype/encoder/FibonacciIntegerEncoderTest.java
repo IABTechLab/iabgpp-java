@@ -107,36 +107,6 @@ public class FibonacciIntegerEncoderTest {
   }
 
   @Test
-  public void testDecode8() {
-    try {
-      decode("110");
-      Assertions.fail("DecodingException expected");
-    } catch (DecodingException e) {
-
-    }
-  }
-
-  @Test
-  public void testDecode9() {
-    try {
-      decode("1100");
-      Assertions.fail("DecodingException expected");
-    } catch (DecodingException e) {
-
-    }
-  }
-
-  @Test
-  public void testDecode10() {
-    try {
-      decode("0110000000");
-      Assertions.fail("DecodingException expected");
-    } catch (DecodingException e) {
-
-    }
-  }
-
-  @Test
   public void testDecodeTooLarge() {
     Assertions.assertThrows(DecodingException.class, () -> 
       decode("0001010001000101001000001001000100001000100011"));

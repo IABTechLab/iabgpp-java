@@ -48,6 +48,9 @@ public final class BitString {
   }
 
   public boolean getValue(int i) {
+    if (i >= length) {
+      throw new DecodingException("faile");
+    }
     return bitSet.get(i);
   }
 
