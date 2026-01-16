@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.AbstractSet;
-import java.util.BitSet;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Spliterator;
@@ -10,6 +9,7 @@ import java.util.PrimitiveIterator.OfInt;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
+import com.iab.gpp.encoder.bitstring.BitSet;
 
 /**
  * An optimized implementation of {@literal Set<Integer>} backed by a {@link java.util.BitSet}.
@@ -34,7 +34,7 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   public  IntegerSet(int limit) {
-    this(new BitSet(0), 0, limit, 0);
+    this(new BitSet(), 0, limit, 0);
   }
 
   public IntegerSet() {
@@ -146,7 +146,7 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
     if (present) {
       return false;
     }
-    bitSet.set(offset, true);
+    bitSet.set(offset);
     dirty = true;
     return true;
   }
@@ -161,7 +161,7 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
     if (!present) {
       return false;
     }
-    bitSet.set(offset, false);
+    bitSet.clear(offset);
     dirty = true;
     return true;
   }

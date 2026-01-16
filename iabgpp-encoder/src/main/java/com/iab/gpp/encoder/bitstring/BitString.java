@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.bitstring;
 
-import java.util.BitSet;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 
