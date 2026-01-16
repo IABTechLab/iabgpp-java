@@ -17,6 +17,11 @@ public final class BitStringBuilder {
   public BitString build() {
     return new BitString(bitSet, length);
   }
+  
+  public BitStringBuilder extend(int length) {
+    this.length += length;
+    return this;
+  }
 
   public BitStringBuilder append(boolean value) {
     int idx = length++;
@@ -26,12 +31,15 @@ public final class BitStringBuilder {
     return this;
   }
 
-  public BitStringBuilder append(BitString other) {
-    int otherLength = other.length();
-    for (int i = 0; i < otherLength; i++) {
+  public BitStringBuilder append(BitString other, int from, int to) {
+    for (int i = from; i < to; i++) {
       append(other.getValue(i));
     }
     return this;
+  }
+
+  public BitStringBuilder append(BitString other) {
+    return append(other, 0, other.length());
   }
 
   public int length() {
