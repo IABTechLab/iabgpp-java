@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.bitstring;
 
 import java.util.Arrays;
-import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 // a thin version of java.util.BitSet

@@ -1,10 +1,8 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.Collection;
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.bitstring.BitStringReader;
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFixedRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;

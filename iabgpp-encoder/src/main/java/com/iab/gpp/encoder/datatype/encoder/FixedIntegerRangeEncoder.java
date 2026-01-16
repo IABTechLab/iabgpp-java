@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.Collection;
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
