@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.bitstring;
 
-import java.util.BitSet;
 
 public final class BitStringBuilder {
   private final BitSet bitSet;
@@ -36,10 +35,6 @@ public final class BitStringBuilder {
       append(other.getValue(i));
     }
     return this;
-  }
-
-  public BitStringBuilder append(BitString other) {
-    return append(other, 0, other.length());
   }
 
   public int length() {

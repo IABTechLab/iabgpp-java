@@ -1,5 +1,7 @@
 package com.iab.gpp.encoder.base64;
 
+import java.util.Arrays;
+import com.iab.gpp.encoder.bitstring.BitSet;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
@@ -17,12 +19,11 @@ public abstract class AbstractBase64UrlEncoder {
    */
   private static final String DICT = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
   private static final int REVERSE_DICT_SIZE = 128;
-  private static final BitString[] REVERSE_DICT = new BitString[REVERSE_DICT_SIZE];
+  private static final long[] REVERSE_DICT = new long[REVERSE_DICT_SIZE];
   static {
+    Arrays.fill(REVERSE_DICT, -1);
     for (int i = 0; i < DICT.length(); i++) {
-      BitStringBuilder builder = new BitStringBuilder();
-      FixedIntegerEncoder.encode(builder, i, 6);
-      REVERSE_DICT[DICT.charAt(i)] = builder.build();
+      REVERSE_DICT[DICT.charAt(i)] = Long.reverse(i) >>> -6;
     }
   }
 
@@ -48,19 +49,26 @@ public abstract class AbstractBase64UrlEncoder {
 
   public BitString decode(CharSequence str) {
     int length = str.length();
-    BitStringBuilder sb = new BitStringBuilder(length * BASE64_BITS);
+    int bitLength = length * BASE64_BITS;
+    long [] words = new long[bitLength / BitSet.BITS_PER_WORD + 1];
+    int bitIndex = 0;
     for (int i = 0; i < length; i++) {
       char c = str.charAt(i);
-      BitString n = null;
+      long n = -1;
       if (c < REVERSE_DICT_SIZE) {
         n = REVERSE_DICT[c];
       }
-      if (n == null) {
+      if (n < 0) {
         throw new DecodingException("Undecodable Base64URL string");
       }
-      sb.append(n);
-
+      int wordIndex = BitSet.wordIndex(bitIndex);
+      words[wordIndex] |= (n << bitIndex);
+      int nextWordIndex = BitSet.wordIndex(bitIndex + BASE64_BITS);
+      if(wordIndex != nextWordIndex) {
+        words[nextWordIndex] = n >>> (BitSet.BITS_PER_WORD - bitIndex);
+      }
+      bitIndex += 6;
     }
-    return sb.build();
+    return new BitString(new BitSet(words), bitLength);
   }
 }

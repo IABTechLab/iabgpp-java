@@ -1,28 +1,33 @@
 package com.iab.gpp.encoder.bitstring;
 
 import java.util.Arrays;
+import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 // a thin version of java.util.BitSet
 public final class BitSet {
   
   private static final int ADDRESS_BITS_PER_WORD = 6;
-  private static final int BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
+  public static final int BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
 
   /* Used to shift left or right for a partial word mask */
   private static final long WORD_MASK = 0xffffffffffffffffL;
   
   private long[] words;
 
+  public BitSet(long[] words) {
+    this.words = words;
+  }
+  
   public BitSet(int initialCapacity) {
-    this.words = new long[wordIndex(initialCapacity) + 1];
+    this(new long[wordIndex(initialCapacity) + 1]);
   }
 
   public BitSet() {
     this(0);
   }
   
-  private static int wordIndex(int index) {
+  public static int wordIndex(int index) {
     if (index < 0) {
       throw new DecodingException("got negative word index");
     }
@@ -93,9 +98,4 @@ public final class BitSet {
     long[] words = ensureIndex(wordIndex);
     words[wordIndex] |= (1L << bitIndex);
   }
-
-  public void appendLong(int bitIndex, long value, int bits) {
-    
-  }
-
 }

@@ -12,7 +12,7 @@ public final class BitString {
   private final BitSet bitSet;
   private final int length;
 
-  BitString(BitSet bitSet, int length) {
+  public BitString(BitSet bitSet, int length) {
     this.bitSet = bitSet;
     this.length = length;
   }
