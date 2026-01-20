@@ -13,6 +13,7 @@ public abstract class AbstractBase64UrlEncoder {
   protected abstract void pad(BitStringBuilder bitString);
 
   private static final int BASE64_BITS = 6;
+  private static final long NO_SYMBOL = -1;
   /**
    * Base 64 URL character set. Different from standard Base64 char set in that '+' and '/' are
    * replaced with '-' and '_'.
@@ -21,9 +22,12 @@ public abstract class AbstractBase64UrlEncoder {
   private static final int REVERSE_DICT_SIZE = 128;
   private static final long[] REVERSE_DICT = new long[REVERSE_DICT_SIZE];
   static {
-    Arrays.fill(REVERSE_DICT, -1);
+    Arrays.fill(REVERSE_DICT, NO_SYMBOL);
     for (int i = 0; i < DICT.length(); i++) {
-      REVERSE_DICT[DICT.charAt(i)] = Long.reverse(i) >>> -6;
+      // NOTE: the bit string is stored in a long[] and read from LSB to MSB
+      // but each base64 digit is read from MSB to LSB
+      // so they need to be reversed.
+      REVERSE_DICT[DICT.charAt(i)] = Long.reverse(i) >>> -BASE64_BITS;
     }
   }
 
@@ -54,20 +58,21 @@ public abstract class AbstractBase64UrlEncoder {
     int bitIndex = 0;
     for (int i = 0; i < length; i++) {
       char c = str.charAt(i);
-      long n = -1;
+      long n = NO_SYMBOL;
       if (c < REVERSE_DICT_SIZE) {
         n = REVERSE_DICT[c];
       }
-      if (n < 0) {
+      if (n == NO_SYMBOL) {
         throw new DecodingException("Undecodable Base64URL string");
       }
       int wordIndex = BitSet.wordIndex(bitIndex);
       words[wordIndex] |= (n << bitIndex);
-      int nextWordIndex = BitSet.wordIndex(bitIndex + BASE64_BITS);
+      int nextBitIndex = bitIndex + BASE64_BITS;
+      int nextWordIndex = BitSet.wordIndex(nextBitIndex);
       if(wordIndex != nextWordIndex) {
         words[nextWordIndex] = n >>> (BitSet.BITS_PER_WORD - bitIndex);
       }
-      bitIndex += 6;
+      bitIndex = nextBitIndex;
     }
     return new BitString(new BitSet(words), bitLength);
   }
