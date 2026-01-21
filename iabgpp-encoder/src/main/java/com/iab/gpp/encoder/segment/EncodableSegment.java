@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.section.FieldKey;
+import com.iab.gpp.encoder.field.FieldKey;
 
 public interface EncodableSegment<E extends Enum<E> & FieldKey> {
   

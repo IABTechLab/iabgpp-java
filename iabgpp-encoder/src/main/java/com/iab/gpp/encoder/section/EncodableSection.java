@@ -1,5 +1,7 @@
 package com.iab.gpp.encoder.section;
 
+import com.iab.gpp.encoder.field.FieldKey;
+
 public interface EncodableSection<E extends Enum<E> & FieldKey> {
 
   int getId();

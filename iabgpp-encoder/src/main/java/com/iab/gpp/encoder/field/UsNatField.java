@@ -1,7 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import com.iab.gpp.encoder.section.FieldKey;
-
 public enum UsNatField implements FieldKey {
   VERSION("Version"),
   SHARING_NOTICE("SharingNotice"),

@@ -1,7 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import com.iab.gpp.encoder.section.FieldKey;
-
 public enum HeaderV1Field implements FieldKey {
   ID("Id"),
   VERSION("Version"),

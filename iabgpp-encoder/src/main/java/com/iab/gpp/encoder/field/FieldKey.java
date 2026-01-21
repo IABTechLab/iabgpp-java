@@ -1,4 +1,4 @@
-package com.iab.gpp.encoder.section;
+package com.iab.gpp.encoder.field;
 
 public interface FieldKey {
   String getName();

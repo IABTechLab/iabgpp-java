@@ -6,9 +6,9 @@ import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
+import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
 import com.iab.gpp.encoder.field.UsCaField;
-import com.iab.gpp.encoder.section.FieldKey;
 
 public abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends AbstractLazilyEncodableSegment<E, AbstractEncodableBitStringDataType<?>> {
   

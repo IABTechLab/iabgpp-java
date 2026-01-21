@@ -1,7 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import com.iab.gpp.encoder.section.FieldKey;
-
 public enum TcfCaV1Field implements FieldKey {
   VERSION("Version"),
   CREATED("Created"),

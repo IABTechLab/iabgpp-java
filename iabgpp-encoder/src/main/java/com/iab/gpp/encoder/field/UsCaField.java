@@ -1,7 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import com.iab.gpp.encoder.section.FieldKey;
-
 public enum UsCaField implements FieldKey {
   VERSION("Version"),
   SALE_OPT_OUT_NOTICE("SaleOptOutNotice"),

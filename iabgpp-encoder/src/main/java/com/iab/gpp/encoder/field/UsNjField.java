@@ -1,7 +1,5 @@
 package com.iab.gpp.encoder.field;
 
-import com.iab.gpp.encoder.section.FieldKey;
-
 public enum UsNjField implements FieldKey {
   VERSION("Version"),
   PROCESSING_NOTICE("ProcessingNotice"),
