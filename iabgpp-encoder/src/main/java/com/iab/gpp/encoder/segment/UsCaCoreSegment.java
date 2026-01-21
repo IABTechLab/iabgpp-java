@@ -4,7 +4,6 @@ import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -12,10 +11,9 @@ import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsCaField;
 import com.iab.gpp.encoder.section.UsCa;
 
-public final class UsCaCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public final class UsCaCoreSegment extends AbstractLazilyEncodableSegment<UsCaField, EncodableBitStringFields<UsCaField>> {
 
   private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
-  private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
   public UsCaCoreSegment() {
     super();
@@ -27,8 +25,8 @@ public final class UsCaCoreSegment extends AbstractLazilyEncodableSegment<Encoda
   }
 
   @Override
-  protected EncodableBitStringFields initializeFields() {
-    EncodableBitStringFields fields = new EncodableBitStringFields(UsCaField.USCA_CORE_SEGMENT_FIELD_NAMES);
+  protected EncodableBitStringFields<UsCaField> initializeFields() {
+    EncodableBitStringFields<UsCaField> fields = new EncodableBitStringFields<>(UsCaField.USCA_CORE_SEGMENT_FIELD_NAMES);
     fields.put(UsCaField.VERSION, new EncodableFixedInteger(6, UsCa.VERSION));
     fields.put(UsCaField.SALE_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
@@ -57,19 +55,19 @@ public final class UsCaCoreSegment extends AbstractLazilyEncodableSegment<Encoda
   }
 
   @Override
-  protected StringBuilder encodeSegment(EncodableBitStringFields fields) {
-    BitStringBuilder bitString = bitStringEncoder.encode(fields);
+  protected StringBuilder encodeSegment(EncodableBitStringFields<UsCaField> fields) {
+    BitStringBuilder bitString = fields.encode();
     return base64UrlEncoder.encode(bitString);
   }
 
   @Override
-  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields fields) {
+  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields<UsCaField> fields) {
     if (encodedString == null || encodedString.length() == 0) {
       this.fields.reset(fields);
     }
     try {
       BitString bitString = base64UrlEncoder.decode(encodedString);
-      bitStringEncoder.decode(bitString, fields);
+      this.fields.decode(bitString);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode UsCaCoreSegment '" + encodedString + "'", e);
     }

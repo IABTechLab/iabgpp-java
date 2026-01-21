@@ -14,7 +14,7 @@ import com.iab.gpp.encoder.segment.TcfCaV1CoreSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1DisclosedVendorsSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1PublisherPurposesSegment;
 
-public class TcfCaV1 extends AbstractLazilyEncodableSection {
+public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
 
   public static final int ID = 5;
   public static final int VERSION = 1;
@@ -45,12 +45,12 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected List<EncodableSegment> initializeSegments() {
+  protected List<EncodableSegment<TcfCaV1Field>> initializeSegments() {
     return Arrays.asList(new TcfCaV1CoreSegment(), new TcfCaV1PublisherPurposesSegment(), new TcfCaV1DisclosedVendorsSegment());
   }
 
   @Override
-  public List<EncodableSegment> decodeSection(CharSequence encodedString) {
+  public List<EncodableSegment<TcfCaV1Field>> decodeSection(CharSequence encodedString) {
     if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
       for (int i = 0; i < encodedSegments.size(); i++) {
@@ -87,7 +87,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  public CharSequence encodeSection(List<EncodableSegment> segments) {
+  public CharSequence encodeSection(List<EncodableSegment<TcfCaV1Field>> segments) {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
     encodedSegments.add(segments.get(0).encodeCharSequence());
@@ -100,7 +100,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
+  public void setFieldValue(TcfCaV1Field fieldName, Object value) throws InvalidFieldException {
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfCaV1Field.CREATED) && !fieldName.equals(TcfCaV1Field.LAST_UPDATED)) {

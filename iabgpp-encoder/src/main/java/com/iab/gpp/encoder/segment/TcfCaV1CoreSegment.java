@@ -5,7 +5,6 @@ import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
@@ -18,10 +17,9 @@ import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 import com.iab.gpp.encoder.section.TcfCaV1;
 
-public final class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public final class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<TcfCaV1Field, EncodableBitStringFields<TcfCaV1Field>> {
 
   private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
-  private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
   public TcfCaV1CoreSegment() {
     super();
@@ -33,11 +31,11 @@ public final class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<Enc
   }
 
   @Override
-  protected EncodableBitStringFields initializeFields() {
+  protected EncodableBitStringFields<TcfCaV1Field> initializeFields() {
     // NOTE: TcfCaV1.setFieldValue records modifications
     Instant date = Instant.EPOCH;
 
-    EncodableBitStringFields fields = new EncodableBitStringFields(TcfCaV1Field.TCFCAV1_CORE_SEGMENT_FIELD_NAMES);
+    EncodableBitStringFields<TcfCaV1Field> fields = new EncodableBitStringFields<>(TcfCaV1Field.TCFCAV1_CORE_SEGMENT_FIELD_NAMES);
     fields.put(TcfCaV1Field.VERSION, new EncodableFixedInteger(6, TcfCaV1.VERSION));
     fields.put(TcfCaV1Field.CREATED, new EncodableDatetime(date));
     fields.put(TcfCaV1Field.LAST_UPDATED, new EncodableDatetime(date));
@@ -58,19 +56,19 @@ public final class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<Enc
   }
 
   @Override
-  protected StringBuilder encodeSegment(EncodableBitStringFields fields) {
-    BitStringBuilder bitString = bitStringEncoder.encode(fields);
+  protected StringBuilder encodeSegment(EncodableBitStringFields<TcfCaV1Field> fields) {
+    BitStringBuilder bitString = fields.encode();
     return base64UrlEncoder.encode(bitString);
   }
 
   @Override
-  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields fields) {
+  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields<TcfCaV1Field> fields) {
     if(encodedString == null || encodedString.length() == 0) {
       this.fields.reset(fields);
     }
     try {
       BitString bitString = base64UrlEncoder.decode(encodedString);
-      bitStringEncoder.decode(bitString, fields);
+      this.fields.decode(bitString);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode TcfCaV1CoreSegment '" + encodedString + "'", e);
     }

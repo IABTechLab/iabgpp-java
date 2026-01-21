@@ -7,7 +7,7 @@ import com.iab.gpp.encoder.field.GenericFields;
 import com.iab.gpp.encoder.field.UspV1Field;
 import com.iab.gpp.encoder.section.UspV1;
 
-public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFields> {
+public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1Field, GenericFields<UspV1Field>> {
 
   public UspV1CoreSegment() {
     super();
@@ -19,8 +19,8 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<Gener
   }
 
   @Override
-  protected GenericFields initializeFields() {
-    GenericFields fields = new GenericFields(UspV1Field.USPV1_CORE_SEGMENT_FIELD_NAMES);
+  protected GenericFields<UspV1Field> initializeFields() {
+    GenericFields<UspV1Field> fields = new GenericFields<>(UspV1Field.USPV1_CORE_SEGMENT_FIELD_NAMES);
     fields.put(UspV1Field.VERSION, new UnencodableInteger(UspV1.VERSION));
     fields.put(UspV1Field.NOTICE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
     fields.put(UspV1Field.OPT_OUT_SALE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
@@ -29,7 +29,7 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<Gener
   }
 
   @Override
-  protected StringBuilder encodeSegment(GenericFields fields) {
+  protected StringBuilder encodeSegment(GenericFields<UspV1Field> fields) {
     StringBuilder str = new StringBuilder();
     str.append(fields.get(UspV1Field.VERSION).getValue());
     str.append(fields.get(UspV1Field.NOTICE).getValue());
@@ -39,7 +39,7 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<Gener
   }
 
   @Override
-  protected void decodeSegment(CharSequence encodedString, GenericFields fields) {
+  protected void decodeSegment(CharSequence encodedString, GenericFields<UspV1Field> fields) {
     if (encodedString == null || encodedString.length() != 4) {
       throw new DecodingException("Invalid uspv1 string: '" + encodedString + "'");
     }

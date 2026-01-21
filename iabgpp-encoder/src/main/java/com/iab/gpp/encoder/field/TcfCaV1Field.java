@@ -1,37 +1,48 @@
 package com.iab.gpp.encoder.field;
 
-public final class TcfCaV1Field {
-  private TcfCaV1Field() {}
+import com.iab.gpp.encoder.section.FieldKey;
 
-  public static final String VERSION = "Version";
-  public static final String CREATED = "Created";
-  public static final String LAST_UPDATED = "LastUpdated";
-  public static final String CMP_ID = "CmpId";
-  public static final String CMP_VERSION = "CmpVersion";
-  public static final String CONSENT_SCREEN = "ConsentScreen";
-  public static final String CONSENT_LANGUAGE = "ConsentLanguage";
-  public static final String VENDOR_LIST_VERSION = "VendorListVersion";
-  public static final String TCF_POLICY_VERSION = "TcfPolicyVersion";
-  public static final String USE_NON_STANDARD_STACKS = "UseNonStandardStacks";
-  public static final String SPECIAL_FEATURE_EXPRESS_CONSENT = "SpecialFeatureExpressConsent";
-  public static final String PURPOSES_EXPRESS_CONSENT = "PurposesExpressConsent";
-  public static final String PURPOSES_IMPLIED_CONSENT = "PurposesImpliedConsent";
-  public static final String VENDOR_EXPRESS_CONSENT = "VendorExpressConsent";
-  public static final String VENDOR_IMPLIED_CONSENT = "VendorImpliedConsent";
-  public static final String PUB_RESTRICTIONS = "PubRestrictions";
+public enum TcfCaV1Field implements FieldKey {
+  VERSION("Version"),
+  CREATED("Created"),
+  LAST_UPDATED("LastUpdated"),
+  CMP_ID("CmpId"),
+  CMP_VERSION("CmpVersion"),
+  CONSENT_SCREEN("ConsentScreen"),
+  CONSENT_LANGUAGE("ConsentLanguage"),
+  VENDOR_LIST_VERSION("VendorListVersion"),
+  TCF_POLICY_VERSION("TcfPolicyVersion"),
+  USE_NON_STANDARD_STACKS("UseNonStandardStacks"),
+  SPECIAL_FEATURE_EXPRESS_CONSENT("SpecialFeatureExpressConsent"),
+  PURPOSES_EXPRESS_CONSENT("PurposesExpressConsent"),
+  PURPOSES_IMPLIED_CONSENT("PurposesImpliedConsent"),
+  VENDOR_EXPRESS_CONSENT("VendorExpressConsent"),
+  VENDOR_IMPLIED_CONSENT("VendorImpliedConsent"),
+  PUB_RESTRICTIONS("PubRestrictions"),
 
-  public static final String PUB_PURPOSES_SEGMENT_TYPE = "PubPurposesSegmentType";
-  public static final String PUB_PURPOSES_EXPRESS_CONSENT = "PubPurposesExpressConsent";
-  public static final String PUB_PURPOSES_IMPLIED_CONSENT = "PubPurposesImpliedConsent";
-  public static final String NUM_CUSTOM_PURPOSES = "NumCustomPurposes";
-  public static final String CUSTOM_PURPOSES_EXPRESS_CONSENT = "CustomPurposesExpressConsent";
-  public static final String CUSTOM_PURPOSES_IMPLIED_CONSENT = "CustomPurposesImpliedConsent";
+  PUB_PURPOSES_SEGMENT_TYPE("PubPurposesSegmentType"),
+  PUB_PURPOSES_EXPRESS_CONSENT("PubPurposesExpressConsent"),
+  PUB_PURPOSES_IMPLIED_CONSENT("PubPurposesImpliedConsent"),
+  NUM_CUSTOM_PURPOSES("NumCustomPurposes"),
+  CUSTOM_PURPOSES_EXPRESS_CONSENT("CustomPurposesExpressConsent"),
+  CUSTOM_PURPOSES_IMPLIED_CONSENT("CustomPurposesImpliedConsent"),
 
-  public static final String DISCLOSED_VENDORS_SEGMENT_TYPE = "DisclosedVendorsSegmentType";
-  public static final String DISCLOSED_VENDORS = "DisclosedVendors";
+  DISCLOSED_VENDORS_SEGMENT_TYPE("DisclosedVendorsSegmentType"),
+  DISCLOSED_VENDORS("DisclosedVendors");
+
+  private String name;
+
+  TcfCaV1Field(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
 
   //@formatter:off
-  public static final FieldNames TCFCAV1_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfCaV1Field> TCFCAV1_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       TcfCaV1Field.VERSION,
       TcfCaV1Field.CREATED,
       TcfCaV1Field.LAST_UPDATED,
@@ -52,7 +63,7 @@ public final class TcfCaV1Field {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfCaV1Field> TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = FieldNames.of(
     TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE,
     TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
     TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
@@ -63,7 +74,7 @@ public final class TcfCaV1Field {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfCaV1Field> TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES = FieldNames.of(
     TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE,
     TcfCaV1Field.DISCLOSED_VENDORS
   );

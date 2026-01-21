@@ -8,7 +8,7 @@ import com.iab.gpp.encoder.field.UsUtField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsUtCoreSegment;
 
-public class UsUt extends AbstractLazilyEncodableSection {
+public class UsUt extends AbstractLazilyEncodableSection<UsUtField> {
 
   public static final int ID = 11;
   public static final int VERSION = 1;
@@ -39,12 +39,12 @@ public class UsUt extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected List<EncodableSegment> initializeSegments() {
+  protected List<EncodableSegment<UsUtField>> initializeSegments() {
     return Collections.singletonList(new UsUtCoreSegment());
   }
 
   @Override
-  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
+  protected List<EncodableSegment<UsUtField>> decodeSection(CharSequence encodedString) {
     if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
 
@@ -59,9 +59,9 @@ public class UsUt extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected CharSequence encodeSection(List<EncodableSegment> segments) {
+  protected CharSequence encodeSection(List<EncodableSegment<UsUtField>> segments) {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
-    for(EncodableSegment segment : segments) {
+    for(EncodableSegment<UsUtField> segment : segments) {
       encodedSegments.add(segment.encodeCharSequence());
     }
     return SlicedCharSequence.join('.',  encodedSegments);

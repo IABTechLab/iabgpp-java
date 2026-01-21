@@ -1,23 +1,34 @@
 package com.iab.gpp.encoder.field;
 
-public final class UsFlField {
-  private UsFlField() {}
+import com.iab.gpp.encoder.section.FieldKey;
 
-  public static final String VERSION = "Version";
-  public static final String PROCESSING_NOTICE = "ProcessingNotice";
-  public static final String SALE_OPT_OUT_NOTICE = "SaleOptOutNotice";
-  public static final String TARGETED_ADVERTISING_OPT_OUT_NOTICE = "TargetedAdvertisingOptOutNotice";
-  public static final String SALE_OPT_OUT = "SaleOptOut";
-  public static final String TARGETED_ADVERTISING_OPT_OUT = "TargetedAdvertisingOptOut";
-  public static final String SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing";
-  public static final String KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents";
-  public static final String ADDITIONAL_DATA_PROCESSING_CONSENT = "AdditionalDataProcessingConsent";
-  public static final String MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction";
-  public static final String MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode";
-  public static final String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
+public enum UsFlField implements FieldKey {
+  VERSION("Version"),
+  PROCESSING_NOTICE("ProcessingNotice"),
+  SALE_OPT_OUT_NOTICE("SaleOptOutNotice"),
+  TARGETED_ADVERTISING_OPT_OUT_NOTICE("TargetedAdvertisingOptOutNotice"),
+  SALE_OPT_OUT("SaleOptOut"),
+  TARGETED_ADVERTISING_OPT_OUT("TargetedAdvertisingOptOut"),
+  SENSITIVE_DATA_PROCESSING("SensitiveDataProcessing"),
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS("KnownChildSensitiveDataConsents"),
+  ADDITIONAL_DATA_PROCESSING_CONSENT("AdditionalDataProcessingConsent"),
+  MSPA_COVERED_TRANSACTION("MspaCoveredTransaction"),
+  MSPA_OPT_OUT_OPTION_MODE("MspaOptOutOptionMode"),
+  MSPA_SERVICE_PROVIDER_MODE("MspaServiceProviderMode");
+
+  private String name;
+
+  UsFlField(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
 
   //@formatter:off
-  public static final FieldNames USFL_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsFlField> USFL_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsFlField.VERSION,
       UsFlField.PROCESSING_NOTICE,
       UsFlField.SALE_OPT_OUT_NOTICE,

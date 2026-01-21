@@ -15,7 +15,7 @@ import com.iab.gpp.encoder.segment.TcfEuV2PublisherPurposesSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2VendorsAllowedSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2VendorsDisclosedSegment;
 
-public class TcfEuV2 extends AbstractLazilyEncodableSection {
+public class TcfEuV2 extends AbstractLazilyEncodableSection<TcfEuV2Field> {
 
   public static final int ID = 2;
   public static final int VERSION = 2;
@@ -46,12 +46,12 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected List<EncodableSegment> initializeSegments() {
+  protected List<EncodableSegment<TcfEuV2Field>> initializeSegments() {
     return Arrays.asList(new TcfEuV2CoreSegment(), new TcfEuV2PublisherPurposesSegment(), new TcfEuV2VendorsAllowedSegment(), new TcfEuV2VendorsDisclosedSegment());
   }
 
   @Override
-  public List<EncodableSegment> decodeSection(CharSequence encodedString) {
+  public List<EncodableSegment<TcfEuV2Field>> decodeSection(CharSequence encodedString) {
     if (encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
       for (int i = 0; i < encodedSegments.size(); i++) {
@@ -92,7 +92,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  public CharSequence encodeSection(List<EncodableSegment> segments) {
+  public CharSequence encodeSection(List<EncodableSegment<TcfEuV2Field>> segments) {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
     if (segments.size() >= 1) {
       encodedSegments.add(segments.get(0).encodeCharSequence());

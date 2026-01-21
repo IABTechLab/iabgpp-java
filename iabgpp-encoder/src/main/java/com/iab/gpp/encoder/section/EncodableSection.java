@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.section;
 
-public interface EncodableSection {
+public interface EncodableSection<E extends Enum<E> & FieldKey> {
 
   int getId();
 
@@ -8,6 +8,12 @@ public interface EncodableSection {
 
   int getVersion();
 
+  boolean hasField(E fieldName);
+
+  Object getFieldValue(E fieldName);
+
+  void setFieldValue(E fieldName, Object value);
+  
   boolean hasField(String fieldName);
 
   Object getFieldValue(String fieldName);

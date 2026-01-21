@@ -1,27 +1,38 @@
 package com.iab.gpp.encoder.field;
 
-public final class UsIaField {
-  private UsIaField() {}
+import com.iab.gpp.encoder.section.FieldKey;
 
-  public static final String VERSION = "Version";
-  public static final String PROCESSING_NOTICE = "ProcessingNotice";
-  public static final String SALE_OPT_OUT_NOTICE = "SaleOptOutNotice";
-  public static final String TARGETED_ADVERTISING_OPT_OUT_NOTICE = "TargetedAdvertisingOptOutNotice";
-  public static final String SENSITIVE_DATA_OPT_OUT_NOTICE = "SensitiveDataOptOutNotice";
-  public static final String SALE_OPT_OUT = "SaleOptOut";
-  public static final String TARGETED_ADVERTISING_OPT_OUT = "TargetedAdvertisingOptOut";
-  public static final String SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing";
-  public static final String KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents";
-  public static final String MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction";
-  public static final String MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode";
-  public static final String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
+public enum UsIaField implements FieldKey {
+  VERSION("Version"),
+  PROCESSING_NOTICE("ProcessingNotice"),
+  SALE_OPT_OUT_NOTICE("SaleOptOutNotice"),
+  TARGETED_ADVERTISING_OPT_OUT_NOTICE("TargetedAdvertisingOptOutNotice"),
+  SENSITIVE_DATA_OPT_OUT_NOTICE("SensitiveDataOptOutNotice"),
+  SALE_OPT_OUT("SaleOptOut"),
+  TARGETED_ADVERTISING_OPT_OUT("TargetedAdvertisingOptOut"),
+  SENSITIVE_DATA_PROCESSING("SensitiveDataProcessing"),
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS("KnownChildSensitiveDataConsents"),
+  MSPA_COVERED_TRANSACTION("MspaCoveredTransaction"),
+  MSPA_OPT_OUT_OPTION_MODE("MspaOptOutOptionMode"),
+  MSPA_SERVICE_PROVIDER_MODE("MspaServiceProviderMode"),
 
-  public static final String GPC_SEGMENT_TYPE = "GpcSegmentType";
-  public static final String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
-  public static final String GPC = "Gpc";
+  GPC_SEGMENT_TYPE("GpcSegmentType"),
+  GPC_SEGMENT_INCLUDED("GpcSegmentIncluded"),
+  GPC("Gpc");
+
+  private String name;
+
+  UsIaField(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
 
   //@formatter:off
-  public static final FieldNames USIA_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsIaField> USIA_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsIaField.VERSION,
       UsIaField.PROCESSING_NOTICE,
       UsIaField.SALE_OPT_OUT_NOTICE,
@@ -38,7 +49,7 @@ public final class UsIaField {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames USIA_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsIaField> USIA_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
       UsIaField.GPC_SEGMENT_TYPE,
       UsIaField.GPC_SEGMENT_INCLUDED,
       UsIaField.GPC

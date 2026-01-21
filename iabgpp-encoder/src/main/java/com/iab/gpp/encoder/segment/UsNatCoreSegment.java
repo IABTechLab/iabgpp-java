@@ -4,7 +4,6 @@ import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -12,10 +11,9 @@ import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsNatField;
 import com.iab.gpp.encoder.section.UsNat;
 
-public final class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+public final class UsNatCoreSegment extends AbstractLazilyEncodableSegment<UsNatField, EncodableBitStringFields<UsNatField>> {
 
   private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
-  private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
   public UsNatCoreSegment() {
     super();
@@ -27,8 +25,8 @@ public final class UsNatCoreSegment extends AbstractLazilyEncodableSegment<Encod
   }
 
   @Override
-  protected EncodableBitStringFields initializeFields() {
-    EncodableBitStringFields fields = new EncodableBitStringFields(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES);
+  protected EncodableBitStringFields<UsNatField> initializeFields() {
+    EncodableBitStringFields<UsNatField> fields = new EncodableBitStringFields<>(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES);
     fields.put(UsNatField.VERSION, new EncodableFixedInteger(6, UsNat.VERSION));
     fields.put(UsNatField.SHARING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
@@ -65,13 +63,13 @@ public final class UsNatCoreSegment extends AbstractLazilyEncodableSegment<Encod
   }
 
   @Override
-  protected StringBuilder encodeSegment(EncodableBitStringFields fields) {
-    BitStringBuilder bitString = bitStringEncoder.encode(fields);
+  protected StringBuilder encodeSegment(EncodableBitStringFields<UsNatField> fields) {
+    BitStringBuilder bitString = fields.encode();
     return base64UrlEncoder.encode(bitString);
   }
 
   @Override
-  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields fields) {
+  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields<UsNatField> fields) {
     if (encodedString == null || encodedString.length() == 0) {
       this.fields.reset(fields);
     }
@@ -92,7 +90,7 @@ public final class UsNatCoreSegment extends AbstractLazilyEncodableSegment<Encod
         bitString = builder.build();
       }
 
-      bitStringEncoder.decode(bitString, fields);
+      this.fields.decode(bitString);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode UsNatCoreSegment '" + encodedString + "'", e);
     }

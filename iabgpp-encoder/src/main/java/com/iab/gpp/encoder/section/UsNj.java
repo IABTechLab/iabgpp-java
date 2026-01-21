@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsNjCoreSegment;
 import com.iab.gpp.encoder.segment.UsNjGpcSegment;
 
-public class UsNj extends AbstractLazilyEncodableSection {
+public class UsNj extends AbstractLazilyEncodableSection<UsNjField> {
 
   public static final int ID = 21;
   public static final int VERSION = 1;
@@ -40,12 +40,12 @@ public class UsNj extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected List<EncodableSegment> initializeSegments() {
+  protected List<EncodableSegment<UsNjField>> initializeSegments() {
     return Arrays.asList(new UsNjCoreSegment(), new UsNjGpcSegment());
   }
 
   @Override
-  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
+  protected List<EncodableSegment<UsNjField>> decodeSection(CharSequence encodedString) {
     if(encodedString != null && encodedString.length() > 0) {
       List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
 
@@ -65,7 +65,7 @@ public class UsNj extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected CharSequence encodeSection(List<EncodableSegment> segments) {
+  protected CharSequence encodeSection(List<EncodableSegment<UsNjField>> segments) {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
     if(!segments.isEmpty()) {
