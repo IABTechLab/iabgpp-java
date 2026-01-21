@@ -10,9 +10,9 @@ public final class UsNeGpcSegment extends AbstractBase64Segment<UsNeField> {
 
   public UsNeGpcSegment() {
     super(UsNeField.USNE_GPC_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
-    fields.put(UsNeField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    fields.put(UsNeField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
-    fields.put(UsNeField.GPC, new EncodableBoolean(false));
+    initialize(UsNeField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
+    initialize(UsNeField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
+    initialize(UsNeField.GPC, new EncodableBoolean(false));
   }
 
 }

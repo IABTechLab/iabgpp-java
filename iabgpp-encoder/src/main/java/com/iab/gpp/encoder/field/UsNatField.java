@@ -34,7 +34,7 @@ public enum UsNatField implements FieldKey {
   }
 
   //@formatter:off
-  public static final FieldNames<UsNatField> USNAT_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsNatField> USNAT_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsNatField.VERSION,
       UsNatField.SHARING_NOTICE,
       UsNatField.SALE_OPT_OUT_NOTICE,
@@ -55,7 +55,7 @@ public enum UsNatField implements FieldKey {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<UsNatField> USNAT_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsNatField> USNAT_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsNatField.GPC_SEGMENT_TYPE,
       UsNatField.GPC_SEGMENT_INCLUDED,
       UsNatField.GPC

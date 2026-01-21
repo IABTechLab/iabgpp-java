@@ -4,9 +4,10 @@ import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.DataType;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.error.InvalidFieldException;
-import com.iab.gpp.encoder.field.Fields;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.field.FieldNames;
 
-public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implements EncodableSegment {
+abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T extends DataType<?>> extends EncodableSegment<E> {
 
   protected static final Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
   protected static final Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
@@ -19,34 +20,90 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
     return true;
   });
 
-  protected T fields;
+  protected final FieldNames<E> fieldNames;
+  private final Object[] values;
+
+  protected boolean containsKey(E key) {
+    Integer index = fieldNames.getIndex(key);
+    return index != null && values[index] != null;
+  }
+
+  protected void initialize(E key, T value) {
+    Integer index = fieldNames.getIndex(key);
+    if (index == null) {
+      throw new IllegalArgumentException("invalid key "+ key);
+    }
+    values[index] = value;
+  }
+
+  @SuppressWarnings("unchecked")
+  protected T get(int index) {
+    return (T) values[index];
+  }
+
+  protected T get(E key) {
+    Integer index = fieldNames.getIndex(key);
+    if (index != null) {
+      return get(index);
+    }
+    return null;
+  }
+
+  protected boolean isDirty() {
+    int size = fieldNames.size();
+    for (int i = 0; i < size; i++) {
+      T value = get(i);
+      if (value != null && value.isDirty()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  protected void markClean() {
+    int size = fieldNames.size();
+    for (int i = 0; i < size; i++) {
+      T value = get(i);
+      if (value != null) {
+        value.setDirty(false);
+      }
+    }
+  }
 
   private CharSequence encodedString = null;
 
   private boolean decoded = true;
 
-  protected AbstractLazilyEncodableSegment() {
-    this.fields = initializeFields();
+  protected AbstractLazilyEncodableSegment(FieldNames<E> fieldNames) {
+    this.fieldNames = fieldNames;
+    this.values = new Object[fieldNames.size()];
   }
 
-  protected abstract T initializeFields();
+  protected abstract StringBuilder encodeSegment();
 
-  protected abstract StringBuilder encodeSegment(T fields);
-
-  protected abstract void decodeSegment(CharSequence encodedString, T fields);
+  protected abstract void decodeSegment(CharSequence encodedString);
 
   public boolean hasField(String fieldName) {
-    return this.fields.containsKey(fieldName);
+    E key = fieldNames.convertKey(fieldName);
+    return key != null && hasField(key);
+  }
+
+  public boolean hasField(E fieldName) {
+    return this.containsKey(fieldName);
   }
 
   public Object getFieldValue(String fieldName) {
+    return getFieldValue(fieldNames.convertKey(fieldName));
+  }
+  
+  public Object getFieldValue(E fieldName) {
     if (!this.decoded) {
-      this.decodeSegment(this.encodedString, this.fields);
-      this.fields.markClean();
+      this.decodeSegment(this.encodedString);
+      this.markClean();
       this.decoded = true;
     }
 
-    DataType<?> field = this.fields.get(fieldName);
+    DataType<?> field = this.get(fieldName);
     if (field != null) {
       return field.getValue();
     } else {
@@ -55,13 +112,17 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
   }
 
   public void setFieldValue(String fieldName, Object value) {
+    setFieldValue(fieldNames.convertKey(fieldName), value);
+  }
+
+  public void setFieldValue(E fieldName, Object value) {
     if (!this.decoded) {
-      this.decodeSegment(this.encodedString, this.fields);
-      this.fields.markClean();
+      this.decodeSegment(this.encodedString);
+      this.markClean();
       this.decoded = true;
     }
 
-    DataType<?> field = this.fields.get(fieldName);
+    DataType<?> field = this.get(fieldName);
     if (field != null) {
       field.setValue(value);
     } else {
@@ -70,9 +131,9 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
   }
 
   public CharSequence encodeCharSequence() {
-    if (this.encodedString == null || this.encodedString.length() == 0 || this.fields.isDirty()) {
-      this.encodedString = encodeSegment(this.fields);
-      this.fields.markClean();
+    if (this.encodedString == null || this.encodedString.length() == 0 || this.isDirty()) {
+      this.encodedString = encodeSegment();
+      this.markClean();
       this.decoded = true;
     }
 
@@ -81,14 +142,16 @@ public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implem
 
   public void decode(CharSequence encodedString) {
     this.encodedString = encodedString;
-    this.fields.markClean();
+    this.markClean();
     this.decoded = false;
   }
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("{name=").append(getClass().getSimpleName());
-    for (String field : fields.getNames()) {
+    int size = fieldNames.size();
+    for (int i = 0; i < size; i++) {
+      E field = fieldNames.get(i);
       if (hasField(field)) {
         sb.append(", ").append(field).append('=').append(getFieldValue(field));
       }

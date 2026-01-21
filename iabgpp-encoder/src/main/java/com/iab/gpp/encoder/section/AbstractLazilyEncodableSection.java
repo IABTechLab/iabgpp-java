@@ -2,11 +2,12 @@ package com.iab.gpp.encoder.section;
 
 import java.util.List;
 import com.iab.gpp.encoder.error.InvalidFieldException;
+import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public abstract class AbstractLazilyEncodableSection implements EncodableSection {
+abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> extends EncodableSection<E> {
 
-  protected List<EncodableSegment> segments;
+  protected List<EncodableSegment<E>> segments;
 
   private CharSequence encodedString = null;
 
@@ -17,11 +18,11 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
     this.segments = initializeSegments();
   }
 
-  protected abstract List<EncodableSegment> initializeSegments();
+  protected abstract List<EncodableSegment<E>> initializeSegments();
 
-  protected abstract CharSequence encodeSection(List<EncodableSegment> segments);
+  protected abstract CharSequence encodeSection(List<EncodableSegment<E>> segments);
 
-  protected abstract List<EncodableSegment> decodeSection(CharSequence encodedString);
+  protected abstract List<EncodableSegment<E>> decodeSection(CharSequence encodedString);
 
   public boolean hasField(String fieldName) {
     if (!this.decoded) {
@@ -32,7 +33,25 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
 
     int numSegments = segments.size();
     for (int i = 0; i < numSegments; i++) {
-      EncodableSegment segment = segments.get(i);
+      EncodableSegment<E> segment = segments.get(i);
+      if (segment.hasField(fieldName)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  
+  public boolean hasField(E fieldName) {
+    if (!this.decoded) {
+      this.segments = this.decodeSection(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+
+    int numSegments = segments.size();
+    for (int i = 0; i < numSegments; i++) {
+      EncodableSegment<E> segment = segments.get(i);
       if (segment.hasField(fieldName)) {
         return true;
       }
@@ -50,7 +69,25 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
 
     int numSegments = segments.size();
     for (int i = 0; i < numSegments; i++) {
-      EncodableSegment segment = segments.get(i);
+      EncodableSegment<E> segment = segments.get(i);
+      if(segment.hasField(fieldName)) {
+        return segment.getFieldValue(fieldName);
+      }
+    }
+
+    throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
+  }
+  
+  public Object getFieldValue(E fieldName) {
+    if (!this.decoded) {
+      this.segments = this.decodeSection(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+
+    int numSegments = segments.size();
+    for (int i = 0; i < numSegments; i++) {
+      EncodableSegment<E> segment = segments.get(i);
       if(segment.hasField(fieldName)) {
         return segment.getFieldValue(fieldName);
       }
@@ -68,7 +105,27 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
 
     int numSegments = segments.size();
     for (int i = 0; i < numSegments; i++) {
-      EncodableSegment segment = segments.get(i);
+      EncodableSegment<E> segment = segments.get(i);
+      if(segment.hasField(fieldName)) {
+        segment.setFieldValue(fieldName, value);
+        this.dirty = true;
+        return;
+      }
+    }
+
+    throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
+  }
+  
+  public void setFieldValue(E fieldName, Object value) {
+    if (!this.decoded) {
+      this.segments = this.decodeSection(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+
+    int numSegments = segments.size();
+    for (int i = 0; i < numSegments; i++) {
+      EncodableSegment<E> segment = segments.get(i);
       if(segment.hasField(fieldName)) {
         segment.setFieldValue(fieldName, value);
         this.dirty = true;
@@ -102,7 +159,7 @@ public abstract class AbstractLazilyEncodableSection implements EncodableSection
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("{id=").append(getId()).append(", name=").append(getName()).append(", version=").append(getVersion());
-    for (EncodableSegment segment: segments) {
+    for (EncodableSegment<E> segment: segments) {
       sb.append(", ").append(segment.toString());
     }
     sb.append('}');

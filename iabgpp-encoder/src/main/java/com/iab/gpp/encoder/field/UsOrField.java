@@ -30,7 +30,7 @@ public enum UsOrField implements FieldKey {
   }
 
   //@formatter:off
-  public static final FieldNames<UsOrField> USOR_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsOrField> USOR_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsOrField.VERSION,
       UsOrField.PROCESSING_NOTICE,
       UsOrField.SALE_OPT_OUT_NOTICE,
@@ -47,7 +47,7 @@ public enum UsOrField implements FieldKey {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<UsOrField> USOR_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsOrField> USOR_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsOrField.GPC_SEGMENT_TYPE,
       UsOrField.GPC_SEGMENT_INCLUDED,
       UsOrField.GPC

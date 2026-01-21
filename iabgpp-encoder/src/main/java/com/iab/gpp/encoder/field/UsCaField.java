@@ -30,7 +30,7 @@ public enum UsCaField implements FieldKey {
   }
 
   //@formatter:off
-  public static final FieldNames<UsCaField> USCA_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsCaField> USCA_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsCaField.VERSION,
       UsCaField.SALE_OPT_OUT_NOTICE,
       UsCaField.SHARING_OPT_OUT_NOTICE,
@@ -47,7 +47,7 @@ public enum UsCaField implements FieldKey {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<UsCaField> USCA_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsCaField> USCA_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsCaField.GPC_SEGMENT_TYPE,
       UsCaField.GPC_SEGMENT_INCLUDED,
       UsCaField.GPC

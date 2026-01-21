@@ -11,19 +11,19 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1
 
   public UspV1CoreSegment() {
     super(UspV1Field.USPV1_CORE_SEGMENT_FIELD_NAMES);
-    fields.put(UspV1Field.VERSION, new UnencodableInteger(UspV1.VERSION));
-    fields.put(UspV1Field.NOTICE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
-    fields.put(UspV1Field.OPT_OUT_SALE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
-    fields.put(UspV1Field.LSPA_COVERED, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
+    initialize(UspV1Field.VERSION, new UnencodableInteger(UspV1.VERSION));
+    initialize(UspV1Field.NOTICE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
+    initialize(UspV1Field.OPT_OUT_SALE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
+    initialize(UspV1Field.LSPA_COVERED, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
   }
 
   @Override
   protected StringBuilder encodeSegment() {
     StringBuilder str = new StringBuilder();
-    str.append(fields.get(UspV1Field.VERSION).getValue());
-    str.append(fields.get(UspV1Field.NOTICE).getValue());
-    str.append(fields.get(UspV1Field.OPT_OUT_SALE).getValue());
-    str.append(fields.get(UspV1Field.LSPA_COVERED).getValue());
+    str.append(get(UspV1Field.VERSION).getValue());
+    str.append(get(UspV1Field.NOTICE).getValue());
+    str.append(get(UspV1Field.OPT_OUT_SALE).getValue());
+    str.append(get(UspV1Field.LSPA_COVERED).getValue());
     return str;
   }
 
@@ -34,10 +34,10 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1
     }
 
     try {
-      fields.get(UspV1Field.VERSION).setValue((int)(encodedString.charAt(0) - '0'));
-      fields.get(UspV1Field.NOTICE).setValue(encodedString.charAt(1));
-      fields.get(UspV1Field.OPT_OUT_SALE).setValue(encodedString.charAt(2));
-      fields.get(UspV1Field.LSPA_COVERED).setValue(encodedString.charAt(3));
+      get(UspV1Field.VERSION).setValue((int)(encodedString.charAt(0) - '0'));
+      get(UspV1Field.NOTICE).setValue(encodedString.charAt(1));
+      get(UspV1Field.OPT_OUT_SALE).setValue(encodedString.charAt(2));
+      get(UspV1Field.LSPA_COVERED).setValue(encodedString.charAt(3));
     } catch (Exception e) {
       throw new DecodingException("Unable to decode UspV1CoreSegment '" + encodedString + "'", e);
     }

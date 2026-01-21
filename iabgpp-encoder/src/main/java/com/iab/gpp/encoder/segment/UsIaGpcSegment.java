@@ -10,9 +10,9 @@ public final class UsIaGpcSegment extends AbstractBase64Segment<UsIaField> {
 
   public UsIaGpcSegment() {
     super(UsIaField.USIA_GPC_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
-    fields.put(UsIaField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    fields.put(UsIaField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
-    fields.put(UsIaField.GPC, new EncodableBoolean(false));
+    initialize(UsIaField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
+    initialize(UsIaField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
+    initialize(UsIaField.GPC, new EncodableBoolean(false));
   }
 
 }

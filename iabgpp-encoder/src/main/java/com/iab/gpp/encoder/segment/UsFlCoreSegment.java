@@ -10,29 +10,29 @@ public final class UsFlCoreSegment extends AbstractBase64Segment<UsFlField> {
 
   public UsFlCoreSegment() {
     super(UsFlField.USFL_CORE_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
-    fields.put(UsFlField.VERSION, new EncodableFixedInteger(6, UsFl.VERSION));
-    fields.put(UsFlField.PROCESSING_NOTICE,
+    initialize(UsFlField.VERSION, new EncodableFixedInteger(6, UsFl.VERSION));
+    initialize(UsFlField.PROCESSING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.SALE_OPT_OUT_NOTICE,
+    initialize(UsFlField.SALE_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+    initialize(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.SALE_OPT_OUT,
+    initialize(UsFlField.SALE_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.TARGETED_ADVERTISING_OPT_OUT,
+    initialize(UsFlField.TARGETED_ADVERTISING_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.SENSITIVE_DATA_PROCESSING,
+    initialize(UsFlField.SENSITIVE_DATA_PROCESSING,
         new EncodableFixedIntegerList(2, 8)
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsFlField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, 3)
+    initialize(UsFlField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, 3)
         .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsFlField.ADDITIONAL_DATA_PROCESSING_CONSENT,
+    initialize(UsFlField.ADDITIONAL_DATA_PROCESSING_CONSENT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.MSPA_COVERED_TRANSACTION,
+    initialize(UsFlField.MSPA_COVERED_TRANSACTION,
         new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.MSPA_OPT_OUT_OPTION_MODE,
+    initialize(UsFlField.MSPA_OPT_OUT_OPTION_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsFlField.MSPA_SERVICE_PROVIDER_MODE,
+    initialize(UsFlField.MSPA_SERVICE_PROVIDER_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
   }
 

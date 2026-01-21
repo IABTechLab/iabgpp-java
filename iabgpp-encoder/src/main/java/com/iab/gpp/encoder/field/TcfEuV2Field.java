@@ -43,7 +43,7 @@ public enum TcfEuV2Field implements FieldKey {
   }
 
   //@formatter:off
-  public static final FieldNames<TcfEuV2Field> TCFEUV2_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfEuV2Field> TCFEUV2_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       TcfEuV2Field.VERSION,
       TcfEuV2Field.CREATED,
       TcfEuV2Field.LAST_UPDATED,
@@ -67,7 +67,7 @@ public enum TcfEuV2Field implements FieldKey {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<TcfEuV2Field> TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfEuV2Field> TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = new FieldNames<>(
       TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE,
       TcfEuV2Field.PUBLISHER_CONSENTS,
       TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS,
@@ -78,14 +78,14 @@ public enum TcfEuV2Field implements FieldKey {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<TcfEuV2Field> TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfEuV2Field> TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES = new FieldNames<>(
       TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE,
       TcfEuV2Field.VENDORS_ALLOWED
   );
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<TcfEuV2Field> TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfEuV2Field> TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES = new FieldNames<>(
       TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE,
       TcfEuV2Field.VENDORS_DISCLOSED
   );

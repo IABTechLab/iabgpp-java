@@ -12,37 +12,37 @@ public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
 
   public UsNatCoreSegment() {
     super(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
-    fields.put(UsNatField.VERSION, new EncodableFixedInteger(6, UsNat.VERSION));
-    fields.put(UsNatField.SHARING_NOTICE,
+    initialize(UsNatField.VERSION, new EncodableFixedInteger(6, UsNat.VERSION));
+    initialize(UsNatField.SHARING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.SALE_OPT_OUT_NOTICE,
+    initialize(UsNatField.SALE_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.SHARING_OPT_OUT_NOTICE,
+    initialize(UsNatField.SHARING_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+    initialize(UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE,
+    initialize(UsNatField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE,
+    initialize(UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.SALE_OPT_OUT,
+    initialize(UsNatField.SALE_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.SHARING_OPT_OUT,
+    initialize(UsNatField.SHARING_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.TARGETED_ADVERTISING_OPT_OUT,
+    initialize(UsNatField.TARGETED_ADVERTISING_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.SENSITIVE_DATA_PROCESSING,
+    initialize(UsNatField.SENSITIVE_DATA_PROCESSING,
         new EncodableFixedIntegerList(2, 16)
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, 3)
+    initialize(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, 3)
         .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsNatField.PERSONAL_DATA_CONSENTS,
+    initialize(UsNatField.PERSONAL_DATA_CONSENTS,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.MSPA_COVERED_TRANSACTION,
+    initialize(UsNatField.MSPA_COVERED_TRANSACTION,
         new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.MSPA_OPT_OUT_OPTION_MODE,
+    initialize(UsNatField.MSPA_OPT_OUT_OPTION_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNatField.MSPA_SERVICE_PROVIDER_MODE,
+    initialize(UsNatField.MSPA_SERVICE_PROVIDER_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
   }
 

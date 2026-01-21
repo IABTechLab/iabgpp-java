@@ -29,7 +29,7 @@ public enum UsCtField implements FieldKey {
   }
 
   //@formatter:off
-  public static final FieldNames<UsCtField> USCT_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsCtField> USCT_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsCtField.VERSION,
       UsCtField.SHARING_NOTICE,
       UsCtField.SALE_OPT_OUT_NOTICE,
@@ -45,7 +45,7 @@ public enum UsCtField implements FieldKey {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<UsCtField> USCT_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsCtField> USCT_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsCtField.GPC_SEGMENT_TYPE,
       UsCtField.GPC_SEGMENT_INCLUDED,
       UsCtField.GPC

@@ -25,7 +25,7 @@ public enum UsVaField implements FieldKey {
   }
 
   //@formatter:off
-  public static final FieldNames<UsVaField> USVA_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsVaField> USVA_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsVaField.VERSION,
       UsVaField.SHARING_NOTICE,
       UsVaField.SALE_OPT_OUT_NOTICE,

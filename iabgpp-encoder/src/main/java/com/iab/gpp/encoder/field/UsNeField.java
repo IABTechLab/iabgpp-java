@@ -30,7 +30,7 @@ public enum UsNeField implements FieldKey {
   }
 
   //@formatter:off
-  public static final FieldNames<UsNeField> USNE_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsNeField> USNE_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsNeField.VERSION,
       UsNeField.PROCESSING_NOTICE,
       UsNeField.SALE_OPT_OUT_NOTICE,
@@ -47,7 +47,7 @@ public enum UsNeField implements FieldKey {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<UsNeField> USNE_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsNeField> USNE_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsNeField.GPC_SEGMENT_TYPE,
       UsNeField.GPC_SEGMENT_INCLUDED,
       UsNeField.GPC

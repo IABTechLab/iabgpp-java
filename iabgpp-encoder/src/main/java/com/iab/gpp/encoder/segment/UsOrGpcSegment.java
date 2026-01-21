@@ -10,9 +10,9 @@ public final class UsOrGpcSegment extends AbstractBase64Segment<UsOrField> {
 
   public UsOrGpcSegment() {
     super(UsOrField.USOR_GPC_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
-    fields.put(UsOrField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    fields.put(UsOrField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
-    fields.put(UsOrField.GPC, new EncodableBoolean(false));
+    initialize(UsOrField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
+    initialize(UsOrField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
+    initialize(UsOrField.GPC, new EncodableBoolean(false));
   }
 
 }

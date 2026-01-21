@@ -40,7 +40,7 @@ public enum TcfCaV1Field implements FieldKey {
   }
 
   //@formatter:off
-  public static final FieldNames<TcfCaV1Field> TCFCAV1_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfCaV1Field> TCFCAV1_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       TcfCaV1Field.VERSION,
       TcfCaV1Field.CREATED,
       TcfCaV1Field.LAST_UPDATED,
@@ -61,7 +61,7 @@ public enum TcfCaV1Field implements FieldKey {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<TcfCaV1Field> TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfCaV1Field> TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = new FieldNames<>(
     TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE,
     TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
     TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
@@ -72,7 +72,7 @@ public enum TcfCaV1Field implements FieldKey {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames<TcfCaV1Field> TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<TcfCaV1Field> TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES = new FieldNames<>(
     TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE,
     TcfCaV1Field.DISCLOSED_VENDORS
   );

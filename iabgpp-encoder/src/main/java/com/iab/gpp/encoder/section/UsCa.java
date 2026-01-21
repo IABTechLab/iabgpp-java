@@ -20,7 +20,7 @@ public class UsCa extends AbstractLazilyEncodableSection<UsCaField> {
   }
 
   public UsCa(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 

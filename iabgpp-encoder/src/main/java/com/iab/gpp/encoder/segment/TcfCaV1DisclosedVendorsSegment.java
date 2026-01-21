@@ -9,8 +9,8 @@ public final class TcfCaV1DisclosedVendorsSegment extends AbstractBase64Segment<
 
   public TcfCaV1DisclosedVendorsSegment() {
     super(TcfCaV1Field.TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
-    fields.put(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
-    fields.put(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFixedRange());
+    initialize(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
+    initialize(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFixedRange());
   }
 
 }

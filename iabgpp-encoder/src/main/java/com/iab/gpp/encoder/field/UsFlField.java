@@ -26,7 +26,7 @@ public enum UsFlField implements FieldKey {
   }
 
   //@formatter:off
-  public static final FieldNames<UsFlField> USFL_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsFlField> USFL_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsFlField.VERSION,
       UsFlField.PROCESSING_NOTICE,
       UsFlField.SALE_OPT_OUT_NOTICE,

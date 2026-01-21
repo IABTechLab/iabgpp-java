@@ -2,29 +2,29 @@ package com.iab.gpp.encoder.section;
 
 import com.iab.gpp.encoder.field.FieldKey;
 
-public interface EncodableSection<E extends Enum<E> & FieldKey> {
+public abstract class EncodableSection<E extends Enum<E> & FieldKey> {
 
-  int getId();
+  public abstract int getId();
 
-  String getName();
+  public abstract String getName();
 
-  int getVersion();
+  public abstract int getVersion();
 
-  boolean hasField(E fieldName);
+  public abstract boolean hasField(E fieldName);
 
-  Object getFieldValue(E fieldName);
+  public abstract Object getFieldValue(E fieldName);
 
-  void setFieldValue(E fieldName, Object value);
+  public abstract void setFieldValue(E fieldName, Object value);
   
-  boolean hasField(String fieldName);
+  public abstract boolean hasField(String fieldName);
 
-  Object getFieldValue(String fieldName);
+  public abstract Object getFieldValue(String fieldName);
 
-  void setFieldValue(String fieldName, Object value);
+  public abstract void setFieldValue(String fieldName, Object value);
 
-  String encode();
+  public abstract String encode();
 
-  CharSequence encodeCharSequence();
+  public abstract CharSequence encodeCharSequence();
 
-  void decode(CharSequence encodedString);
+  public abstract void decode(CharSequence encodedString);
 }
