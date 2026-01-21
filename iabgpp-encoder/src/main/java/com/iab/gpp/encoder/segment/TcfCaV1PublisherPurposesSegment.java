@@ -1,33 +1,16 @@
 package com.iab.gpp.encoder.segment;
 
 import java.util.function.IntSupplier;
-import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
-import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFlexibleBitfield;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 
-public final class TcfCaV1PublisherPurposesSegment extends AbstractLazilyEncodableSegment<TcfCaV1Field, EncodableBitStringFields<TcfCaV1Field>> {
-
-  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
+public final class TcfCaV1PublisherPurposesSegment extends AbstractBase64Segment<TcfCaV1Field> {
 
   public TcfCaV1PublisherPurposesSegment() {
-    super();
-  }
-
-  public TcfCaV1PublisherPurposesSegment(String encodedString) {
-    super();
-    this.decode(encodedString);
-  }
-
-  @Override
-  protected EncodableBitStringFields<TcfCaV1Field> initializeFields() {
-    EncodableBitStringFields<TcfCaV1Field> fields = new EncodableBitStringFields<>(TcfCaV1Field.TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES);
+    super(TcfCaV1Field.TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
     fields.put(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
     fields.put(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT, new EncodableFixedBitfield(24));
     fields.put(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT, new EncodableFixedBitfield(24));
@@ -49,25 +32,6 @@ public final class TcfCaV1PublisherPurposesSegment extends AbstractLazilyEncodab
 
     fields.put(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
         new EncodableFlexibleBitfield(getLengthSupplier));
-    return fields;
   }
 
-  @Override
-  protected StringBuilder encodeSegment(EncodableBitStringFields<TcfCaV1Field> fields) {
-    BitStringBuilder bitString = fields.encode();
-    return base64UrlEncoder.encode(bitString);
-  }
-
-  @Override
-  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields<TcfCaV1Field> fields) {
-    if(encodedString == null || encodedString.length() == 0) {
-      this.fields.reset(fields);
-    }
-    try {
-      BitString bitString = base64UrlEncoder.decode(encodedString);
-      this.fields.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException("Unable to decode TcfCaV1PublisherPurposesSegment '" + encodedString + "'", e);
-    }
-  }
 }

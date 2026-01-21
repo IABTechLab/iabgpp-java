@@ -1,54 +1,18 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
-import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.UnencodableBoolean;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsMtField;
 
-public final class UsMtGpcSegment extends AbstractLazilyEncodableSegment<UsMtField, EncodableBitStringFields<UsMtField>> {
-
-  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
+public final class UsMtGpcSegment extends AbstractBase64Segment<UsMtField> {
 
   public UsMtGpcSegment() {
-    super();
-  }
-
-  public UsMtGpcSegment(String encodedString) {
-    super();
-    this.decode(encodedString);
-  }
-
-  @Override
-  protected EncodableBitStringFields<UsMtField> initializeFields() {
-    EncodableBitStringFields<UsMtField> fields = new EncodableBitStringFields<>(UsMtField.USMT_GPC_SEGMENT_FIELD_NAMES);
+    super(UsMtField.USMT_GPC_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
     fields.put(UsMtField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
     fields.put(UsMtField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
     fields.put(UsMtField.GPC, new EncodableBoolean(false));
-    return fields;
   }
 
-  @Override
-  protected StringBuilder encodeSegment(EncodableBitStringFields<UsMtField> fields) {
-    BitStringBuilder bitString = fields.encode();
-    return base64UrlEncoder.encode(bitString);
-  }
-
-  @Override
-  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields<UsMtField> fields) {
-    if(encodedString == null || encodedString.length() == 0) {
-      this.fields.reset(fields);
-    }
-    try {
-      BitString bitString = base64UrlEncoder.decode(encodedString);
-      this.fields.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException("Unable to decode UsMtGpcSegment '" + encodedString + "'", e);
-    }
-  }
 }

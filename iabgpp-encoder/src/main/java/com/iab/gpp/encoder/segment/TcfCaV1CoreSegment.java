@@ -1,10 +1,7 @@
 package com.iab.gpp.encoder.segment;
 
 import java.time.Instant;
-import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
-import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
@@ -12,30 +9,15 @@ import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedString;
 import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 import com.iab.gpp.encoder.section.TcfCaV1;
 
-public final class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<TcfCaV1Field, EncodableBitStringFields<TcfCaV1Field>> {
-
-  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
+public final class TcfCaV1CoreSegment extends AbstractBase64Segment<TcfCaV1Field> {
 
   public TcfCaV1CoreSegment() {
-    super();
-  }
-
-  public TcfCaV1CoreSegment(String encodedString) {
-    super();
-    this.decode(encodedString);
-  }
-
-  @Override
-  protected EncodableBitStringFields<TcfCaV1Field> initializeFields() {
+    super(TcfCaV1Field.TCFCAV1_CORE_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
     // NOTE: TcfCaV1.setFieldValue records modifications
     Instant date = Instant.EPOCH;
-
-    EncodableBitStringFields<TcfCaV1Field> fields = new EncodableBitStringFields<>(TcfCaV1Field.TCFCAV1_CORE_SEGMENT_FIELD_NAMES);
     fields.put(TcfCaV1Field.VERSION, new EncodableFixedInteger(6, TcfCaV1.VERSION));
     fields.put(TcfCaV1Field.CREATED, new EncodableDatetime(date));
     fields.put(TcfCaV1Field.LAST_UPDATED, new EncodableDatetime(date));
@@ -52,25 +34,6 @@ public final class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<Tcf
     fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, new EncodableOptimizedFixedRange());
     fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, new EncodableOptimizedFixedRange());
     fields.put(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfFixedIntegerRanges(6, 2, false));
-    return fields;
   }
 
-  @Override
-  protected StringBuilder encodeSegment(EncodableBitStringFields<TcfCaV1Field> fields) {
-    BitStringBuilder bitString = fields.encode();
-    return base64UrlEncoder.encode(bitString);
-  }
-
-  @Override
-  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields<TcfCaV1Field> fields) {
-    if(encodedString == null || encodedString.length() == 0) {
-      this.fields.reset(fields);
-    }
-    try {
-      BitString bitString = base64UrlEncoder.decode(encodedString);
-      this.fields.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException("Unable to decode TcfCaV1CoreSegment '" + encodedString + "'", e);
-    }
-  }
 }

@@ -1,32 +1,15 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
-import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsNjField;
 import com.iab.gpp.encoder.section.UsNj;
 
-public final class UsNjCoreSegment extends AbstractLazilyEncodableSegment<UsNjField, EncodableBitStringFields<UsNjField>> {
-
-  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
+public final class UsNjCoreSegment extends AbstractBase64Segment<UsNjField> {
 
   public UsNjCoreSegment() {
-    super();
-  }
-
-  public UsNjCoreSegment(String encodedString) {
-    super();
-    this.decode(encodedString);
-  }
-
-  @Override
-  protected EncodableBitStringFields<UsNjField> initializeFields() {
-    EncodableBitStringFields<UsNjField> fields = new EncodableBitStringFields<>(UsNjField.USNJ_CORE_SEGMENT_FIELD_NAMES);
+    super(UsNjField.USNJ_CORE_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
     fields.put(UsNjField.VERSION, new EncodableFixedInteger(6, UsNj.VERSION));
     fields.put(UsNjField.PROCESSING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
@@ -51,26 +34,6 @@ public final class UsNjCoreSegment extends AbstractLazilyEncodableSegment<UsNjFi
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsNjField.MSPA_SERVICE_PROVIDER_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    return fields;
-  }
-
-  @Override
-  protected StringBuilder encodeSegment(EncodableBitStringFields<UsNjField> fields) {
-    BitStringBuilder bitString = fields.encode();
-    return base64UrlEncoder.encode(bitString);
-  }
-
-  @Override
-  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields<UsNjField> fields) {
-    if (encodedString == null || encodedString.length() == 0) {
-      this.fields.reset(fields);
-    }
-    try {
-      BitString bitString = base64UrlEncoder.decode(encodedString);
-      this.fields.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException("Unable to decode UsNjCoreSegment '" + encodedString + "'", e);
-    }
   }
 
 }
