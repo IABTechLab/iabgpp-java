@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
@@ -11,7 +10,7 @@ import com.iab.gpp.encoder.section.UsNat;
 public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
 
   public UsNatCoreSegment() {
-    super(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
+    super(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES);
     initialize(UsNatField.VERSION, new EncodableFixedInteger(6, UsNat.VERSION));
     initialize(UsNatField.SHARING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));

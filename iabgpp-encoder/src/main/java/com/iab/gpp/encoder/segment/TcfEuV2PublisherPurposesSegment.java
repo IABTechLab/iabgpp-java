@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.segment;
 
 import java.util.function.IntSupplier;
+import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
@@ -10,7 +11,7 @@ import com.iab.gpp.encoder.field.TcfEuV2Field;
 public final class TcfEuV2PublisherPurposesSegment extends AbstractBase64Segment<TcfEuV2Field> {
 
   public TcfEuV2PublisherPurposesSegment() {
-    super(TcfEuV2Field.TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES, TraditionalBase64UrlEncoder.getInstance());
+    super(TcfEuV2Field.TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES);
     initialize(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE, new EncodableFixedInteger(3, 3));
     initialize(TcfEuV2Field.PUBLISHER_CONSENTS, new EncodableFixedBitfield(24));
     initialize(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS, new EncodableFixedBitfield(24));
@@ -32,6 +33,10 @@ public final class TcfEuV2PublisherPurposesSegment extends AbstractBase64Segment
 
     initialize(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS,
         new EncodableFlexibleBitfield(getLengthSupplier));
+  }
+
+  protected AbstractBase64UrlEncoder getBase64UrlEncoder() {
+    return TraditionalBase64UrlEncoder.getInstance();
   }
 
 }

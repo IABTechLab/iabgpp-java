@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.field.UsDeField;
@@ -9,7 +8,7 @@ import com.iab.gpp.encoder.section.UsDe;
 public final class UsDeCoreSegment extends AbstractBase64Segment<UsDeField> {
 
   public UsDeCoreSegment() {
-    super(UsDeField.USDE_CORE_SEGMENT_FIELD_NAMES, CompressedBase64UrlEncoder.getInstance());
+    super(UsDeField.USDE_CORE_SEGMENT_FIELD_NAMES);
     initialize(UsDeField.VERSION, new EncodableFixedInteger(6, UsDe.VERSION));
     initialize(UsDeField.PROCESSING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));

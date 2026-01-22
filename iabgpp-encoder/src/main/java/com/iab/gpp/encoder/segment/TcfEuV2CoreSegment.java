@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.segment;
 
 import java.time.Instant;
+import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
@@ -15,7 +16,7 @@ import com.iab.gpp.encoder.section.TcfEuV2;
 public final class TcfEuV2CoreSegment extends AbstractBase64Segment<TcfEuV2Field> {
 
   public TcfEuV2CoreSegment() {
-    super(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES, TraditionalBase64UrlEncoder.getInstance());
+    super(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES);
     // NOTE: TcfEuV2.setFieldValue records modifications
     Instant date = Instant.EPOCH;
 
@@ -39,6 +40,10 @@ public final class TcfEuV2CoreSegment extends AbstractBase64Segment<TcfEuV2Field
     initialize(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS, new EncodableOptimizedFixedRange());
 
     initialize(TcfEuV2Field.PUBLISHER_RESTRICTIONS, new EncodableArrayOfFixedIntegerRanges(6, 2, false));
+  }
+
+  protected AbstractBase64UrlEncoder getBase64UrlEncoder() {
+    return TraditionalBase64UrlEncoder.getInstance();
   }
 
 }

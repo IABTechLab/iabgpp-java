@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.segment;
 
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
+import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.bitstring.BitStringReader;
@@ -12,10 +13,12 @@ import com.iab.gpp.encoder.field.FieldNames;
 
 abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends AbstractLazilyEncodableSegment<E, AbstractEncodableBitStringDataType<?>> {
   
-  private final AbstractBase64UrlEncoder base64UrlEncoder;
-  protected AbstractBase64Segment(FieldNames<E> fieldNames, AbstractBase64UrlEncoder base64UrlEncoder) {
+  protected AbstractBase64Segment(FieldNames<E> fieldNames) {
     super(fieldNames);
-    this.base64UrlEncoder = base64UrlEncoder;
+  }
+
+  protected AbstractBase64UrlEncoder getBase64UrlEncoder() {
+    return CompressedBase64UrlEncoder.getInstance();
   }
   
   @Override
@@ -31,7 +34,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
       }
     }
 
-    return base64UrlEncoder.encode(bitString);
+    return getBase64UrlEncoder().encode(bitString);
   }
 
   @Override
@@ -58,7 +61,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
   }
 
   protected BitString decodeBitString(CharSequence encodedString) {
-    return base64UrlEncoder.decode(encodedString);
+    return getBase64UrlEncoder().decode(encodedString);
   }
 
 }
