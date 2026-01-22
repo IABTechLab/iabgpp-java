@@ -29,17 +29,8 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     return get(fieldName);
   }
   
-  public final E convertKey(String fieldName) {
-    return fieldNames.convertKey(fieldName);
-  }
-  
   public final DataType<?> getField(String fieldName) {
     return get(fieldNames.convertKey(fieldName));
-  }
-  
-  protected boolean containsKey(E key) {
-    Integer index = fieldNames.getIndex(key);
-    return index != null && values[index] != null;
   }
 
   protected void initialize(E key, T value) {
@@ -90,19 +81,6 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     this.values = new Object[fieldNames.size()];
   }
 
-  public boolean hasField(String fieldName) {
-    E key = fieldNames.convertKey(fieldName);
-    return key != null && hasField(key);
-  }
-
-  public boolean hasField(E fieldName) {
-    return this.containsKey(fieldName);
-  }
-
-  public Object getFieldValue(String fieldName) {
-    return getFieldValue(fieldNames.convertKey(fieldName));
-  }
-  
   public Object getFieldValue(E fieldName) {
     ensureDecode();
 
@@ -132,9 +110,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
       E field = fieldNames.get(i);
-      if (hasField(field)) {
-        sb.append(", ").append(field).append('=').append(getFieldValue(field));
-      }
+      sb.append(", ").append(field).append('=').append(get(field));
     }
     sb.append('}');
     return sb.toString();

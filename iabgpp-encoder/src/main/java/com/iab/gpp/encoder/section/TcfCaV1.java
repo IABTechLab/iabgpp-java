@@ -7,7 +7,6 @@ import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1CoreSegment;
@@ -79,6 +78,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
 
   @Override
   protected CharSequence doEncode() {
+    this.setFieldValue(TcfCaV1Field.LAST_UPDATED, Instant.now());
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
     encodedSegments.add(segments.get(0).encodeCharSequence());
@@ -89,20 +89,6 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
 
     return SlicedCharSequence.join('.',  encodedSegments);
   }
-
-  @Override
-  public void setFieldValue(TcfCaV1Field fieldName, Object value) throws InvalidFieldException {
-    // TODO: do this using dirty detection
-    super.setFieldValue(fieldName, value);
-
-    if (!fieldName.equals(TcfCaV1Field.CREATED) && !fieldName.equals(TcfCaV1Field.LAST_UPDATED)) {
-      Instant utcDateTime = Instant.now();
-
-      super.setFieldValue(TcfCaV1Field.CREATED, utcDateTime);
-      super.setFieldValue(TcfCaV1Field.LAST_UPDATED, utcDateTime);
-    }
-  }
-
 
   public Instant getCreated() {
     return (Instant) this.getFieldValue(TcfCaV1Field.CREATED);

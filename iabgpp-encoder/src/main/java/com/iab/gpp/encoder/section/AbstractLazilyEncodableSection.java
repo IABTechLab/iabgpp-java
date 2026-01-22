@@ -113,7 +113,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
   }
   
-  public void setFieldValue(E fieldName, Object value) {
+  public final void setFieldValue(E fieldName, Object value) {
     ensureDecode();
 
     int numSegments = segments.size();
@@ -150,7 +150,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     ensureDecode();
     StringBuilder sb = new StringBuilder();
     sb.append("{id=").append(getId()).append(", name=").append(getName()).append(", version=").append(getVersion());
-    for (EncodableSegment<E> segment: segments) {
+    for (EncodableSegment<E> segment : segments) {
       sb.append(", ").append(segment.toString());
     }
     sb.append('}');
