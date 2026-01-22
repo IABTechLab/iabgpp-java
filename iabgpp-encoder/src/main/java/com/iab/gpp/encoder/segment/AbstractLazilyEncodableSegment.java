@@ -23,6 +23,20 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
   protected final FieldNames<E> fieldNames;
   private final Object[] values;
 
+  
+  public final DataType<?> getField(E fieldName) {
+    ensureDecode();
+    return get(fieldName);
+  }
+  
+  public final E convertKey(String fieldName) {
+    return fieldNames.convertKey(fieldName);
+  }
+  
+  public final DataType<?> getField(String fieldName) {
+    return get(fieldNames.convertKey(fieldName));
+  }
+  
   protected boolean containsKey(E key) {
     Integer index = fieldNames.getIndex(key);
     return index != null && values[index] != null;
@@ -49,7 +63,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     return null;
   }
 
-  protected boolean isDirty() {
+  public final boolean isDirty() {
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
       T value = get(i);
@@ -60,28 +74,21 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     return false;
   }
 
-  protected void markClean() {
+  public final void setDirty(boolean dirty) {
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
       T value = get(i);
       if (value != null) {
-        value.setDirty(false);
+        value.setDirty(dirty);
       }
     }
   }
 
-  private CharSequence encodedString = null;
-
-  private boolean decoded = true;
 
   protected AbstractLazilyEncodableSegment(FieldNames<E> fieldNames) {
     this.fieldNames = fieldNames;
     this.values = new Object[fieldNames.size()];
   }
-
-  protected abstract StringBuilder encodeSegment();
-
-  protected abstract void decodeSegment(CharSequence encodedString);
 
   public boolean hasField(String fieldName) {
     E key = fieldNames.convertKey(fieldName);
@@ -97,11 +104,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
   }
   
   public Object getFieldValue(E fieldName) {
-    if (!this.decoded) {
-      this.decodeSegment(this.encodedString);
-      this.markClean();
-      this.decoded = true;
-    }
+    ensureDecode();
 
     DataType<?> field = this.get(fieldName);
     if (field != null) {
@@ -111,16 +114,8 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     }
   }
 
-  public void setFieldValue(String fieldName, Object value) {
-    setFieldValue(fieldNames.convertKey(fieldName), value);
-  }
-
   public void setFieldValue(E fieldName, Object value) {
-    if (!this.decoded) {
-      this.decodeSegment(this.encodedString);
-      this.markClean();
-      this.decoded = true;
-    }
+    ensureDecode();
 
     DataType<?> field = this.get(fieldName);
     if (field != null) {
@@ -130,23 +125,8 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     }
   }
 
-  public CharSequence encodeCharSequence() {
-    if (this.encodedString == null || this.encodedString.length() == 0 || this.isDirty()) {
-      this.encodedString = encodeSegment();
-      this.markClean();
-      this.decoded = true;
-    }
-
-    return this.encodedString;
-  }
-
-  public void decode(CharSequence encodedString) {
-    this.encodedString = encodedString;
-    this.markClean();
-    this.decoded = false;
-  }
-
   public String toString() {
+    ensureDecode();
     StringBuilder sb = new StringBuilder();
     sb.append("{name=").append(getClass().getSimpleName());
     int size = fieldNames.size();

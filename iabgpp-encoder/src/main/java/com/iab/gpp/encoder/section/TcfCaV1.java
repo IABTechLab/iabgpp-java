@@ -45,7 +45,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
   }
 
   @Override
-  public void decodeSection(CharSequence encodedString) {
+  protected void doDecode(CharSequence encodedString) {
     List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
     for (int i = 0; i < encodedSegments.size(); i++) {
 
@@ -78,7 +78,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
   }
 
   @Override
-  public CharSequence encodeSection() {
+  protected CharSequence doEncode() {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
     encodedSegments.add(segments.get(0).encodeCharSequence());
@@ -92,6 +92,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
 
   @Override
   public void setFieldValue(TcfCaV1Field fieldName, Object value) throws InvalidFieldException {
+    // TODO: do this using dirty detection
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfCaV1Field.CREATED) && !fieldName.equals(TcfCaV1Field.LAST_UPDATED)) {

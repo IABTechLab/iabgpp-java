@@ -46,7 +46,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection<TcfEuV2Field> {
   }
 
   @Override
-  public void decodeSection(CharSequence encodedString) {
+  public void doDecode(CharSequence encodedString) {
     List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
     for (int i = 0; i < encodedSegments.size(); i++) {
 
@@ -83,7 +83,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection<TcfEuV2Field> {
   }
 
   @Override
-  public CharSequence encodeSection() {
+  public CharSequence doEncode() {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
     if (segments.size() >= 1) {
       encodedSegments.add(segments.get(0).encodeCharSequence());

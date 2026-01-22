@@ -22,7 +22,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
   }
   
   @Override
-  protected final StringBuilder encodeSegment() {
+  protected final CharSequence doEncode() {
     BitStringBuilder bitString = new BitStringBuilder();
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
@@ -38,7 +38,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
   }
 
   @Override
-  protected final void decodeSegment(CharSequence encodedString) {
+  protected final void doDecode(CharSequence encodedString) {
     try {
       BitString bitString = decodeBitString(encodedString);
       int size = fieldNames.size();

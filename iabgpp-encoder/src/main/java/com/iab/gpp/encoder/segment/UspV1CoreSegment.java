@@ -18,7 +18,7 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1
   }
 
   @Override
-  protected StringBuilder encodeSegment() {
+  protected CharSequence doEncode() {
     StringBuilder str = new StringBuilder();
     str.append(get(UspV1Field.VERSION).getValue());
     str.append(get(UspV1Field.NOTICE).getValue());
@@ -28,7 +28,7 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1
   }
 
   @Override
-  protected void decodeSegment(CharSequence encodedString) {
+  protected void doDecode(CharSequence encodedString) {
     if (encodedString == null || encodedString.length() != 4) {
       throw new DecodingException("Invalid uspv1 string: '" + encodedString + "'");
     }

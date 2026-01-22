@@ -40,7 +40,7 @@ public class UsIa extends AbstractLazilyEncodableSection<UsIaField> {
   }
 
   @Override
-  protected void decodeSection(CharSequence encodedString) {
+  protected void doDecode(CharSequence encodedString) {
     List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
 
     if (encodedSegments.size() > 0) {
@@ -56,7 +56,7 @@ public class UsIa extends AbstractLazilyEncodableSection<UsIaField> {
   }
 
   @Override
-  protected CharSequence encodeSection() {
+  protected CharSequence doEncode() {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
     encodedSegments.add(segments.get(0).encodeCharSequence());

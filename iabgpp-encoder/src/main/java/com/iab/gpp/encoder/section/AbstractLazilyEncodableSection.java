@@ -11,15 +11,11 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
 
   protected final List<EncodableSegment<E>> segments;
 
-  private CharSequence encodedString = null;
-
-  private boolean decoded = true;
-
   protected AbstractLazilyEncodableSection(List<EncodableSegment<E>> segments) {
     this.segments = segments;
   }
 
-  protected void decodeSection(CharSequence encodedString) {
+  protected void doDecode(CharSequence encodedString) {
     int numSegments = segments.size();
     if (numSegments == 1) {
       segments.get(0).decode(encodedString);
@@ -31,7 +27,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     }
   }
 
-  protected CharSequence encodeSection() {
+  protected CharSequence doEncode() {
     int numSegments = segments.size();
     if (numSegments == 1) {
       return segments.get(0).encodeCharSequence();
@@ -41,16 +37,6 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
       encodedSegments.add(segments.get(i).encodeCharSequence());
     }
     return SlicedCharSequence.join('.',  encodedSegments);
-  }
-  
-  private void ensureDecode() {
-    if (!this.decoded) {
-      if(encodedString != null && encodedString.length() > 0) {
-        this.decodeSection(encodedString);
-      }
-      this.setDirty(false);
-      this.decoded = true;
-    }
   }
 
   public final boolean hasField(String fieldName) {
@@ -143,26 +129,6 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
   }
 
-  public final String encode() {
-    return encodeCharSequence().toString();
-  }
-
-  public final CharSequence encodeCharSequence() {
-    if (this.encodedString == null || this.encodedString.length() == 0 || this.isDirty()) {
-      this.encodedString = this.encodeSection();
-      this.setDirty(false);
-      this.decoded = true;
-    }
-
-    return this.encodedString;
-  }
-
-  public final void decode(CharSequence encodedString) {
-    this.encodedString = encodedString;
-    this.setDirty(false);
-    this.decoded = false;
-  }
-  
   public final boolean isDirty() {
     int numSegments = segments.size();
     for (int i = 0; i < numSegments; i++) {
@@ -181,6 +147,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
   }
 
   public final String toString() {
+    ensureDecode();
     StringBuilder sb = new StringBuilder();
     sb.append("{id=").append(getId()).append(", name=").append(getName()).append(", version=").append(getVersion());
     for (EncodableSegment<E> segment: segments) {

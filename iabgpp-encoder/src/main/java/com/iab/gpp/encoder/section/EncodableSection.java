@@ -1,8 +1,10 @@
 package com.iab.gpp.encoder.section;
 
+import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
+import com.iab.gpp.encoder.field.AbstractEncodable;
 import com.iab.gpp.encoder.field.FieldKey;
 
-public abstract class EncodableSection<E extends Enum<E> & FieldKey> {
+public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends AbstractEncodable implements Dirtyable {
 
   public abstract int getId();
 
@@ -22,9 +24,4 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> {
 
   public abstract void setFieldValue(String fieldName, Object value);
 
-  public abstract String encode();
-
-  public abstract CharSequence encodeCharSequence();
-
-  public abstract void decode(CharSequence encodedString);
 }
