@@ -1,10 +1,7 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import com.iab.gpp.encoder.field.UspV1Field;
-import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UspV1CoreSegment;
 
 public class UspV1 extends AbstractLazilyEncodableSection<UspV1Field> {
@@ -14,11 +11,11 @@ public class UspV1 extends AbstractLazilyEncodableSection<UspV1Field> {
   public static final String NAME = "uspv1";
 
   public UspV1() {
-    super();
+    super(Collections.singletonList(new UspV1CoreSegment()));
   }
 
   public UspV1(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -36,36 +33,6 @@ public class UspV1 extends AbstractLazilyEncodableSection<UspV1Field> {
   public int getVersion() {
     return UspV1.VERSION;
   }
-
-  @Override
-  protected List<EncodableSegment<UspV1Field>> initializeSegments() {
-    return Collections.singletonList(new UspV1CoreSegment());
-  }
-
-  @Override
-  protected List<EncodableSegment<UspV1Field>> decodeSection(CharSequence encodedString) {
-    if (encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-
-      for (int i=0; i < segments.size(); i++) {
-        if (encodedSegments.size() > i) {
-          segments.get(i).decode(encodedSegments.get(i));
-        }
-      }
-    }
-
-    return segments;
-  }
-
-  @Override
-  protected CharSequence encodeSection(List<EncodableSegment<UspV1Field>> segments) {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
-    for(EncodableSegment<UspV1Field> segment : segments) {
-      encodedSegments.add(segment.encodeCharSequence());
-    }
-    return SlicedCharSequence.join('.',  encodedSegments);
-  }
-
 
   public Character getNotice() {
     return (Character) this.getFieldValue(UspV1Field.NOTICE);

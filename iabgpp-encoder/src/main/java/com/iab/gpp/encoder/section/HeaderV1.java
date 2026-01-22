@@ -1,11 +1,8 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.field.HeaderV1Field;
-import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.HeaderV1CoreSegment;
 
 public class HeaderV1 extends AbstractLazilyEncodableSection<HeaderV1Field> {
@@ -15,11 +12,11 @@ public class HeaderV1 extends AbstractLazilyEncodableSection<HeaderV1Field> {
   public static final String NAME = "header";
 
   public HeaderV1() {
-    super();
+    super(Collections.singletonList(new HeaderV1CoreSegment()));
   }
 
   public HeaderV1(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -38,39 +35,7 @@ public class HeaderV1 extends AbstractLazilyEncodableSection<HeaderV1Field> {
     return HeaderV1.VERSION;
   }
 
-  @Override
-  protected List<EncodableSegment<HeaderV1Field>> initializeSegments() {
-    return Collections.singletonList(new HeaderV1CoreSegment());
-  }
-
-  @Override
-  protected List<EncodableSegment<HeaderV1Field>> decodeSection(CharSequence encodedString) {
-    if(encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-
-      for (int i=0; i<segments.size(); i++) {
-        if (encodedSegments.size() > i) {
-          segments.get(i).decode(encodedSegments.get(i));
-        }
-      }
-    }
-
-    return segments;
-  }
-
-  @Override
-  protected CharSequence encodeSection(List<EncodableSegment<HeaderV1Field>> segments) {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
-    for(EncodableSegment<HeaderV1Field> segment : segments) {
-      encodedSegments.add(segment.encodeCharSequence());
-    }
-    return SlicedCharSequence.join('.',  encodedSegments);
-  }
-
-
   public IntegerSet getSectionsIds() {
     return (IntegerSet) this.getFieldValue(HeaderV1Field.SECTION_IDS);
   }
-
-
 }

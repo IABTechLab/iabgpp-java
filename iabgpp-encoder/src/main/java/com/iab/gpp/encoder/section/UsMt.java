@@ -16,11 +16,11 @@ public class UsMt extends AbstractLazilyEncodableSection<UsMtField> {
   public static final String NAME = "usmt";
 
   public UsMt() {
-    super();
+    super(Arrays.<EncodableSegment<UsMtField>>asList(new UsMtCoreSegment(), new UsMtGpcSegment()));
   }
 
   public UsMt(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -40,39 +40,28 @@ public class UsMt extends AbstractLazilyEncodableSection<UsMtField> {
   }
 
   @Override
-  protected List<EncodableSegment<UsMtField>> initializeSegments() {
-    return Arrays.asList(new UsMtCoreSegment(), new UsMtGpcSegment());
-  }
+  protected void decodeSection(CharSequence encodedString) {
+    List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
 
-  @Override
-  protected List<EncodableSegment<UsMtField>> decodeSection(CharSequence encodedString) {
-    if(encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-
-      if (encodedSegments.size() > 0) {
-        segments.get(0).decode(encodedSegments.get(0));
-      }
-
-      if (encodedSegments.size() > 1) {
-        segments.get(1).setFieldValue(UsMtField.GPC_SEGMENT_INCLUDED, true);
-        segments.get(1).decode(encodedSegments.get(1));
-      } else {
-        segments.get(1).setFieldValue(UsMtField.GPC_SEGMENT_INCLUDED, false);
-      }
+    if (encodedSegments.size() > 0) {
+      segments.get(0).decode(encodedSegments.get(0));
     }
 
-    return segments;
+    if (encodedSegments.size() > 1) {
+      segments.get(1).setFieldValue(UsMtField.GPC_SEGMENT_INCLUDED, true);
+      segments.get(1).decode(encodedSegments.get(1));
+    } else {
+      segments.get(1).setFieldValue(UsMtField.GPC_SEGMENT_INCLUDED, false);
+    }
   }
 
   @Override
-  protected CharSequence encodeSection(List<EncodableSegment<UsMtField>> segments) {
+  protected CharSequence encodeSection() {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
-    if(!segments.isEmpty()) {
-      encodedSegments.add(segments.get(0).encodeCharSequence());
-      if(segments.size() >= 2 && segments.get(1).getFieldValue(UsMtField.GPC_SEGMENT_INCLUDED).equals(true)) {
-        encodedSegments.add(segments.get(1).encodeCharSequence());
-      }
+    encodedSegments.add(segments.get(0).encodeCharSequence());
+    if(segments.size() >= 2 && segments.get(1).getFieldValue(UsMtField.GPC_SEGMENT_INCLUDED).equals(true)) {
+      encodedSegments.add(segments.get(1).encodeCharSequence());
     }
 
     return SlicedCharSequence.join('.',  encodedSegments);

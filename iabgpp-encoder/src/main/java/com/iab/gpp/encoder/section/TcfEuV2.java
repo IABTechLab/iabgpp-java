@@ -22,11 +22,11 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection<TcfEuV2Field> {
   public static final String NAME = "tcfeuv2";
 
   public TcfEuV2() {
-    super();
+    super(Arrays.<EncodableSegment<TcfEuV2Field>>asList(new TcfEuV2CoreSegment(), new TcfEuV2PublisherPurposesSegment(), new TcfEuV2VendorsAllowedSegment(), new TcfEuV2VendorsDisclosedSegment()));
   }
 
   public TcfEuV2(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -46,53 +46,44 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection<TcfEuV2Field> {
   }
 
   @Override
-  protected List<EncodableSegment<TcfEuV2Field>> initializeSegments() {
-    return Arrays.asList(new TcfEuV2CoreSegment(), new TcfEuV2PublisherPurposesSegment(), new TcfEuV2VendorsAllowedSegment(), new TcfEuV2VendorsDisclosedSegment());
-  }
+  public void decodeSection(CharSequence encodedString) {
+    List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+    for (int i = 0; i < encodedSegments.size(); i++) {
 
-  @Override
-  public List<EncodableSegment<TcfEuV2Field>> decodeSection(CharSequence encodedString) {
-    if (encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-      for (int i = 0; i < encodedSegments.size(); i++) {
+      /**
+       * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
+       *
+       * A-H     = '000' = 0
+       * I-P     = '001' = 1
+       * Q-X     = '010' = 2
+       * Y-Z,a-f = '011' = 3
+       *
+       * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
+       * for the encoding version which only coincidentally works here because the version value is less than 8.
+       */
 
-        /**
-         * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
-         *
-         * A-H     = '000' = 0
-         * I-P     = '001' = 1
-         * Q-X     = '010' = 2
-         * Y-Z,a-f = '011' = 3
-         *
-         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
-         * for the encoding version which only coincidentally works here because the version value is less than 8.
-         */
+      CharSequence encodedSegment = encodedSegments.get(i);
+      if (encodedSegment.length() > 0) {
+        char firstChar = encodedSegment.charAt(0);
 
-        CharSequence encodedSegment = encodedSegments.get(i);
-        if (encodedSegment.length() > 0) {
-          char firstChar = encodedSegment.charAt(0);
-
-          // unfortunately, the segment ordering doesn't match the segment ids
-          if(firstChar >= 'A' && firstChar <= 'H') {
-            segments.get(0).decode(encodedSegment);
-          } else if(firstChar >= 'I' && firstChar <= 'P') {
-            segments.get(3).decode(encodedSegment);
-          } else if(firstChar >= 'Q' && firstChar <= 'X') {
-            segments.get(2).decode(encodedSegment);
-          } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
-            segments.get(1).decode(encodedSegment);
-          } else {
-            throw new DecodingException("Invalid segment '" + encodedSegment + "'");
-          }
+        // unfortunately, the segment ordering doesn't match the segment ids
+        if(firstChar >= 'A' && firstChar <= 'H') {
+          segments.get(0).decode(encodedSegment);
+        } else if(firstChar >= 'I' && firstChar <= 'P') {
+          segments.get(3).decode(encodedSegment);
+        } else if(firstChar >= 'Q' && firstChar <= 'X') {
+          segments.get(2).decode(encodedSegment);
+        } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
+          segments.get(1).decode(encodedSegment);
+        } else {
+          throw new DecodingException("Invalid segment '" + encodedSegment + "'");
         }
       }
     }
-
-    return segments;
   }
 
   @Override
-  public CharSequence encodeSection(List<EncodableSegment<TcfEuV2Field>> segments) {
+  public CharSequence encodeSection() {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
     if (segments.size() >= 1) {
       encodedSegments.add(segments.get(0).encodeCharSequence());
@@ -117,7 +108,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection<TcfEuV2Field> {
   }
 
   @Override
-  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
+  public void setFieldValue(TcfEuV2Field fieldName, Object value) throws InvalidFieldException {
     super.setFieldValue(fieldName, value);
 
     if (!fieldName.equals(TcfEuV2Field.CREATED) && !fieldName.equals(TcfEuV2Field.LAST_UPDATED)) {

@@ -21,11 +21,11 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
   public static final String NAME = "tcfcav1";
 
   public TcfCaV1() {
-    super();
+    super(Arrays.<EncodableSegment<TcfCaV1Field>>asList(new TcfCaV1CoreSegment(), new TcfCaV1PublisherPurposesSegment(), new TcfCaV1DisclosedVendorsSegment()));
   }
 
   public TcfCaV1(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -45,49 +45,40 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
   }
 
   @Override
-  protected List<EncodableSegment<TcfCaV1Field>> initializeSegments() {
-    return Arrays.asList(new TcfCaV1CoreSegment(), new TcfCaV1PublisherPurposesSegment(), new TcfCaV1DisclosedVendorsSegment());
-  }
+  public void decodeSection(CharSequence encodedString) {
+    List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+    for (int i = 0; i < encodedSegments.size(); i++) {
 
-  @Override
-  public List<EncodableSegment<TcfCaV1Field>> decodeSection(CharSequence encodedString) {
-    if (encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-      for (int i = 0; i < encodedSegments.size(); i++) {
+      /**
+       * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
+       *
+       * A-H     = '000' = 0
+       * I-P     = '001' = 1
+       * Y-Z,a-f = '011' = 3
+       *
+       * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
+       * for the encoding version which only coincidentally works here because the version value is less than 8.
+       */
 
-        /**
-         * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
-         *
-         * A-H     = '000' = 0
-         * I-P     = '001' = 1
-         * Y-Z,a-f = '011' = 3
-         *
-         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
-         * for the encoding version which only coincidentally works here because the version value is less than 8.
-         */
+      CharSequence encodedSegment = encodedSegments.get(i);
+      if (encodedSegment.length() > 0) {
+        char firstChar = encodedSegment.charAt(0);
 
-        CharSequence encodedSegment = encodedSegments.get(i);
-        if (encodedSegment.length() > 0) {
-          char firstChar = encodedSegment.charAt(0);
-
-          if(firstChar >= 'A' && firstChar <= 'H') {
-            segments.get(0).decode(encodedSegment);
-          } else if(firstChar >= 'I' && firstChar <= 'P') {
-            segments.get(2).decode(encodedSegment);
-          } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
-            segments.get(1).decode(encodedSegment);
-          } else {
-            throw new DecodingException("Invalid segment '" + encodedSegment + "'");
-          }
+        if(firstChar >= 'A' && firstChar <= 'H') {
+          segments.get(0).decode(encodedSegment);
+        } else if(firstChar >= 'I' && firstChar <= 'P') {
+          segments.get(2).decode(encodedSegment);
+        } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
+          segments.get(1).decode(encodedSegment);
+        } else {
+          throw new DecodingException("Invalid segment '" + encodedSegment + "'");
         }
       }
     }
-
-    return segments;
   }
 
   @Override
-  public CharSequence encodeSection(List<EncodableSegment<TcfCaV1Field>> segments) {
+  public CharSequence encodeSection() {
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
     encodedSegments.add(segments.get(0).encodeCharSequence());
