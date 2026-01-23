@@ -34,8 +34,9 @@ public final class FieldNames<E extends Enum<E> & FieldKey> {
     }
     return indices[key.ordinal()];
   }
-  
-  public E convertKey(String key) {
+
+  public E resolveKey(String key) {
     return map.get(key);
   }
+
 }

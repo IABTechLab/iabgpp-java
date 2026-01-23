@@ -17,7 +17,7 @@ public final class TcfEuV2CoreSegment extends AbstractBase64Segment<TcfEuV2Field
 
   public TcfEuV2CoreSegment() {
     super(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES);
-    // NOTE: TcfEuV2.setFieldValue records modifications
+    // NOTE: TcfEuV2.onSet records modifications
     Instant date = Instant.EPOCH;
 
     initialize(TcfEuV2Field.VERSION, new EncodableFixedInteger(6, TcfEuV2.VERSION));

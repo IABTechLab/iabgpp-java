@@ -23,17 +23,24 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
   protected final FieldNames<E> fieldNames;
   private final Object[] values;
 
-  
+  protected AbstractLazilyEncodableSegment(FieldNames<E> fieldNames) {
+    this.fieldNames = fieldNames;
+    this.values = new Object[fieldNames.size()];
+  }
+
+
+  @Override
   public final DataType<?> getField(E fieldName) {
     ensureDecode();
     return get(fieldName);
   }
-  
+
+  @Override
   public final E resolveKey(String fieldName) {
-    return fieldNames.convertKey(fieldName);
+    return fieldNames.resolveKey(fieldName);
   }
 
-  protected void initialize(E key, T value) {
+  protected final void initialize(E key, T value) {
     Integer index = fieldNames.getIndex(key);
     if (index == null) {
       throw new IllegalArgumentException("invalid key "+ key);
@@ -42,11 +49,11 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
   }
 
   @SuppressWarnings("unchecked")
-  protected T get(int index) {
+  protected final T get(int index) {
     return (T) values[index];
   }
 
-  protected T get(E key) {
+  protected final T get(E key) {
     Integer index = fieldNames.getIndex(key);
     if (index != null) {
       return get(index);
@@ -54,6 +61,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     return null;
   }
 
+  @Override
   public final boolean isDirty() {
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
@@ -65,6 +73,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     return false;
   }
 
+  @Override
   public final void setDirty(boolean dirty) {
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
@@ -75,12 +84,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     }
   }
 
-
-  protected AbstractLazilyEncodableSegment(FieldNames<E> fieldNames) {
-    this.fieldNames = fieldNames;
-    this.values = new Object[fieldNames.size()];
-  }
-
+  @Override
   public Object getFieldValue(E fieldName) {
     ensureDecode();
 
@@ -92,6 +96,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     }
   }
 
+  @Override
   public void setFieldValue(E fieldName, Object value) {
     ensureDecode();
 
@@ -103,6 +108,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     }
   }
 
+  @Override
   public String toString() {
     ensureDecode();
     StringBuilder sb = new StringBuilder();

@@ -15,6 +15,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     this.segments = segments;
   }
 
+  @Override
   protected void doDecode(CharSequence encodedString) {
     int numSegments = segments.size();
     if (numSegments == 1) {
@@ -27,6 +28,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     }
   }
 
+  @Override
   protected CharSequence doEncode() {
     int numSegments = segments.size();
     if (numSegments == 1) {
@@ -39,6 +41,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     return SlicedCharSequence.join('.',  encodedSegments);
   }
 
+  @Override
   public final boolean hasField(String fieldName) {
     ensureDecode();
 
@@ -53,7 +56,8 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
 
     return false;
   }
-  
+
+  @Override
   public final boolean hasField(E fieldName) {
     ensureDecode();
 
@@ -68,6 +72,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     return false;
   }
 
+  @Override
   public final Object getFieldValue(String fieldName) {
     ensureDecode();
 
@@ -85,7 +90,8 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
 
     throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
   }
-  
+
+  @Override
   public final Object getFieldValue(E fieldName) {
     ensureDecode();
 
@@ -101,6 +107,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
   }
 
+  @Override
   public final void setFieldValue(String fieldName, Object value) {
     ensureDecode();
 
@@ -112,7 +119,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
         DataType<?> field = segment.getField(key);
         if (field != null) {
           field.setValue(value);
-          hook(key);
+          onSet(key);
           return;
         }
       }
@@ -120,7 +127,8 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
 
     throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
   }
-  
+
+  @Override
   public final void setFieldValue(E fieldName, Object value) {
     ensureDecode();
 
@@ -130,7 +138,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
       DataType<?> field = segment.getField(fieldName);
       if(field != null) {
         field.setValue(value);
-        hook(fieldName);
+        onSet(fieldName);
         return;
       }
     }
@@ -138,10 +146,11 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
   }
 
-  protected void hook(E fieldName) {
-    
+  protected void onSet(E fieldName) {
+    // pass: override this to set last modified fields
   }
 
+  @Override
   public final boolean isDirty() {
     int numSegments = segments.size();
     for (int i = 0; i < numSegments; i++) {
@@ -152,6 +161,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     return false;
   }
 
+  @Override
   public final void setDirty(boolean dirty) {
     int numSegments = segments.size();
     for (int i = 0; i < numSegments; i++) {
@@ -159,6 +169,7 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     }
   }
 
+  @Override
   public final String toString() {
     ensureDecode();
     StringBuilder sb = new StringBuilder();

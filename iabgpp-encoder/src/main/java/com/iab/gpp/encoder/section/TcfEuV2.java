@@ -107,7 +107,7 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection<TcfEuV2Field> {
   }
 
   @Override
-  public void hook(TcfEuV2Field fieldName) {
+  public void onSet(TcfEuV2Field fieldName) {
     if (!fieldName.equals(TcfEuV2Field.CREATED) && !fieldName.equals(TcfEuV2Field.LAST_UPDATED)) {
       Instant utcDateTime = Instant.now();
 

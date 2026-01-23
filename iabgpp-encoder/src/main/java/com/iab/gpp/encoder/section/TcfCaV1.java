@@ -90,7 +90,7 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
   }
 
   @Override
-  public void hook(TcfCaV1Field fieldName) {
+  public void onSet(TcfCaV1Field fieldName) {
     if (!fieldName.equals(TcfCaV1Field.CREATED) && !fieldName.equals(TcfCaV1Field.LAST_UPDATED)) {
       Instant utcDateTime = Instant.now();
 
