@@ -5,7 +5,7 @@ import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsUtField;
 import com.iab.gpp.encoder.segment.UsUtCoreSegment;
 
-public class UsUt extends AbstractLazilyEncodableSection<UsUtField> {
+public class UsUt extends EncodableSection<UsUtField> {
 
   public static final int ID = 11;
   public static final int VERSION = 1;

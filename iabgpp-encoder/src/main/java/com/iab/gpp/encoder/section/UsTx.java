@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsTxCoreSegment;
 import com.iab.gpp.encoder.segment.UsTxGpcSegment;
 
-public class UsTx extends AbstractLazilyEncodableSection<UsTxField> {
+public class UsTx extends EncodableSection<UsTxField> {
 
   public static final int ID = 16;
   public static final int VERSION = 1;

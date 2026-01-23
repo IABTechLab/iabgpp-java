@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsNatCoreSegment;
 import com.iab.gpp.encoder.segment.UsNatGpcSegment;
 
-public class UsNat extends AbstractLazilyEncodableSection<UsNatField> {
+public class UsNat extends EncodableSection<UsNatField> {
 
   public static final int ID = 7;
   public static final int VERSION = 1;

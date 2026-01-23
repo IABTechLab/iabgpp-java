@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsIaCoreSegment;
 import com.iab.gpp.encoder.segment.UsIaGpcSegment;
 
-public class UsIa extends AbstractLazilyEncodableSection<UsIaField> {
+public class UsIa extends EncodableSection<UsIaField> {
 
   public static final int ID = 18;
   public static final int VERSION = 1;

@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsCoCoreSegment;
 import com.iab.gpp.encoder.segment.UsCoGpcSegment;
 
-public class UsCo extends AbstractLazilyEncodableSection<UsCoField> {
+public class UsCo extends EncodableSection<UsCoField> {
 
   public static final int ID = 10;
   public static final int VERSION = 1;

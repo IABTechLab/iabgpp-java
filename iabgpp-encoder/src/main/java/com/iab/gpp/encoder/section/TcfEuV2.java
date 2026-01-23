@@ -14,7 +14,7 @@ import com.iab.gpp.encoder.segment.TcfEuV2PublisherPurposesSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2VendorsAllowedSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2VendorsDisclosedSegment;
 
-public class TcfEuV2 extends AbstractLazilyEncodableSection<TcfEuV2Field> {
+public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
 
   public static final int ID = 2;
   public static final int VERSION = 2;

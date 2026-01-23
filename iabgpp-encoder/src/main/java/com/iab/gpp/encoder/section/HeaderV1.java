@@ -5,7 +5,7 @@ import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.field.HeaderV1Field;
 import com.iab.gpp.encoder.segment.HeaderV1CoreSegment;
 
-public class HeaderV1 extends AbstractLazilyEncodableSection<HeaderV1Field> {
+public class HeaderV1 extends EncodableSection<HeaderV1Field> {
 
   public static final int ID = 3;
   public static final int VERSION = 1;

@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsMtCoreSegment;
 import com.iab.gpp.encoder.segment.UsMtGpcSegment;
 
-public class UsMt extends AbstractLazilyEncodableSection<UsMtField> {
+public class UsMt extends EncodableSection<UsMtField> {
 
   public static final int ID = 14;
   public static final int VERSION = 1;

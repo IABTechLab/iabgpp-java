@@ -4,7 +4,7 @@ import java.util.Collections;
 import com.iab.gpp.encoder.field.UspV1Field;
 import com.iab.gpp.encoder.segment.UspV1CoreSegment;
 
-public class UspV1 extends AbstractLazilyEncodableSection<UspV1Field> {
+public class UspV1 extends EncodableSection<UspV1Field> {
 
   public static final int ID = 6;
   public static final int VERSION = 1;

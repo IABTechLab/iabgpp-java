@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsOrCoreSegment;
 import com.iab.gpp.encoder.segment.UsOrGpcSegment;
 
-public class UsOr extends AbstractLazilyEncodableSection<UsOrField> {
+public class UsOr extends EncodableSection<UsOrField> {
 
   public static final int ID = 15;
   public static final int VERSION = 1;

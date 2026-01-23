@@ -9,7 +9,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsNeCoreSegment;
 import com.iab.gpp.encoder.segment.UsNeGpcSegment;
 
-public class UsNe extends AbstractLazilyEncodableSection<UsNeField> {
+public class UsNe extends EncodableSection<UsNeField> {
 
   public static final int ID = 19;
   public static final int VERSION = 1;

@@ -13,7 +13,7 @@ import com.iab.gpp.encoder.segment.TcfCaV1CoreSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1DisclosedVendorsSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1PublisherPurposesSegment;
 
-public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
+public class TcfCaV1 extends EncodableSection<TcfCaV1Field> {
 
   public static final int ID = 5;
   public static final int VERSION = 1;
