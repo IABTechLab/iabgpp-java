@@ -1,4 +1,4 @@
-package com.iab.gpp.encoder.field;
+package com.iab.gpp.encoder.section;
 
 import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
 

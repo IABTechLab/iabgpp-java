@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.iab.gpp.encoder.error.ValidationException;
 
-public abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
+public abstract class AbstractEncodableBitStringDataType<T> extends EncodableDataType<T> {
   //this if for backwards compatibility with the newer fields
   protected boolean hardFailIfMissing = true;
   protected boolean dirty = false;
