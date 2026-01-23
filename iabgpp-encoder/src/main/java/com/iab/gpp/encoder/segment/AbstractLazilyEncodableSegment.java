@@ -116,7 +116,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
       E field = fieldNames.get(i);
-      sb.append(", ").append(field).append('=').append(get(field));
+      sb.append(", ").append(field.getName()).append('=').append(get(field));
     }
     sb.append('}');
     return sb.toString();

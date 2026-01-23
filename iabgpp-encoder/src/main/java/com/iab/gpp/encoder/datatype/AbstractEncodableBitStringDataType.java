@@ -58,4 +58,8 @@ public abstract class AbstractEncodableBitStringDataType<T> extends EncodableDat
   public void setDirty(boolean dirty) {
     this.dirty = dirty;
   }
+
+  public String toString() {
+    return String.valueOf(value);
+  }
 }
