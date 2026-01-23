@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 public final class FieldNames<E extends Enum<E> & FieldKey> {
 
   private final E[] keys;
-  private final LinkedHashMap<String, E> map;
+  private final LinkedHashMap<FieldKey, E> map;
   private final Integer[] indices;
 
   @SafeVarargs
@@ -15,7 +15,7 @@ public final class FieldNames<E extends Enum<E> & FieldKey> {
     this.indices = new Integer[keys[0].getClass().getEnumConstants().length];
     for (int i = 0; i < keys.length; i++) {
       E key = keys[i];
-      this.map.put(key.getName(), key);
+      this.map.put(key, key);
       this.indices[key.ordinal()] = i;
     }
   }
@@ -35,7 +35,7 @@ public final class FieldNames<E extends Enum<E> & FieldKey> {
     return indices[key.ordinal()];
   }
 
-  public E resolveKey(String key) {
+  public E resolveKey(FieldKey key) {
     return map.get(key);
   }
 

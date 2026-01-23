@@ -15,7 +15,7 @@ public final class TcfCaV1CoreSegment extends AbstractBase64Segment<TcfCaV1Field
 
   public TcfCaV1CoreSegment() {
     super(TcfCaV1Field.TCFCAV1_CORE_SEGMENT_FIELD_NAMES);
-    // NOTE: TcfCaV1.setFieldValue records modifications
+    // NOTE: TcfCaV1.onSet records modifications
     Instant date = Instant.EPOCH;
     initialize(TcfCaV1Field.VERSION, new EncodableFixedInteger(6, TcfCaV1.VERSION));
     initialize(TcfCaV1Field.CREATED, new EncodableDatetime(date));

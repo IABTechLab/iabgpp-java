@@ -47,7 +47,7 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     return SlicedCharSequence.join('.',  encodedSegments);
   }
 
-  public final boolean hasField(String fieldName) {
+  public final boolean hasField(FieldKey fieldName) {
     ensureDecode();
 
     int numSegments = segments.size();
@@ -76,7 +76,7 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     return false;
   }
 
-  public final Object getFieldValue(String fieldName) {
+  public final Object getFieldValue(FieldKey fieldName) {
     ensureDecode();
 
     int numSegments = segments.size();
@@ -109,7 +109,7 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
   }
 
-  public final void setFieldValue(String fieldName, Object value) {
+  public final void setFieldValue(FieldKey fieldName, Object value) {
     ensureDecode();
 
     int numSegments = segments.size();

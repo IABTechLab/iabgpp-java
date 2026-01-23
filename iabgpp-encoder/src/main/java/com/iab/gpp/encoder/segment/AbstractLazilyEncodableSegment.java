@@ -36,7 +36,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
   }
 
   @Override
-  public final E resolveKey(String fieldName) {
+  public final E resolveKey(FieldKey fieldName) {
     return fieldNames.resolveKey(fieldName);
   }
 

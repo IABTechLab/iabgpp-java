@@ -49,10 +49,6 @@ public class GppModel extends AbstractEncodable {
   }
 
   public void setFieldValue(int sectionId, FieldKey fieldName, Object value) {
-    setFieldValue(sectionId, fieldName.getName(), value);
-  }
-
-  public void setFieldValue(int sectionId, String fieldName, Object value) {
     setFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName, value);
   }
 
@@ -127,10 +123,6 @@ public class GppModel extends AbstractEncodable {
   }
 
   public void setFieldValue(String sectionName, FieldKey fieldName, Object value) {
-    setFieldValue(sectionName, fieldName.getName(), value);
-  }
-
-  public void setFieldValue(String sectionName, String fieldName, Object value) {
     ensureDecode();
     EncodableSection<?> section = getOrCreateSection(sectionName);
     if (section != null) {
@@ -141,18 +133,10 @@ public class GppModel extends AbstractEncodable {
   }
 
   public Object getFieldValue(int sectionId, FieldKey fieldName) {
-    return getFieldValue(sectionId, fieldName.getName());
-  }
-
-  public Object getFieldValue(int sectionId, String fieldName) {
     return getFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName);
   }
 
   public Object getFieldValue(String sectionName, FieldKey fieldName) {
-    return getFieldValue(sectionName, fieldName.getName());
-  }
-
-  public Object getFieldValue(String sectionName, String fieldName) {
     ensureDecode();
     EncodableSection<?> field = this.sections.get(sectionName);
     if (field != null) {
@@ -162,11 +146,11 @@ public class GppModel extends AbstractEncodable {
     }
   }
 
-  public boolean hasField(int sectionId, String fieldName) {
+  public boolean hasField(int sectionId, FieldKey fieldName) {
     return hasField(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName);
   }
 
-  public boolean hasField(String sectionName, String fieldName) {
+  public boolean hasField(String sectionName, FieldKey fieldName) {
     ensureDecode();
     EncodableSection<?> field = this.sections.get(sectionName);
     if (field != null) {
@@ -189,7 +173,7 @@ public class GppModel extends AbstractEncodable {
     ensureDecode();
     HeaderV1 header = new HeaderV1();
     try {
-      header.setFieldValue("SectionIds", this.getSectionIds());
+      header.setFieldValue(HeaderV1Field.SECTION_IDS, this.getSectionIds());
     } catch (InvalidFieldException e) {
 
     }
@@ -328,7 +312,7 @@ public class GppModel extends AbstractEncodable {
 
     HeaderV1 header = new HeaderV1();
     try {
-      header.setFieldValue("SectionIds", getSectionIds());
+      header.setFieldValue(HeaderV1Field.SECTION_IDS, getSectionIds());
     } catch (InvalidFieldException e) {
       throw new EncodingException(e);
     }
