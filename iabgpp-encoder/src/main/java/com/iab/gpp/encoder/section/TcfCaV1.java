@@ -78,7 +78,6 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
 
   @Override
   protected CharSequence doEncode() {
-    this.setFieldValue(TcfCaV1Field.LAST_UPDATED, Instant.now());
     List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
 
     encodedSegments.add(segments.get(0).encodeCharSequence());
@@ -88,6 +87,16 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection<TcfCaV1Field> {
     }
 
     return SlicedCharSequence.join('.',  encodedSegments);
+  }
+
+  @Override
+  public void hook(TcfCaV1Field fieldName) {
+    if (!fieldName.equals(TcfCaV1Field.CREATED) && !fieldName.equals(TcfCaV1Field.LAST_UPDATED)) {
+      Instant utcDateTime = Instant.now();
+
+      this.setFieldValue(TcfCaV1Field.CREATED, utcDateTime);
+      this.setFieldValue(TcfCaV1Field.LAST_UPDATED, utcDateTime);
+    }
   }
 
   public Instant getCreated() {

@@ -6,7 +6,7 @@ public abstract class AbstractEncodable implements Dirtyable {
   
   private CharSequence encodedString;
 
-  protected boolean decoded = true;
+  private boolean decoded = true;
   
   
   public final String encode() {

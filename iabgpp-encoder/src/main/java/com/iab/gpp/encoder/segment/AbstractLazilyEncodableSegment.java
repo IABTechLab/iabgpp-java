@@ -29,8 +29,8 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     return get(fieldName);
   }
   
-  public final DataType<?> getField(String fieldName) {
-    return get(fieldNames.convertKey(fieldName));
+  public final E resolveKey(String fieldName) {
+    return fieldNames.convertKey(fieldName);
   }
 
   protected void initialize(E key, T value) {

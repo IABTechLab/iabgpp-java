@@ -45,7 +45,8 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     int numSegments = segments.size();
     for (int i = 0; i < numSegments; i++) {
       EncodableSegment<E> segment = segments.get(i);
-      if (segment.getField(fieldName) != null) {
+      E key = segment.resolveKey(fieldName);
+      if (key != null && segment.getField(key) != null) {
         return true;
       }
     }
@@ -73,9 +74,12 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     int numSegments = segments.size();
     for (int i = 0; i < numSegments; i++) {
       EncodableSegment<E> segment = segments.get(i);
-      DataType<?> field = segment.getField(fieldName);
-      if (field != null) {
-        return field.getValue();
+      E key = segment.resolveKey(fieldName);
+      if (key != null) {
+        DataType<?> field = segment.getField(key);
+        if (field != null) {
+          return field.getValue();
+        }
       }
     }
 
@@ -103,10 +107,14 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
     int numSegments = segments.size();
     for (int i = 0; i < numSegments; i++) {
       EncodableSegment<E> segment = segments.get(i);
-      DataType<?> field = segment.getField(fieldName);
-      if(field != null) {
-        field.setValue(value);
-        return;
+      E key = segment.resolveKey(fieldName);
+      if (key != null) {
+        DataType<?> field = segment.getField(key);
+        if (field != null) {
+          field.setValue(value);
+          hook(key);
+          return;
+        }
       }
     }
 
@@ -122,11 +130,16 @@ abstract class AbstractLazilyEncodableSection<E extends Enum<E> & FieldKey> exte
       DataType<?> field = segment.getField(fieldName);
       if(field != null) {
         field.setValue(value);
+        hook(fieldName);
         return;
       }
     }
 
     throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
+  }
+
+  protected void hook(E fieldName) {
+    
   }
 
   public final boolean isDirty() {

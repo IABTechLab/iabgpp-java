@@ -9,6 +9,7 @@ import java.util.PrimitiveIterator;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
+import com.iab.gpp.encoder.field.AbstractEncodable;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.HeaderV1Field;
 import com.iab.gpp.encoder.section.EncodableSection;
@@ -35,16 +36,12 @@ import com.iab.gpp.encoder.section.UsUt;
 import com.iab.gpp.encoder.section.UsVa;
 import com.iab.gpp.encoder.section.UspV1;
 
-public class GppModel {
-  private Map<String, EncodableSection<?>> sections = new HashMap<>();
-
-  private String encodedString;
-
+public class GppModel extends AbstractEncodable {
+  private final Map<String, EncodableSection<?>> sections = new HashMap<>();
   private boolean dirty = false;
-  private boolean decoded = true;
+
 
   public GppModel() {
-
   }
 
   public GppModel(String encodedString) {
@@ -123,6 +120,7 @@ public class GppModel {
       }
       if (section != null) {
         this.sections.put(sectionName, section);
+        this.dirty = true;
       }
     }
     return section;
@@ -133,15 +131,10 @@ public class GppModel {
   }
 
   public void setFieldValue(String sectionName, String fieldName, Object value) {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
+    ensureDecode();
     EncodableSection<?> section = getOrCreateSection(sectionName);
     if (section != null) {
       section.setFieldValue(fieldName, value);
-      this.dirty = true;
     } else {
       throw new InvalidFieldException(sectionName + "." + fieldName + " not found");
     }
@@ -160,11 +153,7 @@ public class GppModel {
   }
 
   public Object getFieldValue(String sectionName, String fieldName) {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
+    ensureDecode();
     EncodableSection<?> field = this.sections.get(sectionName);
     if (field != null) {
       return field.getFieldValue(fieldName);
@@ -178,11 +167,7 @@ public class GppModel {
   }
 
   public boolean hasField(String sectionName, String fieldName) {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
+    ensureDecode();
     EncodableSection<?> field = this.sections.get(sectionName);
     if (field != null) {
       return field.hasField(fieldName);
@@ -196,22 +181,12 @@ public class GppModel {
   }
 
   public boolean hasSection(String sectionName) {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
-
+    ensureDecode();
     return this.sections.containsKey(sectionName);
   }
 
   public HeaderV1 getHeader() {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
-
+    ensureDecode();
     HeaderV1 header = new HeaderV1();
     try {
       header.setFieldValue("SectionIds", this.getSectionIds());
@@ -226,11 +201,7 @@ public class GppModel {
   }
 
   public EncodableSection<?> getSection(String sectionName) {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
+    ensureDecode();
     return this.sections.get(sectionName);
   }
 
@@ -239,21 +210,16 @@ public class GppModel {
   }
 
   public void deleteSection(String sectionName) {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
     if (this.sections.remove(sectionName) != null) {
       this.dirty = true;
     }
   }
 
   public void clear() {
-    this.sections.clear();
-    this.encodedString = null;
-    this.dirty = false;
-    this.decoded = true;
+    if (!this.sections.isEmpty()) {
+      this.sections.clear();
+      this.dirty = true;
+    }
   }
 
   public TcfCaV1 getTcfCaV1Section() {
@@ -333,11 +299,7 @@ public class GppModel {
   }
 
   public List<Integer> getSectionIds() {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
+    ensureDecode();
     int length = Sections.SECTION_ORDER.size();
     List<Integer> sectionIds = new ArrayList<>(length);
     for (int i = 0; i < length; i++) {
@@ -350,7 +312,8 @@ public class GppModel {
     return sectionIds;
   }
 
-  protected String encodeModel(Map<String, EncodableSection<?>> sections) {
+  @Override
+  protected CharSequence doEncode() {
     int length = Sections.SECTION_ORDER.size();
     List<CharSequence> encodedSections = new ArrayList<>(length);
     List<Integer> sectionIds = new ArrayList<>(length);
@@ -370,12 +333,13 @@ public class GppModel {
       throw new EncodingException(e);
     }
     encodedSections.add(0, header.encodeCharSequence());
-    return SlicedCharSequence.join('~', encodedSections).toString();
+    return SlicedCharSequence.join('~', encodedSections);
   }
 
-  protected Map<String, EncodableSection<?>> decodeModel(String str) {
-    if (str == null || str.isEmpty() || str.startsWith("DB")) {
-      Map<String, EncodableSection<?>> sections = new HashMap<>();
+  @Override
+  protected void doDecode(CharSequence str) {
+    if (str == null || str.isEmpty() || (str.charAt(0) == 'D' && str.charAt(1) == 'B')) {
+      sections.clear();
 
       if(str != null && !str.isEmpty()) {
         List<CharSequence> encodedSections = SlicedCharSequence.split(str, '~');
@@ -447,11 +411,9 @@ public class GppModel {
           }
         }
       }
-
-      return sections;
-    } else if (str.startsWith("C")) {
+    } else if (str.charAt(0) == 'C') {
       // old tcfeu only string
-      Map<String, EncodableSection<?>> sections = new HashMap<>();
+      sections.clear();
 
       TcfEuV2 section = new TcfEuV2(str);
       sections.put(TcfEuV2.NAME, section);
@@ -460,7 +422,6 @@ public class GppModel {
       header.setFieldValue(HeaderV1Field.SECTION_IDS, Arrays.asList(2));
       sections.put(HeaderV1.NAME, section);
 
-      return sections;
     } else {
       throw new DecodingException("Unable to decode '" + str + "'");
     }
@@ -471,11 +432,7 @@ public class GppModel {
   }
 
   public String encodeSection(String sectionName) {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
+    ensureDecode();
     EncodableSection<?> section = this.sections.get(sectionName);
     if (section != null) {
       return section.encode();
@@ -489,36 +446,15 @@ public class GppModel {
   }
 
   public void decodeSection(String sectionName, String encodedString) {
-    if (!this.decoded) {
-      this.sections = this.decodeModel(this.encodedString);
-      this.dirty = false;
-      this.decoded = true;
-    }
-
+    ensureDecode();
     EncodableSection<?> section = getOrCreateSection(sectionName);
     if (section != null) {
       section.decode(encodedString);
-      this.dirty = true;
     }
-  }
-
-  public String encode() {
-    if (this.encodedString == null || this.encodedString.isEmpty() || this.dirty) {
-      this.encodedString = encodeModel(this.sections);
-      this.dirty = false;
-      this.decoded = true;
-    }
-
-    return this.encodedString;
-  }
-
-  public void decode(String encodedString) {
-    this.encodedString = encodedString;
-    this.dirty = false;
-    this.decoded = false;
   }
 
   public String toString() {
+    ensureDecode();
     List<Integer> sectionIds = getSectionIds();
     List<String> pieces = new ArrayList<>(sectionIds.size());
     for (Integer sectionId : sectionIds) {
@@ -527,5 +463,33 @@ public class GppModel {
     return pieces.toString();
   }
 
+  @Override
+  public boolean isDirty() {
+    if (dirty) {
+      return true;
+    }
+    int length = Sections.SECTION_ORDER.size();
+    for (int i = 0; i < length; i++) {
+      String sectionName = Sections.SECTION_ORDER.get(i);
+      EncodableSection<?> section = this.sections.get(sectionName);
+      if (section != null && section.isDirty()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public void setDirty(boolean dirty) {
+    this.dirty = dirty;
+    int length = Sections.SECTION_ORDER.size();
+    for (int i = 0; i < length; i++) {
+      String sectionName = Sections.SECTION_ORDER.get(i);
+      EncodableSection<?> section = this.sections.get(sectionName);
+      if (section != null) {
+        section.setDirty(true);
+      }
+    }
+  }
 
 }
