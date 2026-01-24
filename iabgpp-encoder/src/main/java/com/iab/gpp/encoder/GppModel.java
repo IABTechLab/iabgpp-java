@@ -92,7 +92,7 @@ public class GppModel extends AbstractEncodable {
       Supplier<EncodableSection<?>> constructor = SECTION_ID_TO_CONSTRUCTOR.get(sectionId);
       if (constructor != null) {
         section = constructor.get();
-        this.sections.put(section.getId(), section);
+        this.sections.put(sectionId, section);
         this.header.getSectionsIds().add(section.getId());
       }
     }
@@ -114,8 +114,7 @@ public class GppModel extends AbstractEncodable {
   }
 
   public Object getFieldValue(int sectionId, FieldKey fieldName) {
-    ensureDecode();
-    EncodableSection<?> field = this.sections.get(sectionId);
+    EncodableSection<?> field = getSection(sectionId);
     if (field != null) {
       return field.getFieldValue(fieldName);
     } else {
@@ -128,8 +127,7 @@ public class GppModel extends AbstractEncodable {
   }
 
   public boolean hasField(int sectionId, FieldKey fieldName) {
-    ensureDecode();
-    EncodableSection<?> field = this.sections.get(sectionId);
+    EncodableSection<?> field = getSection(sectionId);
     if (field != null) {
       return field.hasField(fieldName);
     } else {
@@ -165,6 +163,7 @@ public class GppModel extends AbstractEncodable {
   }
 
   public void deleteSection(int sectionId) {
+    ensureDecode();
     EncodableSection<?> removed = this.sections.remove(sectionId);
     if (removed != null) {
       this.header.getSectionsIds().remove(removed.getId());
@@ -172,6 +171,7 @@ public class GppModel extends AbstractEncodable {
   }
 
   public void clear() {
+    ensureDecode();
     if (!this.sections.isEmpty()) {
       this.sections.clear();
       this.header.getSectionsIds().clear();
@@ -289,7 +289,7 @@ public class GppModel extends AbstractEncodable {
           if (section != null) {
             section.decode(encodedSection);
           } else {
-            // we do not support encoding this section
+            // we do not support re-encoding this section
             header.getSectionsIds().removeInt(sectionId);
           }
         }
@@ -309,8 +309,7 @@ public class GppModel extends AbstractEncodable {
   }
 
   public String encodeSection(int sectionId) {
-    ensureDecode();
-    EncodableSection<?> section = this.sections.get(sectionId);
+    EncodableSection<?> section = getSection(sectionId);
     if (section != null) {
       return section.encode();
     } else {
@@ -332,12 +331,14 @@ public class GppModel extends AbstractEncodable {
 
   public String toString() {
     ensureDecode();
-    List<Integer> sectionIds = getSectionIds();
-    List<String> pieces = new ArrayList<>(sectionIds.size());
-    for (Integer sectionId : sectionIds) {
-      pieces.add(getSection(sectionId).toString());
+    StringBuilder sb = new StringBuilder();
+    sb.append('[').append(header);
+    for (Integer sectionId: header.getSectionsIds()) {
+      EncodableSection<?> section = sections.get(sectionId);
+      sb.append(", ").append(section);
     }
-    return pieces.toString();
+    sb.append(']');
+    return sb.toString();
   }
 
   @Override
