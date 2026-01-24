@@ -34,11 +34,11 @@ import com.iab.gpp.encoder.section.UspV1;
 
 public class GppModel extends AbstractEncodable {
 
+  // NOTE: we genrally use concrete types to avoid the cost of interface calls
   private static final HashMap<Integer, Supplier<EncodableSection<?>>> SECTION_ID_TO_CONSTRUCTOR = new HashMap<>();
   private static final HashMap<String, Integer> SECTION_NAME_TO_ID = new HashMap<>();
   
   static {
-
     List<Supplier<EncodableSection<?>>> constructors = new ArrayList<>();
 
     // register section constructors here
