@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PrimitiveIterator;
+import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
@@ -38,13 +39,14 @@ import com.iab.gpp.encoder.section.UspV1;
 
 public class GppModel extends AbstractEncodable {
   private final Map<String, EncodableSection<?>> sections = new HashMap<>();
-  private boolean dirty = false;
-
+  private final HeaderV1 header;
 
   public GppModel() {
+    this.header = new HeaderV1();
   }
 
   public GppModel(String encodedString) {
+    this();
     decode(encodedString);
   }
 
@@ -116,7 +118,7 @@ public class GppModel extends AbstractEncodable {
       }
       if (section != null) {
         this.sections.put(sectionName, section);
-        this.dirty = true;
+        this.header.getSectionsIds().add(section.getId());
       }
     }
     return section;
@@ -171,7 +173,6 @@ public class GppModel extends AbstractEncodable {
 
   public HeaderV1 getHeader() {
     ensureDecode();
-    HeaderV1 header = new HeaderV1();
     try {
       header.setFieldValue(HeaderV1Field.SECTION_IDS, this.getSectionIds());
     } catch (InvalidFieldException e) {
@@ -194,15 +195,16 @@ public class GppModel extends AbstractEncodable {
   }
 
   public void deleteSection(String sectionName) {
-    if (this.sections.remove(sectionName) != null) {
-      this.dirty = true;
+    EncodableSection<?> removed = this.sections.remove(sectionName);
+    if (removed != null) {
+      this.header.getSectionsIds().remove(removed.getId());
     }
   }
 
   public void clear() {
     if (!this.sections.isEmpty()) {
       this.sections.clear();
-      this.dirty = true;
+      this.header.getSectionsIds().clear();
     }
   }
 
@@ -300,6 +302,7 @@ public class GppModel extends AbstractEncodable {
   protected CharSequence doEncode() {
     int length = Sections.SECTION_ORDER.size();
     List<CharSequence> encodedSections = new ArrayList<>(length);
+    encodedSections.add(header.encodeCharSequence());
     List<Integer> sectionIds = new ArrayList<>(length);
     for (int i = 0; i < length; i++) {
       String sectionName = Sections.SECTION_ORDER.get(i);
@@ -309,14 +312,6 @@ public class GppModel extends AbstractEncodable {
         sectionIds.add(section.getId());
       }
     }
-
-    HeaderV1 header = new HeaderV1();
-    try {
-      header.setFieldValue(HeaderV1Field.SECTION_IDS, getSectionIds());
-    } catch (InvalidFieldException e) {
-      throw new EncodingException(e);
-    }
-    encodedSections.add(0, header.encodeCharSequence());
     return SlicedCharSequence.join('~', encodedSections);
   }
 
@@ -324,11 +319,11 @@ public class GppModel extends AbstractEncodable {
   protected void doDecode(CharSequence str) {
     if (str == null || str.isEmpty() || (str.charAt(0) == 'D' && str.charAt(1) == 'B')) {
       sections.clear();
+      header.getSectionsIds().clear();
 
       if(str != null && !str.isEmpty()) {
         List<CharSequence> encodedSections = SlicedCharSequence.split(str, '~');
-        HeaderV1 header = new HeaderV1(encodedSections.get(0));
-        sections.put(HeaderV1.NAME, header);
+        header.decode(encodedSections.get(0));
 
         PrimitiveIterator.OfInt it = header.getSectionsIds().iterator();
         int i = 1;
@@ -397,15 +392,9 @@ public class GppModel extends AbstractEncodable {
       }
     } else if (str.charAt(0) == 'C') {
       // old tcfeu only string
-      sections.clear();
-
       TcfEuV2 section = new TcfEuV2(str);
       sections.put(TcfEuV2.NAME, section);
-
-      HeaderV1 header = new HeaderV1();
-      header.setFieldValue(HeaderV1Field.SECTION_IDS, Arrays.asList(2));
-      sections.put(HeaderV1.NAME, section);
-
+      header.getSectionsIds().add(section.getId());
     } else {
       throw new DecodingException("Unable to decode '" + str + "'");
     }
@@ -449,7 +438,7 @@ public class GppModel extends AbstractEncodable {
 
   @Override
   public boolean isDirty() {
-    if (dirty) {
+    if (header.isDirty()) {
       return true;
     }
     int length = Sections.SECTION_ORDER.size();
@@ -465,7 +454,7 @@ public class GppModel extends AbstractEncodable {
 
   @Override
   public void setDirty(boolean dirty) {
-    this.dirty = dirty;
+    header.setDirty(dirty);
     int length = Sections.SECTION_ORDER.size();
     for (int i = 0; i < length; i++) {
       String sectionName = Sections.SECTION_ORDER.get(i);

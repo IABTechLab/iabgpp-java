@@ -24,6 +24,7 @@ public abstract class AbstractEncodable implements Dirtyable {
 
   public final void decode(CharSequence encodedString) {
     this.encoded = encodedString;
+    this.setDirty(false);
     this.decoded = false;
   }
 

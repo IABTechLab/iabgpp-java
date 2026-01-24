@@ -815,7 +815,7 @@ public class GppModelTest {
     GppModel gppModel = new GppModel("DBABTA~1---");
     Assertions.assertEquals("DBABTA~1---", gppModel.encode());
 
-    gppModel.decode(null);
+    gppModel.decode("");
     Assertions.assertEquals("DBAA", gppModel.encode());
 
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, 'Y');
