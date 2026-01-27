@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.Collections;
 import com.iab.gpp.encoder.field.UspV1Field;
 import com.iab.gpp.encoder.segment.UspV1CoreSegment;
 
@@ -11,7 +10,7 @@ public class UspV1 extends EncodableSection<UspV1Field> {
   public static final String NAME = "uspv1";
 
   public UspV1() {
-    super(Collections.singletonList(new UspV1CoreSegment()));
+    super(new UspV1CoreSegment());
   }
 
   public UspV1(CharSequence encodedString) {

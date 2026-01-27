@@ -1,11 +1,9 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsCaField;
-import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsCaCoreSegment;
 import com.iab.gpp.encoder.segment.UsCaGpcSegment;
 
@@ -16,7 +14,7 @@ public class UsCa extends EncodableSection<UsCaField> {
   public static final String NAME = "usca";
 
   public UsCa() {
-    super(Arrays.<EncodableSegment<UsCaField>>asList(new UsCaCoreSegment(), new UsCaGpcSegment()));
+    super(new UsCaCoreSegment(), new UsCaGpcSegment());
   }
 
   public UsCa(CharSequence encodedString) {
@@ -44,24 +42,24 @@ public class UsCa extends EncodableSection<UsCaField> {
     List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
 
     if (encodedSegments.size() > 0) {
-      segments.get(0).decode(encodedSegments.get(0));
+      getSegment(0).decode(encodedSegments.get(0));
     }
 
     if (encodedSegments.size() > 1) {
-      segments.get(1).setFieldValue(UsCaField.GPC_SEGMENT_INCLUDED, true);
-      segments.get(1).decode(encodedSegments.get(1));
+      getSegment(1).setFieldValue(UsCaField.GPC_SEGMENT_INCLUDED, true);
+      getSegment(1).decode(encodedSegments.get(1));
     } else {
-      segments.get(1).setFieldValue(UsCaField.GPC_SEGMENT_INCLUDED, false);
+      getSegment(1).setFieldValue(UsCaField.GPC_SEGMENT_INCLUDED, false);
     }
   }
 
   @Override
   protected CharSequence doEncode() {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
+    List<CharSequence> encodedSegments = new ArrayList<>(size());
 
-    encodedSegments.add(segments.get(0).encodeCharSequence());
-    if(segments.size() >= 2 && segments.get(1).getFieldValue(UsCaField.GPC_SEGMENT_INCLUDED).equals(true)) {
-      encodedSegments.add(segments.get(1).encodeCharSequence());
+    encodedSegments.add(getSegment(0).encodeCharSequence());
+    if(size() >= 2 && getSegment(1).getFieldValue(UsCaField.GPC_SEGMENT_INCLUDED).equals(true)) {
+      encodedSegments.add(getSegment(1).encodeCharSequence());
     }
 
     return SlicedCharSequence.join('.',  encodedSegments);

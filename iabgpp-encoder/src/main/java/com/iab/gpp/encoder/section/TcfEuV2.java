@@ -2,13 +2,11 @@ package com.iab.gpp.encoder.section;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
-import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2CoreSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2PublisherPurposesSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2VendorsAllowedSegment;
@@ -21,7 +19,7 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
   public static final String NAME = "tcfeuv2";
 
   public TcfEuV2() {
-    super(Arrays.<EncodableSegment<TcfEuV2Field>>asList(new TcfEuV2CoreSegment(), new TcfEuV2PublisherPurposesSegment(), new TcfEuV2VendorsAllowedSegment(), new TcfEuV2VendorsDisclosedSegment()));
+    super(new TcfEuV2CoreSegment(), new TcfEuV2PublisherPurposesSegment(), new TcfEuV2VendorsAllowedSegment(), new TcfEuV2VendorsDisclosedSegment());
   }
 
   public TcfEuV2(CharSequence encodedString) {
@@ -67,13 +65,13 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
 
         // unfortunately, the segment ordering doesn't match the segment ids
         if(firstChar >= 'A' && firstChar <= 'H') {
-          segments.get(0).decode(encodedSegment);
+          getSegment(0).decode(encodedSegment);
         } else if(firstChar >= 'I' && firstChar <= 'P') {
-          segments.get(3).decode(encodedSegment);
+          getSegment(3).decode(encodedSegment);
         } else if(firstChar >= 'Q' && firstChar <= 'X') {
-          segments.get(2).decode(encodedSegment);
+          getSegment(2).decode(encodedSegment);
         } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
-          segments.get(1).decode(encodedSegment);
+          getSegment(1).decode(encodedSegment);
         } else {
           throw new DecodingException("Invalid segment '" + encodedSegment + "'");
         }
@@ -83,21 +81,21 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
 
   @Override
   public CharSequence doEncode() {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
-    if (segments.size() >= 1) {
-      encodedSegments.add(segments.get(0).encodeCharSequence());
+    List<CharSequence> encodedSegments = new ArrayList<>(size());
+    if (size() >= 1) {
+      encodedSegments.add(getSegment(0).encodeCharSequence());
 
       Boolean isServiceSpecific = (Boolean) this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
       if (isServiceSpecific) {
-        if (segments.size() >= 2) {
-          encodedSegments.add(segments.get(1).encodeCharSequence());
+        if (size() >= 2) {
+          encodedSegments.add(getSegment(1).encodeCharSequence());
         }
       } else {
-        if (segments.size() >= 2) {
-          encodedSegments.add(segments.get(2).encodeCharSequence());
+        if (size() >= 2) {
+          encodedSegments.add(getSegment(2).encodeCharSequence());
 
-          if (segments.size() >= 3) {
-            encodedSegments.add(segments.get(3).encodeCharSequence());
+          if (size() >= 3) {
+            encodedSegments.add(getSegment(3).encodeCharSequence());
           }
         }
       }

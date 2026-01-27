@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.Collections;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsFlField;
 import com.iab.gpp.encoder.segment.UsFlCoreSegment;
@@ -12,7 +11,7 @@ public class UsFl extends EncodableSection<UsFlField> {
   public static final String NAME = "usfl";
 
   public UsFl() {
-    super(Collections.singletonList(new UsFlCoreSegment()));
+    super(new UsFlCoreSegment());
   }
 
   public UsFl(CharSequence encodedString) {

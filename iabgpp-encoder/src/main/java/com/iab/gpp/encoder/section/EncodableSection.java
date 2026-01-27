@@ -9,10 +9,20 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 
 public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends AbstractEncodable {
 
-  protected final List<EncodableSegment<E>> segments;
+  private final Object[] segments;
 
-  protected EncodableSection(List<EncodableSegment<E>> segments) {
+  @SafeVarargs
+  protected EncodableSection(EncodableSegment<E>... segments) {
     this.segments = segments;
+  }
+
+  protected final int size() {
+    return segments.length;
+  }
+
+  @SuppressWarnings("unchecked")
+  protected final EncodableSegment<E> getSegment(int index) {
+    return (EncodableSegment<E>) segments[index];
   }
 
   public abstract int getId();
@@ -23,26 +33,26 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
 
   @Override
   protected void doDecode(CharSequence encodedString) {
-    int numSegments = segments.size();
+    int numSegments = size();
     if (numSegments == 1) {
-      segments.get(0).decode(encodedString);
+      getSegment(0).decode(encodedString);
       return;
     }
     List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
     for (int i = 0; i < numSegments; i++) {
-      segments.get(i).decode(encodedSegments.get(i));
+      getSegment(i).decode(encodedSegments.get(i));
     }
   }
 
   @Override
   protected CharSequence doEncode() {
-    int numSegments = segments.size();
+    int numSegments = size();
     if (numSegments == 1) {
-      return segments.get(0).encodeCharSequence();
+      return getSegment(0).encodeCharSequence();
     }
     List<CharSequence> encodedSegments = new ArrayList<>(numSegments);
     for (int i = 0; i < numSegments; i++) {
-      encodedSegments.add(segments.get(i).encodeCharSequence());
+      encodedSegments.add(getSegment(i).encodeCharSequence());
     }
     return SlicedCharSequence.join('.',  encodedSegments);
   }
@@ -50,9 +60,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
   public final boolean hasField(FieldKey fieldName) {
     ensureDecode();
 
-    int numSegments = segments.size();
+    int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
-      EncodableSegment<E> segment = segments.get(i);
+      EncodableSegment<E> segment = getSegment(i);
       E key = segment.resolveKey(fieldName);
       if (key != null && segment.getField(key) != null) {
         return true;
@@ -65,9 +75,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
   public final boolean hasField(E fieldName) {
     ensureDecode();
 
-    int numSegments = segments.size();
+    int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
-      EncodableSegment<E> segment = segments.get(i);
+      EncodableSegment<E> segment = getSegment(i);
       if (segment.getField(fieldName) != null) {
         return true;
       }
@@ -79,9 +89,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
   public final Object getFieldValue(FieldKey fieldName) {
     ensureDecode();
 
-    int numSegments = segments.size();
+    int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
-      EncodableSegment<E> segment = segments.get(i);
+      EncodableSegment<E> segment = getSegment(i);
       E key = segment.resolveKey(fieldName);
       if (key != null) {
         DataType<?> field = segment.getField(key);
@@ -97,9 +107,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
   public final Object getFieldValue(E fieldName) {
     ensureDecode();
 
-    int numSegments = segments.size();
+    int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
-      EncodableSegment<E> segment = segments.get(i);
+      EncodableSegment<E> segment = getSegment(i);
       DataType<?> field = segment.getField(fieldName);
       if (field != null) {
         return field.getValue();
@@ -112,9 +122,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
   public final void setFieldValue(FieldKey fieldName, Object value) {
     ensureDecode();
 
-    int numSegments = segments.size();
+    int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
-      EncodableSegment<E> segment = segments.get(i);
+      EncodableSegment<E> segment = getSegment(i);
       E key = segment.resolveKey(fieldName);
       if (key != null) {
         DataType<?> field = segment.getField(key);
@@ -132,9 +142,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
   public final void setFieldValue(E fieldName, Object value) {
     ensureDecode();
 
-    int numSegments = segments.size();
+    int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
-      EncodableSegment<E> segment = segments.get(i);
+      EncodableSegment<E> segment = getSegment(i);
       DataType<?> field = segment.getField(fieldName);
       if(field != null) {
         field.setValue(value);
@@ -152,9 +162,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
 
   @Override
   public final boolean isDirty() {
-    int numSegments = segments.size();
+    int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
-      if (segments.get(i).isDirty()) {
+      if (getSegment(i).isDirty()) {
         return true;
       }
     }
@@ -163,9 +173,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
 
   @Override
   public final void setDirty(boolean dirty) {
-    int numSegments = segments.size();
+    int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
-      segments.get(i).setDirty(dirty);
+      getSegment(i).setDirty(dirty);
     }
   }
 
@@ -174,8 +184,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     ensureDecode();
     StringBuilder sb = new StringBuilder();
     sb.append("{id=").append(getId()).append(", name=").append(getName()).append(", version=").append(getVersion());
-    for (EncodableSegment<E> segment : segments) {
-      sb.append(", ").append(segment.toString());
+    int numSegments = size();
+    for (int i = 0; i < numSegments; i++) {
+      sb.append(", ").append(getSegment(i).toString());
     }
     sb.append('}');
     return sb.toString();

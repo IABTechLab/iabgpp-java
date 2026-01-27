@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.Collections;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsVaField;
 import com.iab.gpp.encoder.segment.UsVaCoreSegment;
@@ -12,7 +11,7 @@ public class UsVa extends EncodableSection<UsVaField> {
   public static final String NAME = "usva";
 
   public UsVa() {
-    super(Collections.singletonList(new UsVaCoreSegment()));
+    super(new UsVaCoreSegment());
   }
 
   public UsVa(CharSequence encodedString) {

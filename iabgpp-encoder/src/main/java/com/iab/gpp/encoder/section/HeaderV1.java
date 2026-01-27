@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.Collections;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.field.HeaderV1Field;
 import com.iab.gpp.encoder.segment.HeaderV1CoreSegment;
@@ -12,7 +11,7 @@ public class HeaderV1 extends EncodableSection<HeaderV1Field> {
   public static final String NAME = "header";
 
   public HeaderV1() {
-    super(Collections.singletonList(new HeaderV1CoreSegment()));
+    super(new HeaderV1CoreSegment());
   }
 
   public HeaderV1(CharSequence encodedString) {

@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.Collections;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsUtField;
 import com.iab.gpp.encoder.segment.UsUtCoreSegment;
@@ -12,7 +11,7 @@ public class UsUt extends EncodableSection<UsUtField> {
   public static final String NAME = "usut";
 
   public UsUt() {
-    super(Collections.singletonList(new UsUtCoreSegment()));
+    super(new UsUtCoreSegment());
   }
 
   public UsUt(CharSequence encodedString) {

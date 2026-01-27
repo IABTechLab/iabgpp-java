@@ -2,13 +2,11 @@ package com.iab.gpp.encoder.section;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
-import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1CoreSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1DisclosedVendorsSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1PublisherPurposesSegment;
@@ -20,7 +18,7 @@ public class TcfCaV1 extends EncodableSection<TcfCaV1Field> {
   public static final String NAME = "tcfcav1";
 
   public TcfCaV1() {
-    super(Arrays.<EncodableSegment<TcfCaV1Field>>asList(new TcfCaV1CoreSegment(), new TcfCaV1PublisherPurposesSegment(), new TcfCaV1DisclosedVendorsSegment()));
+    super(new TcfCaV1CoreSegment(), new TcfCaV1PublisherPurposesSegment(), new TcfCaV1DisclosedVendorsSegment());
   }
 
   public TcfCaV1(CharSequence encodedString) {
@@ -64,11 +62,11 @@ public class TcfCaV1 extends EncodableSection<TcfCaV1Field> {
         char firstChar = encodedSegment.charAt(0);
 
         if(firstChar >= 'A' && firstChar <= 'H') {
-          segments.get(0).decode(encodedSegment);
+          getSegment(0).decode(encodedSegment);
         } else if(firstChar >= 'I' && firstChar <= 'P') {
-          segments.get(2).decode(encodedSegment);
+          getSegment(2).decode(encodedSegment);
         } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
-          segments.get(1).decode(encodedSegment);
+          getSegment(1).decode(encodedSegment);
         } else {
           throw new DecodingException("Invalid segment '" + encodedSegment + "'");
         }
@@ -78,12 +76,12 @@ public class TcfCaV1 extends EncodableSection<TcfCaV1Field> {
 
   @Override
   protected CharSequence doEncode() {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
+    List<CharSequence> encodedSegments = new ArrayList<>(size());
 
-    encodedSegments.add(segments.get(0).encodeCharSequence());
-    encodedSegments.add(segments.get(1).encodeCharSequence());
+    encodedSegments.add(getSegment(0).encodeCharSequence());
+    encodedSegments.add(getSegment(1).encodeCharSequence());
     if(!this.getDisclosedVendors().isEmpty()) {
-      encodedSegments.add(segments.get(2).encodeCharSequence());
+      encodedSegments.add(getSegment(2).encodeCharSequence());
     }
 
     return SlicedCharSequence.join('.',  encodedSegments);
