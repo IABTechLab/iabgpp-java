@@ -44,7 +44,8 @@ public class TcfCaV1 extends EncodableSection<TcfCaV1Field> {
   @Override
   protected void doDecode(CharSequence encodedString) {
     List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-    for (int i = 0; i < encodedSegments.size(); i++) {
+    int numEncodedSegments = encodedSegments.size();
+    for (int i = 0; i < numEncodedSegments; i++) {
 
       /**
        * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.

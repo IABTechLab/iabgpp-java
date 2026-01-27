@@ -40,12 +40,13 @@ public class UsNj extends EncodableSection<UsNjField> {
   @Override
   protected void doDecode(CharSequence encodedString) {
     List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+    int numEncodedSegments = encodedSegments.size();
 
-    if (encodedSegments.size() > 0) {
+    if (numEncodedSegments > 0) {
       getSegment(0).decode(encodedSegments.get(0));
     }
 
-    if (encodedSegments.size() > 1) {
+    if (numEncodedSegments > 1) {
       getSegment(1).setFieldValue(UsNjField.GPC_SEGMENT_INCLUDED, true);
       getSegment(1).decode(encodedSegments.get(1));
     } else {
