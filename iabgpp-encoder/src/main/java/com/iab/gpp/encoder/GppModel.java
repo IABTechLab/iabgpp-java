@@ -93,7 +93,7 @@ public class GppModel extends AbstractEncodable {
       if (constructor != null) {
         section = constructor.get();
         this.sections.put(sectionId, section);
-        this.header.getSectionsIds().add(section.getId());
+        this.header.getSectionsIds().addInt(section.getId());
       }
     }
     return section;
@@ -166,7 +166,7 @@ public class GppModel extends AbstractEncodable {
     ensureDecode();
     EncodableSection<?> removed = this.sections.remove(sectionId);
     if (removed != null) {
-      this.header.getSectionsIds().remove(removed.getId());
+      this.header.getSectionsIds().removeInt(removed.getId());
     }
   }
 
@@ -298,7 +298,6 @@ public class GppModel extends AbstractEncodable {
       // old tcfeu only string
       EncodableSection<?> section = getOrCreateSection(TcfEuV2.ID);
       section.decode(str);
-      header.getSectionsIds().add(section.getId());
     } else {
       throw new DecodingException("Unable to decode '" + str + "'");
     }
