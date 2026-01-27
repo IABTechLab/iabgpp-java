@@ -40,9 +40,10 @@ public abstract class AbstractBase64UrlEncoder {
     int index = 0;
     while (index <= length - BASE64_BITS) {
       try {
-        int n = FixedIntegerEncoder.decode(bitString, index, index + BASE64_BITS);
+        int nextIndex = index + BASE64_BITS;
+        int n = FixedIntegerEncoder.decode(bitString, index, nextIndex);
         str.append(DICT.charAt(n));
-        index += BASE64_BITS;
+        index = nextIndex;;
       } catch (DecodingException e) {
         throw new EncodingException("Unencodable Base64Url '" + bitString + "'");
       }
