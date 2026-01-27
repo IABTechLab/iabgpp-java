@@ -1,8 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FibonacciIntegerEncoder {
@@ -10,8 +8,8 @@ public class FibonacciIntegerEncoder {
 
   // this is the length of the longest fibonacci encoded string of all 1's
   // which does not overflow a 32-bit integer
-  private static final int FIBONACCI_LIMIT = 42;
-  private static final int[] FIBONACCI_NUMBERS = new int[FIBONACCI_LIMIT];
+  public static final int FIBONACCI_LIMIT = 42;
+  public static final int[] FIBONACCI_NUMBERS = new int[FIBONACCI_LIMIT];
   static {
     for (int i = 0; i < FIBONACCI_LIMIT; i++) {
       if (i == 0) {
@@ -48,44 +46,5 @@ public class FibonacciIntegerEncoder {
       }
     }
     FixedIntegerEncoder.encode(builder, out, largestIndex + 1);
-  }
-
-  public static int decode(BitString bitString, int start, int end) throws DecodingException {
-    int length = end - start;
-    int limit = length - 1;
-    // must not overflow and must end with "11"
-    if (length < 2 || limit > FIBONACCI_LIMIT || !bitString.getValue(end - 2)
-        || !bitString.getValue(end - 1)) {
-      throw new DecodingException("Undecodable FibonacciInteger '" + bitString + "'");
-    }
-
-    int value = 0;
-    for (int i = 0; i < limit; i++) {
-      if (bitString.getValue(start + i)) {
-        value += FIBONACCI_NUMBERS[i];
-      }
-    }
-    return value;
-  }
-
-  public static int indexOfEndTag(BitString bitString, int fromIndex) {
-    int limit = bitString.length() - 1;
-    int i = fromIndex;
-    while (i < limit) {
-      if (bitString.getValue(i)) {
-        // 1X
-        if (bitString.getValue(i + 1)) {
-          // 11
-          return i;
-        } else {
-          // 10, the next can be skipped
-          i += 2;
-        }
-      } else {
-        // 0, next
-        i++;
-      }
-    }
-    throw new DecodingException("fadf");
   }
 }

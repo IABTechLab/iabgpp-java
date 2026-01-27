@@ -4,6 +4,7 @@ import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedLongEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
+import com.iab.gpp.encoder.error.DecodingException;
 
 public final class BitStringReader {
   
@@ -33,10 +34,22 @@ public final class BitStringReader {
   }
 
   public int readFibonacci() {
-    int indexOfEndTag = FibonacciIntegerEncoder.indexOfEndTag(bitString, offset) + 2;
-    int out = FibonacciIntegerEncoder.decode(bitString, offset, indexOfEndTag);
-    offset = indexOfEndTag;
-    return out;
+    int value = 0;
+    int offset = this.offset;
+    for (int i = 0; i < FibonacciIntegerEncoder.FIBONACCI_LIMIT; i++) {
+      if (bitString.getValue(offset + i)) {
+        // 1X
+        value += FibonacciIntegerEncoder.FIBONACCI_NUMBERS[i];
+        i++;
+        int next = offset + i;
+        if (bitString.getValue(next)) {
+          // 11
+          this.offset = next + 1;
+          return value;
+        }
+      }
+    }
+    throw new DecodingException("Invalid FibonacciInteger");
   }
 
   public IntegerSet readIntegerSet(int length) {
