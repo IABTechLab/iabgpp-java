@@ -10,7 +10,7 @@ public final class EncodableBoolean extends AbstractEncodableBitStringDataType<B
 
   public EncodableBoolean(Boolean value) {
     super(true);
-    setValue(value);
+    setValue(value, false);
   }
 
   public void encode(BitStringBuilder builder){

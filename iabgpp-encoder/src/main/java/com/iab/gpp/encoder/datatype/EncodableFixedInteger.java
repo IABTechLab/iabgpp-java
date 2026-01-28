@@ -18,7 +18,7 @@ public final class EncodableFixedInteger extends AbstractEncodableBitStringDataT
   public EncodableFixedInteger(int bitStringLength, Integer value) {
     super(true);
     this.bitStringLength = bitStringLength;
-    setValue(value);
+    setValue(value, false);
   }
 
   public void encode(BitStringBuilder builder) {

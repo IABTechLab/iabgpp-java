@@ -9,8 +9,8 @@ import com.iab.gpp.encoder.error.ValidationException;
 public abstract class AbstractEncodableBitStringDataType<T> extends EncodableDataType<T> {
   //this if for backwards compatibility with the newer fields
   protected boolean hardFailIfMissing = true;
-  protected boolean dirty = false;
-  protected Predicate<T> validator = null;
+  private boolean dirty = false;
+  private Predicate<T> validator = null;
   protected T value;
 
   protected AbstractEncodableBitStringDataType(boolean hardFailIfMissing) {
@@ -30,12 +30,16 @@ public abstract class AbstractEncodableBitStringDataType<T> extends EncodableDat
     return this.value;
   }
 
-  @SuppressWarnings("unchecked")
   public void setValue(Object value) {
+    setValue(value, true);
+  }
+  
+  @SuppressWarnings("unchecked")
+  protected final void setValue(Object value, boolean dirty) {
     T v = (T) value;
     if (validator == null || validator.test(v)) {
       this.value = v;
-      this.dirty = true;
+      this.dirty = dirty;
     } else {
       if (v instanceof Collection) {
         throw new ValidationException("Invalid value '"

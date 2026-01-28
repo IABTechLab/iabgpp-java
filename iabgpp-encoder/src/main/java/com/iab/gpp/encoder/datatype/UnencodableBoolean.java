@@ -11,7 +11,7 @@ public final class UnencodableBoolean extends AbstractEncodableBitStringDataType
 
   public UnencodableBoolean(Boolean value) {
     super(true);
-    setValue(value);
+    setValue(value, false);
   }
 
   public void encode(BitStringBuilder builder){

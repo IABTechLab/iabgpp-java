@@ -14,12 +14,12 @@ public final class EncodableFibonacciInteger extends AbstractEncodableBitStringD
 
   public EncodableFibonacciInteger(Integer value) {
     super(true);
-    setValue(value);
+    setValue(value, false);
   }
 
   public EncodableFibonacciInteger(Integer value, boolean hardFailIfMissing) {
     super(hardFailIfMissing);
-    setValue(value);
+    setValue(value, false);
   }
 
   public void encode(BitStringBuilder builder) {
