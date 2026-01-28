@@ -25,5 +25,23 @@ public class TraditionalBase64UrlEncoderTest {
   public void testDecode3() {
     Assertions.assertEquals("000011000001000000000001100011110000000000000000", base64UrlEncoder.decode("DBABjwAA").toString());
   }
+
+  @Test
+  public void testDifferingLengthDecodes() {
+    for (int length = 0; length < 1000; length++) {
+      StringBuilder in = new StringBuilder();
+      StringBuilder out = new StringBuilder();
+      for (int i = 0; i < length; i++) {
+        if (i % 2 == 0) {
+          in.append('u');
+          out.append("101110");
+        } else {
+          in.append('d');
+          out.append("011101");
+        }
+      }
+      Assertions.assertEquals(out.toString(), base64UrlEncoder.decode(in.toString()).toString());
+    }
+  }
   
 }
