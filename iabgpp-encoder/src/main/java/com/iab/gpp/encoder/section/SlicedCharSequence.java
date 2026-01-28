@@ -84,7 +84,7 @@ public final class SlicedCharSequence implements CharSequence {
 
   @Override
   public String toString() {
-    return base.subSequence(start, end).toString();
+    return base.substring(start, end);
   }
 
 }
