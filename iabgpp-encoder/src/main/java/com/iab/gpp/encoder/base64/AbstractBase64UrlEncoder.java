@@ -43,7 +43,7 @@ public abstract class AbstractBase64UrlEncoder {
         int nextIndex = index + BASE64_BITS;
         int n = FixedIntegerEncoder.decode(bitString, index, nextIndex);
         str.append(DICT.charAt(n));
-        index = nextIndex;;
+        index = nextIndex;
       } catch (DecodingException e) {
         throw new EncodingException("Unencodable Base64Url '" + bitString + "'");
       }
