@@ -23,7 +23,7 @@ public final class BitSet {
   }
 
   public BitSet() {
-    this(0);
+    this(new long[0]);
   }
   
   public static int wordIndex(int index) {

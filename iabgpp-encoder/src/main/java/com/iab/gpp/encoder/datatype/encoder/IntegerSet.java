@@ -33,12 +33,12 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
     this.adjustment = adjustment;
   }
 
-  public  IntegerSet(int limit) {
-    this(new BitSet(), 0, limit, 0);
+  public IntegerSet(int limit) {
+    this(new BitSet(limit), 0, limit, 0);
   }
 
   public IntegerSet() {
-    this(MAX_COLLECTION_SIZE);
+    this(new BitSet(), 0, MAX_COLLECTION_SIZE, 0);
   }
 
   @Override
