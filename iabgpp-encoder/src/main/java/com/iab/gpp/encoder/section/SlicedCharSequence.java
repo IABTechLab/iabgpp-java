@@ -6,27 +6,43 @@ import java.util.List;
 public final class SlicedCharSequence implements CharSequence {
 
   private static final String EMPTY = "";
-  private final CharSequence base;
+  private final String base;
   private final int start;
   private final int end;
 
-  private SlicedCharSequence(CharSequence base, int start, int end) {
+  private SlicedCharSequence(String base, int start, int end) {
     this.base = base;
     this.start = start;
     this.end = end;
   }
 
   public static List<CharSequence> split(CharSequence charSequence, char splitter) {
-    List<CharSequence> out = new ArrayList<>(1);
-    int length = charSequence.length();
-    int start = 0;
-    for (int i = 0; i < length; i++) {
-      if (charSequence.charAt(i) == splitter) {
-        out.add(new SlicedCharSequence(charSequence, start, i));
-        start = i + 1;
-      }
+    // the first time we see some other CharSequence we convert to a String.
+    // this keeps all derived SlicedCharSequence instances anchored to the same base String.
+    // this is important because String.indexOf internally uses an optimized intrinsic.
+    // CharSequence does not have indexOf, only charAt which is quite slow in comparison.
+    // also we avoid a recursive structure of SlicedCharSequence.
+    String base;
+    int start;
+    int end;
+    if (charSequence instanceof SlicedCharSequence) {
+      SlicedCharSequence slicedCharSequence = (SlicedCharSequence) charSequence;
+      base = slicedCharSequence.base;
+      start = slicedCharSequence.start;
+      end = slicedCharSequence.end;
+    } else {
+      base = charSequence.toString();
+      start = 0;
+      end = base.length();
     }
-    out.add(new SlicedCharSequence(charSequence, start, length));
+    // most sections/segments have less than 4 components
+    List<CharSequence> out = new ArrayList<>(4);
+    int next = 0;
+    while ((next = base.indexOf(splitter, start, end)) != -1) {
+      out.add(new SlicedCharSequence(base, start, next));
+      start = next + 1;
+    }
+    out.add(new SlicedCharSequence(base, start, end));
     return out;
   }
 
@@ -68,7 +84,7 @@ public final class SlicedCharSequence implements CharSequence {
 
   @Override
   public String toString() {
-    return base.subSequence(start, end).toString();
+    return base.substring(start, end);
   }
 
 }

@@ -1,22 +1,21 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.Collection;
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public final class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableFixedBitfield extends AbstractDirtyableBitStringDataType<IntegerSet> {
 
   private final int numElements;
 
   public EncodableFixedBitfield(int numElements) {
     super(true);
     this.numElements = numElements;
-    this.value = new IntegerBitSet(numElements);
+    this.value = new IntegerSet(numElements);
   }
 
   public void encode(BitStringBuilder builder) {
@@ -27,19 +26,11 @@ public final class EncodableFixedBitfield extends AbstractEncodableBitStringData
     }
   }
 
-  public void decode(BitString bitString) {
+  public void decode(BitStringReader reader) {
     try {
-      this.value = FixedBitfieldEncoder.decode(bitString);
+      this.value = reader.readIntegerSet(this.numElements);
     } catch (Exception e) {
       throw new DecodingException(e);
-    }
-  }
-
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + this.numElements);
-    } catch (Exception e) {
-      throw new SubstringException(e);
     }
   }
 
@@ -48,10 +39,5 @@ public final class EncodableFixedBitfield extends AbstractEncodableBitStringData
   public void setValue(Object value) {
     this.value.clear();
     this.value.addAll((Collection<Integer>) value);
-  }
-
-  @Override
-  public IntegerSet getValue() {
-    return new ManagedIntegerSet(this, super.getValue());
   }
 }

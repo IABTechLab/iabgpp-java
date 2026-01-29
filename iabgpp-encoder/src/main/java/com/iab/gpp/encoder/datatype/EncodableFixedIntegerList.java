@@ -1,30 +1,23 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public final class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<List<Integer>> {
+public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringDataType<FixedIntegerList> {
 
   private int elementBitStringLength;
   private int numElements;
 
-  protected EncodableFixedIntegerList(int elementBitStringLength, int numElements) {
+  public EncodableFixedIntegerList(int elementBitStringLength, int numElements) {
     super(true);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = numElements;
-  }
-
-  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value) {
-    super(true);
-    this.elementBitStringLength = elementBitStringLength;
-    this.numElements = value.size();
-    setValue(value);
+    super.setValue(new FixedIntegerList(numElements), false);
   }
 
   public void encode(BitStringBuilder builder) {
@@ -35,37 +28,23 @@ public final class EncodableFixedIntegerList extends AbstractEncodableBitStringD
     }
   }
 
-  public void decode(BitString bitString) {
+  public void decode(BitStringReader reader) {
     try {
-      this.value = FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements);
+      FixedIntegerListEncoder.decode(this.value, reader, this.elementBitStringLength);
     } catch (Exception e) {
       throw new DecodingException(e);
-    }
-  }
-
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + (this.elementBitStringLength * numElements));
-    } catch (Exception e) {
-      throw new SubstringException(e);
     }
   }
 
   @SuppressWarnings("unchecked")
   @Override
   public void setValue(Object value) {
-    List<Integer> v = new ArrayList<>((List<Integer>) value);
-    for (int i = v.size(); i < numElements; i++) {
-      v.add(0);
+    List<Integer> list = (List<Integer>) value;
+    int size = list.size();
+    for (int i = 0; i < numElements; i++) {
+      this.value.set(i, i < size ? list.get(i) : 0);
     }
-    if (v.size() > numElements) {
-      v = v.subList(0, numElements);
-    }
-    super.setValue(v);
-  }
-
-  @Override
-  public List<Integer> getValue() {
-    return new ManagedFixedList<>(this, super.getValue());
+    // call validator
+    super.setValue(this.value);
   }
 }

@@ -1,26 +1,35 @@
 package com.iab.gpp.encoder.field;
 
-public final class UsCoField {
-  private UsCoField() {}
+public enum UsCoField implements FieldKey {
+  VERSION("Version"),
+  SHARING_NOTICE("SharingNotice"),
+  SALE_OPT_OUT_NOTICE("SaleOptOutNotice"),
+  TARGETED_ADVERTISING_OPT_OUT_NOTICE("TargetedAdvertisingOptOutNotice"),
+  SALE_OPT_OUT("SaleOptOut"),
+  TARGETED_ADVERTISING_OPT_OUT("TargetedAdvertisingOptOut"),
+  SENSITIVE_DATA_PROCESSING("SensitiveDataProcessing"),
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS("KnownChildSensitiveDataConsents"),
+  MSPA_COVERED_TRANSACTION("MspaCoveredTransaction"),
+  MSPA_OPT_OUT_OPTION_MODE("MspaOptOutOptionMode"),
+  MSPA_SERVICE_PROVIDER_MODE("MspaServiceProviderMode"),
 
-  public static final String VERSION = "Version";
-  public static final String SHARING_NOTICE = "SharingNotice";
-  public static final String SALE_OPT_OUT_NOTICE = "SaleOptOutNotice";
-  public static final String TARGETED_ADVERTISING_OPT_OUT_NOTICE = "TargetedAdvertisingOptOutNotice";
-  public static final String SALE_OPT_OUT = "SaleOptOut";
-  public static final String TARGETED_ADVERTISING_OPT_OUT = "TargetedAdvertisingOptOut";
-  public static final String SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing";
-  public static final String KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents";
-  public static final String MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction";
-  public static final String MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode";
-  public static final String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
+  GPC_SEGMENT_TYPE("GpcSegmentType"),
+  GPC_SEGMENT_INCLUDED("GpcSegmentIncluded"),
+  GPC("Gpc");
 
-  public static final String GPC_SEGMENT_TYPE = "GpcSegmentType";
-  public static final String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
-  public static final String GPC = "Gpc";
+  private String name;
+
+  UsCoField(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
 
   //@formatter:off
-  public static final FieldNames USCO_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsCoField> USCO_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsCoField.VERSION,
       UsCoField.SHARING_NOTICE,
       UsCoField.SALE_OPT_OUT_NOTICE,
@@ -36,7 +45,7 @@ public final class UsCoField {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames USCO_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsCoField> USCO_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsCoField.GPC_SEGMENT_TYPE,
       UsCoField.GPC_SEGMENT_INCLUDED,
       UsCoField.GPC

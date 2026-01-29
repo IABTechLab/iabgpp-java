@@ -1,24 +1,21 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsUtField;
-import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsUtCoreSegment;
 
-public class UsUt extends AbstractLazilyEncodableSection {
+public class UsUt extends EncodableSection<UsUtField> {
 
   public static final int ID = 11;
   public static final int VERSION = 1;
   public static final String NAME = "usut";
 
   public UsUt() {
-    super();
+    super(new UsUtCoreSegment());
   }
 
   public UsUt(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -36,36 +33,6 @@ public class UsUt extends AbstractLazilyEncodableSection {
   public int getVersion() {
     return UsUt.VERSION;
   }
-
-  @Override
-  protected List<EncodableSegment> initializeSegments() {
-    return Collections.singletonList(new UsUtCoreSegment());
-  }
-
-  @Override
-  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
-    if (encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-
-      for (int i = 0; i < segments.size(); i++) {
-        if (encodedSegments.size() > i) {
-          segments.get(i).decode(encodedSegments.get(i));
-        }
-      }
-    }
-
-    return segments;
-  }
-
-  @Override
-  protected CharSequence encodeSection(List<EncodableSegment> segments) {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
-    for(EncodableSegment segment : segments) {
-      encodedSegments.add(segment.encodeCharSequence());
-    }
-    return SlicedCharSequence.join('.',  encodedSegments);
-  }
-
 
   public Integer getSharingNotice() {
     return (Integer) this.getFieldValue(UsUtField.SHARING_NOTICE);
@@ -91,9 +58,8 @@ public class UsUt extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.getFieldValue(UsUtField.SENSITIVE_DATA_PROCESSING);
+  public FixedIntegerList getSensitiveDataProcessing() {
+    return (FixedIntegerList) this.getFieldValue(UsUtField.SENSITIVE_DATA_PROCESSING);
   }
 
   public Integer getKnownChildSensitiveDataConsents() {

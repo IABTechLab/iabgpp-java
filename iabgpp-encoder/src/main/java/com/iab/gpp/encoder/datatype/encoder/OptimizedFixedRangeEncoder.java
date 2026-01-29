@@ -1,7 +1,7 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -27,23 +27,12 @@ public class OptimizedFixedRangeEncoder {
     }
   }
 
-  public static IntegerSet decode(BitString bitString) throws DecodingException {
-    if (bitString.length() < 12) {
-      throw new DecodingException("Undecodable FixedIntegerRange '" + bitString + "'");
-    }
-
-    if (bitString.getValue(16)) {
-      return FixedIntegerRangeEncoder.decode(bitString.substring(17));
+  public static IntegerSet decode(BitStringReader reader) throws DecodingException {
+    int size = reader.readInt(16);
+    if (reader.readBool()) {
+      return FixedIntegerRangeEncoder.decode(reader);
     } else {
-      BitString bits = bitString.substring(17);
-      int length = bits.length();
-      IntegerBitSet value = new IntegerBitSet();
-      for (int i = 0; i < length; i++) {
-        if (bits.getValue(i)) {
-          value.addInt(i + 1);
-        }
-      }
-      return value;
+      return reader.readIntegerSet(size);
     }
   }
 }

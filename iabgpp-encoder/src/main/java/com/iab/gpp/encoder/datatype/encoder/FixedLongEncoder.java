@@ -20,12 +20,12 @@ public class FixedLongEncoder {
     }
   }
 
-  public static long decode(BitString bitString) throws DecodingException {
+  public static long decode(BitString bitString, int from, int to) throws DecodingException {
     long value = 0;
 
-    int length = bitString.length();
+    int length = to - from;
     for (int i = 0; i < length; i++) {
-      if (bitString.getValue(length - (i + 1))) {
+      if (bitString.getValue(to - (i + 1))) {
         value += 1L << i;
       }
     }

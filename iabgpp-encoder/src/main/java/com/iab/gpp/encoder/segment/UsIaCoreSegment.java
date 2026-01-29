@@ -1,79 +1,38 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.Arrays;
-import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
-import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
-import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsIaField;
 import com.iab.gpp.encoder.section.UsIa;
 
-public final class UsIaCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
-
-  private static final AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
-  private static final BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
+public final class UsIaCoreSegment extends AbstractBase64Segment<UsIaField> {
 
   public UsIaCoreSegment() {
-    super();
-  }
-
-  public UsIaCoreSegment(String encodedString) {
-    super();
-    this.decode(encodedString);
-  }
-
-  @Override
-  protected EncodableBitStringFields initializeFields() {
-    EncodableBitStringFields fields = new EncodableBitStringFields(UsIaField.USIA_CORE_SEGMENT_FIELD_NAMES);
-    fields.put(UsIaField.VERSION, new EncodableFixedInteger(6, UsIa.VERSION));
-    fields.put(UsIaField.PROCESSING_NOTICE,
+    super(UsIaField.USIA_CORE_SEGMENT_FIELD_NAMES);
+    initialize(UsIaField.VERSION, new EncodableFixedInteger(6, UsIa.VERSION));
+    initialize(UsIaField.PROCESSING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsIaField.SALE_OPT_OUT_NOTICE,
+    initialize(UsIaField.SALE_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsIaField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+    initialize(UsIaField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsIaField.SENSITIVE_DATA_OPT_OUT_NOTICE,
+    initialize(UsIaField.SENSITIVE_DATA_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsIaField.SALE_OPT_OUT,
+    initialize(UsIaField.SALE_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsIaField.TARGETED_ADVERTISING_OPT_OUT,
+    initialize(UsIaField.TARGETED_ADVERTISING_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsIaField.SENSITIVE_DATA_PROCESSING,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))
+    initialize(UsIaField.SENSITIVE_DATA_PROCESSING,
+        new EncodableFixedIntegerList(2, 8)
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsIaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+    initialize(UsIaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsIaField.MSPA_COVERED_TRANSACTION,
+    initialize(UsIaField.MSPA_COVERED_TRANSACTION,
         new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsIaField.MSPA_OPT_OUT_OPTION_MODE,
+    initialize(UsIaField.MSPA_OPT_OUT_OPTION_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsIaField.MSPA_SERVICE_PROVIDER_MODE,
+    initialize(UsIaField.MSPA_SERVICE_PROVIDER_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    return fields;
-  }
-
-  @Override
-  protected StringBuilder encodeSegment(EncodableBitStringFields fields) {
-    BitStringBuilder bitString = bitStringEncoder.encode(fields);
-    return base64UrlEncoder.encode(bitString);
-  }
-
-  @Override
-  protected void decodeSegment(CharSequence encodedString, EncodableBitStringFields fields) {
-    if (encodedString == null || encodedString.length() == 0) {
-      this.fields.reset(fields);
-    }
-    try {
-      BitString bitString = base64UrlEncoder.decode(encodedString);
-      bitStringEncoder.decode(bitString, fields);
-    } catch (Exception e) {
-      throw new DecodingException("Unable to decode UsIaCoreSegment '" + encodedString + "'", e);
-    }
   }
 
 }

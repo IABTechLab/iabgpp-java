@@ -1,18 +1,16 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
-public final class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStringDataType<List<RangeEntry>> {
+public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableBitStringDataType<DirtyableList<RangeEntry>> {
 
   private int keyBitStringLength;
   private int typeBitStringLength;
@@ -21,7 +19,7 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableB
     super(hardFailIfMissing);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
-    this.value = Collections.emptyList();
+    this.value = new DirtyableList<>();
   }
 
   @Override
@@ -42,60 +40,26 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableB
   }
 
   @Override
-  public void decode(BitString bitString) {
+  public void decode(BitStringReader reader) {
     try {
-      int size = FixedIntegerEncoder.decode(bitString, 0, 12);
-      List<RangeEntry> entries = new ArrayList<>(size);
-      int index = 12;
+      int size = reader.readInt(12);
+      value.clear();
       for (int i = 0; i < size; i++) {
-        int key = FixedIntegerEncoder.decode(bitString, index, keyBitStringLength);
-        index += keyBitStringLength;
-
-        int type = FixedIntegerEncoder.decode(bitString, index, typeBitStringLength);
-        index += typeBitStringLength;
-
-        BitString substring = new EncodableFixedIntegerRange().substring(bitString, index);
-        IntegerSet ids = FixedIntegerRangeEncoder.decode(substring);
-        index += substring.length();
-
-        entries.add(new RangeEntry(key, type, ids));
+        int key = reader.readInt(keyBitStringLength);
+        int type = reader.readInt(typeBitStringLength);
+        IntegerSet ids = FixedIntegerRangeEncoder.decode(reader);
+        RangeEntry entry = new RangeEntry(key, type, ids);
+        value.add(entry);
       }
-
-      // NOTE: this requires that updates to structure be done using the setter
-      this.value = Collections.unmodifiableList(entries);
     } catch (Exception e) {
       throw new DecodingException(e);
     }
   }
 
+  @SuppressWarnings("unchecked")
   @Override
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      BitStringBuilder sb = new BitStringBuilder();
-      BitString lengthString = bitString.substring(fromIndex, fromIndex + 12);
-      sb.append(lengthString);
-
-      int size = FixedIntegerEncoder.decode(lengthString);
-
-      int index = fromIndex + lengthString.length();
-      for (int i = 0; i < size; i++) {
-        BitString keySubstring = bitString.substring(index, index + keyBitStringLength);
-        index += keySubstring.length();
-        sb.append(keySubstring);
-
-        BitString typeSubstring = bitString.substring(index, index + typeBitStringLength);
-        index += typeSubstring.length();
-        sb.append(typeSubstring);
-
-        BitString rangeSubstring = new EncodableFixedIntegerRange().substring(bitString, index);
-        index += rangeSubstring.length();
-        sb.append(rangeSubstring);
-      }
-
-      return sb.build();
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  public void setValue(Object value) {
+    this.value.clear();
+    this.value.addAll((List<RangeEntry>) value);
   }
-
 }

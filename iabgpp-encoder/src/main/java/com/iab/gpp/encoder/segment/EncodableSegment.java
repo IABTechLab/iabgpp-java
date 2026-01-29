@@ -1,14 +1,15 @@
 package com.iab.gpp.encoder.segment;
 
-public interface EncodableSegment {
+import com.iab.gpp.encoder.datatype.DataType;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.section.AbstractEncodable;
 
-  boolean hasField(String fieldName);
+public abstract class EncodableSegment<E extends Enum<E> & FieldKey> extends AbstractEncodable {
+  public abstract E resolveKey(FieldKey fieldName);
 
-  Object getFieldValue(String fieldName);
+  public abstract DataType<?> getField(E fieldName);
+  
+  public abstract Object getFieldValue(E fieldName);
 
-  void setFieldValue(String fieldName, Object value);
-
-  CharSequence encodeCharSequence();
-
-  void decode(CharSequence encodedString);
+  public abstract void setFieldValue(E fieldName, Object value);
 }

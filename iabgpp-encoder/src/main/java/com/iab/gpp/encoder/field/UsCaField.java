@@ -1,27 +1,36 @@
 package com.iab.gpp.encoder.field;
 
-public final class UsCaField {
-  private UsCaField() {}
+public enum UsCaField implements FieldKey {
+  VERSION("Version"),
+  SALE_OPT_OUT_NOTICE("SaleOptOutNotice"),
+  SHARING_OPT_OUT_NOTICE("SharingOptOutNotice"),
+  SENSITIVE_DATA_LIMIT_USE_NOTICE("SensitiveDataLimitUseNotice"),
+  SALE_OPT_OUT("SaleOptOut"),
+  SHARING_OPT_OUT("SharingOptOut"),
+  SENSITIVE_DATA_PROCESSING("SensitiveDataProcessing"),
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS("KnownChildSensitiveDataConsents"),
+  PERSONAL_DATA_CONSENTS("PersonalDataConsents"),
+  MSPA_COVERED_TRANSACTION("MspaCoveredTransaction"),
+  MSPA_OPT_OUT_OPTION_MODE("MspaOptOutOptionMode"),
+  MSPA_SERVICE_PROVIDER_MODE("MspaServiceProviderMode"),
 
-  public static final String VERSION = "Version";
-  public static final String SALE_OPT_OUT_NOTICE = "SaleOptOutNotice";
-  public static final String SHARING_OPT_OUT_NOTICE = "SharingOptOutNotice";
-  public static final String SENSITIVE_DATA_LIMIT_USE_NOTICE = "SensitiveDataLimitUseNotice";
-  public static final String SALE_OPT_OUT = "SaleOptOut";
-  public static final String SHARING_OPT_OUT = "SharingOptOut";
-  public static final String SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing";
-  public static final String KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents";
-  public static final String PERSONAL_DATA_CONSENTS = "PersonalDataConsents";
-  public static final String MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction";
-  public static final String MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode";
-  public static final String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
+  GPC_SEGMENT_TYPE("GpcSegmentType"),
+  GPC_SEGMENT_INCLUDED("GpcSegmentIncluded"),
+  GPC("Gpc");
 
-  public static final String GPC_SEGMENT_TYPE = "GpcSegmentType";
-  public static final String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
-  public static final String GPC = "Gpc";
+  private String name;
+
+  UsCaField(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
 
   //@formatter:off
-  public static final FieldNames USCA_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsCaField> USCA_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsCaField.VERSION,
       UsCaField.SALE_OPT_OUT_NOTICE,
       UsCaField.SHARING_OPT_OUT_NOTICE,
@@ -38,7 +47,7 @@ public final class UsCaField {
   //@formatter:on
 
   //@formatter:off
-  public static final FieldNames USCA_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UsCaField> USCA_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UsCaField.GPC_SEGMENT_TYPE,
       UsCaField.GPC_SEGMENT_INCLUDED,
       UsCaField.GPC

@@ -2,30 +2,27 @@ package com.iab.gpp.encoder.section;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
-import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1CoreSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1DisclosedVendorsSegment;
 import com.iab.gpp.encoder.segment.TcfCaV1PublisherPurposesSegment;
 
-public class TcfCaV1 extends AbstractLazilyEncodableSection {
+public class TcfCaV1 extends EncodableSection<TcfCaV1Field> {
 
   public static final int ID = 5;
   public static final int VERSION = 1;
   public static final String NAME = "tcfcav1";
 
   public TcfCaV1() {
-    super();
+    super(new TcfCaV1CoreSegment(), new TcfCaV1PublisherPurposesSegment(), new TcfCaV1DisclosedVendorsSegment());
   }
 
   public TcfCaV1(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -45,72 +42,61 @@ public class TcfCaV1 extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected List<EncodableSegment> initializeSegments() {
-    return Arrays.asList(new TcfCaV1CoreSegment(), new TcfCaV1PublisherPurposesSegment(), new TcfCaV1DisclosedVendorsSegment());
-  }
+  protected void doDecode(CharSequence encodedString) {
+    List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+    int numEncodedSegments = encodedSegments.size();
+    for (int i = 0; i < numEncodedSegments; i++) {
 
-  @Override
-  public List<EncodableSegment> decodeSection(CharSequence encodedString) {
-    if (encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-      for (int i = 0; i < encodedSegments.size(); i++) {
+      /**
+       * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
+       *
+       * A-H     = '000' = 0
+       * I-P     = '001' = 1
+       * Y-Z,a-f = '011' = 3
+       *
+       * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
+       * for the encoding version which only coincidentally works here because the version value is less than 8.
+       */
 
-        /**
-         * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
-         *
-         * A-H     = '000' = 0
-         * I-P     = '001' = 1
-         * Y-Z,a-f = '011' = 3
-         *
-         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
-         * for the encoding version which only coincidentally works here because the version value is less than 8.
-         */
+      CharSequence encodedSegment = encodedSegments.get(i);
+      if (encodedSegment.length() > 0) {
+        char firstChar = encodedSegment.charAt(0);
 
-        CharSequence encodedSegment = encodedSegments.get(i);
-        if (encodedSegment.length() > 0) {
-          char firstChar = encodedSegment.charAt(0);
-
-          if(firstChar >= 'A' && firstChar <= 'H') {
-            segments.get(0).decode(encodedSegment);
-          } else if(firstChar >= 'I' && firstChar <= 'P') {
-            segments.get(2).decode(encodedSegment);
-          } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
-            segments.get(1).decode(encodedSegment);
-          } else {
-            throw new DecodingException("Invalid segment '" + encodedSegment + "'");
-          }
+        if(firstChar >= 'A' && firstChar <= 'H') {
+          getSegment(0).decode(encodedSegment);
+        } else if(firstChar >= 'I' && firstChar <= 'P') {
+          getSegment(2).decode(encodedSegment);
+        } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
+          getSegment(1).decode(encodedSegment);
+        } else {
+          throw new DecodingException("Invalid segment '" + encodedSegment + "'");
         }
       }
     }
-
-    return segments;
   }
 
   @Override
-  public CharSequence encodeSection(List<EncodableSegment> segments) {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
+  protected CharSequence doEncode() {
+    List<CharSequence> encodedSegments = new ArrayList<>(size());
 
-    encodedSegments.add(segments.get(0).encodeCharSequence());
-    encodedSegments.add(segments.get(1).encodeCharSequence());
+    encodedSegments.add(getSegment(0).encodeCharSequence());
+    encodedSegments.add(getSegment(1).encodeCharSequence());
     if(!this.getDisclosedVendors().isEmpty()) {
-      encodedSegments.add(segments.get(2).encodeCharSequence());
+      encodedSegments.add(getSegment(2).encodeCharSequence());
     }
 
     return SlicedCharSequence.join('.',  encodedSegments);
   }
 
   @Override
-  public void setFieldValue(String fieldName, Object value) throws InvalidFieldException {
-    super.setFieldValue(fieldName, value);
-
+  public void onSet(TcfCaV1Field fieldName) {
     if (!fieldName.equals(TcfCaV1Field.CREATED) && !fieldName.equals(TcfCaV1Field.LAST_UPDATED)) {
       Instant utcDateTime = Instant.now();
 
-      super.setFieldValue(TcfCaV1Field.CREATED, utcDateTime);
-      super.setFieldValue(TcfCaV1Field.LAST_UPDATED, utcDateTime);
+      this.setFieldValue(TcfCaV1Field.CREATED, utcDateTime);
+      this.setFieldValue(TcfCaV1Field.LAST_UPDATED, utcDateTime);
     }
   }
-
 
   public Instant getCreated() {
     return (Instant) this.getFieldValue(TcfCaV1Field.CREATED);

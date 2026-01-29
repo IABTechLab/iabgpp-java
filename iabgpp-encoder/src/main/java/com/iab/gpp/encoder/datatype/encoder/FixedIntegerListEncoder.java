@@ -1,10 +1,10 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -28,29 +28,11 @@ public class FixedIntegerListEncoder {
     }
   }
 
-  public static List<Integer> decode(BitString bitString, int elementBitStringLength, int numElements)
+  public static void decode(FixedIntegerList out, BitStringReader reader, int elementBitStringLength)
       throws DecodingException {
-    int length = bitString.length();
-    if (length > elementBitStringLength * numElements) {
-      throw new DecodingException("Undecodable FixedIntegerList '" + bitString + "'");
+    int size = out.size();
+    for (int i = 0; i < size; i++) {
+      out.setInt(i, reader.readInt(elementBitStringLength));
     }
-
-    if (length % elementBitStringLength != 0) {
-      throw new DecodingException("Undecodable FixedIntegerList '" + bitString + "'");
-    }
-
-    bitString = bitString.expandTo(elementBitStringLength * numElements);
-
-    List<Integer> value = new ArrayList<>(numElements);
-    length = bitString.length();
-    for (int i = 0; i < length; i += elementBitStringLength) {
-      value.add(IntegerCache.valueOf(FixedIntegerEncoder.decode(bitString, i, elementBitStringLength)));
-    }
-
-    while (value.size() < numElements) {
-      value.add(0);
-    }
-
-    return value;
   }
 }

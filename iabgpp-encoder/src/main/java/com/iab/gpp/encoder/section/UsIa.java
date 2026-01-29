@@ -1,25 +1,24 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsIaField;
-import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.UsIaCoreSegment;
 import com.iab.gpp.encoder.segment.UsIaGpcSegment;
 
-public class UsIa extends AbstractLazilyEncodableSection {
+public class UsIa extends EncodableSection<UsIaField> {
 
   public static final int ID = 18;
   public static final int VERSION = 1;
   public static final String NAME = "usia";
 
   public UsIa() {
-    super();
+    super(new UsIaCoreSegment(), new UsIaGpcSegment());
   }
 
   public UsIa(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -39,39 +38,29 @@ public class UsIa extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected List<EncodableSegment> initializeSegments() {
-    return Arrays.asList(new UsIaCoreSegment(), new UsIaGpcSegment());
-  }
+  protected void doDecode(CharSequence encodedString) {
+    List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
+    int numEncodedSegments = encodedSegments.size();
 
-  @Override
-  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
-    if (encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-
-      if (encodedSegments.size() > 0) {
-        segments.get(0).decode(encodedSegments.get(0));
-      }
-
-      if (encodedSegments.size() > 1) {
-        segments.get(1).setFieldValue(UsIaField.GPC_SEGMENT_INCLUDED, true);
-        segments.get(1).decode(encodedSegments.get(1));
-      } else {
-        segments.get(1).setFieldValue(UsIaField.GPC_SEGMENT_INCLUDED, false);
-      }
+    if (numEncodedSegments > 0) {
+      getSegment(0).decode(encodedSegments.get(0));
     }
 
-    return segments;
+    if (numEncodedSegments > 1) {
+      getSegment(1).setFieldValue(UsIaField.GPC_SEGMENT_INCLUDED, true);
+      getSegment(1).decode(encodedSegments.get(1));
+    } else {
+      getSegment(1).setFieldValue(UsIaField.GPC_SEGMENT_INCLUDED, false);
+    }
   }
 
   @Override
-  protected CharSequence encodeSection(List<EncodableSegment> segments) {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
+  protected CharSequence doEncode() {
+    List<CharSequence> encodedSegments = new ArrayList<>(size());
 
-    if (!segments.isEmpty()) {
-      encodedSegments.add(segments.get(0).encodeCharSequence());
-      if (segments.size() >= 2 && segments.get(1).getFieldValue(UsIaField.GPC_SEGMENT_INCLUDED).equals(true)) {
-        encodedSegments.add(segments.get(1).encodeCharSequence());
-      }
+    encodedSegments.add(getSegment(0).encodeCharSequence());
+    if (size() >= 2 && getSegment(1).getFieldValue(UsIaField.GPC_SEGMENT_INCLUDED).equals(true)) {
+      encodedSegments.add(getSegment(1).encodeCharSequence());
     }
 
     return SlicedCharSequence.join('.',  encodedSegments);
@@ -102,9 +91,8 @@ public class UsIa extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(UsIaField.TARGETED_ADVERTISING_OPT_OUT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.getFieldValue(UsIaField.SENSITIVE_DATA_PROCESSING);
+  public FixedIntegerList getSensitiveDataProcessing() {
+    return (FixedIntegerList) this.getFieldValue(UsIaField.SENSITIVE_DATA_PROCESSING);
   }
 
   public Integer getKnownChildSensitiveDataConsents() {

@@ -1,15 +1,24 @@
 package com.iab.gpp.encoder.field;
 
-public final class UspV1Field {
-  private UspV1Field() {}
+public enum UspV1Field implements FieldKey {
+  VERSION("Version"),
+  NOTICE("Notice"),
+  OPT_OUT_SALE("OptOutSale"),
+  LSPA_COVERED("LspaCovered");
 
-  public static final String VERSION = "Version";
-  public static final String NOTICE = "Notice";
-  public static final String OPT_OUT_SALE = "OptOutSale";
-  public static final String LSPA_COVERED = "LspaCovered";
+  private String name;
+
+  UspV1Field(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
 
   //@formatter:off
-  public static final FieldNames USPV1_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
+  public static final FieldNames<UspV1Field> USPV1_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
       UspV1Field.VERSION,
       UspV1Field.NOTICE,
       UspV1Field.OPT_OUT_SALE,

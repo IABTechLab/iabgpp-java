@@ -4,14 +4,13 @@ import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.ValidationException;
 
-public abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
+public abstract class AbstractEncodableBitStringDataType<T> extends EncodableDataType<T> {
   //this if for backwards compatibility with the newer fields
   protected boolean hardFailIfMissing = true;
-  protected boolean dirty = false;
-  protected Predicate<T> validator = null;
+  private boolean dirty = false;
+  private Predicate<T> validator = null;
   protected T value;
 
   protected AbstractEncodableBitStringDataType(boolean hardFailIfMissing) {
@@ -23,20 +22,24 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
     return this;
   }
 
-  public boolean hasValue() {
+  public final boolean hasValue() {
     return this.value != null;
   }
 
-  public T getValue() {
+  public final T getValue() {
     return this.value;
   }
 
-  @SuppressWarnings("unchecked")
   public void setValue(Object value) {
+    setValue(value, true);
+  }
+  
+  @SuppressWarnings("unchecked")
+  protected final void setValue(Object value, boolean dirty) {
     T v = (T) value;
     if (validator == null || validator.test(v)) {
       this.value = v;
-      this.dirty = true;
+      this.dirty = dirty;
     } else {
       if (v instanceof Collection) {
         throw new ValidationException("Invalid value '"
@@ -48,11 +51,9 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
 
   }
 
-  public boolean getHardFailIfMissing() {
+  public final boolean getHardFailIfMissing() {
     return this.hardFailIfMissing;
   }
-
-  public abstract BitString substring(BitString bitString, int fromIndex) throws SubstringException;
 
   public boolean isDirty() {
     return dirty;
@@ -60,5 +61,9 @@ public abstract class AbstractEncodableBitStringDataType<T> implements Encodable
 
   public void setDirty(boolean dirty) {
     this.dirty = dirty;
+  }
+
+  public String toString() {
+    return String.valueOf(value);
   }
 }

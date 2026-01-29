@@ -1,7 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
-import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -18,7 +18,7 @@ public final class EncodableFixedInteger extends AbstractEncodableBitStringDataT
   public EncodableFixedInteger(int bitStringLength, Integer value) {
     super(true);
     this.bitStringLength = bitStringLength;
-    setValue(value);
+    setValue(value, false);
   }
 
   public void encode(BitStringBuilder builder) {
@@ -29,19 +29,11 @@ public final class EncodableFixedInteger extends AbstractEncodableBitStringDataT
     }
   }
 
-  public void decode(BitString bitString) {
+  public void decode(BitStringReader reader) {
     try {
-      this.value = FixedIntegerEncoder.decode(bitString);
+      this.value = reader.readInt(bitStringLength);
     } catch (Exception e) {
       throw new DecodingException(e);
-    }
-  }
-
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + this.bitStringLength);
-    } catch (Exception e) {
-      throw new SubstringException(e);
     }
   }
 }

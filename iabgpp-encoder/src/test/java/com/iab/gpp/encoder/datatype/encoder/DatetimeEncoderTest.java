@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class DatetimeEncoderTest {
@@ -16,7 +17,7 @@ public class DatetimeEncoderTest {
     BitStringBuilder builder = new BitStringBuilder();
     DatetimeEncoder.encode(builder, date1);
     String encodedDate1 = builder.build().toString();
-    Instant date2 = DatetimeEncoder.decode(BitString.of(encodedDate1));
+    Instant date2 = DatetimeEncoder.decode(new BitStringReader(BitString.of(encodedDate1)));
 
     Assertions.assertEquals((date1.toEpochMilli() / 100L) * 100L, date2.toEpochMilli());
   }
