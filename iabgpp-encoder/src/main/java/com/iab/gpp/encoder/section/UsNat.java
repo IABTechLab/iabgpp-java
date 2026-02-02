@@ -10,7 +10,7 @@ import com.iab.gpp.encoder.segment.UsNatGpcSegment;
 public class UsNat extends AbstractLazilyEncodableSection {
 
   public static int ID = 7;
-  public static int VERSION = 1;
+  public static int VERSION = 2;
   public static String NAME = "usnat";
 
   public UsNat() {

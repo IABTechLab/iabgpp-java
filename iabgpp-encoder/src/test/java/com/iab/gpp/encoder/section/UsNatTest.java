@@ -2,6 +2,8 @@ package com.iab.gpp.encoder.section;
 
 
 import java.util.Arrays;
+
+import com.iab.gpp.encoder.GppModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -14,7 +16,7 @@ public class UsNatTest {
   public void testEncode1() {
 
     UsNat usNat = new UsNat();
-    Assertions.assertEquals("BAAAAAAAAABA.QA", usNat.encode());
+    Assertions.assertEquals("CAAAAAAAAABA.QA", usNat.encode());
   }
 
   @Test
@@ -38,7 +40,7 @@ public class UsNatTest {
     usNat.setFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNat.setFieldValue(UsNatField.GPC, true);
 
-    Assertions.assertEquals("BVVVkkkkkpFY.YA", usNat.encode());
+    Assertions.assertEquals("CVVVkkkkkpFY.YA", usNat.encode());
   }
   
   @Test
@@ -174,7 +176,7 @@ public class UsNatTest {
     usNat.setFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNat.setFieldValue(UsNatField.GPC, true);
 
-    Assertions.assertEquals("BVVVkkkkkpFY.YA", usNat.encode());
+    Assertions.assertEquals("CVVVkkkkkpFY.YA", usNat.encode());
   }
 
   @Test
@@ -182,12 +184,54 @@ public class UsNatTest {
 
     UsNat usNat = new UsNat();
     usNat.setFieldValue(UsNatField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAAAAABA", usNat.encode());
+    Assertions.assertEquals("CAAAAAAAAABA", usNat.encode());
+  }
+
+  @Test
+  public void testEncodeUsNatV1WithV1Values() {
+    UsNat usNat = new UsNat();
+    usNat.setFieldValue(UsNatField.VERSION, 1);
+    usNat.setFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING, Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    usNat.setFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(1, 1));
+    Assertions.assertEquals(
+            "BAAAVVVVUQA.QA",
+            usNat.encode());
+  }
+
+  @Test
+  public void testEncodeV1WithV2Values() {
+    UsNat usNat = new UsNat();
+    usNat.setFieldValue(UsNatField.VERSION, 1);
+    usNat.setFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING, Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    usNat.setFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(1, 1, 1));
+    Assertions.assertEquals(
+            "BAAAVVVVUQA.QA",
+            usNat.encode());
+  }
+
+  @Test
+  public void testEncodeV2WithV1Values() {
+    UsNat usNat = new UsNat();
+    usNat.setFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING, Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    usNat.setFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(1, 1));
+    Assertions.assertEquals(
+            "CAAAVVVVAFBA.QA",
+            usNat.encode());
+  }
+
+  @Test
+  public void testEncodeV2WithV2Values() {
+    UsNat usNat = new UsNat();
+    usNat.setFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING, Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    usNat.setFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(1, 1, 1));
+    Assertions.assertEquals(
+            "CAAAVVVVVVRA.QA",
+            usNat.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
-    UsNat usNat = new UsNat("BVVVkkkkkpFY.YA");
+    UsNat usNat = new UsNat("CVVVkkkkkpFY.YA");
 
     Assertions.assertEquals(1, usNat.getSharingNotice());
     Assertions.assertEquals(1, usNat.getSaleOptOutNotice());
@@ -209,7 +253,7 @@ public class UsNatTest {
 
   @Test
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
-    UsNat usNat = new UsNat("BVVVkkkkkpFY");
+    UsNat usNat = new UsNat("CVVVkkkkkpFY");
 
     Assertions.assertEquals(1, usNat.getSharingNotice());
     Assertions.assertEquals(1, usNat.getSaleOptOutNotice());
@@ -234,5 +278,32 @@ public class UsNatTest {
     Assertions.assertThrows(DecodingException.class, () -> {
       new UsNat("z").getSharingNotice();
     });
+  }
+
+  @Test
+  public void testDecodeUsNatV1() {
+    UsNat usNat = new UsNat("BAAAVVVVUQA.QA");
+
+    Assertions.assertEquals(1, usNat.getFieldValue(UsNatField.VERSION));
+    Assertions.assertEquals(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(1, 1), usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+
+  @Test
+  public void testDecodeUsNatV2WithV1Values() {
+    UsNat usNat = new UsNat("CAAAVVVVAFBA.QA");
+
+    Assertions.assertEquals(2, usNat.getFieldValue(UsNatField.VERSION));
+    Assertions.assertEquals(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0), usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(1, 1, 0), usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+
+  @Test
+  public void testDecodeUsNatV2WithV2Values() {
+    UsNat usNat = new UsNat("CAAAVVVVVVRA.QA");
+
+    Assertions.assertEquals(2, usNat.getFieldValue(UsNatField.VERSION));
+    Assertions.assertEquals(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(1, 1, 1), usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
   }
 }

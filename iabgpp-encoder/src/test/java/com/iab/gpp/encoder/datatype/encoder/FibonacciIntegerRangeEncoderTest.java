@@ -102,6 +102,6 @@ public class FibonacciIntegerRangeEncoderTest {
   @Test
   public void testGiantRange() {
     String max = FibonacciIntegerEncoder.encode(FibonacciIntegerRangeEncoder.MAX_SIZE + 1);
-    Assertions.assertEquals(List.of(), FibonacciIntegerRangeEncoder.decode("000000000001111" + max));
+    Assertions.assertEquals(new ArrayList<>(), FibonacciIntegerRangeEncoder.decode("000000000001111" + max));
   }
 }
