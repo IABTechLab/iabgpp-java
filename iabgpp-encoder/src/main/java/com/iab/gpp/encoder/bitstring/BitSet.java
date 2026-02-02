@@ -1,14 +1,12 @@
 package com.iab.gpp.encoder.bitstring;
 
 import java.util.Arrays;
-import java.util.Base64;
-import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 
 // a thin version of java.util.BitSet
 public final class BitSet {
   
+  private static final byte[] EMPTY = new byte[0];
   private static final int ADDRESS_BITS_PER_WORD = 3;
   public static final int BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
 
@@ -26,7 +24,7 @@ public final class BitSet {
   }
 
   public BitSet() {
-    this(new byte[0]);
+    this(EMPTY);
   }
   
   public static int wordIndex(int index) {
@@ -103,5 +101,20 @@ public final class BitSet {
     byte[] words = ensureIndex(wordIndex);
     int bit = bitIndex % BITS_PER_WORD;
     words[wordIndex] |= (1 << bit);
+  }
+
+  public boolean set(int bitIndex, boolean value) {
+    int wordIndex = wordIndex(bitIndex);
+    byte[] words = ensureIndex(wordIndex);
+    int bit = bitIndex % BITS_PER_WORD;
+    boolean prior = ((words[wordIndex] >>> bit) & 1) == 1;
+    if (prior != value) {
+      if (value) {
+        words[wordIndex] |= (1 << bit);
+      } else {
+        words[wordIndex] &= ~(1 << bit);
+      }
+    }
+    return prior;
   }
 }

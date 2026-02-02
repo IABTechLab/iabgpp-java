@@ -152,7 +152,7 @@ public class FixedIntegerListEncoderTest {
   }
 
   private FixedIntegerList decode(String str) {
-    FixedIntegerList out = new FixedIntegerList(2);
+    FixedIntegerList out = new FixedIntegerList(2, 2);
     FixedIntegerListEncoder.decode(out, new BitStringReader(BitString.of(str)), 2);
     return out;
   }

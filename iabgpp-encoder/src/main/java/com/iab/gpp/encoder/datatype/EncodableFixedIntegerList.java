@@ -17,7 +17,7 @@ public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringD
     super(true);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = numElements;
-    super.setValue(new FixedIntegerList(numElements), false);
+    super.setValue(new FixedIntegerList(elementBitStringLength, numElements), false);
   }
 
   public void encode(BitStringBuilder builder) {

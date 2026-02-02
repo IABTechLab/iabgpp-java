@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.bitstring;
 
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 
@@ -35,6 +36,10 @@ public final class BitString {
 
   public IntegerSet toIntegerSet(int from, int to) {
     return new IntegerSet(bitSet, from, to, 1);
+  }
+
+  public FixedIntegerList toFixedIntegerList(int from, int elementSize, int size) {
+    return new FixedIntegerList(bitSet, from, elementSize, size);
   }
 
   @Override

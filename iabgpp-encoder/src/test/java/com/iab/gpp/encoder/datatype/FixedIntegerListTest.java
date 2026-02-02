@@ -8,7 +8,7 @@ class FixedIntegerListTest {
 
   @Test
   void test() {
-    FixedIntegerList list = new FixedIntegerList(5);
+    FixedIntegerList list = new FixedIntegerList(6, 5);
     assertFalse(list.isDirty());
     list.set(0, 2);
     list.set(1, 1);

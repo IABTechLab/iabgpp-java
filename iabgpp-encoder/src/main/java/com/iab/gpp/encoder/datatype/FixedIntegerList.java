@@ -1,7 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.AbstractList;
-import java.util.Arrays;
+import com.iab.gpp.encoder.bitstring.BitSet;
 import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
 
 /**
@@ -11,15 +11,25 @@ import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
 public final class FixedIntegerList extends AbstractList<Integer> implements Dirtyable {
 
   private boolean dirty;
-  private final byte[] array;
+  private final BitSet bitSet;
+  private final int offset;
+  private final int elementBitStringLength;
+  private final int numElements;
 
-  public FixedIntegerList(int size) {
-    this.array = new byte[size];
+  public FixedIntegerList(BitSet bitSet, int offset, int elementBitStringLength, int numElements) {
+    this.bitSet = bitSet;
+    this.offset = offset;
+    this.elementBitStringLength = elementBitStringLength;
+    this.numElements = numElements;
+  }
+  
+  public FixedIntegerList(int elementBitStringLength, int numElements) {
+    this(new BitSet(elementBitStringLength * numElements), 0, elementBitStringLength, numElements);
   }
 
   @Override
   public int size() {
-    return array.length;
+    return numElements;
   }
 
   @Override
@@ -28,7 +38,18 @@ public final class FixedIntegerList extends AbstractList<Integer> implements Dir
   }
 
   public int getInt(int index) {
-    return array[index];
+    int length = elementBitStringLength;
+    int mask = 1 << length;
+    int from = offset + index * length;
+    int to = from + length;
+    int value = 0;
+    for (int i = from; i < to; i++) {
+      mask >>= 1;
+      if (bitSet.get(i)) {
+        value |= mask;
+      }
+    }
+    return value;
   }
 
   @Override
@@ -37,19 +58,22 @@ public final class FixedIntegerList extends AbstractList<Integer> implements Dir
   }
 
   public int setInt(int index, int value) {
-    // NOTE: int 128 is prevented since it would get turned into byte -128
-    if(value < 0 || value >= 128) {
-      throw new IllegalArgumentException("FixedIntegerList only supports positive integers less than 128.");
+    int length = elementBitStringLength;
+    int mask = 1 << length;
+    if (value < 0 || value >= mask) {
+      throw new IllegalArgumentException(
+        "Numeric value '" + value + "' is too large for a bit string length of '" + elementBitStringLength + "'");
     }
-    int prior = array[index];
-    array[index] = (byte) value;
+    int from = offset + index * length;
+    int to = from + length;
+    for (int i = from; i < to; i++) {
+      mask >>= 1;
+      if (bitSet.set(i, (value & mask) > 0)) {
+        value |= mask;
+      }
+    }
     dirty = true;
-    return prior;
-  }
-
-  @Override
-  public String toString() {
-    return Arrays.toString(array);
+    return value;
   }
 
   @Override

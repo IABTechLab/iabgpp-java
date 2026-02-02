@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.bitstring;
 
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedLongEncoder;
@@ -55,6 +56,13 @@ public final class BitStringReader {
   public IntegerSet readIntegerSet(int length) {
     int newOffset = offset + length;
     IntegerSet out = bitString.toIntegerSet(offset, newOffset);
+    offset = newOffset;
+    return out;
+  }
+
+  public FixedIntegerList readFixedIntegerList(int elementLength, int length) {
+    int newOffset = offset + elementLength * length;
+    FixedIntegerList out = bitString.toFixedIntegerList(offset, elementLength, length);
     offset = newOffset;
     return out;
   }

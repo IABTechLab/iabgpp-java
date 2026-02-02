@@ -142,13 +142,9 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
       logOutOfRange(value);
       return false;
     }
-    boolean present = bitSet.get(offset);
-    if (present) {
-      return false;
-    }
-    bitSet.set(offset);
+    boolean present = !bitSet.set(offset, true);
     dirty = true;
-    return true;
+    return present;
   }
 
   public boolean removeInt(int value) {
@@ -157,13 +153,9 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
       logOutOfRange(value);
       return false;
     }
-    boolean present = bitSet.get(offset);
-    if (!present) {
-      return false;
-    }
-    bitSet.clear(offset);
+    boolean present = bitSet.set(offset, false);
     dirty = true;
-    return true;
+    return present;
   }
 
   @Override
