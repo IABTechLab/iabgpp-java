@@ -9,6 +9,7 @@ import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsNatField;
 import com.iab.gpp.encoder.section.UsNat;
@@ -84,6 +85,12 @@ public class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
   @Override
   protected String encodeSegment(EncodableBitStringFields fields) {
     String bitString = bitStringEncoder.encode(fields, getFieldNames());
+
+    Integer version = (Integer)fields.get(UsNatField.VERSION).getValue();
+    if(version == 1) {
+      bitString = bitString.substring(0, 48) + bitString.substring(56, 60) + bitString.substring(62);
+    }
+
     String encodedString = base64UrlEncoder.encode(bitString);
     return encodedString;
   }
@@ -110,4 +117,17 @@ public class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
     }
   }
 
+  @Override
+  public Object getFieldValue(String fieldName) {
+    Object value = super.getFieldValue(fieldName);
+    Integer version = (Integer)super.getFieldValue(UsNatField.VERSION);
+    if(version == 1) {
+      if (fieldName.equals(UsNatField.SENSITIVE_DATA_PROCESSING)) {
+        value = ((List<Integer>) value).subList(0, 12);
+      } else if (fieldName.equals(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)) {
+        value = ((List<Integer>) value).subList(0, 2);
+      }
+    }
+    return value;
+  }
 }
