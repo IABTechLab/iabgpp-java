@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -13,43 +11,43 @@ public class FixedIntegerEncoderTest {
 
   @Test
   public void testEncode1() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     FixedIntegerEncoder.encode(builder, 0, 1);
-    Assertions.assertEquals("0", builder.build().toString());
+    Assertions.assertEquals("0", builder.toString());
   }
 
   @Test
   public void testEncode2() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     FixedIntegerEncoder.encode(builder, 0, 6);
-    Assertions.assertEquals("000000", builder.build().toString());
+    Assertions.assertEquals("000000", builder.toString());
   }
 
   @Test
   public void testEncode3() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     FixedIntegerEncoder.encode(builder, 1, 1);
-    Assertions.assertEquals("1", builder.build().toString());
+    Assertions.assertEquals("1", builder.toString());
   }
 
   @Test
   public void testEncode4() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     FixedIntegerEncoder.encode(builder, 1, 4);
-    Assertions.assertEquals("0001", builder.build().toString());
+    Assertions.assertEquals("0001", builder.toString());
   }
 
   @Test
   public void testEncode5() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     FixedIntegerEncoder.encode(builder, 7, 8);
-    Assertions.assertEquals("00000111", builder.build().toString());
+    Assertions.assertEquals("00000111", builder.toString());
   }
   
   @Test
   public void testEncode6() {
     try {
-      BitStringBuilder builder = new BitStringBuilder();
+      BitString builder = new BitString();
       FixedIntegerEncoder.encode(builder, 8, 1);
       Assertions.fail("EncodingException expected");
     } catch (EncodingException e) {
@@ -58,7 +56,7 @@ public class FixedIntegerEncoderTest {
   }
 
   private int decode(String str) {
-    return new BitStringReader(BitString.of(str)).readInt(str.length());
+    return BitString.of(str).readInt(str.length());
   }
   
   @Test

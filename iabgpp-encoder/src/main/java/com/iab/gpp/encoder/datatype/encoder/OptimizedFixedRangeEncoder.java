@@ -1,16 +1,15 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class OptimizedFixedRangeEncoder {
 
-  public static void encode(BitStringBuilder builder, IntegerSet value) throws EncodingException {
+  public static void encode(BitString builder, IntegerSet value) throws EncodingException {
     // TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
     // to identify in advance which will be shorter based on the array length and values
-    BitStringBuilder rangeBitString = new BitStringBuilder();
+    BitString rangeBitString = new BitString();
     int max = FixedIntegerRangeEncoder.encode(rangeBitString, value);
     int rangeLength = rangeBitString.length();
     int bitFieldLength = max;
@@ -27,7 +26,7 @@ public class OptimizedFixedRangeEncoder {
     }
   }
 
-  public static IntegerSet decode(BitStringReader reader) throws DecodingException {
+  public static IntegerSet decode(BitString reader) throws DecodingException {
     int size = reader.readInt(16);
     if (reader.readBool()) {
       return FixedIntegerRangeEncoder.decode(reader);

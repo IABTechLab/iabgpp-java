@@ -1,9 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.List;
-
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -24,7 +22,7 @@ public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringD
     return new FixedIntegerList(elementBitStringLength, numElements);
   }
 
-  public void encode(BitStringBuilder builder) {
+  public void encode(BitString builder) {
     try {
       FixedIntegerListEncoder.encode(builder, this.getValue(), this.elementBitStringLength, this.numElements);
     } catch (Exception e) {
@@ -32,7 +30,7 @@ public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringD
     }
   }
 
-  public void decode(BitStringReader reader) {
+  public void decode(BitString reader) {
     try {
       this.value = reader.readFixedIntegerList(elementBitStringLength, numElements);
     } catch (Exception e) {

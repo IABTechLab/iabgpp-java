@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FibonacciIntegerEncoder {
@@ -22,7 +22,7 @@ public class FibonacciIntegerEncoder {
     }
   }
 
-  public static void encode(BitStringBuilder builder, int value) {
+  public static void encode(BitString builder, int value) {
     int largestIndex = 0;
     for (int i = 0; i < FIBONACCI_LIMIT; i++) {
       if (value >= FIBONACCI_NUMBERS[i]) {

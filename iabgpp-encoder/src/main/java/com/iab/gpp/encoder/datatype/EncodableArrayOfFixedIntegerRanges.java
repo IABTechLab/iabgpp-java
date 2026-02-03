@@ -1,9 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.List;
-
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
@@ -23,7 +21,7 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
   }
 
   @Override
-  public void encode(BitStringBuilder sb) {
+  public void encode(BitString sb) {
     try {
       List<RangeEntry> entries = this.value;
 
@@ -40,7 +38,7 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
   }
 
   @Override
-  public void decode(BitStringReader reader) {
+  public void decode(BitString reader) {
     try {
       int size = reader.readInt(12);
       value.clear();

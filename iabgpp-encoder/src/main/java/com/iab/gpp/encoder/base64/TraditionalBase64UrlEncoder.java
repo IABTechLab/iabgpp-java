@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.base64;
 
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.bitstring.BitString;
 
 public final class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder {
 
@@ -15,7 +15,7 @@ public final class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder 
   }
 
   @Override
-  protected void pad(BitStringBuilder bitString) {
+  protected void pad(BitString bitString) {
     int remainder = bitString.length() % 24;
     if (remainder > 0) {
       int padding = 24 - remainder;

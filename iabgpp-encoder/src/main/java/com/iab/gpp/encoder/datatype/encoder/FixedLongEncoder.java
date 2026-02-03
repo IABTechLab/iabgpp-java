@@ -1,14 +1,13 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedLongEncoder {
   private FixedLongEncoder() {}
 
-  public static void encode(BitStringBuilder builder, long value, int bitStringLength) {
+  public static void encode(BitString builder, long value, int bitStringLength) {
     long mask = 1L << bitStringLength;
     if (value >= mask) {
       throw new EncodingException(

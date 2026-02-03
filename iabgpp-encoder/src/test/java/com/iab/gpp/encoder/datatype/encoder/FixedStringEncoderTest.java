@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -13,22 +11,22 @@ public class FixedStringEncoderTest {
 
   @Test
   public void testEncode1() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     FixedStringEncoder.encode(builder, "AB", 2);
-    Assertions.assertEquals("000000000001", builder.build().toString());
+    Assertions.assertEquals("000000000001", builder.toString());
   }
 
   @Test
   public void testEncode2() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     FixedStringEncoder.encode(builder, "a", 2);
-    Assertions.assertEquals("100000111111", builder.build().toString());
+    Assertions.assertEquals("100000111111", builder.toString());
   }
 
   @Test
   public void testEncode3() {
     try {
-      BitStringBuilder builder = new BitStringBuilder();
+      BitString builder = new BitString();
       FixedStringEncoder.encode(builder, "1", 2);
       Assertions.fail("DecodingException expected");
     } catch (EncodingException e) {
@@ -37,7 +35,7 @@ public class FixedStringEncoderTest {
   }
 
   private String decode(String str) {
-    return FixedStringEncoder.decode(new BitStringReader(BitString.of(str)), str.length() / 6);
+    return FixedStringEncoder.decode(BitString.of(str), str.length() / 6);
   }
   
   @Test

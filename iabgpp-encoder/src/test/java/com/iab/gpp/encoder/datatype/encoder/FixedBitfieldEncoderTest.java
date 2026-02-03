@@ -5,71 +5,69 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedBitfieldEncoderTest {
 
   @Test
   public void testEncode1() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
     FixedBitfieldEncoder.encode(builder, set, 2);
-    Assertions.assertEquals("00", builder.build().toString());
+    Assertions.assertEquals("00", builder.toString());
   }
 
   @Test
   public void testEncode2() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
     FixedBitfieldEncoder.encode(builder, set, 1);
-    Assertions.assertEquals("0", builder.build().toString());
+    Assertions.assertEquals("0", builder.toString());
   }
 
   @Test
   public void testEncode3() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
     set.add(0);
     FixedBitfieldEncoder.encode(builder, set, 1);
-    Assertions.assertEquals("1", builder.build().toString());
+    Assertions.assertEquals("1", builder.toString());
   }
 
   @Test
   public void testEncode4() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
     FixedBitfieldEncoder.encode(builder, set, 2);
-    Assertions.assertEquals("00", builder.build().toString());
+    Assertions.assertEquals("00", builder.toString());
   }
 
   @Test
   public void testEncode5() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
     set.addInt(1);
     FixedBitfieldEncoder.encode(builder, set, 2);
-    Assertions.assertEquals("01", builder.build().toString());
+    Assertions.assertEquals("01", builder.toString());
   }
 
   @Test
   public void testEncode6() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
     set.addInt(0);
     FixedBitfieldEncoder.encode(builder, set, 2);
-    Assertions.assertEquals("10", builder.build().toString());
+    Assertions.assertEquals("10", builder.toString());
   }
 
   @Test
   public void testEncode7() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
     set.addInt(0);
     set.addInt(1);
     FixedBitfieldEncoder.encode(builder, set, 2);
-    Assertions.assertEquals("11", builder.build().toString());
+    Assertions.assertEquals("11", builder.toString());
   }
 
   @Test
@@ -89,7 +87,7 @@ public class FixedBitfieldEncoderTest {
   }
 
   private IntegerSet decode(String str) {
-    return new BitStringReader(BitString.of(str)).readIntegerSet(str.length());
+    return BitString.of(str).readIntegerSet(str.length());
   }
 
   @Test

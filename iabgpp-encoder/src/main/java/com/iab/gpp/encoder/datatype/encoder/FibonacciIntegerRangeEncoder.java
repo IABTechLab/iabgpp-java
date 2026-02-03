@@ -1,15 +1,14 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.Collection;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FibonacciIntegerRangeEncoder {
   private FibonacciIntegerRangeEncoder() {}
 
-  public static int encode(BitStringBuilder builder, Collection<Integer> value) {
-    BitStringBuilder rangeBuilder = new BitStringBuilder();
+  public static int encode(BitString builder, Collection<Integer> value) {
+    BitString rangeBuilder = new BitString();
     int groupStart = -1;
     int last = Integer.MIN_VALUE;
     int offset = 0;
@@ -34,7 +33,7 @@ public class FibonacciIntegerRangeEncoder {
     return last;
   }
 
-  private static void writeGroup(BitStringBuilder builder, int groupStart, int last, int offset) {
+  private static void writeGroup(BitString builder, int groupStart, int last, int offset) {
     int base = groupStart - offset;
     int span = last - groupStart;
     if (span == 0) {
@@ -47,7 +46,7 @@ public class FibonacciIntegerRangeEncoder {
     }
   }
 
-  public static IntegerSet decode(BitStringReader reader) throws DecodingException {
+  public static IntegerSet decode(BitString reader) throws DecodingException {
     int count = reader.readInt(12);
     IntegerSet value = new IntegerSet();
     int offset = 0;

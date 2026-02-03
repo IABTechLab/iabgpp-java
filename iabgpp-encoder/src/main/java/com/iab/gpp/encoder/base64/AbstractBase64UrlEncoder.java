@@ -3,14 +3,13 @@ package com.iab.gpp.encoder.base64;
 import java.util.Arrays;
 import com.iab.gpp.encoder.bitstring.BitSet;
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public abstract class AbstractBase64UrlEncoder {
 
-  protected abstract void pad(BitStringBuilder bitString);
+  protected abstract void pad(BitString bitString);
 
   private static final int BASE64_BITS = 6;
   private static final int NO_SYMBOL = -1;
@@ -32,9 +31,8 @@ public abstract class AbstractBase64UrlEncoder {
     }
   }
 
-  public StringBuilder encode(BitStringBuilder bitStringBuilder) {
-    pad(bitStringBuilder);
-    BitString bitString = bitStringBuilder.build();
+  public StringBuilder encode(BitString bitString) {
+    pad(bitString);
     int length = bitString.length();
     StringBuilder str = new StringBuilder(length / BASE64_BITS);
 

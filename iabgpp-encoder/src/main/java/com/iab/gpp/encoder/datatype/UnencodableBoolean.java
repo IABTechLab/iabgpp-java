@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
+import com.iab.gpp.encoder.bitstring.BitString;
 
 public final class UnencodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
 
@@ -14,11 +13,11 @@ public final class UnencodableBoolean extends AbstractEncodableBitStringDataType
     setValue(value, false);
   }
 
-  public void encode(BitStringBuilder builder){
+  public void encode(BitString builder){
     // pass
   }
 
-  public void decode(BitStringReader reader) {
+  public void decode(BitString reader) {
     // pass
   }
 

@@ -4,28 +4,29 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class BooleanEncoderTest {
 
   @Test
   public void testEncode1() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     BooleanEncoder.encode(builder, false);
-    Assertions.assertEquals("0", builder.build().toString());
+    Assertions.assertEquals("0", builder.toString());
   }
 
   @Test
   public void testEncode2() {
-    BitStringBuilder builder = new BitStringBuilder();
+    BitString builder = new BitString();
     BooleanEncoder.encode(builder, true);
-    Assertions.assertEquals("1", builder.build().toString());
+    Assertions.assertEquals("1", builder.toString());
   }
 
   @Test
   public void testDecode1() {
-    Assertions.assertEquals(false, BooleanEncoder.decode(BitString.of("0")));
+     BitString x = BitString.of("0");
+     System.out.println(x);
+    Assertions.assertEquals(false, BooleanEncoder.decode(x));
   }
 
   @Test

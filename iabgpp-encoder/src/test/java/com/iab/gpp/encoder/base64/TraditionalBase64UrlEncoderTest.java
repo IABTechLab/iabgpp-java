@@ -2,8 +2,6 @@ package com.iab.gpp.encoder.base64;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 
 public class TraditionalBase64UrlEncoderTest {
 

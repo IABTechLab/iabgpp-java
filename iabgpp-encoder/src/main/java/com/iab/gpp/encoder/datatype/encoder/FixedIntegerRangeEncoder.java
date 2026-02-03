@@ -1,15 +1,14 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.Collection;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedIntegerRangeEncoder {
   private FixedIntegerRangeEncoder() {}
 
-  public static int encode(BitStringBuilder builder, Collection<Integer> value) {
-    BitStringBuilder rangeBuilder = new BitStringBuilder();
+  public static int encode(BitString builder, Collection<Integer> value) {
+    BitString rangeBuilder = new BitString();
     int groupStart = -1;
     int last = Integer.MIN_VALUE;
     int groupCount = 0;
@@ -27,12 +26,12 @@ public class FixedIntegerRangeEncoder {
       groupCount++;
       writeGroup(rangeBuilder, groupStart, last);
     }
-    FixedIntegerEncoder.encode(builder,groupCount, 12);
+    FixedIntegerEncoder.encode(builder, groupCount, 12);
     builder.append(rangeBuilder);
     return last;
   }
 
-  private static void writeGroup(BitStringBuilder builder, int groupStart, int last) {
+  private static void writeGroup(BitString builder, int groupStart, int last) {
     if (groupStart == last) {
       builder.append(false);
       FixedIntegerEncoder.encode(builder, groupStart, 16);
@@ -43,7 +42,7 @@ public class FixedIntegerRangeEncoder {
     }
   }
 
-  public static IntegerSet decode(BitStringReader reader) throws DecodingException {
+  public static IntegerSet decode(BitString reader) throws DecodingException {
     int count = reader.readInt(12);
     IntegerSet value = new IntegerSet();
     for (int i = 0; i < count; i++) {

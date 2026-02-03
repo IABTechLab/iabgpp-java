@@ -1,14 +1,13 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.bitstring.BitStringReader;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedStringEncoder {
   private FixedStringEncoder() {}
   private static final char SPACE = ' ';
 
-  public static void encode(BitStringBuilder builder, String value, int stringLength) {
+  public static void encode(BitString builder, String value, int stringLength) {
     int length = value.length();
     for (int i = 0; i < stringLength; i++) {
       int code = SPACE;
@@ -25,7 +24,7 @@ public class FixedStringEncoder {
     }
   }
 
-  public static String decode(BitStringReader reader, int length) {
+  public static String decode(BitString reader, int length) {
     StringBuilder value = new StringBuilder(length);
     for (int i = 0; i < length; i++) {
       int code = reader.readInt(6);

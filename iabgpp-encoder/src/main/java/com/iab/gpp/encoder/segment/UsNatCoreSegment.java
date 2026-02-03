@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.field.UsNatField;
@@ -52,14 +51,14 @@ public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
     // length of 12 to 16 and known child sensitive data consents changed from a length of 2 to 3 in the
     // DE, IA, NE, NH, NJ, TN release
     if (bitString.length() == 66) {
-      BitStringBuilder builder = new BitStringBuilder();
+      BitString builder = new BitString();
       
       builder.append(bitString, 0, 48);
       builder.extend(8);
       builder.append(bitString, 48, 52);
       builder.extend(2);
       builder.append(bitString, 52, 62);
-      bitString = builder.build();
+      bitString = builder;
     }
     return bitString;
   }
