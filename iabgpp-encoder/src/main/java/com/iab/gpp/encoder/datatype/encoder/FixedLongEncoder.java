@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedLongEncoder {
@@ -17,18 +16,5 @@ public class FixedLongEncoder {
       mask >>= 1;
       builder.append((value & mask) > 0);
     }
-  }
-
-  public static long decode(BitString bitString, int from, int to) throws DecodingException {
-    long value = 0;
-
-    int length = to - from;
-    for (int i = 0; i < length; i++) {
-      if (bitString.getValue(to - (i + 1))) {
-        value += 1L << i;
-      }
-    }
-
-    return value;
   }
 }

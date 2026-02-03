@@ -24,20 +24,18 @@ public class BooleanEncoderTest {
 
   @Test
   public void testDecode1() {
-     BitString x = BitString.of("0");
-     System.out.println(x);
-    Assertions.assertEquals(false, BooleanEncoder.decode(x));
+    Assertions.assertEquals(false, BitString.of("0").readBool());
   }
 
   @Test
   public void testDecode2() {
-    Assertions.assertEquals(true, BooleanEncoder.decode(BitString.of("1")));
+    Assertions.assertEquals(true, BitString.of("1").readBool());
   }
 
   @Test
   public void testDecode3() {
     try {
-      BooleanEncoder.decode(BitString.of(""));
+      BitString.of("").readBool();
       Assertions.fail("DecodingException expected");
     } catch (DecodingException e) {
 
@@ -47,37 +45,7 @@ public class BooleanEncoderTest {
   @Test
   public void testDecode4() {
     try {
-      BooleanEncoder.decode(BitString.of("2"));
-      Assertions.fail("DecodingException expected");
-    } catch (DecodingException e) {
-
-    }
-  }
-
-  @Test
-  public void testDecode5() {
-    try {
-      BooleanEncoder.decode(BitString.of("00"));
-      Assertions.fail("DecodingException expected");
-    } catch (DecodingException e) {
-
-    }
-  }
-
-  @Test
-  public void testDecode6() {
-    try {
-      BooleanEncoder.decode(BitString.of("01"));
-      Assertions.fail("DecodingException expected");
-    } catch (DecodingException e) {
-
-    }
-  }
-
-  @Test
-  public void testDecode7() {
-    try {
-      BooleanEncoder.decode(BitString.of("10"));
+      BitString.of("2").readBool();
       Assertions.fail("DecodingException expected");
     } catch (DecodingException e) {
 

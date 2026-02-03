@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.base64;
 import java.util.Arrays;
 import com.iab.gpp.encoder.bitstring.BitSet;
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -35,19 +34,14 @@ public abstract class AbstractBase64UrlEncoder {
     pad(bitString);
     int length = bitString.length();
     StringBuilder str = new StringBuilder(length / BASE64_BITS);
-
-    int index = 0;
-    while (index <= length - BASE64_BITS) {
+    while (bitString.hasRemaining()) {
       try {
-        int nextIndex = index + BASE64_BITS;
-        int n = FixedIntegerEncoder.decode(bitString, index, nextIndex);
+        int n = bitString.readInt(BASE64_BITS);
         str.append(DICT.charAt(n));
-        index = nextIndex;
       } catch (DecodingException e) {
         throw new EncodingException("Unencodable Base64Url '" + bitString + "'");
       }
     }
-
     return str;
   }
 

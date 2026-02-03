@@ -2,8 +2,6 @@ package com.iab.gpp.encoder.bitstring;
 
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
-import com.iab.gpp.encoder.datatype.encoder.FixedLongEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 
@@ -52,7 +50,7 @@ public final class BitString {
     return sb.toString();
   }
 
-  public boolean getValue(int i) {
+  private boolean getValue(int i) {
     if (i >= writeIndex) {
       throw new DecodingException("Bit string access out of range");
     }
@@ -63,6 +61,9 @@ public final class BitString {
     return writeIndex;
   }
   
+  public boolean hasRemaining() {
+    return readIndex < writeIndex;
+  }
   
   public BitString extend(int length) {
     this.writeIndex += length;
@@ -93,16 +94,26 @@ public final class BitString {
   }
   
   public int readInt(int length) {
-    int newReadIndex = readIndex + length;
-    int out = FixedIntegerEncoder.decode(this, readIndex, newReadIndex);
-    readIndex = newReadIndex;
+    int out = 0;
+    int mask = 1 << length;
+    for (int i = 0; i < length; i++) {
+      mask >>= 1;
+      if (readBool()) {
+        out |= mask;
+      }
+    }
     return out;
   }
 
   public long readLong(int length) {
-    int newReadIndex = readIndex + length;
-    long out = FixedLongEncoder.decode(this, readIndex, newReadIndex);
-    readIndex = newReadIndex;
+    long out = 0;
+    long mask = 1L << length;
+    for (int i = 0; i < length; i++) {
+      mask >>= 1;
+      if (readBool()) {
+        out |= mask;
+      }
+    }
     return out;
   }
   
