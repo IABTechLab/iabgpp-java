@@ -27,12 +27,4 @@ public class FixedIntegerListEncoder {
       }
     }
   }
-
-  public static void decode(FixedIntegerList out, BitStringReader reader, int elementBitStringLength)
-      throws DecodingException {
-    int size = out.size();
-    for (int i = 0; i < size; i++) {
-      out.setInt(i, reader.readInt(elementBitStringLength));
-    }
-  }
 }

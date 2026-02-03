@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.bitstring.BitStringReader;
+import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
@@ -152,9 +153,9 @@ public class FixedIntegerListEncoderTest {
   }
 
   private FixedIntegerList decode(String str) {
-    FixedIntegerList out = new FixedIntegerList(2, 2);
-    FixedIntegerListEncoder.decode(out, new BitStringReader(BitString.of(str)), 2);
-    return out;
+    EncodableFixedIntegerList encodable = new EncodableFixedIntegerList(2, 2);
+    encodable.decode(new BitStringReader(BitString.of(str)));
+    return encodable.getValue();
   }
 
   @Test

@@ -35,10 +35,16 @@ public final class BitString {
   }
 
   public IntegerSet toIntegerSet(int from, int to) {
+    if (to > length) {
+      throw new DecodingException("Bit string access out of range");
+    }
     return new IntegerSet(bitSet, from, to, 1);
   }
 
   public FixedIntegerList toFixedIntegerList(int from, int elementSize, int size) {
+    if ((from + elementSize * size) > length) {
+      throw new DecodingException("Bit string access out of range");
+    }
     return new FixedIntegerList(bitSet, from, elementSize, size);
   }
 
