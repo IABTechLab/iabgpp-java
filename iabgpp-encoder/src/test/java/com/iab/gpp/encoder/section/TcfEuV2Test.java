@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.datatype.RangeEntry;
-import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 

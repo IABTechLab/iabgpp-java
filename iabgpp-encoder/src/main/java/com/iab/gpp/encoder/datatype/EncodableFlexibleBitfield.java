@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.function.IntSupplier;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 

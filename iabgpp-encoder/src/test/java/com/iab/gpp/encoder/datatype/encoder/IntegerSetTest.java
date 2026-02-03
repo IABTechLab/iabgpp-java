@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 
 class IntegerSetTest {
 

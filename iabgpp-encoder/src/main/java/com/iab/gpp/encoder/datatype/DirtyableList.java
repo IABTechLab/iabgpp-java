@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.datatype;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
-import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
 
 // This class tracks whether a list has been modified.
 final class DirtyableList<T extends Dirtyable> extends AbstractList<T> implements Dirtyable {

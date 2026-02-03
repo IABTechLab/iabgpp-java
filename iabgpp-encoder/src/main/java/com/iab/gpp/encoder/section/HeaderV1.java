@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.section;
 
-import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.field.HeaderV1Field;
 import com.iab.gpp.encoder.segment.HeaderV1CoreSegment;
 

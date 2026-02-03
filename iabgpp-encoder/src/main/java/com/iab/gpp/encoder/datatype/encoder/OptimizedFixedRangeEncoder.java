@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 

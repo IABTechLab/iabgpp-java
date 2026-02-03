@@ -1,6 +1,6 @@
 package com.iab.gpp.encoder.section;
 
-import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
+import com.iab.gpp.encoder.datatype.Dirtyable;
 
 public abstract class AbstractEncodable implements Dirtyable {
   

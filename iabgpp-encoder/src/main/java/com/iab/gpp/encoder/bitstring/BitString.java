@@ -1,8 +1,8 @@
 package com.iab.gpp.encoder.bitstring;
 
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 

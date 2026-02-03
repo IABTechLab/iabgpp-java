@@ -1,4 +1,4 @@
-package com.iab.gpp.encoder.datatype.encoder;
+package com.iab.gpp.encoder.datatype;
 
 import java.util.AbstractSet;
 import java.util.Collection;

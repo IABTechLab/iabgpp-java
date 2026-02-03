@@ -2,7 +2,6 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.AbstractList;
 import com.iab.gpp.encoder.bitstring.BitSet;
-import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
 
 /**
  * An optimized implementation of {@literal List<Integer>} of fixed size.

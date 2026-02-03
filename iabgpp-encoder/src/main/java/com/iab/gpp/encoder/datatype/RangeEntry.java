@@ -1,8 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.Collection;
-import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
-import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 
 public final class RangeEntry implements Dirtyable {
 

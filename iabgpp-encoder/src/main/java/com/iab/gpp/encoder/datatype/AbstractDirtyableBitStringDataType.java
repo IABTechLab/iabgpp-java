@@ -1,7 +1,5 @@
 package com.iab.gpp.encoder.datatype;
 
-import com.iab.gpp.encoder.datatype.encoder.Dirtyable;
-
 // This class is used to handle collection types.
 // It is important that we monitor the collections we return for changes.
 public abstract class AbstractDirtyableBitStringDataType<T extends Dirtyable>

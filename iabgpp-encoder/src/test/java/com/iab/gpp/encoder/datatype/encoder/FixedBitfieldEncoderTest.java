@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedBitfieldEncoderTest {

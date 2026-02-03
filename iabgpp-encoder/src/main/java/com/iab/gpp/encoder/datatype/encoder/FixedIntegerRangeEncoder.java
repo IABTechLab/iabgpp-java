@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 
 public class FixedIntegerRangeEncoder {

@@ -29,7 +29,7 @@ public final class EncodableFixedInteger extends AbstractEncodableBitStringDataT
 
   public void decode(BitString reader) {
     try {
-      this.value = reader.readInt(bitStringLength);
+      this.value = IntegerCache.valueOf(reader.readInt(bitStringLength));
     } catch (Exception e) {
       throw new DecodingException(e);
     }
