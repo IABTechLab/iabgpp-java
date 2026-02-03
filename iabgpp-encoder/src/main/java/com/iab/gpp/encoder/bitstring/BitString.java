@@ -140,26 +140,40 @@ public final class BitString {
   }
 
   public int readInt(int length) {
-    int out = 0;
+    int from = readIndex;
+    int to = from + length;
+    int writeIndex = this.writeIndex;
     int mask = 1 << length;
-    for (int i = 0; i < length; i++) {
+    int out = 0;
+    for (int i = from; i < to; i++) {
       mask >>= 1;
-      if (readBoolean()) {
+      if (i >= writeIndex) {
+        throw new DecodingException("Bit string access out of range");
+      }
+      if (bitSet.get(i)) {
         out |= mask;
       }
     }
+    readIndex = to;
     return out;
   }
 
   public long readLong(int length) {
-    long out = 0;
+    int from = readIndex;
+    int to = from + length;
+    int writeIndex = this.writeIndex;
     long mask = 1L << length;
-    for (int i = 0; i < length; i++) {
+    long out = 0;
+    for (int i = from; i < to; i++) {
       mask >>= 1;
-      if (readBoolean()) {
+      if (i >= writeIndex) {
+        throw new DecodingException("Bit string access out of range");
+      }
+      if (bitSet.get(i)) {
         out |= mask;
       }
     }
+    readIndex = to;
     return out;
   }
   
