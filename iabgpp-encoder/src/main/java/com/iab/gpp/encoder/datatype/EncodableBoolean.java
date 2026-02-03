@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.datatype.encoder.BooleanEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -14,7 +13,7 @@ public final class EncodableBoolean extends AbstractEncodableBitStringDataType<B
 
   public void encode(BitString builder){
     try {
-      BooleanEncoder.encode(builder, this.value);
+      builder.writeBoolean(this.value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
@@ -22,7 +21,7 @@ public final class EncodableBoolean extends AbstractEncodableBitStringDataType<B
 
   public void decode(BitString reader) {
     try {
-      this.value = reader.readBool();
+      this.value = reader.readBoolean();
     } catch (Exception e) {
       throw new DecodingException(e);
     }

@@ -15,10 +15,10 @@ public class FixedIntegerListEncoder {
 
     for (int i = 0; i < numElements; i++) {
       if (i < length) {
-        FixedIntegerEncoder.encode(builder, value.get(i), elementBitStringLength);
+        builder.writeInt(value.get(i), elementBitStringLength);
       } else {
         for (int j = 0; j < elementBitStringLength; j++) {
-          builder.append(false);
+          builder.writeBoolean(false);
         }
       }
     }

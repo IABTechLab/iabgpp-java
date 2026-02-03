@@ -2,7 +2,6 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.List;
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -25,10 +24,10 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
     try {
       List<RangeEntry> entries = this.value;
 
-      FixedIntegerEncoder.encode(sb, entries.size(), 12);
+      sb.writeInt(entries.size(), 12);
       for (RangeEntry entry : entries) {
-        FixedIntegerEncoder.encode(sb, entry.getKey(), keyBitStringLength);
-        FixedIntegerEncoder.encode(sb, entry.getType(), typeBitStringLength);
+        sb.writeInt(entry.getKey(), keyBitStringLength);
+        sb.writeInt(entry.getType(), typeBitStringLength);
         FixedIntegerRangeEncoder.encode(sb, entry.getIds());
       }
 

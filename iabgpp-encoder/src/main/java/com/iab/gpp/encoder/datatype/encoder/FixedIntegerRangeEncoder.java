@@ -26,19 +26,19 @@ public class FixedIntegerRangeEncoder {
       groupCount++;
       writeGroup(rangeBuilder, groupStart, last);
     }
-    FixedIntegerEncoder.encode(builder, groupCount, 12);
-    builder.append(rangeBuilder);
+    builder.writeInt(groupCount, 12);
+    builder.write(rangeBuilder);
     return last;
   }
 
   private static void writeGroup(BitString builder, int groupStart, int last) {
     if (groupStart == last) {
-      builder.append(false);
-      FixedIntegerEncoder.encode(builder, groupStart, 16);
+      builder.writeBoolean(false);
+      builder.writeInt(groupStart, 16);
     } else {
-      builder.append(true);
-      FixedIntegerEncoder.encode(builder, groupStart, 16);
-      FixedIntegerEncoder.encode(builder, last, 16);
+      builder.writeBoolean(true);
+      builder.writeInt(groupStart, 16);
+      builder.writeInt(last, 16);
     }
   }
 
@@ -46,7 +46,7 @@ public class FixedIntegerRangeEncoder {
     int count = reader.readInt(12);
     IntegerSet value = new IntegerSet();
     for (int i = 0; i < count; i++) {
-      boolean group = reader.readBool();
+      boolean group = reader.readBoolean();
       if (group) {
         int start = reader.readInt(16);
         int end = reader.readInt(16);

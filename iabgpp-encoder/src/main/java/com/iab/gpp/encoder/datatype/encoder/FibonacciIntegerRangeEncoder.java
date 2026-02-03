@@ -28,8 +28,8 @@ public class FibonacciIntegerRangeEncoder {
       groupCount++;
       writeGroup(rangeBuilder, groupStart, last, offset);
     }
-    FixedIntegerEncoder.encode(builder,groupCount, 12);
-    builder.append(rangeBuilder);
+    builder.writeInt(groupCount, 12);
+    builder.write(rangeBuilder);
     return last;
   }
 
@@ -37,12 +37,12 @@ public class FibonacciIntegerRangeEncoder {
     int base = groupStart - offset;
     int span = last - groupStart;
     if (span == 0) {
-      builder.append(false);
-      FibonacciIntegerEncoder.encode(builder, base);
+      builder.writeBoolean(false);
+      builder.writeFibonacci(base);
     } else {
-      builder.append(true);
-      FibonacciIntegerEncoder.encode(builder, base);
-      FibonacciIntegerEncoder.encode(builder, span);
+      builder.writeBoolean(true);
+      builder.writeFibonacci(base);
+      builder.writeFibonacci(span);
     }
   }
 
@@ -51,7 +51,7 @@ public class FibonacciIntegerRangeEncoder {
     IntegerSet value = new IntegerSet();
     int offset = 0;
     for (int i = 0; i < count; i++) {
-      boolean group = reader.readBool();
+      boolean group = reader.readBoolean();
       if (group) {
         int start = reader.readFibonacci() + offset;
         offset = start;

@@ -20,7 +20,7 @@ public final class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder 
     if (remainder > 0) {
       int padding = 24 - remainder;
       for (int i = 0; i < padding; i++) {
-        bitString.append(false);
+        bitString.writeBoolean(false);
       }
     }
   }

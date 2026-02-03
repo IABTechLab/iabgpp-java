@@ -12,35 +12,35 @@ public class FixedIntegerEncoderTest {
   @Test
   public void testEncode1() {
     BitString builder = new BitString();
-    FixedIntegerEncoder.encode(builder, 0, 1);
+    builder.writeInt(0, 1);
     Assertions.assertEquals("0", builder.toString());
   }
 
   @Test
   public void testEncode2() {
     BitString builder = new BitString();
-    FixedIntegerEncoder.encode(builder, 0, 6);
+    builder.writeInt(0, 6);
     Assertions.assertEquals("000000", builder.toString());
   }
 
   @Test
   public void testEncode3() {
     BitString builder = new BitString();
-    FixedIntegerEncoder.encode(builder, 1, 1);
+    builder.writeInt(1, 1);
     Assertions.assertEquals("1", builder.toString());
   }
 
   @Test
   public void testEncode4() {
     BitString builder = new BitString();
-    FixedIntegerEncoder.encode(builder, 1, 4);
+    builder.writeInt(1, 4);
     Assertions.assertEquals("0001", builder.toString());
   }
 
   @Test
   public void testEncode5() {
     BitString builder = new BitString();
-    FixedIntegerEncoder.encode(builder, 7, 8);
+    builder.writeInt(7, 8);
     Assertions.assertEquals("00000111", builder.toString());
   }
   
@@ -48,7 +48,7 @@ public class FixedIntegerEncoderTest {
   public void testEncode6() {
     try {
       BitString builder = new BitString();
-      FixedIntegerEncoder.encode(builder, 8, 1);
+      builder.writeInt(8, 1);
       Assertions.fail("EncodingException expected");
     } catch (EncodingException e) {
 

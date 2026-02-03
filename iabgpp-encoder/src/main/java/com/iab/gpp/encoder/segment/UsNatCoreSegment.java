@@ -53,11 +53,11 @@ public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
     if (bitString.length() == 66) {
       BitString builder = new BitString();
       
-      builder.append(bitString, 0, 48);
-      builder.extend(8);
-      builder.append(bitString, 48, 52);
-      builder.extend(2);
-      builder.append(bitString, 52, 62);
+      builder.write(bitString, 0, 48);
+      builder.writeEmpty(8);
+      builder.write(bitString, 48, 52);
+      builder.writeEmpty(2);
+      builder.write(bitString, 52, 62);
       bitString = builder;
     }
     return bitString;

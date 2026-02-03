@@ -12,49 +12,49 @@ public class FibonacciIntegerEncoderTest {
   @Test
   public void testEncode1() {
     BitString builder = new BitString();
-    FibonacciIntegerEncoder.encode(builder, 1);
+    builder.writeFibonacci(1);
     Assertions.assertEquals("11", builder.toString());
   }
 
   @Test
   public void testEncode2() {
     BitString builder = new BitString();
-    FibonacciIntegerEncoder.encode(builder, 2);
+    builder.writeFibonacci(2);
     Assertions.assertEquals("011", builder.toString());
   }
 
   @Test
   public void testEncode3() {
     BitString builder = new BitString();
-    FibonacciIntegerEncoder.encode(builder, 3);
+    builder.writeFibonacci(3);
     Assertions.assertEquals("0011", builder.toString());
   }
 
   @Test
   public void testEncode4() {
     BitString builder = new BitString();
-    FibonacciIntegerEncoder.encode(builder, 4);
+    builder.writeFibonacci(4);
     Assertions.assertEquals("1011", builder.toString());
   }
 
   @Test
   public void testEncode5() {
     BitString builder = new BitString();
-    FibonacciIntegerEncoder.encode(builder, 5);
+    builder.writeFibonacci(5);
     Assertions.assertEquals("00011", builder.toString());
   }
 
   @Test
   public void testEncode6() {
     BitString builder = new BitString();
-    FibonacciIntegerEncoder.encode(builder, 6);
+    builder.writeFibonacci(6);
     Assertions.assertEquals("10011", builder.toString());
   }
 
   @Test
   public void testEncode7() {
     BitString builder = new BitString();
-    FibonacciIntegerEncoder.encode(builder, 7);
+    builder.writeFibonacci(7);
     Assertions.assertEquals("01011", builder.toString());
   }
 
@@ -62,7 +62,7 @@ public class FibonacciIntegerEncoderTest {
   public void testEncodeTooLarge() {
     BitString builder = new BitString();
     Assertions.assertThrows(EncodingException.class, () -> 
-      FibonacciIntegerEncoder.encode(builder, Integer.MAX_VALUE));
+      builder.writeFibonacci(Integer.MAX_VALUE));
   }
 
   private int decode(String str) {

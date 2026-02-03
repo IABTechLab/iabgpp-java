@@ -15,20 +15,21 @@ public class OptimizedFixedRangeEncoder {
     int bitFieldLength = max;
 
     if (rangeLength <= bitFieldLength) {
-      FixedIntegerEncoder.encode(builder, max, 16);
-      builder.append(true).append(rangeBitString);
+      builder.writeInt(max, 16);
+      builder.writeBoolean(true);
+      builder.write(rangeBitString);
     } else {
-      FixedIntegerEncoder.encode(builder, max, 16);
-      builder.append(false);
+      builder.writeInt(max, 16);
+      builder.writeBoolean(false);
       for (int i = 0; i < max; i++) {
-        builder.append(value.containsInt(i + 1));
+        builder.writeBoolean(value.containsInt(i + 1));
       }
     }
   }
 
   public static IntegerSet decode(BitString reader) throws DecodingException {
     int size = reader.readInt(16);
-    if (reader.readBool()) {
+    if (reader.readBoolean()) {
       return FixedIntegerRangeEncoder.decode(reader);
     } else {
       return reader.readIntegerSet(size);

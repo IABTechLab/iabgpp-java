@@ -1,7 +1,6 @@
 package com.iab.gpp.encoder.datatype;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
@@ -23,7 +22,7 @@ public final class EncodableFibonacciInteger extends AbstractEncodableBitStringD
 
   public void encode(BitString builder) {
     try {
-      FibonacciIntegerEncoder.encode(builder, this.value);
+      builder.writeFibonacci(this.value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }

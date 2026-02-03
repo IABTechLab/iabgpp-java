@@ -10,9 +10,9 @@ public class DatetimeEncoder {
 
   public static void encode(BitString builder, Instant value) {
     if (value != null) {
-      FixedLongEncoder.encode(builder, value.toEpochMilli() / 100, 36);
+      builder.writeLong(value.toEpochMilli() / 100, 36);
     } else {
-      FixedLongEncoder.encode(builder, 0, 36);
+      builder.writeLong(0, 36);
     }
   }
 

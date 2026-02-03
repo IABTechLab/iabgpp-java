@@ -12,35 +12,35 @@ public class FixedLongEncoderTest {
   @Test
   public void testEncode1() {
     BitString builder = new BitString();
-    FixedLongEncoder.encode(builder, 0, 1);
+    builder.writeLong(0, 1);
     Assertions.assertEquals("0", builder.toString());
   }
 
   @Test
   public void testEncode2() {
     BitString builder = new BitString();
-    FixedLongEncoder.encode(builder, 0, 6);
+    builder.writeLong(0, 6);
     Assertions.assertEquals("000000", builder.toString());
   }
 
   @Test
   public void testEncode3() {
     BitString builder = new BitString();
-    FixedLongEncoder.encode(builder, 1, 1);
+    builder.writeLong(1, 1);
     Assertions.assertEquals("1", builder.toString());
   }
 
   @Test
   public void testEncode4() {
     BitString builder = new BitString();
-    FixedLongEncoder.encode(builder, 1, 4);
+    builder.writeLong(1, 4);
     Assertions.assertEquals("0001", builder.toString());
   }
 
   @Test
   public void testEncode5() {
     BitString builder = new BitString();
-    FixedLongEncoder.encode(builder, 7, 8);
+    builder.writeLong(7, 8);
     Assertions.assertEquals("00000111", builder.toString());
   }
 
@@ -48,7 +48,7 @@ public class FixedLongEncoderTest {
   @Test
   public void testEncode6() {
     BitString builder = new BitString();
-    FixedLongEncoder.encode(builder, 16630898421L, 36);
+    builder.writeLong(16630898421L, 36);
     Assertions.assertEquals("001111011111010001110101111011110101", builder.toString());
   }
   
@@ -56,7 +56,7 @@ public class FixedLongEncoderTest {
   public void testEncode7() {
     try {
       BitString builder = new BitString();
-      FixedIntegerEncoder.encode(builder, 8, 1);
+      builder.writeInt(8, 1);
       Assertions.fail("EncodingException expected");
     } catch (EncodingException e) {
 

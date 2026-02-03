@@ -68,7 +68,7 @@ public final class FixedIntegerList extends AbstractList<Integer> implements Dir
     int to = from + length;
     for (int i = from; i < to; i++) {
       mask >>= 1;
-      if (bitSet.set(i, (value & mask) > 0)) {
+      if (bitSet.set(i, (value & mask) != 0)) {
         value |= mask;
       }
     }

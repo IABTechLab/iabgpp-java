@@ -7,7 +7,7 @@ public class FixedBitfieldEncoder {
 
   public static void encode(BitString builder, IntegerSet value, int bitStringLength) {
     for (int i = 0; i < bitStringLength; i++) {
-      BooleanEncoder.encode(builder, value.containsInt(i));
+      builder.writeBoolean(value.containsInt(i));
     }
   }
 }

@@ -15,9 +15,9 @@ public class FixedStringEncoder {
         code = value.charAt(i);
       }
       if (code == SPACE) {
-        FixedIntegerEncoder.encode(builder, 63, 6);
+        builder.writeInt(63, 6);
       } else if (code >= 65) {
-        FixedIntegerEncoder.encode(builder, ((int) value.charAt(i)) - 65, 6);
+        builder.writeInt(((int) value.charAt(i)) - 65, 6);
       } else {
         throw new EncodingException("Unencodable FixedString '" + value + "'");
       }

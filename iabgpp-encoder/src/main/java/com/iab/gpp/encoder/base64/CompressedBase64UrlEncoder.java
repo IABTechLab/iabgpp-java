@@ -20,7 +20,7 @@ public final class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
     if(remainder > 0) {
       int padding = 8 - remainder;
       for (int i = 0; i < padding; i++) {
-        bitString.append(false);
+        bitString.writeBoolean(false);
       }
     }
 
@@ -28,7 +28,7 @@ public final class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
     if(remainder > 0) {
       int padding = 6 - remainder;
       for (int i = 0; i < padding; i++) {
-        bitString.append(false);
+        bitString.writeBoolean(false);
       }
     }
   }
