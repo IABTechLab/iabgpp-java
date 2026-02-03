@@ -142,39 +142,21 @@ public final class BitString {
   public int readInt(int length) {
     int from = readIndex;
     int to = from + length;
-    int writeIndex = this.writeIndex;
-    int mask = 1 << length;
-    int out = 0;
-    for (int i = from; i < to; i++) {
-      mask >>= 1;
-      if (i >= writeIndex) {
-        throw new DecodingException("Bit string access out of range");
-      }
-      if (bitSet.get(i)) {
-        out |= mask;
-      }
+    if (from >= writeIndex) {
+      throw new DecodingException("Bit string access out of range");
     }
     readIndex = to;
-    return out;
+    return bitSet.readInt(from, to);
   }
 
   public long readLong(int length) {
     int from = readIndex;
     int to = from + length;
-    int writeIndex = this.writeIndex;
-    long mask = 1L << length;
-    long out = 0;
-    for (int i = from; i < to; i++) {
-      mask >>= 1;
-      if (i >= writeIndex) {
-        throw new DecodingException("Bit string access out of range");
-      }
-      if (bitSet.get(i)) {
-        out |= mask;
-      }
+    if (from >= writeIndex) {
+      throw new DecodingException("Bit string access out of range");
     }
     readIndex = to;
-    return out;
+    return bitSet.readLong(from, to);
   }
   
   public boolean readBoolean() {

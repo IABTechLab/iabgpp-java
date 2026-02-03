@@ -80,7 +80,7 @@ public final class BitSet {
         return -1;
     }
 
-    int bit = fromIndex % BITS_PER_WORD;
+    int bit = fromIndex & MODULO;
     int word = (words[u] << CORRECTION) & (WORD_MASK >>> bit);
 
     while (true) {
@@ -119,5 +119,58 @@ public final class BitSet {
       }
     }
     return prior;
+  }
+  
+  
+  public int readInt(int from, int to) {
+    int startWordIndex = wordIndex(from);
+    int startBit = from & MODULO;
+    int endWordIndex = wordIndex(to);
+    int endBit = to & MODULO;
+    // TODO: is this needed if the caller checks range?
+    byte[] words = ensureIndex(endWordIndex);
+    int out = 0;
+    for(int wordIndex = startWordIndex; wordIndex <= endWordIndex; wordIndex++) {
+      int word = words[wordIndex] & 0xff;
+      if (wordIndex == startWordIndex) {
+        int mask = (0xff >>> startBit);
+        word &= mask;
+      }
+      if (wordIndex == endWordIndex) {
+        int mask = ~(0xff >> endBit);
+        word &= mask;
+        out |= word >>> (BITS_PER_WORD - endBit);
+        break;
+      }
+      int remaining = to - ((wordIndex + 1) << ADDRESS_BITS_PER_WORD);
+      out |= word << remaining;
+    }
+    return out;
+  }
+  
+  public long readLong(int from, int to) {
+    int startWordIndex = wordIndex(from);
+    int startBit = from & MODULO;
+    int endWordIndex = wordIndex(to);
+    int endBit = to & MODULO;
+    // TODO: is this needed if the caller checks range?
+    byte[] words = ensureIndex(endWordIndex);
+    long out = 0;
+    for(int wordIndex = startWordIndex; wordIndex <= endWordIndex; wordIndex++) {
+      long word = words[wordIndex] & 0xff;
+      if (wordIndex == startWordIndex) {
+        int mask = (0xff >>> startBit);
+        word &= mask;
+      }
+      if (wordIndex == endWordIndex) {
+        int mask = ~(0xff >> endBit);
+        word &= mask;
+        out |= word >>> (BITS_PER_WORD - endBit);
+        break;
+      }
+      int remaining = to - ((wordIndex + 1) << ADDRESS_BITS_PER_WORD);
+      out |= word << remaining;
+    }
+    return out;
   }
 }
