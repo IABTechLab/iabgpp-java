@@ -12,7 +12,7 @@ public final class BitSet {
   private static final int MASK = 1 << (BITS_PER_WORD - 1);
   private static final int MODULO = BITS_PER_WORD - 1;
   private static final int CORRECTION = Integer.SIZE - BITS_PER_WORD;
-  private static final int WORD_MASK = 0xffffffff;
+  private static final int WORD_MASK = 0xff;
   
   private byte[] words;
 
@@ -81,16 +81,17 @@ public final class BitSet {
     }
 
     int bit = fromIndex & MODULO;
-    int word = (words[u] << CORRECTION) & (WORD_MASK >>> bit);
+    int word = words[u] & (WORD_MASK >>> bit);
 
     while (true) {
+        word &= WORD_MASK;
         if (word != 0) {
-            return (u * BITS_PER_WORD) + Integer.numberOfLeadingZeros(word);
+            return (u * BITS_PER_WORD) + Integer.numberOfLeadingZeros(word) - CORRECTION;
         }
         if (++u == wordsInUse) {
             return -1;
         }
-        word = (words[u] << CORRECTION);
+        word = words[u];
     }
   }
 
@@ -131,14 +132,12 @@ public final class BitSet {
     byte[] words = ensureIndex(endWordIndex);
     int out = 0;
     for(int wordIndex = startWordIndex; wordIndex <= endWordIndex; wordIndex++) {
-      int word = words[wordIndex] & 0xff;
+      int word = words[wordIndex] & WORD_MASK;
       if (wordIndex == startWordIndex) {
-        int mask = (0xff >>> startBit);
-        word &= mask;
+        word &= WORD_MASK >>> startBit;
       }
       if (wordIndex == endWordIndex) {
-        int mask = ~(0xff >> endBit);
-        word &= mask;
+        word &= ~(WORD_MASK >> endBit);
         out |= word >>> (BITS_PER_WORD - endBit);
         break;
       }
@@ -157,14 +156,12 @@ public final class BitSet {
     byte[] words = ensureIndex(endWordIndex);
     long out = 0;
     for(int wordIndex = startWordIndex; wordIndex <= endWordIndex; wordIndex++) {
-      long word = words[wordIndex] & 0xff;
+      long word = words[wordIndex] & WORD_MASK;
       if (wordIndex == startWordIndex) {
-        int mask = (0xff >>> startBit);
-        word &= mask;
+        word &= (WORD_MASK >>> startBit);
       }
       if (wordIndex == endWordIndex) {
-        int mask = ~(0xff >> endBit);
-        word &= mask;
+        word &= ~(WORD_MASK >> endBit);
         out |= word >>> (BITS_PER_WORD - endBit);
         break;
       }
