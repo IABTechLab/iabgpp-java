@@ -14,7 +14,7 @@ public class UsMnTest {
   @Test
   public void testEncode1() {
     UsMn usMn = new UsMn();
-    Assertions.assertEquals("BAAAAAABAA.QA", usMn.encode());
+    Assertions.assertEquals("BAAAAAQA.QA", usMn.encode());
   }
 
   @Test
@@ -26,15 +26,15 @@ public class UsMnTest {
     usMn.setFieldValue(UsMnField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 1);
     usMn.setFieldValue(UsMnField.SALE_OPT_OUT, 1);
     usMn.setFieldValue(UsMnField.TARGETED_ADVERTISING_OPT_OUT, 1);
-    usMn.setFieldValue(UsMnField.SENSITIVE_DATA_PROCESSING, Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1, 0));
-    usMn.setFieldValue(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(2, 1, 0, 2, 1));
+    usMn.setFieldValue(UsMnField.SENSITIVE_DATA_PROCESSING, Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1));
+    usMn.setFieldValue(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, 1);
     usMn.setFieldValue(UsMnField.ADDITIONAL_DATA_PROCESSING_CONSENT, 1);
     usMn.setFieldValue(UsMnField.MSPA_COVERED_TRANSACTION, 1);
     usMn.setFieldValue(UsMnField.MSPA_OPT_OUT_OPTION_MODE, 1);
     usMn.setFieldValue(UsMnField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usMn.setFieldValue(UsMnField.GPC, true);
 
-    Assertions.assertEquals("BVWSSSSVYA.YA", usMn.encode());
+    Assertions.assertEquals("BVWSSVWA.YA", usMn.encode());
   }
   
   @Test
@@ -84,7 +84,7 @@ public class UsMnTest {
     }
     
     try {
-      usMn.setFieldValue(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(1, 2, 3));
+      usMn.setFieldValue(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
       
@@ -123,20 +123,20 @@ public class UsMnTest {
   public void testEncodeWithGpcSegmentExcluded() {
     UsMn usMn = new UsMn();
     usMn.setFieldValue(UsMnField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAABAA", usMn.encode());
+    Assertions.assertEquals("BAAAAAQA", usMn.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
-    UsMn usMn = new UsMn("BVWSSSSVYA.YA");
+    UsMn usMn = new UsMn("BVWSSVWA.YA");
 
     Assertions.assertEquals(1, usMn.getProcessingNotice());
     Assertions.assertEquals(1, usMn.getSaleOptOutNotice());
     Assertions.assertEquals(1, usMn.getTargetedAdvertisingOptOutNotice());
     Assertions.assertEquals(1, usMn.getSaleOptOut());
     Assertions.assertEquals(1, usMn.getTargetedAdvertisingOptOut());
-    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1, 0), usMn.getSensitiveDataProcessing());
-    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1), usMn.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usMn.getSensitiveDataProcessing());
+    Assertions.assertEquals(1, usMn.getKnownChildSensitiveDataConsents());
     Assertions.assertEquals(1, usMn.getAdditionalDataProcessingConsent());
     Assertions.assertEquals(1, usMn.getMspaCoveredTransaction());
     Assertions.assertEquals(1, usMn.getMspaOptOutOptionMode());
@@ -146,15 +146,15 @@ public class UsMnTest {
 
   @Test
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
-    UsMn usMn = new UsMn("BVWSSSSVYA");
+    UsMn usMn = new UsMn("BVWSSVWA");
 
     Assertions.assertEquals(1, usMn.getProcessingNotice());
     Assertions.assertEquals(1, usMn.getSaleOptOutNotice());
     Assertions.assertEquals(1, usMn.getTargetedAdvertisingOptOutNotice());
     Assertions.assertEquals(1, usMn.getSaleOptOut());
     Assertions.assertEquals(1, usMn.getTargetedAdvertisingOptOut());
-    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1, 0), usMn.getSensitiveDataProcessing());
-    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1), usMn.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usMn.getSensitiveDataProcessing());
+    Assertions.assertEquals(1, usMn.getKnownChildSensitiveDataConsents());
     Assertions.assertEquals(1, usMn.getAdditionalDataProcessingConsent());
     Assertions.assertEquals(1, usMn.getMspaCoveredTransaction());
     Assertions.assertEquals(1, usMn.getMspaOptOutOptionMode());

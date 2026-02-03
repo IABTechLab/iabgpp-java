@@ -107,8 +107,8 @@ public class UsMn extends AbstractLazilyEncodableSection {
   }
 
   @SuppressWarnings("unchecked")
-  public List<Integer> getKnownChildSensitiveDataConsents() {
-    return (List<Integer>) this.getFieldValue(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS);
+  public Integer getKnownChildSensitiveDataConsents() {
+    return (Integer) this.getFieldValue(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS);
   }
 
   public Integer getAdditionalDataProcessingConsent() {

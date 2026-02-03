@@ -59,11 +59,10 @@ public class UsMnCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
     fields.put(UsMnField.TARGETED_ADVERTISING_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsMnField.SENSITIVE_DATA_PROCESSING,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0))
+        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
     fields.put(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-        new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0))
-            .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
+            new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsMnField.ADDITIONAL_DATA_PROCESSING_CONSENT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     fields.put(UsMnField.MSPA_COVERED_TRANSACTION,
