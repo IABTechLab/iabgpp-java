@@ -27,7 +27,14 @@ public abstract class AbstractEncodableBitStringDataType<T> extends EncodableDat
   }
 
   public final T getValue() {
+    if (this.value == null) {
+      this.value = getDefaultValue();
+    }
     return this.value;
+  }
+
+  protected T getDefaultValue() {
+    return null;
   }
 
   public void setValue(Object value) {

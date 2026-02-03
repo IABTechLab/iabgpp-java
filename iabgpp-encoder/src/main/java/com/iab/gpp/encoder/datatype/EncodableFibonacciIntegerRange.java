@@ -12,12 +12,16 @@ public final class EncodableFibonacciIntegerRange extends AbstractDirtyableBitSt
 
   public EncodableFibonacciIntegerRange() {
     super(true);
-    this.value = new IntegerSet();
+  }
+
+  @Override
+  protected IntegerSet getDefaultValue() {
+    return new IntegerSet();
   }
 
   public void encode(BitStringBuilder builder) {
     try {
-      FibonacciIntegerRangeEncoder.encode(builder, this.value);
+      FibonacciIntegerRangeEncoder.encode(builder, this.getValue());
     } catch (Exception e) {
       throw new EncodingException(e);
     }
@@ -33,8 +37,9 @@ public final class EncodableFibonacciIntegerRange extends AbstractDirtyableBitSt
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    this.value.clear();
-    this.value.addAll((Collection<Integer>) value);
+  public void setValue(Object newValue) {
+    IntegerSet value = this.getValue();
+    value.clear();
+    value.addAll((Collection<Integer>) newValue);
   }
 }

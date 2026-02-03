@@ -17,12 +17,16 @@ public final class EncodableFlexibleBitfield extends AbstractDirtyableBitStringD
   public EncodableFlexibleBitfield(IntSupplier getLengthSupplier) {
     super(true);
     this.getLengthSupplier = getLengthSupplier;
-    this.value = new IntegerSet();
+  }
+
+  @Override
+  protected IntegerSet getDefaultValue() {
+    return new IntegerSet();
   }
 
   public void encode(BitStringBuilder builder) {
     try {
-      FixedBitfieldEncoder.encode(builder, this.value, this.getLengthSupplier.getAsInt());
+      FixedBitfieldEncoder.encode(builder, this.getValue(), this.getLengthSupplier.getAsInt());
     } catch (Exception e) {
       throw new EncodingException(e);
     }
@@ -39,8 +43,9 @@ public final class EncodableFlexibleBitfield extends AbstractDirtyableBitStringD
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    this.value.clear();
-    this.value.addAll((Collection<Integer>) value);
+  public void setValue(Object newValue) {
+    IntegerSet value = this.getValue();
+    value.clear();
+    value.addAll((Collection<Integer>) newValue);
   }
 }

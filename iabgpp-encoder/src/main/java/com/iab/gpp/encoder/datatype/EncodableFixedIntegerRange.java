@@ -12,12 +12,16 @@ public final class EncodableFixedIntegerRange extends AbstractDirtyableBitString
 
   protected EncodableFixedIntegerRange() {
     super(true);
-    this.value = new IntegerSet();
+  }
+
+  @Override
+  protected IntegerSet getDefaultValue() {
+    return new IntegerSet();
   }
 
   public void encode(BitStringBuilder builder) {
     try {
-      FixedIntegerRangeEncoder.encode(builder, this.value);
+      FixedIntegerRangeEncoder.encode(builder, this.getValue());
     } catch (Exception e) {
       throw new EncodingException(e);
     }
@@ -33,8 +37,9 @@ public final class EncodableFixedIntegerRange extends AbstractDirtyableBitString
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    this.value.clear();
-    this.value.addAll((Collection<Integer>) value);
+  public void setValue(Object newValue) {
+    IntegerSet value = this.getValue();
+    value.clear();
+    value.addAll((Collection<Integer>) newValue);
   }
 }

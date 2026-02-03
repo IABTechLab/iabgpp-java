@@ -13,12 +13,14 @@ public abstract class AbstractDirtyableBitStringDataType<T extends Dirtyable>
 
   @Override
   public boolean isDirty() {
-    return super.isDirty() || value.isDirty();
+    return super.isDirty() || (value != null && value.isDirty());
   }
 
   @Override
   public void setDirty(boolean dirty) {
     super.setDirty(dirty);
-    value.setDirty(dirty);
+    if (value != null) {
+      value.setDirty(dirty);
+    }
   }
 }
