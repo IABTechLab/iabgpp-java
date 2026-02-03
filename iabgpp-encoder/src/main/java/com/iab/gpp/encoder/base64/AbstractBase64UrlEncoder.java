@@ -22,11 +22,7 @@ public abstract class AbstractBase64UrlEncoder {
   static {
     Arrays.fill(REVERSE_DICT, NO_SYMBOL);
     for (int i = 0; i < DICT.length(); i++) {
-      // NOTE: the bit string is stored in a long[] and read from LSB to MSB
-      // but each base64 digit is read from MSB to LSB
-      // so they need to be reversed.
-      int value  = Integer.reverse(i) >>> -BASE64_BITS;
-      REVERSE_DICT[DICT.charAt(i)] = value;
+      REVERSE_DICT[DICT.charAt(i)] = i;
     }
   }
 
@@ -62,10 +58,10 @@ public abstract class AbstractBase64UrlEncoder {
         if ((b1 | b2 | b3 | b4) < 0) {
           throw new DecodingException("Undecodable Base64URL string");
         }
-        int bits0 = b4 << 18 | b3 << 12 | b2 << 6 | b1;
-        words[dst++] = (byte)(bits0);
-        words[dst++] = (byte)(bits0 >>  8);
+        int bits0 = b1 << 18 | b2 << 12 | b3 << 6 | b4;
         words[dst++] = (byte)(bits0 >> 16);
+        words[dst++] = (byte)(bits0 >>  8);
+        words[dst++] = (byte)(bits0);
       }
       if (length > limit) {
         remainder(str, words, length, src, dst);
@@ -88,9 +84,9 @@ public abstract class AbstractBase64UrlEncoder {
     if ((b1 | b2 | b3 | b4) < 0) {
       throw new DecodingException("Undecodable Base64URL string");
     }
-    int bits0 = b4 << 18 | b3 << 12 | b2 << 6 | b1;
-    words[dst++] = (byte)(bits0);
-    words[dst++] = (byte)(bits0 >>  8);
+    int bits0 = b1 << 18 | b2 << 12 | b3 << 6 | b4;
     words[dst++] = (byte)(bits0 >> 16);
+    words[dst++] = (byte)(bits0 >>  8);
+    words[dst++] = (byte)(bits0);
   }
 }

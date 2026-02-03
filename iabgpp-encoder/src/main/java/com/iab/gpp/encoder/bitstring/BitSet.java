@@ -8,9 +8,10 @@ public final class BitSet {
   
   private static final byte[] EMPTY = new byte[0];
   private static final int ADDRESS_BITS_PER_WORD = 3;
-  public static final int BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
-
-  /* Used to shift left or right for a partial word mask */
+  private static final int BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
+  private static final int MASK = 1 << (BITS_PER_WORD - 1);
+  private static final int MODULO = BITS_PER_WORD - 1;
+  private static final int CORRECTION = Integer.SIZE - BITS_PER_WORD;
   private static final int WORD_MASK = 0xffffffff;
   
   private byte[] words;
@@ -26,14 +27,19 @@ public final class BitSet {
   public BitSet() {
     this(EMPTY);
   }
-  
-  public static int wordIndex(int index) {
+
+  private static int wordIndex(int index) {
     if (index < 0) {
       throw new DecodingException("got negative word index");
     }
     return index >> ADDRESS_BITS_PER_WORD;
   }
-  
+
+  private static int wordMask(int index) {
+    int bit = index & MODULO;
+    return MASK >> bit;
+  }
+
   private byte[] ensureIndex(int wordIndex) {
     byte[] words = this.words;
     int wordsUsed = words.length;
@@ -48,9 +54,8 @@ public final class BitSet {
   public boolean get(int bitIndex) {
     int wordIndex = wordIndex(bitIndex);
     byte[] words = this.words;
-    int bit = bitIndex % BITS_PER_WORD;
     return (wordIndex < words.length)
-        && ((words[wordIndex] >>> bit) & 1) == 1;
+        && (words[wordIndex] & wordMask(bitIndex)) != 0;
   }
 
   public void clear(int from, int to) {
@@ -63,8 +68,7 @@ public final class BitSet {
     int wordIndex = wordIndex(bitIndex);
     byte[] words = this.words;
     if (wordIndex < words.length) {
-      int bit = bitIndex % BITS_PER_WORD;
-      words[wordIndex] &= ~(1 << bit);
+      words[wordIndex] &= ~wordMask(bitIndex);
     }
   }
 
@@ -77,16 +81,16 @@ public final class BitSet {
     }
 
     int bit = fromIndex % BITS_PER_WORD;
-    int word = words[u] & (WORD_MASK << bit);
+    int word = (words[u] << CORRECTION) & (WORD_MASK >>> bit);
 
     while (true) {
         if (word != 0) {
-            return (u * BITS_PER_WORD) + Integer.numberOfTrailingZeros(word);
+            return (u * BITS_PER_WORD) + Integer.numberOfLeadingZeros(word);
         }
         if (++u == wordsInUse) {
             return -1;
         }
-        word = words[u];
+        word = (words[u] << CORRECTION);
     }
   }
 
@@ -99,20 +103,19 @@ public final class BitSet {
   public void set(int bitIndex) {
     int wordIndex = wordIndex(bitIndex);
     byte[] words = ensureIndex(wordIndex);
-    int bit = bitIndex % BITS_PER_WORD;
-    words[wordIndex] |= (1 << bit);
+    words[wordIndex] |= wordMask(bitIndex);
   }
 
   public boolean set(int bitIndex, boolean value) {
     int wordIndex = wordIndex(bitIndex);
+    int wordMask = wordMask(bitIndex);
     byte[] words = ensureIndex(wordIndex);
-    int bit = bitIndex % BITS_PER_WORD;
-    boolean prior = ((words[wordIndex] >>> bit) & 1) == 1;
+    boolean prior = (words[wordIndex] & wordMask) != 0;
     if (prior != value) {
       if (value) {
-        words[wordIndex] |= (1 << bit);
+        words[wordIndex] |= wordMask;
       } else {
-        words[wordIndex] &= ~(1 << bit);
+        words[wordIndex] &= ~wordMask;
       }
     }
     return prior;
