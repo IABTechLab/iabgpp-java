@@ -7,30 +7,32 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public final class EncodableFixedString extends AbstractEncodableBitStringDataType<String> {
 
-  private int stringLength;
+  private final int stringLength;
+  private final String initial;
 
-  protected EncodableFixedString(int stringLength) {
-    super(true);
+  public EncodableFixedString(int stringLength, String initial) {
     this.stringLength = stringLength;
+    this.initial = initial;
   }
 
-  public EncodableFixedString(int stringLength, String value) {
-    super(true);
-    this.stringLength = stringLength;
-    setValue(value, false);
+  @Override
+  protected String initialize() {
+    return initial;
   }
-
-  public void encode(BitString builder) {
+  
+  @Override
+  protected void encode(BitString builder, String value) {
     try {
-      FixedStringEncoder.encode(builder, this.value, this.stringLength);
+      FixedStringEncoder.encode(builder, value, this.stringLength);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(BitString reader) {
+  @Override
+  protected String decode(BitString reader) {
     try {
-      this.value = FixedStringEncoder.decode(reader, this.stringLength);
+      return FixedStringEncoder.decode(reader, this.stringLength);
     } catch (Exception e) {
       throw new DecodingException(e);
     }

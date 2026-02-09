@@ -8,26 +8,24 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public final class EncodableFibonacciIntegerRange extends AbstractDirtyableBitStringDataType<IntegerSet> {
 
-  public EncodableFibonacciIntegerRange() {
-    super(true);
-  }
-
   @Override
-  protected IntegerSet getDefaultValue() {
+  public IntegerSet initialize() {
     return new IntegerSet();
   }
 
-  public void encode(BitString builder) {
+  @Override
+  protected void encode(BitString builder, IntegerSet value) {
     try {
-      FibonacciIntegerRangeEncoder.encode(builder, this.getValue());
+      FibonacciIntegerRangeEncoder.encode(builder, value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(BitString reader) {
+  @Override
+  protected IntegerSet decode(BitString reader) {
     try {
-      this.value = FibonacciIntegerRangeEncoder.decode(reader);
+      return FibonacciIntegerRangeEncoder.decode(reader);
     } catch (Exception e) {
       throw new DecodingException(e);
     }
@@ -35,9 +33,9 @@ public final class EncodableFibonacciIntegerRange extends AbstractDirtyableBitSt
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object newValue) {
-    IntegerSet value = this.getValue();
-    value.clear();
-    value.addAll((Collection<Integer>) newValue);
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

@@ -2,7 +2,6 @@ package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.iab.gpp.encoder.datatype.DataType;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -64,7 +63,7 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     for (int i = 0; i < numSegments; i++) {
       EncodableSegment<E> segment = getSegment(i);
       E key = segment.resolveKey(fieldName);
-      if (key != null && segment.getField(key) != null) {
+      if (key != null) {
         return true;
       }
     }
@@ -78,7 +77,7 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
       EncodableSegment<E> segment = getSegment(i);
-      if (segment.getField(fieldName) != null) {
+      if (segment.hasField(fieldName)) {
         return true;
       }
     }
@@ -94,10 +93,7 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
       EncodableSegment<E> segment = getSegment(i);
       E key = segment.resolveKey(fieldName);
       if (key != null) {
-        DataType<?> field = segment.getField(key);
-        if (field != null) {
-          return field.getValue();
-        }
+        return segment.getFieldValue(key);
       }
     }
 
@@ -110,9 +106,8 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
       EncodableSegment<E> segment = getSegment(i);
-      DataType<?> field = segment.getField(fieldName);
-      if (field != null) {
-        return field.getValue();
+      if (segment.hasField(fieldName)) {
+        return segment.getFieldValue(fieldName);
       }
     }
 
@@ -127,12 +122,9 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
       EncodableSegment<E> segment = getSegment(i);
       E key = segment.resolveKey(fieldName);
       if (key != null) {
-        DataType<?> field = segment.getField(key);
-        if (field != null) {
-          field.setValue(value);
-          onSet(key);
-          return;
-        }
+        segment.setFieldValue(key, value);
+        onSet(key);
+        return;
       }
     }
 
@@ -145,9 +137,8 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
       EncodableSegment<E> segment = getSegment(i);
-      DataType<?> field = segment.getField(fieldName);
-      if(field != null) {
-        field.setValue(value);
+      if(segment.hasField(fieldName)) {
+        segment.setFieldValue(fieldName, value);
         onSet(fieldName);
         return;
       }

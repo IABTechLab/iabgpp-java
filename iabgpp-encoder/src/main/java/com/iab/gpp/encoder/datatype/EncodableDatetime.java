@@ -8,26 +8,24 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public final class EncodableDatetime extends AbstractEncodableBitStringDataType<Instant> {
 
-  protected EncodableDatetime() {
-    super(true);
+  @Override
+  protected Instant initialize() {
+    return Instant.EPOCH;
   }
 
-  public EncodableDatetime(Instant value) {
-    super(true);
-    setValue(value, false);
-  }
-
-  public void encode(BitString builder) {
+  @Override
+  protected void encode(BitString builder, Instant value) {
     try {
-      DatetimeEncoder.encode(builder, this.value);
+      DatetimeEncoder.encode(builder, value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(BitString reader) {
+  @Override
+  protected Instant decode(BitString reader) {
     try {
-      this.value = DatetimeEncoder.decode(reader);
+      return DatetimeEncoder.decode(reader);
     } catch (Exception e) {
       throw new DecodingException(e);
     }

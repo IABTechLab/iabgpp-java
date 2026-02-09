@@ -14,33 +14,33 @@ public class EncodableFixedIntegerRangeTest {
   @Test
   public void testEncode1() throws EncodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
-    encodableFixedIntegerRange.setValue(Arrays.asList(28));
+    IntegerSet integerSet = new IntegerSet();
+    integerSet.add(28);
     BitString builder = new BitString();
-    encodableFixedIntegerRange.encode(builder);
+    encodableFixedIntegerRange.encode(builder, integerSet);
     Assertions.assertEquals("00000000000100000000000011100", builder.toString());
   }
 
   @Test
   public void testEncode2() throws EncodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
-    encodableFixedIntegerRange.setValue(Arrays.asList(29));
+    IntegerSet integerSet = new IntegerSet();
+    integerSet.add(29);
     BitString builder = new BitString();
-    encodableFixedIntegerRange.encode(builder);
+    encodableFixedIntegerRange.encode(builder, integerSet);
     Assertions.assertEquals("00000000000100000000000011101", builder.toString());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
-    encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011100"));
-    Assertions.assertEquals(Set.of(28), encodableFixedIntegerRange.getValue());
+    Assertions.assertEquals(Set.of(28), encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011100")));
   }
 
   @Test
   public void testDecode2() throws DecodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
-    encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011101"));
-    Assertions.assertEquals(Set.of(29), encodableFixedIntegerRange.getValue());
+    Assertions.assertEquals(Set.of(29), encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011101")));
   }
 
 }

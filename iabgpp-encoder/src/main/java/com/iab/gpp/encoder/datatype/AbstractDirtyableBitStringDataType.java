@@ -5,18 +5,16 @@ package com.iab.gpp.encoder.datatype;
 public abstract class AbstractDirtyableBitStringDataType<T extends Dirtyable>
     extends AbstractEncodableBitStringDataType<T> {
 
-  protected AbstractDirtyableBitStringDataType(boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
+  @Override
+  public boolean isDirty(Object[] values, int index) {
+    T value = get(values, index);
+    return (value != null && value.isDirty());
   }
 
+  @SuppressWarnings("unchecked")
   @Override
-  public boolean isDirty() {
-    return super.isDirty() || (value != null && value.isDirty());
-  }
-
-  @Override
-  public void setDirty(boolean dirty) {
-    super.setDirty(dirty);
+  public void setDirty(Object[] values, int index, boolean dirty) {
+    T value = (T) values[index];
     if (value != null) {
       value.setDirty(dirty);
     }

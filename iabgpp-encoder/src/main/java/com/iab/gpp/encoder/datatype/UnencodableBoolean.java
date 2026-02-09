@@ -4,21 +4,25 @@ import com.iab.gpp.encoder.bitstring.BitString;
 
 public final class UnencodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
 
-  protected UnencodableBoolean() {
-    super(true);
+  private final Boolean initial;
+
+  public UnencodableBoolean(Boolean initial) {
+    this.initial = initial;
+  }
+  
+  @Override
+  protected Boolean initialize() {
+    return initial;
   }
 
-  public UnencodableBoolean(Boolean value) {
-    super(true);
-    setValue(value, false);
-  }
-
-  public void encode(BitString builder){
+  @Override
+  protected void encode(BitString writer, Boolean value) {
     // pass
   }
 
-  public void decode(BitString reader) {
-    // pass
+  @Override
+  protected Boolean decode(BitString reader) {
+    return Boolean.FALSE;
   }
 
 }

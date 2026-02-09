@@ -6,31 +6,30 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public final class EncodableFibonacciInteger extends AbstractEncodableBitStringDataType<Integer> {
 
-  protected EncodableFibonacciInteger() {
-    super(true);
+  private final Integer initial;
+
+  public EncodableFibonacciInteger(Integer initial) {
+    this.initial = initial;
   }
 
-  public EncodableFibonacciInteger(Integer value) {
-    super(true);
-    setValue(value, false);
+  @Override
+  protected Integer initialize() {
+    return initial;
   }
 
-  public EncodableFibonacciInteger(Integer value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value, false);
-  }
-
-  public void encode(BitString builder) {
+  @Override
+  protected void encode(BitString builder, Integer value) {
     try {
-      builder.writeFibonacci(this.value);
+      builder.writeFibonacci(value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(BitString reader) {
+  @Override
+  protected Integer decode(BitString reader) {
     try {
-      this.value = reader.readFibonacci();
+      return reader.readFibonacci();
     } catch (Exception e) {
       throw new DecodingException(e);
     }

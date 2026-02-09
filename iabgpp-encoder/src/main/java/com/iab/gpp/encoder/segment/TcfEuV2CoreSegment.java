@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import java.time.Instant;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
@@ -18,11 +17,9 @@ public final class TcfEuV2CoreSegment extends AbstractBase64Segment<TcfEuV2Field
   public TcfEuV2CoreSegment() {
     super(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES);
     // NOTE: TcfEuV2.onSet records modifications
-    Instant date = Instant.EPOCH;
-
     initialize(TcfEuV2Field.VERSION, new EncodableFixedInteger(6, TcfEuV2.VERSION));
-    initialize(TcfEuV2Field.CREATED, new EncodableDatetime(date));
-    initialize(TcfEuV2Field.LAST_UPDATED, new EncodableDatetime(date));
+    initialize(TcfEuV2Field.CREATED, new EncodableDatetime());
+    initialize(TcfEuV2Field.LAST_UPDATED, new EncodableDatetime());
     initialize(TcfEuV2Field.CMP_ID, new EncodableFixedInteger(12, 0));
     initialize(TcfEuV2Field.CMP_VERSION, new EncodableFixedInteger(12, 0));
     initialize(TcfEuV2Field.CONSENT_SCREEN, new EncodableFixedInteger(6, 0));

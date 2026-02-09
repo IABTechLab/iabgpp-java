@@ -21,7 +21,7 @@ public final class TcfCaV1PublisherPurposesSegment extends AbstractBase64Segment
 
       @Override
       public int getAsInt() {
-        return numCustomPurposes.getValue();
+        return (Integer) TcfCaV1PublisherPurposesSegment.this.getFieldValueUnsafe(TcfCaV1Field.NUM_CUSTOM_PURPOSES);
       }
 
     };

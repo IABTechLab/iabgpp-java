@@ -11,26 +11,27 @@ public final class EncodableFixedBitfield extends AbstractDirtyableBitStringData
   private final int numElements;
 
   public EncodableFixedBitfield(int numElements) {
-    super(true);
     this.numElements = numElements;
   }
 
   @Override
-  protected IntegerSet getDefaultValue() {
+  protected IntegerSet initialize() {
     return new IntegerSet(numElements);
   }
 
-  public void encode(BitString builder) {
+  @Override
+  protected void encode(BitString builder, IntegerSet value) {
     try {
-      FixedBitfieldEncoder.encode(builder, this.getValue(), this.numElements);
+      FixedBitfieldEncoder.encode(builder, value, this.numElements);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(BitString reader) {
+  @Override
+  protected IntegerSet decode(BitString reader) {
     try {
-      this.value = reader.readIntegerSet(this.numElements);
+      return reader.readIntegerSet(this.numElements);
     } catch (Exception e) {
       throw new DecodingException(e);
     }
@@ -38,9 +39,9 @@ public final class EncodableFixedBitfield extends AbstractDirtyableBitStringData
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object newValue) {
-    IntegerSet value = this.getValue();
-    value.clear();
-    value.addAll((Collection<Integer>) newValue);
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

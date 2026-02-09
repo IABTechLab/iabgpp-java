@@ -21,18 +21,15 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
   });
 
   protected final FieldNames<E> fieldNames;
-  private final Object[] values;
+  private final Object[] types;
+  protected final Object[] values;
+  private boolean dirty;
 
   protected AbstractLazilyEncodableSegment(FieldNames<E> fieldNames) {
     this.fieldNames = fieldNames;
     this.values = new Object[fieldNames.size()];
-  }
-
-
-  @Override
-  public final DataType<?> getField(E fieldName) {
-    ensureDecode();
-    return get(fieldName);
+    // TODO: move to FieldNames
+    this.types = new Object[fieldNames.size()];
   }
 
   @Override
@@ -45,12 +42,12 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     if (index == null) {
       throw new IllegalArgumentException("invalid key "+ key);
     }
-    values[index] = value;
+    types[index] = value;
   }
 
   @SuppressWarnings("unchecked")
   protected final T get(int index) {
-    return (T) values[index];
+    return (T) types[index];
   }
 
   protected final T get(E key) {
@@ -62,11 +59,18 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
   }
 
   @Override
+  public final boolean hasField(E key) {
+    return get(key) != null;
+  }
+
+  @Override
   public final boolean isDirty() {
+    if (dirty) {
+      return dirty;
+    }
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      T value = get(i);
-      if (value != null && value.isDirty()) {
+      if (get(i).isDirty(values, i)) {
         return true;
       }
     }
@@ -75,34 +79,39 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
 
   @Override
   public final void setDirty(boolean dirty) {
+    this.dirty = dirty;
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      T value = get(i);
-      if (value != null) {
-        value.setDirty(dirty);
-      }
+      get(i).setDirty(values, i, dirty);
     }
   }
 
   @Override
-  public Object getFieldValue(E fieldName) {
+  public final Object getFieldValue(E fieldName) {
     ensureDecode();
-
-    DataType<?> field = this.get(fieldName);
-    if (field != null) {
-      return field.getValue();
+    return getFieldValueUnsafe(fieldName);
+  }
+  
+  protected final Object getFieldValueUnsafe(E fieldName) {
+    Integer index = fieldNames.getIndex(fieldName);
+    if (index != null) {
+      return get(index).get(values, index);
     } else {
       throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
     }
   }
 
   @Override
-  public void setFieldValue(E fieldName, Object value) {
+  public final void setFieldValue(E fieldName, Object value) {
     ensureDecode();
+    setFieldValueUnsafe(fieldName, value);
+  }
 
-    DataType<?> field = this.get(fieldName);
-    if (field != null) {
-      field.setValue(value);
+  protected final void setFieldValueUnsafe(E fieldName, Object value) {
+    Integer index = fieldNames.getIndex(fieldName);
+    if (index != null) {
+      get(index).set(values, index, value);
+      dirty = true;
     } else {
       throw new InvalidFieldException(fieldName + " not found");
     }
@@ -116,7 +125,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
       E field = fieldNames.get(i);
-      sb.append(", ").append(field.getName()).append('=').append(get(field));
+      sb.append(", ").append(field.getName()).append('=').append(values[i]);
     }
     sb.append('}');
     return sb.toString();

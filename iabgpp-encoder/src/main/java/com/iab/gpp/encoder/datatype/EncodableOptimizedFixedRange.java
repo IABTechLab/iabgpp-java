@@ -9,26 +9,24 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public final class EncodableOptimizedFixedRange extends AbstractDirtyableBitStringDataType<IntegerSet> {
 
-  public EncodableOptimizedFixedRange() {
-    super(true);
-  }
-
   @Override
-  protected IntegerSet getDefaultValue() {
+  protected IntegerSet initialize() {
     return new IntegerSet();
   }
 
-  public void encode(BitString builder) {
+  @Override
+  protected void encode(BitString builder, IntegerSet value) {
     try {
-      OptimizedFixedRangeEncoder.encode(builder, this.getValue());
+      OptimizedFixedRangeEncoder.encode(builder, value);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(BitString reader) {
+  @Override
+  protected IntegerSet decode(BitString reader) {
     try {
-      this.value = OptimizedFixedRangeEncoder.decode(reader);
+      return OptimizedFixedRangeEncoder.decode(reader);
     } catch (Exception e) {
       throw new DecodingException(e);
     }
@@ -36,9 +34,9 @@ public final class EncodableOptimizedFixedRange extends AbstractDirtyableBitStri
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object newValue) {
-    IntegerSet value = this.getValue();
-    value.clear();
-    value.addAll((Collection<Integer>) newValue);
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

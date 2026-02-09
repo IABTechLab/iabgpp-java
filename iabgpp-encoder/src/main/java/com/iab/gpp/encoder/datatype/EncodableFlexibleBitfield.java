@@ -9,29 +9,30 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public final class EncodableFlexibleBitfield extends AbstractDirtyableBitStringDataType<IntegerSet> {
 
-  private IntSupplier getLengthSupplier;
+  private final IntSupplier getLengthSupplier;
 
   public EncodableFlexibleBitfield(IntSupplier getLengthSupplier) {
-    super(true);
     this.getLengthSupplier = getLengthSupplier;
   }
 
   @Override
-  protected IntegerSet getDefaultValue() {
+  protected IntegerSet initialize() {
     return new IntegerSet();
   }
 
-  public void encode(BitString builder) {
+  @Override
+  protected void encode(BitString builder, IntegerSet value) {
     try {
-      FixedBitfieldEncoder.encode(builder, this.getValue(), this.getLengthSupplier.getAsInt());
+      FixedBitfieldEncoder.encode(builder, value, this.getLengthSupplier.getAsInt());
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(BitString reader) {
+  @Override
+  protected IntegerSet decode(BitString reader) {
     try {
-      this.value = reader.readIntegerSet(getLengthSupplier.getAsInt());
+      return reader.readIntegerSet(getLengthSupplier.getAsInt());
     } catch (Exception e) {
       throw new DecodingException(e);
     }
@@ -40,9 +41,9 @@ public final class EncodableFlexibleBitfield extends AbstractDirtyableBitStringD
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object newValue) {
-    IntegerSet value = this.getValue();
-    value.clear();
-    value.addAll((Collection<Integer>) newValue);
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

@@ -8,31 +8,32 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringDataType<FixedIntegerList> {
 
-  private int elementBitStringLength;
-  private int numElements;
+  private final int elementBitStringLength;
+  private final int numElements;
 
   public EncodableFixedIntegerList(int elementBitStringLength, int numElements) {
-    super(true);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = numElements;
   }
 
   @Override
-  protected FixedIntegerList getDefaultValue() {
+  protected FixedIntegerList initialize() {
     return new FixedIntegerList(elementBitStringLength, numElements);
   }
 
-  public void encode(BitString builder) {
+  @Override
+  protected void encode(BitString builder, FixedIntegerList value) {
     try {
-      FixedIntegerListEncoder.encode(builder, this.getValue(), this.elementBitStringLength, this.numElements);
+      FixedIntegerListEncoder.encode(builder, value, this.elementBitStringLength, this.numElements);
     } catch (Exception e) {
       throw new EncodingException(e);
     }
   }
 
-  public void decode(BitString reader) {
+  @Override
+  protected FixedIntegerList decode(BitString reader) {
     try {
-      this.value = reader.readFixedIntegerList(elementBitStringLength, numElements);
+      return reader.readFixedIntegerList(elementBitStringLength, numElements);
     } catch (Exception e) {
       throw new DecodingException(e);
     }
@@ -40,14 +41,12 @@ public final class EncodableFixedIntegerList extends AbstractDirtyableBitStringD
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object newValue) {
-    FixedIntegerList value = this.getValue();
+  protected FixedIntegerList processValue(FixedIntegerList oldValue, Object newValue) {
     List<Integer> list = (List<Integer>) newValue;
     int size = list.size();
     for (int i = 0; i < numElements; i++) {
-      value.set(i, i < size ? list.get(i) : 0);
+      oldValue.set(i, i < size ? list.get(i) : 0);
     }
-    // call validator
-    super.setValue(value);
+    return oldValue;
   }
 }

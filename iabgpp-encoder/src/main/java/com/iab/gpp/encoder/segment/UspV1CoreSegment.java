@@ -20,10 +20,10 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1
   @Override
   protected CharSequence doEncode() {
     StringBuilder str = new StringBuilder();
-    str.append(get(UspV1Field.VERSION).getValue());
-    str.append(get(UspV1Field.NOTICE).getValue());
-    str.append(get(UspV1Field.OPT_OUT_SALE).getValue());
-    str.append(get(UspV1Field.LSPA_COVERED).getValue());
+    str.append(getFieldValue(UspV1Field.VERSION));
+    str.append(getFieldValue(UspV1Field.NOTICE));
+    str.append(getFieldValue(UspV1Field.OPT_OUT_SALE));
+    str.append(getFieldValue(UspV1Field.LSPA_COVERED));
     return str;
   }
 
@@ -34,10 +34,10 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1
     }
 
     try {
-      get(UspV1Field.VERSION).setValue((int)(encodedString.charAt(0) - '0'));
-      get(UspV1Field.NOTICE).setValue(encodedString.charAt(1));
-      get(UspV1Field.OPT_OUT_SALE).setValue(encodedString.charAt(2));
-      get(UspV1Field.LSPA_COVERED).setValue(encodedString.charAt(3));
+      setFieldValueUnsafe(UspV1Field.VERSION, (int)(encodedString.charAt(0) - '0'));
+      setFieldValueUnsafe(UspV1Field.NOTICE, encodedString.charAt(1));
+      setFieldValueUnsafe(UspV1Field.OPT_OUT_SALE, encodedString.charAt(2));
+      setFieldValueUnsafe(UspV1Field.LSPA_COVERED, encodedString.charAt(3));
     } catch (Exception e) {
       throw new DecodingException("Unable to decode UspV1CoreSegment '" + encodedString + "'", e);
     }

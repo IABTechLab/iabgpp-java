@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import java.time.Instant;
 import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
@@ -16,10 +15,9 @@ public final class TcfCaV1CoreSegment extends AbstractBase64Segment<TcfCaV1Field
   public TcfCaV1CoreSegment() {
     super(TcfCaV1Field.TCFCAV1_CORE_SEGMENT_FIELD_NAMES);
     // NOTE: TcfCaV1.onSet records modifications
-    Instant date = Instant.EPOCH;
     initialize(TcfCaV1Field.VERSION, new EncodableFixedInteger(6, TcfCaV1.VERSION));
-    initialize(TcfCaV1Field.CREATED, new EncodableDatetime(date));
-    initialize(TcfCaV1Field.LAST_UPDATED, new EncodableDatetime(date));
+    initialize(TcfCaV1Field.CREATED, new EncodableDatetime());
+    initialize(TcfCaV1Field.LAST_UPDATED, new EncodableDatetime());
     initialize(TcfCaV1Field.CMP_ID, new EncodableFixedInteger(12, 0));
     initialize(TcfCaV1Field.CMP_VERSION, new EncodableFixedInteger(12, 0));
     initialize(TcfCaV1Field.CONSENT_SCREEN, new EncodableFixedInteger(6, 0));

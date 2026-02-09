@@ -23,7 +23,7 @@ public final class TcfEuV2PublisherPurposesSegment extends AbstractBase64Segment
 
       @Override
       public int getAsInt() {
-        return numCustomPurposes.getValue();
+        return (Integer) TcfEuV2PublisherPurposesSegment.this.getFieldValueUnsafe(TcfEuV2Field.NUM_CUSTOM_PURPOSES);
       }
 
     };

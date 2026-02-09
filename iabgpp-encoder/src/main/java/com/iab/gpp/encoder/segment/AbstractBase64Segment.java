@@ -26,7 +26,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
     for (int i = 0; i < size; i++) {
       AbstractEncodableBitStringDataType<?> field = get(i);
       if (field != null) {
-        field.encode(bitString);
+        field.encode(bitString, values, i);
       } else {
         throw new EncodingException("Field not found: '" + fieldNames.get(i) + "'");
       }
@@ -44,7 +44,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
         AbstractEncodableBitStringDataType<?> field = get(i);
         if (field != null) {
           try {
-            field.decode(bitString);
+            field.decode(bitString, values, i);
           } catch (Exception e) {
             throw new DecodingException("Unable to decode " + fieldNames.get(i), e);
           }
