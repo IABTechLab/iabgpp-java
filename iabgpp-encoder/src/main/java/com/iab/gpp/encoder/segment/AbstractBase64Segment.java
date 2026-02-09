@@ -3,13 +3,13 @@ package com.iab.gpp.encoder.segment;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.datatype.AbstractEncodableBitStringDataType;
+import com.iab.gpp.encoder.datatype.DataType;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
 
-abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends AbstractLazilyEncodableSegment<E, AbstractEncodableBitStringDataType<?>> {
+abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends AbstractLazilyEncodableSegment<E> {
   
   protected AbstractBase64Segment(FieldNames<E> fieldNames) {
     super(fieldNames);
@@ -24,7 +24,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
     BitString bitString = new BitString();
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      AbstractEncodableBitStringDataType<?> field = get(i);
+      DataType<?> field = get(i);
       if (field != null) {
         field.encode(bitString, values, i);
       } else {
@@ -41,7 +41,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
       BitString bitString = decodeBitString(encodedString);
       int size = fieldNames.size();
       for (int i = 0; i < size; i++) {
-        AbstractEncodableBitStringDataType<?> field = get(i);
+        DataType<?> field = get(i);
         if (field != null) {
           try {
             field.decode(bitString, values, i);

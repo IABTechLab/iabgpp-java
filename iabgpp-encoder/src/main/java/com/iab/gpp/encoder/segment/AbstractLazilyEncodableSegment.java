@@ -7,7 +7,7 @@ import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
 
-abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T extends DataType<?>> extends EncodableSegment<E> {
+abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> extends EncodableSegment<E> {
 
   protected static final Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
   protected static final Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
@@ -37,7 +37,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     return fieldNames.resolveKey(fieldName);
   }
 
-  protected final void initialize(E key, T value) {
+  protected final void initialize(E key, DataType<?> value) {
     Integer index = fieldNames.getIndex(key);
     if (index == null) {
       throw new IllegalArgumentException("invalid key "+ key);
@@ -45,12 +45,11 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey, T ex
     types[index] = value;
   }
 
-  @SuppressWarnings("unchecked")
-  protected final T get(int index) {
-    return (T) types[index];
+  protected final DataType<?> get(int index) {
+    return (DataType<?>) types[index];
   }
 
-  protected final T get(E key) {
+  protected final DataType<?> get(E key) {
     Integer index = fieldNames.getIndex(key);
     if (index != null) {
       return get(index);

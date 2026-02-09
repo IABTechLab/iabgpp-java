@@ -8,16 +8,18 @@ public abstract class AbstractEncodableBitStringDataType<T> extends DataType<T> 
     this.validator = validator;
     return this;
   }
-  
+
+  @Override
   public final void encode(BitString writer, Object[] values, int index) {
     encode(writer, get(values, index));
   }
-  
+
   protected abstract void encode(BitString writer, T value);
 
+  @Override
   public final void decode(BitString reader, Object[] values, int index) {
     values[index] = decode(reader);
   }
-  
+
   protected abstract T decode(BitString reader);
 }

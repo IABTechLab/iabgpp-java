@@ -3,6 +3,7 @@ package com.iab.gpp.encoder.datatype;
 import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.ValidationException;
 
 public abstract class DataType<T> {
@@ -33,6 +34,14 @@ public abstract class DataType<T> {
 
   public void setDirty(Object[] values, int index, boolean dirty) {
     // pass
+  }
+
+  public void encode(BitString writer, Object[] values, int index) {
+    throw new UnsupportedOperationException("type does not permit bit string encoding");
+  }
+
+  public void decode(BitString reader, Object[] values, int index) {
+    throw new UnsupportedOperationException("type does not permit bit string decoding");
   }
 
   @SuppressWarnings("unchecked")
