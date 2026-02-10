@@ -1,12 +1,10 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsCtField;
 import com.iab.gpp.encoder.segment.Base64Segment;
 
-public class UsCt extends EncodableSection<UsCtField> {
+public class UsCt extends AbstractUsSectionWithGpc<UsCtField> {
 
   public static final int ID = 12;
   public static final int VERSION = 1;
@@ -37,34 +35,9 @@ public class UsCt extends EncodableSection<UsCtField> {
   }
 
   @Override
-  protected void doDecode(CharSequence encodedString) {
-    List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-    int numEncodedSegments = encodedSegments.size();
-
-    if (numEncodedSegments > 0) {
-      getSegment(0).decode(encodedSegments.get(0));
-    }
-
-    if (numEncodedSegments > 1) {
-      getSegment(1).setFieldValue(UsCtField.GPC_SEGMENT_INCLUDED, true);
-      getSegment(1).decode(encodedSegments.get(1));
-    } else {
-      getSegment(1).setFieldValue(UsCtField.GPC_SEGMENT_INCLUDED, false);
-    }
+  protected final UsCtField getGpcSegmentIncludedKey() {
+    return UsCtField.GPC_SEGMENT_INCLUDED;
   }
-
-  @Override
-  protected CharSequence doEncode() {
-    List<CharSequence> encodedSegments = new ArrayList<>(size());
-
-    encodedSegments.add(getSegment(0).encodeCharSequence());
-    if(size() >= 2 && getSegment(1).getFieldValue(UsCtField.GPC_SEGMENT_INCLUDED).equals(true)) {
-      encodedSegments.add(getSegment(1).encodeCharSequence());
-    }
-
-    return SlicedCharSequence.join('.',  encodedSegments);
-  }
-
 
   public Integer getSharingNotice() {
     return (Integer) this.getFieldValue(UsCtField.SHARING_NOTICE);
@@ -108,10 +81,6 @@ public class UsCt extends EncodableSection<UsCtField> {
 
   public Integer getGpcSegmentType() {
     return (Integer) this.getFieldValue(UsCtField.GPC_SEGMENT_TYPE);
-  }
-
-  public Boolean getGpcSegmentIncluded() {
-    return (Boolean) this.getFieldValue(UsCtField.GPC_SEGMENT_INCLUDED);
   }
 
   public Boolean getGpc() {

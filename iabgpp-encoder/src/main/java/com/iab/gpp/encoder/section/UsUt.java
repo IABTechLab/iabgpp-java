@@ -4,7 +4,7 @@ import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsUtField;
 import com.iab.gpp.encoder.segment.Base64Segment;
 
-public class UsUt extends EncodableSection<UsUtField> {
+public class UsUt extends AbstractUsSection<UsUtField> {
 
   public static final int ID = 11;
   public static final int VERSION = 1;

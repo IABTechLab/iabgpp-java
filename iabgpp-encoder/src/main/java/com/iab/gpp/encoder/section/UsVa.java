@@ -4,7 +4,7 @@ import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsVaField;
 import com.iab.gpp.encoder.segment.Base64Segment;
 
-public class UsVa extends EncodableSection<UsVaField> {
+public class UsVa extends AbstractUsSection<UsVaField> {
 
   public static final int ID = 9;
   public static final int VERSION = 1;

@@ -1,12 +1,10 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsNeField;
 import com.iab.gpp.encoder.segment.Base64Segment;
 
-public class UsNe extends EncodableSection<UsNeField> {
+public class UsNe extends AbstractUsSectionWithGpc<UsNeField> {
 
   public static final int ID = 19;
   public static final int VERSION = 1;
@@ -37,32 +35,8 @@ public class UsNe extends EncodableSection<UsNeField> {
   }
 
   @Override
-  protected void doDecode(CharSequence encodedString) {
-    List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-    int numEncodedSegments = encodedSegments.size();
-
-    if (numEncodedSegments > 0) {
-      getSegment(0).decode(encodedSegments.get(0));
-    }
-
-    if (numEncodedSegments > 1) {
-      getSegment(1).setFieldValue(UsNeField.GPC_SEGMENT_INCLUDED, true);
-      getSegment(1).decode(encodedSegments.get(1));
-    } else {
-      getSegment(1).setFieldValue(UsNeField.GPC_SEGMENT_INCLUDED, false);
-    }
-  }
-
-  @Override
-  protected CharSequence doEncode() {
-    List<CharSequence> encodedSegments = new ArrayList<>(size());
-
-    encodedSegments.add(getSegment(0).encodeCharSequence());
-    if(size() >= 2 && getSegment(1).getFieldValue(UsNeField.GPC_SEGMENT_INCLUDED).equals(true)) {
-      encodedSegments.add(getSegment(1).encodeCharSequence());
-    }
-
-    return SlicedCharSequence.join('.',  encodedSegments);
+  protected final UsNeField getGpcSegmentIncludedKey() {
+    return UsNeField.GPC_SEGMENT_INCLUDED;
   }
 
 
@@ -112,10 +86,6 @@ public class UsNe extends EncodableSection<UsNeField> {
 
   public Integer getGpcSegmentType() {
     return (Integer) this.getFieldValue(UsNeField.GPC_SEGMENT_TYPE);
-  }
-
-  public Boolean getGpcSegmentIncluded() {
-    return (Boolean) this.getFieldValue(UsNeField.GPC_SEGMENT_INCLUDED);
   }
 
   public Boolean getGpc() {
