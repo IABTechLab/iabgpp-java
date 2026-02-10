@@ -9,9 +9,6 @@ public final class UsNjGpcSegment extends AbstractBase64Segment<UsNjField> {
 
   public UsNjGpcSegment() {
     super(UsNjField.USNJ_GPC_SEGMENT_FIELD_NAMES);
-    initialize(UsNjField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    initialize(UsNjField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
-    initialize(UsNjField.GPC, new EncodableBoolean(false));
   }
 
 }

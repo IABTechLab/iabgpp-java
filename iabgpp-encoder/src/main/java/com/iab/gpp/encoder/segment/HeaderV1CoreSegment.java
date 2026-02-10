@@ -9,9 +9,6 @@ public final class HeaderV1CoreSegment extends AbstractBase64Segment<HeaderV1Fie
 
   public HeaderV1CoreSegment() {
     super(HeaderV1Field.HEADER_CORE_SEGMENT_FIELD_NAMES);
-    initialize(HeaderV1Field.ID, new EncodableFixedInteger(6, HeaderV1.ID));
-    initialize(HeaderV1Field.VERSION, new EncodableFixedInteger(6, HeaderV1.VERSION));
-    initialize(HeaderV1Field.SECTION_IDS, new EncodableFibonacciIntegerRange());
   }
 
 }

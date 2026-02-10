@@ -1,22 +1,26 @@
 package com.iab.gpp.encoder.field;
 
 import java.util.LinkedHashMap;
+import com.iab.gpp.encoder.datatype.DataType;
 
 public final class FieldNames<E extends Enum<E> & FieldKey> {
 
   private final E[] keys;
   private final LinkedHashMap<FieldKey, E> map;
   private final Integer[] indices;
+  private final DataType<?>[] types;
 
   @SafeVarargs
   FieldNames(E... keys) {
     this.keys = keys;
     this.map = new LinkedHashMap<>();
     this.indices = new Integer[keys[0].getClass().getEnumConstants().length];
+    this.types = new DataType<?>[keys.length];
     for (int i = 0; i < keys.length; i++) {
       E key = keys[i];
       this.map.put(key, key);
       this.indices[key.ordinal()] = i;
+      this.types[i] = key.getType();
     }
   }
   
@@ -26,6 +30,10 @@ public final class FieldNames<E extends Enum<E> & FieldKey> {
   
   public E get(int i) {
     return keys[i];
+  }
+  
+  public DataType<?> getType(int i) {
+    return types[i];
   }
   
   public Integer getIndex(E key) {

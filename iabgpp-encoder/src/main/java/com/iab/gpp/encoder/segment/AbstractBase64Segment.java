@@ -24,9 +24,9 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
     BitString bitString = new BitString();
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      DataType<?> field = get(i);
+      DataType<?> field = fieldNames.getType(i);
       if (field != null) {
-        field.encode(bitString, values, i);
+        field.encode(bitString, values, i, this);
       } else {
         throw new EncodingException("Field not found: '" + fieldNames.get(i) + "'");
       }
@@ -41,10 +41,10 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
       BitString bitString = decodeBitString(encodedString);
       int size = fieldNames.size();
       for (int i = 0; i < size; i++) {
-        DataType<?> field = get(i);
+        DataType<?> field = fieldNames.getType(i);
         if (field != null) {
           try {
-            field.decode(bitString, values, i);
+            field.decode(bitString, values, i, this);
           } catch (Exception e) {
             throw new DecodingException("Unable to decode " + fieldNames.get(i), e);
           }

@@ -1,20 +1,32 @@
 package com.iab.gpp.encoder.field;
 
+import com.iab.gpp.encoder.datatype.DataType;
+import com.iab.gpp.encoder.datatype.UnencodableCharacter;
+import com.iab.gpp.encoder.datatype.UnencodableInteger;
+import com.iab.gpp.encoder.section.UspV1;
+
 public enum UspV1Field implements FieldKey {
-  VERSION("Version"),
-  NOTICE("Notice"),
-  OPT_OUT_SALE("OptOutSale"),
-  LSPA_COVERED("LspaCovered");
+  VERSION("Version", new UnencodableInteger(UspV1.VERSION)),
+  NOTICE("Notice", new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-'))),
+  OPT_OUT_SALE("OptOutSale", new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-'))),
+  LSPA_COVERED("LspaCovered", new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
 
-  private String name;
+  private final String name;
+  private final DataType<?> type;
 
-  UspV1Field(String name) {
+  UspV1Field(String name, DataType<?> type) {
     this.name = name;
+    this.type = type;
   }
 
   @Override
   public String getName() {
     return name;
+  }
+
+  @Override
+  public DataType<?> getType() {
+    return type;
   }
 
   //@formatter:off

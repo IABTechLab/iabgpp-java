@@ -10,38 +10,6 @@ public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
 
   public UsNatCoreSegment() {
     super(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES);
-    initialize(UsNatField.VERSION, new EncodableFixedInteger(6, UsNat.VERSION));
-    initialize(UsNatField.SHARING_NOTICE,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.SALE_OPT_OUT_NOTICE,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.SHARING_OPT_OUT_NOTICE,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.SALE_OPT_OUT,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.SHARING_OPT_OUT,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.TARGETED_ADVERTISING_OPT_OUT,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.SENSITIVE_DATA_PROCESSING,
-        new EncodableFixedIntegerList(2, 16)
-            .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    initialize(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, new EncodableFixedIntegerList(2, 3)
-        .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    initialize(UsNatField.PERSONAL_DATA_CONSENTS,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.MSPA_COVERED_TRANSACTION,
-        new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.MSPA_OPT_OUT_OPTION_MODE,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    initialize(UsNatField.MSPA_SERVICE_PROVIDER_MODE,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
   }
 
   @Override

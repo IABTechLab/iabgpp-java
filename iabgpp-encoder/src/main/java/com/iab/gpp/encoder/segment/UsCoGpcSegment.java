@@ -9,9 +9,6 @@ public final class UsCoGpcSegment extends AbstractBase64Segment<UsCoField> {
 
   public UsCoGpcSegment() {
     super(UsCoField.USCO_GPC_SEGMENT_FIELD_NAMES);
-    initialize(UsCoField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    initialize(UsCoField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
-    initialize(UsCoField.GPC, new EncodableBoolean(false));
   }
 
 }

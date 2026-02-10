@@ -10,10 +10,6 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1
 
   public UspV1CoreSegment() {
     super(UspV1Field.USPV1_CORE_SEGMENT_FIELD_NAMES);
-    initialize(UspV1Field.VERSION, new UnencodableInteger(UspV1.VERSION));
-    initialize(UspV1Field.NOTICE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
-    initialize(UspV1Field.OPT_OUT_SALE, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
-    initialize(UspV1Field.LSPA_COVERED, new UnencodableCharacter('-', (v -> v == 'Y' || v == 'N' || v == '-')));
   }
 
   @Override

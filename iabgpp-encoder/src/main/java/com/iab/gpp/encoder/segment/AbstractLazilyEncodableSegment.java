@@ -9,27 +9,13 @@ import com.iab.gpp.encoder.field.FieldNames;
 
 abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> extends EncodableSegment<E> {
 
-  protected static final Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
-  protected static final Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
-  protected static final Predicate<FixedIntegerList> nullableBooleanAsTwoBitIntegerListValidator = (l -> {
-    for (int n : l) {
-      if (n < 0 || n > 2) {
-        return false;
-      }
-    }
-    return true;
-  });
-
   protected final FieldNames<E> fieldNames;
-  private final Object[] types;
   protected final Object[] values;
   private boolean dirty;
 
   protected AbstractLazilyEncodableSegment(FieldNames<E> fieldNames) {
     this.fieldNames = fieldNames;
     this.values = new Object[fieldNames.size()];
-    // TODO: move to FieldNames
-    this.types = new Object[fieldNames.size()];
   }
 
   @Override
@@ -37,29 +23,17 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     return fieldNames.resolveKey(fieldName);
   }
 
-  protected final void initialize(E key, DataType<?> value) {
-    Integer index = fieldNames.getIndex(key);
-    if (index == null) {
-      throw new IllegalArgumentException("invalid key "+ key);
-    }
-    types[index] = value;
-  }
-
-  protected final DataType<?> get(int index) {
-    return (DataType<?>) types[index];
-  }
-
   protected final DataType<?> get(E key) {
     Integer index = fieldNames.getIndex(key);
     if (index != null) {
-      return get(index);
+      return fieldNames.getType(index);
     }
     return null;
   }
 
   @Override
   public final boolean hasField(E key) {
-    return get(key) != null;
+    return fieldNames.getIndex(key) != null;
   }
 
   @Override
@@ -69,7 +43,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     }
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      if (get(i).isDirty(values, i)) {
+      if (fieldNames.getType(i).isDirty(values, i)) {
         return true;
       }
     }
@@ -81,7 +55,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     this.dirty = dirty;
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      get(i).setDirty(values, i, dirty);
+      fieldNames.getType(i).setDirty(values, i, dirty);
     }
   }
 
@@ -94,7 +68,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
   protected final Object getFieldValueUnsafe(E fieldName) {
     Integer index = fieldNames.getIndex(fieldName);
     if (index != null) {
-      return get(index).get(values, index);
+      return fieldNames.getType(index).get(values, index);
     } else {
       throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
     }
@@ -109,7 +83,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
   protected final void setFieldValueUnsafe(E fieldName, Object value) {
     Integer index = fieldNames.getIndex(fieldName);
     if (index != null) {
-      get(index).set(values, index, value);
+      fieldNames.getType(index).set(values, index, value);
       dirty = true;
     } else {
       throw new InvalidFieldException(fieldName + " not found");

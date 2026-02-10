@@ -9,9 +9,6 @@ public final class UsOrGpcSegment extends AbstractBase64Segment<UsOrField> {
 
   public UsOrGpcSegment() {
     super(UsOrField.USOR_GPC_SEGMENT_FIELD_NAMES);
-    initialize(UsOrField.GPC_SEGMENT_TYPE, new EncodableFixedInteger(2, 1));
-    initialize(UsOrField.GPC_SEGMENT_INCLUDED, new UnencodableBoolean(true));
-    initialize(UsOrField.GPC, new EncodableBoolean(false));
   }
 
 }
