@@ -3,7 +3,6 @@ package com.iab.gpp.encoder.section;
 import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.field.FieldKey;
-import com.iab.gpp.encoder.field.UsNeField;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 
 public abstract class AbstractUsSectionWithGpc<E extends Enum<E> & FieldKey> extends AbstractUsSection<E> {
