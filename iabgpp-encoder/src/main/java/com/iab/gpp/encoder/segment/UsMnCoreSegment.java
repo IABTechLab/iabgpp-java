@@ -1,8 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
@@ -10,26 +7,30 @@ import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
-import com.iab.gpp.encoder.field.UsNeField;
-import com.iab.gpp.encoder.section.UsNe;
+import com.iab.gpp.encoder.field.UsMnField;
+import com.iab.gpp.encoder.section.UsMn;
 
-public class UsNeCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+
+public class UsMnCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
 
   private AbstractBase64UrlEncoder base64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
   private BitStringEncoder bitStringEncoder = BitStringEncoder.getInstance();
 
-  public UsNeCoreSegment() {
+  public UsMnCoreSegment() {
     super();
   }
 
-  public UsNeCoreSegment(String encodedString) {
+  public UsMnCoreSegment(String encodedString) {
     super();
     this.decode(encodedString);
   }
 
   @Override
   public List<String> getFieldNames() {
-    return UsNeField.USNE_CORE_SEGMENT_FIELD_NAMES;
+    return UsMnField.USMN_CORE_SEGMENT_FIELD_NAMES;
   }
 
   @Override
@@ -46,29 +47,29 @@ public class UsNeCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
     });
 
     EncodableBitStringFields fields = new EncodableBitStringFields();
-    fields.put(UsNeField.VERSION, new EncodableFixedInteger(6, UsNe.VERSION));
-    fields.put(UsNeField.PROCESSING_NOTICE,
+    fields.put(UsMnField.VERSION, new EncodableFixedInteger(6, UsMn.VERSION));
+    fields.put(UsMnField.PROCESSING_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNeField.SALE_OPT_OUT_NOTICE,
+    fields.put(UsMnField.SALE_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNeField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+    fields.put(UsMnField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNeField.SALE_OPT_OUT,
+    fields.put(UsMnField.SALE_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNeField.TARGETED_ADVERTISING_OPT_OUT,
+    fields.put(UsMnField.TARGETED_ADVERTISING_OPT_OUT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNeField.SENSITIVE_DATA_PROCESSING,
+    fields.put(UsMnField.SENSITIVE_DATA_PROCESSING,
         new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsNeField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+    fields.put(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+            new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+    fields.put(UsMnField.ADDITIONAL_DATA_PROCESSING_CONSENT,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNeField.ADDITIONAL_DATA_PROCESSING_CONSENT,
-        new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNeField.MSPA_COVERED_TRANSACTION,
+    fields.put(UsMnField.MSPA_COVERED_TRANSACTION,
         new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNeField.MSPA_OPT_OUT_OPTION_MODE,
+    fields.put(UsMnField.MSPA_OPT_OUT_OPTION_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
-    fields.put(UsNeField.MSPA_SERVICE_PROVIDER_MODE,
+    fields.put(UsMnField.MSPA_SERVICE_PROVIDER_MODE,
         new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
     return fields;
   }
@@ -89,7 +90,7 @@ public class UsNeCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
       String bitString = base64UrlEncoder.decode(encodedString);
       bitStringEncoder.decode(bitString, getFieldNames(), fields);
     } catch (Exception e) {
-      throw new DecodingException("Unable to decode UsNeCoreSegment '" + encodedString + "'", e);
+      throw new DecodingException("Unable to decode UsMnCoreSegment '" + encodedString + "'", e);
     }
   }
 

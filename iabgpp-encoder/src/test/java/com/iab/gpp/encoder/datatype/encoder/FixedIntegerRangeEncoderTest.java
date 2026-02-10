@@ -132,6 +132,6 @@ public class FixedIntegerRangeEncoderTest {
   @Test
   public void testGiantRange() {
     String max = FibonacciIntegerEncoder.encode(FibonacciIntegerRangeEncoder.MAX_SIZE + 1);
-    Assertions.assertEquals(List.of(), FixedIntegerRangeEncoder.decode("00000000000110000000000000001" + max));
+    Assertions.assertEquals(new ArrayList<>(), FixedIntegerRangeEncoder.decode("00000000000110000000000000001" + max));
   }
 }
