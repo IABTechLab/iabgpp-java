@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsDeField;
-import com.iab.gpp.encoder.segment.UsDeCoreSegment;
-import com.iab.gpp.encoder.segment.UsDeGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsDe extends EncodableSection<UsDeField> {
 
@@ -14,7 +13,7 @@ public class UsDe extends EncodableSection<UsDeField> {
   public static final String NAME = "usde";
 
   public UsDe() {
-    super(new UsDeCoreSegment(), new UsDeGpcSegment());
+    super(new Base64Segment<>(UsDeField.USDE_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsDeField.USDE_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsDe(CharSequence encodedString) {

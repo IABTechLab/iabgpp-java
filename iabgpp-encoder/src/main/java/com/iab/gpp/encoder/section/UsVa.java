@@ -2,7 +2,7 @@ package com.iab.gpp.encoder.section;
 
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsVaField;
-import com.iab.gpp.encoder.segment.UsVaCoreSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsVa extends EncodableSection<UsVaField> {
 
@@ -11,7 +11,7 @@ public class UsVa extends EncodableSection<UsVaField> {
   public static final String NAME = "usva";
 
   public UsVa() {
-    super(new UsVaCoreSegment());
+    super(new Base64Segment<>(UsVaField.USVA_CORE_SEGMENT_FIELD_NAMES));
   }
 
   public UsVa(CharSequence encodedString) {

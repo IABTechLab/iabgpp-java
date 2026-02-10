@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsNhField;
-import com.iab.gpp.encoder.segment.UsNhCoreSegment;
-import com.iab.gpp.encoder.segment.UsNhGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsNh extends EncodableSection<UsNhField> {
 
@@ -14,7 +13,7 @@ public class UsNh extends EncodableSection<UsNhField> {
   public static final String NAME = "usnh";
 
   public UsNh() {
-    super(new UsNhCoreSegment(), new UsNhGpcSegment());
+    super(new Base64Segment<>(UsNhField.USNH_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsNhField.USNH_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsNh(CharSequence encodedString) {

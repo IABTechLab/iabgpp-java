@@ -2,7 +2,7 @@ package com.iab.gpp.encoder.section;
 
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsUtField;
-import com.iab.gpp.encoder.segment.UsUtCoreSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsUt extends EncodableSection<UsUtField> {
 
@@ -11,7 +11,7 @@ public class UsUt extends EncodableSection<UsUtField> {
   public static final String NAME = "usut";
 
   public UsUt() {
-    super(new UsUtCoreSegment());
+    super(new Base64Segment<>(UsUtField.USUT_CORE_SEGMENT_FIELD_NAMES));
   }
 
   public UsUt(CharSequence encodedString) {

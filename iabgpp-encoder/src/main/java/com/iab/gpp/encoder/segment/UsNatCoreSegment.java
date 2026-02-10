@@ -1,5 +1,7 @@
 package com.iab.gpp.encoder.segment;
 
+import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
+import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.field.UsNatField;
 
@@ -7,6 +9,10 @@ public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
 
   public UsNatCoreSegment() {
     super(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES);
+  }
+
+  protected AbstractBase64UrlEncoder getBase64UrlEncoder() {
+    return TraditionalBase64UrlEncoder.getInstance();
   }
 
   @Override

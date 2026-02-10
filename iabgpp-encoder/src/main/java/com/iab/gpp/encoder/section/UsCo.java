@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsCoField;
-import com.iab.gpp.encoder.segment.UsCoCoreSegment;
-import com.iab.gpp.encoder.segment.UsCoGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsCo extends EncodableSection<UsCoField> {
 
@@ -14,7 +13,7 @@ public class UsCo extends EncodableSection<UsCoField> {
   public static final String NAME = "usco";
 
   public UsCo() {
-    super(new UsCoCoreSegment(), new UsCoGpcSegment());
+    super(new Base64Segment<>(UsCoField.USCO_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsCoField.USCO_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsCo(CharSequence encodedString) {

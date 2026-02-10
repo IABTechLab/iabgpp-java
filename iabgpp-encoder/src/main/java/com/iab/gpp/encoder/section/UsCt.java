@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsCtField;
-import com.iab.gpp.encoder.segment.UsCtCoreSegment;
-import com.iab.gpp.encoder.segment.UsCtGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsCt extends EncodableSection<UsCtField> {
 
@@ -14,7 +13,7 @@ public class UsCt extends EncodableSection<UsCtField> {
   public static final String NAME = "usct";
 
   public UsCt() {
-    super(new UsCtCoreSegment(), new UsCtGpcSegment());
+    super(new Base64Segment<>(UsCtField.USCT_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsCtField.USCT_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsCt(CharSequence encodedString) {

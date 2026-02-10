@@ -2,7 +2,7 @@ package com.iab.gpp.encoder.section;
 
 import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.field.HeaderV1Field;
-import com.iab.gpp.encoder.segment.HeaderV1CoreSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class HeaderV1 extends EncodableSection<HeaderV1Field> {
 
@@ -11,7 +11,7 @@ public class HeaderV1 extends EncodableSection<HeaderV1Field> {
   public static final String NAME = "header";
 
   public HeaderV1() {
-    super(new HeaderV1CoreSegment());
+    super(new Base64Segment<>(HeaderV1Field.HEADER_CORE_SEGMENT_FIELD_NAMES));
   }
 
   public HeaderV1(CharSequence encodedString) {

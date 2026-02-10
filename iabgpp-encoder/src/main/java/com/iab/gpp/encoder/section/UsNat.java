@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsNatField;
+import com.iab.gpp.encoder.segment.Base64Segment;
 import com.iab.gpp.encoder.segment.UsNatCoreSegment;
-import com.iab.gpp.encoder.segment.UsNatGpcSegment;
 
 public class UsNat extends EncodableSection<UsNatField> {
 
@@ -14,7 +14,8 @@ public class UsNat extends EncodableSection<UsNatField> {
   public static final String NAME = "usnat";
 
   public UsNat() {
-    super(new UsNatCoreSegment(), new UsNatGpcSegment());
+    // NOTE: the core segment has inconsistent decoding due to a version mixup
+    super(new UsNatCoreSegment(), new Base64Segment<>(UsNatField.USNAT_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsNat(CharSequence encodedString) {

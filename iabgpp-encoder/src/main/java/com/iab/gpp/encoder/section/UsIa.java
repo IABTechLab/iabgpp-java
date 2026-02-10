@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsIaField;
-import com.iab.gpp.encoder.segment.UsIaCoreSegment;
-import com.iab.gpp.encoder.segment.UsIaGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsIa extends EncodableSection<UsIaField> {
 
@@ -14,7 +13,7 @@ public class UsIa extends EncodableSection<UsIaField> {
   public static final String NAME = "usia";
 
   public UsIa() {
-    super(new UsIaCoreSegment(), new UsIaGpcSegment());
+    super(new Base64Segment<>(UsIaField.USIA_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsIaField.USIA_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsIa(CharSequence encodedString) {

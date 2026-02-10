@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsNeField;
-import com.iab.gpp.encoder.segment.UsNeCoreSegment;
-import com.iab.gpp.encoder.segment.UsNeGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsNe extends EncodableSection<UsNeField> {
 
@@ -14,7 +13,7 @@ public class UsNe extends EncodableSection<UsNeField> {
   public static final String NAME = "usne";
 
   public UsNe() {
-    super(new UsNeCoreSegment(), new UsNeGpcSegment());
+    super(new Base64Segment<>(UsNeField.USNE_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsNeField.USNE_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsNe(CharSequence encodedString) {

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsOrField;
-import com.iab.gpp.encoder.segment.UsOrCoreSegment;
-import com.iab.gpp.encoder.segment.UsOrGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsOr extends EncodableSection<UsOrField> {
 
@@ -14,7 +13,7 @@ public class UsOr extends EncodableSection<UsOrField> {
   public static final String NAME = "usor";
 
   public UsOr() {
-    super(new UsOrCoreSegment(), new UsOrGpcSegment());
+    super(new Base64Segment<>(UsOrField.USOR_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsOrField.USOR_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsOr(CharSequence encodedString) {

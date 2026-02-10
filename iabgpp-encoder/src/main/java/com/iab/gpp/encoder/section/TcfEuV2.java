@@ -7,10 +7,7 @@ import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
-import com.iab.gpp.encoder.segment.TcfEuV2CoreSegment;
-import com.iab.gpp.encoder.segment.TcfEuV2PublisherPurposesSegment;
-import com.iab.gpp.encoder.segment.TcfEuV2VendorsAllowedSegment;
-import com.iab.gpp.encoder.segment.TcfEuV2VendorsDisclosedSegment;
+import com.iab.gpp.encoder.segment.TraditionalBase64Segment;
 
 public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
 
@@ -19,7 +16,7 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
   public static final String NAME = "tcfeuv2";
 
   public TcfEuV2() {
-    super(new TcfEuV2CoreSegment(), new TcfEuV2PublisherPurposesSegment(), new TcfEuV2VendorsAllowedSegment(), new TcfEuV2VendorsDisclosedSegment());
+    super(new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES), new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES), new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES), new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES));
   }
 
   public TcfEuV2(CharSequence encodedString) {

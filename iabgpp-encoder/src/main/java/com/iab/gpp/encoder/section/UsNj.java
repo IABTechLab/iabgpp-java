@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsNjField;
-import com.iab.gpp.encoder.segment.UsNjCoreSegment;
-import com.iab.gpp.encoder.segment.UsNjGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsNj extends EncodableSection<UsNjField> {
 
@@ -14,7 +13,7 @@ public class UsNj extends EncodableSection<UsNjField> {
   public static final String NAME = "usnj";
 
   public UsNj() {
-    super(new UsNjCoreSegment(), new UsNjGpcSegment());
+    super(new Base64Segment<>(UsNjField.USNJ_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsNjField.USNJ_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsNj(CharSequence encodedString) {

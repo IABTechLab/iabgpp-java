@@ -7,7 +7,7 @@ import com.iab.gpp.encoder.datatype.FixedIntegerList;
 public interface FieldKey {
   String getName();
   DataType<?, ?> getType();
-  
+
   public static final Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);
   public static final Predicate<Integer> nonNullableBooleanAsTwoBitIntegerValidator = (n -> n >= 1 && n <= 2);
   public static final Predicate<FixedIntegerList> nullableBooleanAsTwoBitIntegerListValidator = (l -> {

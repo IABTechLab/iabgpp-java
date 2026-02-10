@@ -7,9 +7,7 @@ import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
-import com.iab.gpp.encoder.segment.TcfCaV1CoreSegment;
-import com.iab.gpp.encoder.segment.TcfCaV1DisclosedVendorsSegment;
-import com.iab.gpp.encoder.segment.TcfCaV1PublisherPurposesSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class TcfCaV1 extends EncodableSection<TcfCaV1Field> {
 
@@ -18,7 +16,7 @@ public class TcfCaV1 extends EncodableSection<TcfCaV1Field> {
   public static final String NAME = "tcfcav1";
 
   public TcfCaV1() {
-    super(new TcfCaV1CoreSegment(), new TcfCaV1PublisherPurposesSegment(), new TcfCaV1DisclosedVendorsSegment());
+    super(new Base64Segment<>(TcfCaV1Field.TCFCAV1_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(TcfCaV1Field.TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES), new Base64Segment<>(TcfCaV1Field.TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES));
   }
 
   public TcfCaV1(CharSequence encodedString) {

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsTnField;
-import com.iab.gpp.encoder.segment.UsTnCoreSegment;
-import com.iab.gpp.encoder.segment.UsTnGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsTn extends EncodableSection<UsTnField> {
 
@@ -14,7 +13,7 @@ public class UsTn extends EncodableSection<UsTnField> {
   public static final String NAME = "ustn";
 
   public UsTn() {
-    super(new UsTnCoreSegment(), new UsTnGpcSegment());
+    super(new Base64Segment<>(UsTnField.USTN_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsTnField.USTN_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsTn(CharSequence encodedString) {

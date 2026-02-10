@@ -60,7 +60,6 @@ public abstract class DataType<E extends Enum<E> & FieldKey, T> {
     
   protected abstract T initialize();
 
-  // TODO: rename
   @SuppressWarnings("unchecked")
   protected T processValue(T oldValue, Object newValue) {
     return (T) newValue;

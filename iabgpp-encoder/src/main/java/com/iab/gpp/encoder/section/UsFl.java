@@ -2,7 +2,7 @@ package com.iab.gpp.encoder.section;
 
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsFlField;
-import com.iab.gpp.encoder.segment.UsFlCoreSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsFl extends EncodableSection<UsFlField> {
 
@@ -11,7 +11,7 @@ public class UsFl extends EncodableSection<UsFlField> {
   public static final String NAME = "usfl";
 
   public UsFl() {
-    super(new UsFlCoreSegment());
+    super(new Base64Segment<>(UsFlField.USFL_CORE_SEGMENT_FIELD_NAMES));
   }
 
   public UsFl(CharSequence encodedString) {

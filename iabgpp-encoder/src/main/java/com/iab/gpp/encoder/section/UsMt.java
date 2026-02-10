@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsMtField;
-import com.iab.gpp.encoder.segment.UsMtCoreSegment;
-import com.iab.gpp.encoder.segment.UsMtGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
 public class UsMt extends EncodableSection<UsMtField> {
 
@@ -14,7 +13,7 @@ public class UsMt extends EncodableSection<UsMtField> {
   public static final String NAME = "usmt";
 
   public UsMt() {
-    super(new UsMtCoreSegment(), new UsMtGpcSegment());
+    super(new Base64Segment<>(UsMtField.USMT_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsMtField.USMT_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsMt(CharSequence encodedString) {
