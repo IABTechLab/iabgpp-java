@@ -9,6 +9,7 @@ import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.UsNatField;
 
 public class FixedIntegerListEncoderTest {
 
@@ -150,7 +151,7 @@ public class FixedIntegerListEncoderTest {
   }
 
   private FixedIntegerList decode(String str) {
-    EncodableFixedIntegerList encodable = new EncodableFixedIntegerList(2, 2, null);
+    EncodableFixedIntegerList<UsNatField> encodable = new EncodableFixedIntegerList<>(2, 2, null);
     return encodable.decode(BitString.of(str), null);
   }
 

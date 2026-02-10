@@ -1,10 +1,7 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.datatype.UnencodableCharacter;
-import com.iab.gpp.encoder.datatype.UnencodableInteger;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.UspV1Field;
-import com.iab.gpp.encoder.section.UspV1;
 
 public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1Field> {
 

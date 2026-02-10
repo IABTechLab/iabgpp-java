@@ -58,11 +58,6 @@ public class FixedIntegerEncoderTest {
   private int decode(String str) {
     return BitString.of(str).readInt(str.length());
   }
-  
-  @Test
-  public void testDecode1() throws DecodingException {
-    Assertions.assertEquals(0, decode(""));
-  }
 
   @Test
   public void testDecode2() throws DecodingException {

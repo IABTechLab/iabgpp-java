@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.field.UsNatField;
 
 public class EncodableOptimizedFixedRangeTest {
 
-  private EncodableOptimizedFixedRange encodableOptimizedFixedRange = new EncodableOptimizedFixedRange();
+  private EncodableOptimizedFixedRange<UsNatField> encodableOptimizedFixedRange = new EncodableOptimizedFixedRange<>();
 
   @Test
   public void testEncode1() {
