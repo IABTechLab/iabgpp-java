@@ -33,8 +33,8 @@ public enum TcfCaV1Field implements FieldKey {
   PUB_PURPOSES_EXPRESS_CONSENT("PubPurposesExpressConsent", new EncodableFixedBitfield<>(24)),
   PUB_PURPOSES_IMPLIED_CONSENT("PubPurposesImpliedConsent", new EncodableFixedBitfield<>(24)),
   NUM_CUSTOM_PURPOSES("NumCustomPurposes", new EncodableFixedInteger<>(6, 0)),
-  CUSTOM_PURPOSES_EXPRESS_CONSENT("CustomPurposesExpressConsent", new EncodableFlexibleBitfield<TcfCaV1Field>(segment -> (Integer) segment.getFieldValueUnsafe(TcfCaV1Field.NUM_CUSTOM_PURPOSES))),
-  CUSTOM_PURPOSES_IMPLIED_CONSENT("CustomPurposesImpliedConsent", new EncodableFlexibleBitfield<TcfCaV1Field>(segment -> (Integer) segment.getFieldValueUnsafe(TcfCaV1Field.NUM_CUSTOM_PURPOSES))),
+  CUSTOM_PURPOSES_EXPRESS_CONSENT("CustomPurposesExpressConsent", new EncodableFlexibleBitfield<>(TcfCaV1Field.NUM_CUSTOM_PURPOSES)),
+  CUSTOM_PURPOSES_IMPLIED_CONSENT("CustomPurposesImpliedConsent", new EncodableFlexibleBitfield<>(TcfCaV1Field.NUM_CUSTOM_PURPOSES)),
 
   DISCLOSED_VENDORS_SEGMENT_TYPE("DisclosedVendorsSegmentType", new EncodableFixedInteger<>(3, 1)),
   DISCLOSED_VENDORS("DisclosedVendors", new EncodableOptimizedFixedRange<>());

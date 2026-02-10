@@ -63,9 +63,8 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     return getFieldValueUnsafe(fieldName);
   }
 
-  // TODO: try to hide this
   @Override
-  public final Object getFieldValueUnsafe(E fieldName) {
+  protected final Object getFieldValueUnsafe(E fieldName) {
     Integer index = fieldNames.getIndex(fieldName);
     if (index != null) {
       return fieldNames.getType(index).get(values, index);

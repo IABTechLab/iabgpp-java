@@ -5,12 +5,12 @@ import com.iab.gpp.encoder.section.AbstractEncodable;
 
 public abstract class EncodableSegment<E extends Enum<E> & FieldKey> extends AbstractEncodable {
   public abstract E resolveKey(FieldKey fieldName);
-  
+
   public abstract boolean hasField(E fieldName);
 
   public abstract Object getFieldValue(E fieldName);
-  
-  public abstract Object getFieldValueUnsafe(E fieldName);
+
+  protected abstract Object getFieldValueUnsafe(E key);
 
   public abstract void setFieldValue(E fieldName, Object value);
 }

@@ -1,20 +1,20 @@
 package com.iab.gpp.encoder.datatype;
 
 import java.util.Collection;
-import java.util.function.ToIntFunction;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.SegmentValueProvider;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 
 public final class EncodableFlexibleBitfield<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
-  private final ToIntFunction<EncodableSegment<E>> getLengthSupplier;
+  private final SegmentValueProvider<E> getLengthSupplier;
 
-  public EncodableFlexibleBitfield(ToIntFunction<EncodableSegment<E>> getLengthSupplier) {
-    this.getLengthSupplier = getLengthSupplier;
+  public EncodableFlexibleBitfield(E key) {
+    this.getLengthSupplier = new SegmentValueProvider<>(key);
   }
 
   @Override
@@ -25,7 +25,7 @@ public final class EncodableFlexibleBitfield<E extends Enum<E> & FieldKey> exten
   @Override
   protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
     try {
-      FixedBitfieldEncoder.encode(builder, value, this.getLengthSupplier.applyAsInt(segment));
+      FixedBitfieldEncoder.encode(builder, value, this.getLengthSupplier.extract(segment));
     } catch (Exception e) {
       throw new EncodingException(e);
     }
@@ -34,7 +34,7 @@ public final class EncodableFlexibleBitfield<E extends Enum<E> & FieldKey> exten
   @Override
   protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
     try {
-      return reader.readIntegerSet(getLengthSupplier.applyAsInt(segment));
+      return reader.readIntegerSet(getLengthSupplier.extract(segment));
     } catch (Exception e) {
       throw new DecodingException(e);
     }
