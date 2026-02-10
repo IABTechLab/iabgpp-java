@@ -5,8 +5,10 @@ import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public final class EncodableFixedIntegerRange extends AbstractDirtyableBitStringDataType<IntegerSet> {
+public final class EncodableFixedIntegerRange<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
   @Override
   protected IntegerSet initialize() {
@@ -14,7 +16,7 @@ public final class EncodableFixedIntegerRange extends AbstractDirtyableBitString
   }
 
   @Override
-  protected void encode(BitString builder, IntegerSet value) {
+  protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
     try {
       FixedIntegerRangeEncoder.encode(builder, value);
     } catch (Exception e) {
@@ -23,7 +25,7 @@ public final class EncodableFixedIntegerRange extends AbstractDirtyableBitString
   }
 
   @Override
-  protected IntegerSet decode(BitString reader) {
+  protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
     try {
       return FixedIntegerRangeEncoder.decode(reader);
     } catch (Exception e) {

@@ -2,22 +2,16 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.Collection;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public abstract class DataType<T> {
+public abstract class DataType<E extends Enum<E> & FieldKey, T> {
   
   protected Predicate<T> validator = null;
 
-  public DataType<T> withValidator(Predicate<T> validator) {
-    this.validator = validator;
-    return this;
-  }
-  
   protected final void validate(T v) {
     if (validator == null || validator.test(v)) {
       return;
@@ -39,11 +33,11 @@ public abstract class DataType<T> {
     // pass
   }
 
-  public <E extends Enum<E> & FieldKey> void encode(BitString writer, Object[] values, int index, EncodableSegment<E> segment) {
+  public void encode(BitString writer, Object[] values, int index, EncodableSegment<E> segment) {
     throw new UnsupportedOperationException("type does not permit bit string encoding");
   }
 
-  public <E extends Enum<E> & FieldKey> void decode(BitString reader, Object[] values, int index, EncodableSegment<E> segment) {
+  public void decode(BitString reader, Object[] values, int index, EncodableSegment<E> segment) {
     throw new UnsupportedOperationException("type does not permit bit string decoding");
   }
 

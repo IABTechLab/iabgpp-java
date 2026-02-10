@@ -16,7 +16,7 @@ public class EncodableFixedIntegerRangeTest {
     IntegerSet integerSet = new IntegerSet();
     integerSet.add(28);
     BitString builder = new BitString();
-    encodableFixedIntegerRange.encode(builder, integerSet);
+    encodableFixedIntegerRange.encode(builder, integerSet, null);
     Assertions.assertEquals("00000000000100000000000011100", builder.toString());
   }
 
@@ -26,20 +26,20 @@ public class EncodableFixedIntegerRangeTest {
     IntegerSet integerSet = new IntegerSet();
     integerSet.add(29);
     BitString builder = new BitString();
-    encodableFixedIntegerRange.encode(builder, integerSet);
+    encodableFixedIntegerRange.encode(builder, integerSet, null);
     Assertions.assertEquals("00000000000100000000000011101", builder.toString());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
-    Assertions.assertEquals(Set.of(28), encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011100")));
+    Assertions.assertEquals(Set.of(28), encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011100"), null));
   }
 
   @Test
   public void testDecode2() throws DecodingException {
     EncodableFixedIntegerRange encodableFixedIntegerRange = new EncodableFixedIntegerRange();
-    Assertions.assertEquals(Set.of(29), encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011101")));
+    Assertions.assertEquals(Set.of(29), encodableFixedIntegerRange.decode(BitString.of("00000000000100000000000011101"), null));
   }
 
 }

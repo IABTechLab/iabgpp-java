@@ -1,9 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.field.UsIaField;
-import com.iab.gpp.encoder.section.UsIa;
 
 public final class UsIaCoreSegment extends AbstractBase64Segment<UsIaField> {
 

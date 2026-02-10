@@ -9,6 +9,8 @@ public abstract class EncodableSegment<E extends Enum<E> & FieldKey> extends Abs
   public abstract boolean hasField(E fieldName);
 
   public abstract Object getFieldValue(E fieldName);
+  
+  public abstract Object getFieldValueUnsafe(E fieldName);
 
   public abstract void setFieldValue(E fieldName, Object value);
 }

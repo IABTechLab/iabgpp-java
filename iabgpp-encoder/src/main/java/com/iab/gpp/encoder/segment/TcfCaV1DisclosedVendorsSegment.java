@@ -1,7 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
 
 public final class TcfCaV1DisclosedVendorsSegment extends AbstractBase64Segment<TcfCaV1Field> {

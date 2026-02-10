@@ -6,35 +6,34 @@ import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.section.UsUt;
 
 public enum UsUtField implements FieldKey {
-  VERSION("Version", new EncodableFixedInteger(6, UsUt.VERSION)),
+  VERSION("Version", new EncodableFixedInteger<>(6, UsUt.VERSION)),
   SHARING_NOTICE("SharingNotice",
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
   SALE_OPT_OUT_NOTICE("SaleOptOutNotice",
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
   TARGETED_ADVERTISING_OPT_OUT_NOTICE("TargetedAdvertisingOptOutNotice",
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
   SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE("SensitiveDataProcessingOptOutNotice",
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
   SALE_OPT_OUT("SaleOptOut",
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
   TARGETED_ADVERTISING_OPT_OUT("TargetedAdvertisingOptOut",
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
   SENSITIVE_DATA_PROCESSING("SensitiveDataProcessing",
-      new EncodableFixedIntegerList(2, 8)
-      .withValidator(nullableBooleanAsTwoBitIntegerListValidator)),
+      new EncodableFixedIntegerList<>(2, 8, nullableBooleanAsTwoBitIntegerListValidator)),
   KNOWN_CHILD_SENSITIVE_DATA_CONSENTS("KnownChildSensitiveDataConsents",
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
   MSPA_COVERED_TRANSACTION("MspaCoveredTransaction",
-      new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>(2, 1, nonNullableBooleanAsTwoBitIntegerValidator)),
   MSPA_OPT_OUT_OPTION_MODE("MspaOptOutOptionMode",
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
   MSPA_SERVICE_PROVIDER_MODE("MspaServiceProviderMode",
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator));
+      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator));
 
   private final String name;
-  private final DataType<?> type;
+  private final DataType<UsUtField, ?> type;
 
-  UsUtField(String name, DataType<?> type) {
+  UsUtField(String name, DataType<UsUtField, ?> type) {
     this.name = name;
     this.type = type;
   }
@@ -45,7 +44,7 @@ public enum UsUtField implements FieldKey {
   }
 
   @Override
-  public DataType<?> getType() {
+  public DataType<UsUtField, ?> getType() {
     return type;
   }
 

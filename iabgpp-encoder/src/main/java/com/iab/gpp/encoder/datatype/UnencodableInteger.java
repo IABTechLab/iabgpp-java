@@ -1,6 +1,8 @@
 package com.iab.gpp.encoder.datatype;
 
-public final class UnencodableInteger extends DataType<Integer> {
+import com.iab.gpp.encoder.field.FieldKey;
+
+public final class UnencodableInteger<E extends Enum<E> & FieldKey> extends DataType<E, Integer> {
 
   private final Integer initial;
   

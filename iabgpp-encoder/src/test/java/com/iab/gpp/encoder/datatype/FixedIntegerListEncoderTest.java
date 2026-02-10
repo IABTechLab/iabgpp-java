@@ -150,8 +150,8 @@ public class FixedIntegerListEncoderTest {
   }
 
   private FixedIntegerList decode(String str) {
-    EncodableFixedIntegerList encodable = new EncodableFixedIntegerList(2, 2);
-    return encodable.decode(BitString.of(str));
+    EncodableFixedIntegerList encodable = new EncodableFixedIntegerList(2, 2, null);
+    return encodable.decode(BitString.of(str), null);
   }
 
   @Test

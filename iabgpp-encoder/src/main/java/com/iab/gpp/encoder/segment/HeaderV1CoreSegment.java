@@ -1,9 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.datatype.EncodableFibonacciIntegerRange;
-import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.field.HeaderV1Field;
-import com.iab.gpp.encoder.section.HeaderV1;
 
 public final class HeaderV1CoreSegment extends AbstractBase64Segment<HeaderV1Field> {
 

@@ -8,14 +8,14 @@ public final class FieldNames<E extends Enum<E> & FieldKey> {
   private final E[] keys;
   private final LinkedHashMap<FieldKey, E> map;
   private final Integer[] indices;
-  private final DataType<?>[] types;
+  private final Object[] types;
 
   @SafeVarargs
   FieldNames(E... keys) {
     this.keys = keys;
     this.map = new LinkedHashMap<>();
     this.indices = new Integer[keys[0].getClass().getEnumConstants().length];
-    this.types = new DataType<?>[keys.length];
+    this.types = new Object[keys.length];
     for (int i = 0; i < keys.length; i++) {
       E key = keys[i];
       this.map.put(key, key);
@@ -32,8 +32,9 @@ public final class FieldNames<E extends Enum<E> & FieldKey> {
     return keys[i];
   }
   
-  public DataType<?> getType(int i) {
-    return types[i];
+  @SuppressWarnings("unchecked")
+  public DataType<E, ?> getType(int i) {
+    return (DataType<E, ?>) types[i];
   }
   
   public Integer getIndex(E key) {

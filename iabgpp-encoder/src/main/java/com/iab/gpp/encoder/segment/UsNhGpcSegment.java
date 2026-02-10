@@ -1,8 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.datatype.EncodableBoolean;
-import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.UnencodableBoolean;
 import com.iab.gpp.encoder.field.UsNhField;
 
 public final class UsNhGpcSegment extends AbstractBase64Segment<UsNhField> {

@@ -5,8 +5,10 @@ import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableBitStringDataType<DirtyableList<RangeEntry>> {
+public final class EncodableArrayOfFixedIntegerRanges<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, DirtyableList<RangeEntry>> {
 
   private final int keyBitStringLength;
   private final int typeBitStringLength;
@@ -22,7 +24,7 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
   }
 
   @Override
-  protected void encode(BitString sb, DirtyableList<RangeEntry> entries) {
+  protected void encode(BitString sb, DirtyableList<RangeEntry> entries, EncodableSegment<E> segment) {
     try {
       sb.writeInt(entries.size(), 12);
       for (RangeEntry entry : entries) {
@@ -36,7 +38,7 @@ public final class EncodableArrayOfFixedIntegerRanges extends AbstractDirtyableB
   }
 
   @Override
-  protected DirtyableList<RangeEntry> decode(BitString reader) {
+  protected DirtyableList<RangeEntry> decode(BitString reader, EncodableSegment<E> segment) {
     try {
       int size = reader.readInt(12);
       DirtyableList<RangeEntry> value = initialize();

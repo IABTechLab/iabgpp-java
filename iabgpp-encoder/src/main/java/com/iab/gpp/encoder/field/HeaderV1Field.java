@@ -6,14 +6,14 @@ import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.section.HeaderV1;
 
 public enum HeaderV1Field implements FieldKey {
-  ID("Id", new EncodableFixedInteger(6, HeaderV1.ID)),
-  VERSION("Version", new EncodableFixedInteger(6, HeaderV1.VERSION)),
-  SECTION_IDS("SectionIds", new EncodableFibonacciIntegerRange());
+  ID("Id", new EncodableFixedInteger<>(6, HeaderV1.ID)),
+  VERSION("Version", new EncodableFixedInteger<>(6, HeaderV1.VERSION)),
+  SECTION_IDS("SectionIds", new EncodableFibonacciIntegerRange<>());
 
   private final String name;
-  private final DataType<?> type;
+  private final DataType<HeaderV1Field, ?> type;
 
-  HeaderV1Field(String name, DataType<?> type) {
+  HeaderV1Field(String name, DataType<HeaderV1Field, ?> type) {
     this.name = name;
     this.type = type;
   }
@@ -24,7 +24,7 @@ public enum HeaderV1Field implements FieldKey {
   }
 
   @Override
-  public DataType<?> getType() {
+  public DataType<HeaderV1Field, ?> getType() {
     return type;
   }
 

@@ -179,79 +179,79 @@ public class GppModel extends AbstractEncodable {
   }
 
   public TcfCaV1 getTcfCaV1Section() {
-    return (TcfCaV1) getSection(TcfCaV1.NAME);
+    return (TcfCaV1) getSection(TcfCaV1.ID);
   }
 
   public TcfEuV2 getTcfEuV2Section() {
-    return (TcfEuV2) getSection(TcfEuV2.NAME);
+    return (TcfEuV2) getSection(TcfEuV2.ID);
   }
 
   public UspV1 getUspV1Section() {
-    return (UspV1) getSection(UspV1.NAME);
+    return (UspV1) getSection(UspV1.ID);
   }
 
   public UsNat getUsNatSection() {
-    return (UsNat) getSection(UsNat.NAME);
+    return (UsNat) getSection(UsNat.ID);
   }
 
   public UsCa getUsCaSection() {
-    return (UsCa) getSection(UsCa.NAME);
+    return (UsCa) getSection(UsCa.ID);
   }
 
   public UsVa getUsVaSection() {
-    return (UsVa) getSection(UsVa.NAME);
+    return (UsVa) getSection(UsVa.ID);
   }
 
   public UsCo getUsCoSection() {
-    return (UsCo) getSection(UsCo.NAME);
+    return (UsCo) getSection(UsCo.ID);
   }
 
   public UsUt getUsUtSection() {
-    return (UsUt) getSection(UsUt.NAME);
+    return (UsUt) getSection(UsUt.ID);
   }
 
   public UsCt getUsCtSection() {
-    return (UsCt) getSection(UsCt.NAME);
+    return (UsCt) getSection(UsCt.ID);
   }
 
   public UsFl getUsFlSection() {
-    return (UsFl) getSection(UsFl.NAME);
+    return (UsFl) getSection(UsFl.ID);
   }
 
   public UsMt getUsMtSection() {
-    return (UsMt) getSection(UsMt.NAME);
+    return (UsMt) getSection(UsMt.ID);
   }
 
   public UsOr getUsOrSection() {
-    return (UsOr) getSection(UsOr.NAME);
+    return (UsOr) getSection(UsOr.ID);
   }
 
   public UsTx getUsTxSection() {
-    return (UsTx) getSection(UsTx.NAME);
+    return (UsTx) getSection(UsTx.ID);
   }
 
   public UsDe getUsDeSection() {
-    return (UsDe) getSection(UsDe.NAME);
+    return (UsDe) getSection(UsDe.ID);
   }
 
   public UsIa getUsIaSection() {
-    return (UsIa) getSection(UsIa.NAME);
+    return (UsIa) getSection(UsIa.ID);
   }
 
   public UsNe getUsNeSection() {
-    return (UsNe) getSection(UsNe.NAME);
+    return (UsNe) getSection(UsNe.ID);
   }
 
   public UsNh getUsNhSection() {
-    return (UsNh) getSection(UsNh.NAME);
+    return (UsNh) getSection(UsNh.ID);
   }
 
   public UsNj getUsNjSection() {
-    return (UsNj) getSection(UsNj.NAME);
+    return (UsNj) getSection(UsNj.ID);
   }
 
   public UsTn getUsTnSection() {
-    return (UsTn) getSection(UsTn.NAME);
+    return (UsTn) getSection(UsTn.ID);
   }
 
   public List<Integer> getSectionIds() {

@@ -12,37 +12,37 @@ import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
 import com.iab.gpp.encoder.section.TcfCaV1;
 
 public enum TcfCaV1Field implements FieldKey {
-  VERSION("Version", new EncodableFixedInteger(6, TcfCaV1.VERSION)),
-  CREATED("Created", new EncodableDatetime()),
-  LAST_UPDATED("LastUpdated", new EncodableDatetime()),
-  CMP_ID("CmpId", new EncodableFixedInteger(12, 0)),
-  CMP_VERSION("CmpVersion", new EncodableFixedInteger(12, 0)),
-  CONSENT_SCREEN("ConsentScreen", new EncodableFixedInteger(6, 0)),
-  CONSENT_LANGUAGE("ConsentLanguage", new EncodableFixedString(2, "EN")),
-  VENDOR_LIST_VERSION("VendorListVersion", new EncodableFixedInteger(12, 0)),
-  TCF_POLICY_VERSION("TcfPolicyVersion", new EncodableFixedInteger(6, 2)),
-  USE_NON_STANDARD_STACKS("UseNonStandardStacks", new EncodableBoolean(false)),
-  SPECIAL_FEATURE_EXPRESS_CONSENT("SpecialFeatureExpressConsent", new EncodableFixedBitfield(12)),
-  PURPOSES_EXPRESS_CONSENT("PurposesExpressConsent", new EncodableFixedBitfield(24)),
-  PURPOSES_IMPLIED_CONSENT("PurposesImpliedConsent", new EncodableFixedBitfield(24)),
-  VENDOR_EXPRESS_CONSENT("VendorExpressConsent", new EncodableOptimizedFixedRange()),
-  VENDOR_IMPLIED_CONSENT("VendorImpliedConsent", new EncodableOptimizedFixedRange()),
-  PUB_RESTRICTIONS("PubRestrictions", new EncodableArrayOfFixedIntegerRanges(6, 2, false)),
+  VERSION("Version", new EncodableFixedInteger<>(6, TcfCaV1.VERSION)),
+  CREATED("Created", new EncodableDatetime<>()),
+  LAST_UPDATED("LastUpdated", new EncodableDatetime<>()),
+  CMP_ID("CmpId", new EncodableFixedInteger<>(12, 0)),
+  CMP_VERSION("CmpVersion", new EncodableFixedInteger<>(12, 0)),
+  CONSENT_SCREEN("ConsentScreen", new EncodableFixedInteger<>(6, 0)),
+  CONSENT_LANGUAGE("ConsentLanguage", new EncodableFixedString<>(2, "EN")),
+  VENDOR_LIST_VERSION("VendorListVersion", new EncodableFixedInteger<>(12, 0)),
+  TCF_POLICY_VERSION("TcfPolicyVersion", new EncodableFixedInteger<>(6, 2)),
+  USE_NON_STANDARD_STACKS("UseNonStandardStacks", new EncodableBoolean<>(false)),
+  SPECIAL_FEATURE_EXPRESS_CONSENT("SpecialFeatureExpressConsent", new EncodableFixedBitfield<>(12)),
+  PURPOSES_EXPRESS_CONSENT("PurposesExpressConsent", new EncodableFixedBitfield<>(24)),
+  PURPOSES_IMPLIED_CONSENT("PurposesImpliedConsent", new EncodableFixedBitfield<>(24)),
+  VENDOR_EXPRESS_CONSENT("VendorExpressConsent", new EncodableOptimizedFixedRange<>()),
+  VENDOR_IMPLIED_CONSENT("VendorImpliedConsent", new EncodableOptimizedFixedRange<>()),
+  PUB_RESTRICTIONS("PubRestrictions", new EncodableArrayOfFixedIntegerRanges<>(6, 2, false)),
 
-  PUB_PURPOSES_SEGMENT_TYPE("PubPurposesSegmentType", new EncodableFixedInteger(3, 3)),
-  PUB_PURPOSES_EXPRESS_CONSENT("PubPurposesExpressConsent", new EncodableFixedBitfield(24)),
-  PUB_PURPOSES_IMPLIED_CONSENT("PubPurposesImpliedConsent", new EncodableFixedBitfield(24)),
-  NUM_CUSTOM_PURPOSES("NumCustomPurposes", new EncodableFixedInteger(6, 0)),
-  CUSTOM_PURPOSES_EXPRESS_CONSENT("CustomPurposesExpressConsent", new EncodableFlexibleBitfield<TcfCaV1Field>(segment -> (Integer) segment.getFieldValue(TcfCaV1Field.NUM_CUSTOM_PURPOSES))),
-  CUSTOM_PURPOSES_IMPLIED_CONSENT("CustomPurposesImpliedConsent", new EncodableFlexibleBitfield<TcfCaV1Field>(segment -> (Integer) segment.getFieldValue(TcfCaV1Field.NUM_CUSTOM_PURPOSES))),
+  PUB_PURPOSES_SEGMENT_TYPE("PubPurposesSegmentType", new EncodableFixedInteger<>(3, 3)),
+  PUB_PURPOSES_EXPRESS_CONSENT("PubPurposesExpressConsent", new EncodableFixedBitfield<>(24)),
+  PUB_PURPOSES_IMPLIED_CONSENT("PubPurposesImpliedConsent", new EncodableFixedBitfield<>(24)),
+  NUM_CUSTOM_PURPOSES("NumCustomPurposes", new EncodableFixedInteger<>(6, 0)),
+  CUSTOM_PURPOSES_EXPRESS_CONSENT("CustomPurposesExpressConsent", new EncodableFlexibleBitfield<TcfCaV1Field>(segment -> (Integer) segment.getFieldValueUnsafe(TcfCaV1Field.NUM_CUSTOM_PURPOSES))),
+  CUSTOM_PURPOSES_IMPLIED_CONSENT("CustomPurposesImpliedConsent", new EncodableFlexibleBitfield<TcfCaV1Field>(segment -> (Integer) segment.getFieldValueUnsafe(TcfCaV1Field.NUM_CUSTOM_PURPOSES))),
 
-  DISCLOSED_VENDORS_SEGMENT_TYPE("DisclosedVendorsSegmentType", new EncodableFixedInteger(3, 1)),
-  DISCLOSED_VENDORS("DisclosedVendors", new EncodableOptimizedFixedRange());
+  DISCLOSED_VENDORS_SEGMENT_TYPE("DisclosedVendorsSegmentType", new EncodableFixedInteger<>(3, 1)),
+  DISCLOSED_VENDORS("DisclosedVendors", new EncodableOptimizedFixedRange<>());
 
   private final String name;
-  private final DataType<?> type;
+  private final DataType<TcfCaV1Field, ?> type;
 
-  TcfCaV1Field(String name, DataType<?> type) {
+  TcfCaV1Field(String name, DataType<TcfCaV1Field, ?> type) {
     this.name = name;
     this.type = type;
   }
@@ -53,7 +53,7 @@ public enum TcfCaV1Field implements FieldKey {
   }
 
   @Override
-  public DataType<?> getType() {
+  public DataType<TcfCaV1Field, ?> getType() {
     return type;
   }
   //@formatter:off

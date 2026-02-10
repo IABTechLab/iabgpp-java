@@ -1,8 +1,6 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.datatype.DataType;
-import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
@@ -23,7 +21,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     return fieldNames.resolveKey(fieldName);
   }
 
-  protected final DataType<?> get(E key) {
+  protected final DataType<E, ?> get(E key) {
     Integer index = fieldNames.getIndex(key);
     if (index != null) {
       return fieldNames.getType(index);
@@ -64,8 +62,10 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     ensureDecode();
     return getFieldValueUnsafe(fieldName);
   }
-  
-  protected final Object getFieldValueUnsafe(E fieldName) {
+
+  // TODO: try to hide this
+  @Override
+  public final Object getFieldValueUnsafe(E fieldName) {
     Integer index = fieldNames.getIndex(fieldName);
     if (index != null) {
       return fieldNames.getType(index).get(values, index);

@@ -1,10 +1,7 @@
 package com.iab.gpp.encoder.segment;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.field.UsNatField;
-import com.iab.gpp.encoder.section.UsNat;
 
 public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
 
