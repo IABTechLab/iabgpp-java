@@ -17,6 +17,11 @@ public final class EncodableFixedString<E extends Enum<E> & FieldKey> extends Ab
     this.stringLength = stringLength;
     this.initial = initial;
   }
+  
+  @Override
+  public String toString() {
+    return name + "=String(" + stringLength + ")";
+  }
 
   @Override
   protected String initialize() {

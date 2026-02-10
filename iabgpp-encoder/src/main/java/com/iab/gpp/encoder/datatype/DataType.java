@@ -10,7 +10,7 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 
 public abstract class DataType<E extends Enum<E> & FieldKey, T> {
   
-  private final String name;
+  protected final String name;
   private final Predicate<T> validator;
   
   protected DataType(String name, Predicate<T> validator) {
@@ -20,6 +20,11 @@ public abstract class DataType<E extends Enum<E> & FieldKey, T> {
 
   public final String getName() {
     return name;
+  }
+
+  @Override
+  public String toString() {
+    return name + "=" + this.getClass().getSimpleName();
   }
 
   protected final void validate(T v) {

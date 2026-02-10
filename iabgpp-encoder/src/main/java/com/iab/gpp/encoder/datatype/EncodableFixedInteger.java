@@ -21,6 +21,11 @@ public final class EncodableFixedInteger<E extends Enum<E> & FieldKey> extends A
   public EncodableFixedInteger(String name, int bitStringLength, Integer initial) {
     this(name, bitStringLength, initial, null);
   }
+  
+  @Override
+  public String toString() {
+    return name + "=Int(" + bitStringLength + ")";
+  }
 
   @Override
   protected Integer initialize() {

@@ -18,6 +18,11 @@ public final class EncodableFixedBitfield<E extends Enum<E> & FieldKey> extends 
   }
 
   @Override
+  public String toString() {
+    return name + "=Bitfield(" + numElements + ")";
+  }
+
+  @Override
   protected IntegerSet initialize() {
     return new IntegerSet(numElements);
   }

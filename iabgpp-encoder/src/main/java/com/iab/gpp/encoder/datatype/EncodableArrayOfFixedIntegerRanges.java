@@ -20,6 +20,11 @@ public final class EncodableArrayOfFixedIntegerRanges<E extends Enum<E> & FieldK
   }
 
   @Override
+  public String toString() {
+    return name + "=N-ArrayOfRanges(" + keyBitStringLength + "," + typeBitStringLength + ")";
+  }
+
+  @Override
   protected DirtyableList<RangeEntry> initialize() {
     return new DirtyableList<>();
   }

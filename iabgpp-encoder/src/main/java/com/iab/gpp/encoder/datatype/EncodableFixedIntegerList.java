@@ -21,6 +21,11 @@ public final class EncodableFixedIntegerList<E extends Enum<E> & FieldKey> exten
   }
 
   @Override
+  public String toString() {
+    return name + "=Int(" + elementBitStringLength + "," + numElements + ")";
+  }
+
+  @Override
   protected FixedIntegerList initialize() {
     return new FixedIntegerList(elementBitStringLength, numElements);
   }

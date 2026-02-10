@@ -7,13 +7,13 @@ public final class FieldNames<E extends Enum<E> & FieldKey> {
 
   private final LinkedHashMap<FieldKey, E> map;
   private final Integer[] indices;
-  private final Object[] types;
+  private final DataType<?,?>[] types;
 
   @SafeVarargs
   FieldNames(E... keys) {
     this.map = new LinkedHashMap<>();
     this.indices = new Integer[keys[0].getClass().getEnumConstants().length];
-    this.types = new Object[keys.length];
+    this.types = new DataType[keys.length];
     for (int i = 0; i < keys.length; i++) {
       E key = keys[i];
       this.map.put(key, key);
