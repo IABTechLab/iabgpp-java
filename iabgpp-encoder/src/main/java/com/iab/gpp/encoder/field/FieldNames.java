@@ -5,14 +5,12 @@ import com.iab.gpp.encoder.datatype.DataType;
 
 public final class FieldNames<E extends Enum<E> & FieldKey> {
 
-  private final E[] keys;
   private final LinkedHashMap<FieldKey, E> map;
   private final Integer[] indices;
   private final Object[] types;
 
   @SafeVarargs
   FieldNames(E... keys) {
-    this.keys = keys;
     this.map = new LinkedHashMap<>();
     this.indices = new Integer[keys[0].getClass().getEnumConstants().length];
     this.types = new Object[keys.length];
@@ -25,15 +23,11 @@ public final class FieldNames<E extends Enum<E> & FieldKey> {
   }
   
   public int size() {
-    return keys.length;
+    return types.length;
   }
-  
-  public E get(int i) {
-    return keys[i];
-  }
-  
+
   @SuppressWarnings("unchecked")
-  public DataType<E, ?> getType(int i) {
+  public DataType<E, ?> get(int i) {
     return (DataType<E, ?>) types[i];
   }
   

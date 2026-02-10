@@ -8,7 +8,8 @@ public final class UnencodableBoolean<E extends Enum<E> & FieldKey> extends Abst
 
   private final Boolean initial;
 
-  public UnencodableBoolean(Boolean initial) {
+  public UnencodableBoolean(String name, Boolean initial) {
+    super(name, null);
     this.initial = initial;
   }
   

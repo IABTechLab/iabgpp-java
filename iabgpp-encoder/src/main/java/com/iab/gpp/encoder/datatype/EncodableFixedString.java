@@ -12,7 +12,8 @@ public final class EncodableFixedString<E extends Enum<E> & FieldKey> extends Ab
   private final int stringLength;
   private final String initial;
 
-  public EncodableFixedString(int stringLength, String initial) {
+  public EncodableFixedString(String name, int stringLength, String initial) {
+    super(name, null);
     this.stringLength = stringLength;
     this.initial = initial;
   }

@@ -10,7 +10,8 @@ public final class EncodableBoolean<E extends Enum<E> & FieldKey> extends Abstra
 
   private final Boolean initial;
 
-  public EncodableBoolean(Boolean initial) {
+  public EncodableBoolean(String name, Boolean initial) {
+    super(name, null);
     this.initial = initial;
   }
 

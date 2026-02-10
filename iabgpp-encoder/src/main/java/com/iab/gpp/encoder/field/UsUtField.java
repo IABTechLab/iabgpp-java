@@ -6,41 +6,34 @@ import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.section.UsUt;
 
 public enum UsUtField implements FieldKey {
-  VERSION("Version", new EncodableFixedInteger<>(6, UsUt.VERSION)),
-  SHARING_NOTICE("SharingNotice",
-      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
-  SALE_OPT_OUT_NOTICE("SaleOptOutNotice",
-      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
-  TARGETED_ADVERTISING_OPT_OUT_NOTICE("TargetedAdvertisingOptOutNotice",
-      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
-  SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE("SensitiveDataProcessingOptOutNotice",
-      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
-  SALE_OPT_OUT("SaleOptOut",
-      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
-  TARGETED_ADVERTISING_OPT_OUT("TargetedAdvertisingOptOut",
-      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
-  SENSITIVE_DATA_PROCESSING("SensitiveDataProcessing",
-      new EncodableFixedIntegerList<>(2, 8, nullableBooleanAsTwoBitIntegerListValidator)),
-  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS("KnownChildSensitiveDataConsents",
-      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
-  MSPA_COVERED_TRANSACTION("MspaCoveredTransaction",
-      new EncodableFixedInteger<>(2, 1, nonNullableBooleanAsTwoBitIntegerValidator)),
-  MSPA_OPT_OUT_OPTION_MODE("MspaOptOutOptionMode",
-      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator)),
-  MSPA_SERVICE_PROVIDER_MODE("MspaServiceProviderMode",
-      new EncodableFixedInteger<>(2, 0, nullableBooleanAsTwoBitIntegerValidator));
+  VERSION(new EncodableFixedInteger<>("Version", 6, UsUt.VERSION)),
+  SHARING_NOTICE(
+      new EncodableFixedInteger<>("SharingNotice", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+  SALE_OPT_OUT_NOTICE(
+      new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+  TARGETED_ADVERTISING_OPT_OUT_NOTICE(
+      new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+  SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE(
+      new EncodableFixedInteger<>("SensitiveDataProcessingOptOutNotice",2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+  SALE_OPT_OUT(
+      new EncodableFixedInteger<>("SaleOptOut",2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+  TARGETED_ADVERTISING_OPT_OUT(
+      new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+  SENSITIVE_DATA_PROCESSING(
+      new EncodableFixedIntegerList<>("SensitiveDataProcessing", 2, 8, nullableBooleanAsTwoBitIntegerListValidator)),
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS(
+      new EncodableFixedInteger<>("KnownChildSensitiveDataConsents", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+  MSPA_COVERED_TRANSACTION(
+      new EncodableFixedInteger<>("MspaCoveredTransaction", 2, 1, nonNullableBooleanAsTwoBitIntegerValidator)),
+  MSPA_OPT_OUT_OPTION_MODE(
+      new EncodableFixedInteger<>("MspaOptOutOptionMode", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+  MSPA_SERVICE_PROVIDER_MODE(
+      new EncodableFixedInteger<>("MspaServiceProviderMode", 2, 0, nullableBooleanAsTwoBitIntegerValidator));
 
-  private final String name;
   private final DataType<UsUtField, ?> type;
 
-  UsUtField(String name, DataType<UsUtField, ?> type) {
-    this.name = name;
+  UsUtField(DataType<UsUtField, ?> type) {
     this.type = type;
-  }
-
-  @Override
-  public String getName() {
-    return name;
   }
 
   @Override

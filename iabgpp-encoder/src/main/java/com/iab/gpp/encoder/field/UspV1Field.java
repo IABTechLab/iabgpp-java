@@ -6,22 +6,15 @@ import com.iab.gpp.encoder.datatype.UnencodableInteger;
 import com.iab.gpp.encoder.section.UspV1;
 
 public enum UspV1Field implements FieldKey {
-  VERSION("Version", new UnencodableInteger<>(UspV1.VERSION)),
-  NOTICE("Notice", new UnencodableCharacter<>('-', (v -> v == 'Y' || v == 'N' || v == '-'))),
-  OPT_OUT_SALE("OptOutSale", new UnencodableCharacter<>('-', (v -> v == 'Y' || v == 'N' || v == '-'))),
-  LSPA_COVERED("LspaCovered", new UnencodableCharacter<>('-', (v -> v == 'Y' || v == 'N' || v == '-')));
+  VERSION(new UnencodableInteger<>("Version", UspV1.VERSION)),
+  NOTICE(new UnencodableCharacter<>("Notice", '-', (v -> v == 'Y' || v == 'N' || v == '-'))),
+  OPT_OUT_SALE(new UnencodableCharacter<>("OptOutSale", '-', (v -> v == 'Y' || v == 'N' || v == '-'))),
+  LSPA_COVERED(new UnencodableCharacter<>("LspaCovered", '-', (v -> v == 'Y' || v == 'N' || v == '-')));
 
-  private final String name;
   private final DataType<UspV1Field, ?> type;
 
-  UspV1Field(String name, DataType<UspV1Field, ?> type) {
-    this.name = name;
+  UspV1Field(DataType<UspV1Field, ?> type) {
     this.type = type;
-  }
-
-  @Override
-  public String getName() {
-    return name;
   }
 
   @Override

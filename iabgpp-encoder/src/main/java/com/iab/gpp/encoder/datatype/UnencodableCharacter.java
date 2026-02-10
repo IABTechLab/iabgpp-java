@@ -7,9 +7,9 @@ public final class UnencodableCharacter<E extends Enum<E> & FieldKey> extends Da
 
   private final Character initial;
   
-  public UnencodableCharacter(Character initial, Predicate<Character> validator) {
+  public UnencodableCharacter(String name, Character initial, Predicate<Character> validator) {
+    super(name, validator);
     this.initial = initial;
-    this.validator = validator;
   }
 
   @Override

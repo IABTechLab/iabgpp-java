@@ -10,7 +10,7 @@ import com.iab.gpp.encoder.field.UsNatField;
 
 public class EncodableOptimizedFixedRangeTest {
 
-  private EncodableOptimizedFixedRange<UsNatField> encodableOptimizedFixedRange = new EncodableOptimizedFixedRange<>();
+  private EncodableOptimizedFixedRange<UsNatField> encodableOptimizedFixedRange = new EncodableOptimizedFixedRange<>("");
 
   @Test
   public void testEncode1() {

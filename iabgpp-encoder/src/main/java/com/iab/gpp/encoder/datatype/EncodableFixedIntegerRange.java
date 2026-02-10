@@ -10,6 +10,10 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 
 public final class EncodableFixedIntegerRange<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
+  public EncodableFixedIntegerRange(String name) {
+    super(name, null);
+  }
+
   @Override
   protected IntegerSet initialize() {
     return new IntegerSet();

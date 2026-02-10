@@ -14,10 +14,10 @@ public final class EncodableFixedIntegerList<E extends Enum<E> & FieldKey> exten
   private final int elementBitStringLength;
   private final int numElements;
 
-  public EncodableFixedIntegerList(int elementBitStringLength, int numElements, Predicate<FixedIntegerList> validator) {
+  public EncodableFixedIntegerList(String name, int elementBitStringLength, int numElements, Predicate<FixedIntegerList> validator) {
+    super(name, validator);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = numElements;
-    this.validator = validator;
   }
 
   @Override

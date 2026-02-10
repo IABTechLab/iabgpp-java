@@ -13,7 +13,8 @@ public final class EncodableArrayOfFixedIntegerRanges<E extends Enum<E> & FieldK
   private final int keyBitStringLength;
   private final int typeBitStringLength;
 
-  public EncodableArrayOfFixedIntegerRanges(int keyBitStringLength, int typeBitStringLength, boolean hardFailIfMissing) {
+  public EncodableArrayOfFixedIntegerRanges(String name, int keyBitStringLength, int typeBitStringLength) {
+    super(name, null);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
   }

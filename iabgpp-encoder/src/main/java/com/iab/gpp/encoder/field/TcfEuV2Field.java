@@ -12,47 +12,40 @@ import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
 import com.iab.gpp.encoder.section.TcfEuV2;
 
 public enum TcfEuV2Field implements FieldKey {
-  VERSION("Version", new EncodableFixedInteger<>(6, TcfEuV2.VERSION)),
-  CREATED("Created", new EncodableDatetime<>()),
-  LAST_UPDATED("LastUpdated", new EncodableDatetime<>()),
-  CMP_ID("CmpId", new EncodableFixedInteger<>(12, 0)),
-  CMP_VERSION("CmpVersion", new EncodableFixedInteger<>(12, 0)),
-  CONSENT_SCREEN("ConsentScreen", new EncodableFixedInteger<>(6, 0)),
-  CONSENT_LANGUAGE("ConsentLanguage", new EncodableFixedString<>(2, "EN")),
-  VENDOR_LIST_VERSION("VendorListVersion", new EncodableFixedInteger<>(12, 0)),
-  POLICY_VERSION("PolicyVersion", new EncodableFixedInteger<>(6, 2)),
-  IS_SERVICE_SPECIFIC("IsServiceSpecific", new EncodableBoolean<>(false)),
-  USE_NON_STANDARD_STACKS("UseNonStandardStacks", new EncodableBoolean<>(false)),
-  SPECIAL_FEATURE_OPTINS("SpecialFeatureOptins", new EncodableFixedBitfield<>(12)),
-  PURPOSE_CONSENTS("PurposeConsents", new EncodableFixedBitfield<>(24)),
-  PURPOSE_LEGITIMATE_INTERESTS("PurposeLegitimateInterests", new EncodableFixedBitfield<>(24)),
-  PURPOSE_ONE_TREATMENT("PurposeOneTreatment", new EncodableBoolean<>(false)),
-  PUBLISHER_COUNTRY_CODE("PublisherCountryCode", new EncodableFixedString<>(2, "AA")),
-  VENDOR_CONSENTS("VendorConsents", new EncodableOptimizedFixedRange<>()),
-  VENDOR_LEGITIMATE_INTERESTS("VendorLegitimateInterests", new EncodableOptimizedFixedRange<>()),
-  PUBLISHER_RESTRICTIONS("PublisherRestrictions", new EncodableArrayOfFixedIntegerRanges<>(6, 2, false)),
-  PUBLISHER_PURPOSES_SEGMENT_TYPE("PublisherPurposesSegmentType", new EncodableFixedInteger<>(3, 3)),
-  PUBLISHER_CONSENTS("PublisherConsents", new EncodableFixedBitfield<>(24)),
-  PUBLISHER_LEGITIMATE_INTERESTS("PublisherLegitimateInterests", new EncodableFixedBitfield<>(24)),
-  NUM_CUSTOM_PURPOSES("NumCustomPurposes", new EncodableFixedInteger<>(6, 0)),
-  PUBLISHER_CUSTOM_CONSENTS("PublisherCustomConsents", new EncodableFlexibleBitfield<>(TcfEuV2Field.NUM_CUSTOM_PURPOSES)),
-  PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS("PublisherCustomLegitimateInterests", new EncodableFlexibleBitfield<>(TcfEuV2Field.NUM_CUSTOM_PURPOSES)),
-  VENDORS_ALLOWED_SEGMENT_TYPE("VendorsAllowedSegmentType", new EncodableFixedInteger<>(3, 2)),
-  VENDORS_ALLOWED("VendorsAllowed", new EncodableOptimizedFixedRange<>()),
-  VENDORS_DISCLOSED_SEGMENT_TYPE("VendorsDisclosedSegmentType", new EncodableFixedInteger<>(3, 1)),
-  VENDORS_DISCLOSED("VendorsDisclosed", new EncodableOptimizedFixedRange<>());
+  VERSION(new EncodableFixedInteger<>("Version", 6, TcfEuV2.VERSION)),
+  CREATED(new EncodableDatetime<>("Created")),
+  LAST_UPDATED(new EncodableDatetime<>("LastUpdated")),
+  CMP_ID(new EncodableFixedInteger<>("CmpId", 12, 0)),
+  CMP_VERSION(new EncodableFixedInteger<>("CmpVersion", 12, 0)),
+  CONSENT_SCREEN(new EncodableFixedInteger<>("ConsentScreen", 6, 0)),
+  CONSENT_LANGUAGE(new EncodableFixedString<>("ConsentLanguage", 2, "EN")),
+  VENDOR_LIST_VERSION(new EncodableFixedInteger<>("VendorListVersion", 12, 0)),
+  POLICY_VERSION(new EncodableFixedInteger<>("PolicyVersion", 6, 2)),
+  IS_SERVICE_SPECIFIC(new EncodableBoolean<>("IsServiceSpecific", false)),
+  USE_NON_STANDARD_STACKS(new EncodableBoolean<>("UseNonStandardStacks", false)),
+  SPECIAL_FEATURE_OPTINS(new EncodableFixedBitfield<>("SpecialFeatureOptins", 12)),
+  PURPOSE_CONSENTS(new EncodableFixedBitfield<>("PurposeConsents", 24)),
+  PURPOSE_LEGITIMATE_INTERESTS(new EncodableFixedBitfield<>("PurposeLegitimateInterests", 24)),
+  PURPOSE_ONE_TREATMENT(new EncodableBoolean<>("PurposeOneTreatment", false)),
+  PUBLISHER_COUNTRY_CODE(new EncodableFixedString<>("PublisherCountryCode", 2, "AA")),
+  VENDOR_CONSENTS(new EncodableOptimizedFixedRange<>("VendorConsents")),
+  VENDOR_LEGITIMATE_INTERESTS(new EncodableOptimizedFixedRange<>("VendorLegitimateInterests")),
+  PUBLISHER_RESTRICTIONS(new EncodableArrayOfFixedIntegerRanges<>("PublisherRestrictions", 6, 2)),
+  PUBLISHER_PURPOSES_SEGMENT_TYPE(new EncodableFixedInteger<>("PublisherPurposesSegmentType", 3, 3)),
+  PUBLISHER_CONSENTS(new EncodableFixedBitfield<>("PublisherConsents", 24)),
+  PUBLISHER_LEGITIMATE_INTERESTS(new EncodableFixedBitfield<>("PublisherLegitimateInterests", 24)),
+  NUM_CUSTOM_PURPOSES(new EncodableFixedInteger<>("NumCustomPurposes", 6, 0)),
+  PUBLISHER_CUSTOM_CONSENTS(new EncodableFlexibleBitfield<>("PublisherCustomConsents", TcfEuV2Field.NUM_CUSTOM_PURPOSES)),
+  PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS(new EncodableFlexibleBitfield<>("PublisherCustomLegitimateInterests", TcfEuV2Field.NUM_CUSTOM_PURPOSES)),
+  VENDORS_ALLOWED_SEGMENT_TYPE(new EncodableFixedInteger<>("VendorsAllowedSegmentType", 3, 2)),
+  VENDORS_ALLOWED(new EncodableOptimizedFixedRange<>("VendorsAllowed")),
+  VENDORS_DISCLOSED_SEGMENT_TYPE(new EncodableFixedInteger<>("VendorsDisclosedSegmentType", 3, 1)),
+  VENDORS_DISCLOSED(new EncodableOptimizedFixedRange<>("VendorsDisclosed"));
 
-  private final String name;
   private final DataType<TcfEuV2Field, ?> type;
 
-  TcfEuV2Field(String name, DataType<TcfEuV2Field, ?> type) {
-    this.name = name;
+  TcfEuV2Field(DataType<TcfEuV2Field, ?> type) {
     this.type = type;
-  }
-
-  @Override
-  public String getName() {
-    return name;
   }
 
   @Override

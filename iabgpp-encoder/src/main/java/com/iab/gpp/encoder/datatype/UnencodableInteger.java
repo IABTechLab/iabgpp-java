@@ -6,7 +6,8 @@ public final class UnencodableInteger<E extends Enum<E> & FieldKey> extends Data
 
   private final Integer initial;
   
-  public UnencodableInteger(Integer initial) {
+  public UnencodableInteger(String name, Integer initial) {
+    super(name, null);
     this.initial = initial;
   }
 

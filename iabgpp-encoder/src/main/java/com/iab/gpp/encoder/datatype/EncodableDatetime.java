@@ -10,6 +10,10 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 
 public final class EncodableDatetime<E extends Enum<E> & FieldKey> extends AbstractEncodableBitStringDataType<E, Instant> {
 
+  public EncodableDatetime(String name) {
+    super(name, null);
+  }
+
   @Override
   protected Instant initialize() {
     return Instant.EPOCH;

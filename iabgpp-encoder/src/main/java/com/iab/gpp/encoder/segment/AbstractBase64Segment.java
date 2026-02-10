@@ -4,7 +4,6 @@ import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.DataType;
 import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
 
@@ -21,12 +20,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
     BitString bitString = new BitString();
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      DataType<E, ?> field = fieldNames.getType(i);
-      if (field != null) {
-        field.encode(bitString, values, i, this);
-      } else {
-        throw new EncodingException("Field not found: '" + fieldNames.get(i) + "'");
-      }
+      fieldNames.get(i).encode(bitString, values, i, this);
     }
 
     return getBase64UrlEncoder().encode(bitString);
@@ -38,15 +32,11 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
       BitString bitString = decodeBitString(encodedString);
       int size = fieldNames.size();
       for (int i = 0; i < size; i++) {
-        DataType<E, ?> field = fieldNames.getType(i);
-        if (field != null) {
-          try {
-            field.decode(bitString, values, i, this);
-          } catch (Exception e) {
-            throw new DecodingException("Unable to decode " + fieldNames.get(i), e);
-          }
-        } else {
-          throw new DecodingException("Field not found: '" + fieldNames.get(i) + "'");
+        DataType<E, ?> field = fieldNames.get(i);
+        try {
+          field.decode(bitString, values, i, this);
+        } catch (Exception e) {
+          throw new DecodingException("Unable to decode " + field, e);
         }
       }
     } catch (Exception e) {

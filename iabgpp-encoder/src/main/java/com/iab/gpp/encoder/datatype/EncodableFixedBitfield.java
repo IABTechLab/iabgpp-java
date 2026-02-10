@@ -12,7 +12,8 @@ public final class EncodableFixedBitfield<E extends Enum<E> & FieldKey> extends 
 
   private final int numElements;
 
-  public EncodableFixedBitfield(int numElements) {
+  public EncodableFixedBitfield(String name, int numElements) {
+    super(name, null);
     this.numElements = numElements;
   }
 

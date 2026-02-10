@@ -151,7 +151,7 @@ public class FixedIntegerListEncoderTest {
   }
 
   private FixedIntegerList decode(String str) {
-    EncodableFixedIntegerList<UsNatField> encodable = new EncodableFixedIntegerList<>(2, 2, null);
+    EncodableFixedIntegerList<UsNatField> encodable = new EncodableFixedIntegerList<>("", 2, 2, null);
     return encodable.decode(BitString.of(str), null);
   }
 

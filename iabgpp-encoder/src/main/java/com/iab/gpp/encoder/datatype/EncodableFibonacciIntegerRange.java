@@ -10,6 +10,10 @@ import com.iab.gpp.encoder.segment.EncodableSegment;
 
 public final class EncodableFibonacciIntegerRange<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
+  public EncodableFibonacciIntegerRange(String name) {
+    super(name, null);
+  }
+
   @Override
   public IntegerSet initialize() {
     return new IntegerSet();

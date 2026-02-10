@@ -5,7 +5,6 @@ import com.iab.gpp.encoder.datatype.DataType;
 import com.iab.gpp.encoder.datatype.FixedIntegerList;
 
 public interface FieldKey {
-  String getName();
   DataType<?, ?> getType();
 
   public static final Predicate<Integer> nullableBooleanAsTwoBitIntegerValidator = (n -> n >= 0 && n <= 2);

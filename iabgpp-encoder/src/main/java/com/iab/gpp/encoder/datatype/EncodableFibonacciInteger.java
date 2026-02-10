@@ -10,7 +10,8 @@ public final class EncodableFibonacciInteger<E extends Enum<E> & FieldKey> exten
 
   private final Integer initial;
 
-  public EncodableFibonacciInteger(Integer initial) {
+  public EncodableFibonacciInteger(String name, Integer initial) {
+    super(name, null);
     this.initial = initial;
   }
 

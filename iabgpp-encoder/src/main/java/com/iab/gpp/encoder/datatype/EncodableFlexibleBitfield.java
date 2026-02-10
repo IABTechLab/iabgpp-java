@@ -13,7 +13,8 @@ public final class EncodableFlexibleBitfield<E extends Enum<E> & FieldKey> exten
 
   private final SegmentValueProvider<E> getLengthSupplier;
 
-  public EncodableFlexibleBitfield(E key) {
+  public EncodableFlexibleBitfield(String name, E key) {
+    super(name, null);
     this.getLengthSupplier = new SegmentValueProvider<>(key);
   }
 

@@ -1,6 +1,5 @@
 package com.iab.gpp.encoder.segment;
 
-import com.iab.gpp.encoder.datatype.DataType;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
@@ -21,14 +20,6 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     return fieldNames.resolveKey(fieldName);
   }
 
-  protected final DataType<E, ?> get(E key) {
-    Integer index = fieldNames.getIndex(key);
-    if (index != null) {
-      return fieldNames.getType(index);
-    }
-    return null;
-  }
-
   @Override
   public final boolean hasField(E key) {
     return fieldNames.getIndex(key) != null;
@@ -41,7 +32,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     }
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      if (fieldNames.getType(i).isDirty(values, i)) {
+      if (fieldNames.get(i).isDirty(values, i)) {
         return true;
       }
     }
@@ -53,7 +44,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     this.dirty = dirty;
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      fieldNames.getType(i).setDirty(values, i, dirty);
+      fieldNames.get(i).setDirty(values, i, dirty);
     }
   }
 
@@ -67,7 +58,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
   protected final Object getFieldValueUnsafe(E fieldName) {
     Integer index = fieldNames.getIndex(fieldName);
     if (index != null) {
-      return fieldNames.getType(index).get(values, index);
+      return fieldNames.get(index).get(values, index);
     } else {
       throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
     }
@@ -82,7 +73,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
   protected final void setFieldValueUnsafe(E fieldName, Object value) {
     Integer index = fieldNames.getIndex(fieldName);
     if (index != null) {
-      fieldNames.getType(index).set(values, index, value);
+      fieldNames.get(index).set(values, index, value);
       dirty = true;
     } else {
       throw new InvalidFieldException(fieldName + " not found");
@@ -96,8 +87,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     sb.append("{name=").append(getClass().getSimpleName());
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {
-      E field = fieldNames.get(i);
-      sb.append(", ").append(field.getName()).append('=').append(values[i]);
+      sb.append(", ").append(fieldNames.get(i).getName()).append('=').append(values[i]);
     }
     sb.append('}');
     return sb.toString();

@@ -12,14 +12,14 @@ public final class EncodableFixedInteger<E extends Enum<E> & FieldKey> extends A
   private final int bitStringLength;
   private final Integer initial;
   
-  public EncodableFixedInteger(int bitStringLength, Integer initial, Predicate<Integer> validator) {
+  public EncodableFixedInteger(String name, int bitStringLength, Integer initial, Predicate<Integer> validator) {
+    super(name, validator);
     this.bitStringLength = bitStringLength;
     this.initial = initial;
-    this.validator = validator;
   }
   
-  public EncodableFixedInteger(int bitStringLength, Integer initial) {
-    this(bitStringLength, initial, null);
+  public EncodableFixedInteger(String name, int bitStringLength, Integer initial) {
+    this(name, bitStringLength, initial, null);
   }
 
   @Override
