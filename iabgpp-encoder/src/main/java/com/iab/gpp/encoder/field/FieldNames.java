@@ -1,6 +1,9 @@
 package com.iab.gpp.encoder.field;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.stream.Stream;
 import com.iab.gpp.encoder.datatype.DataType;
 
 public final class FieldNames<E extends Enum<E> & FieldKey> {
@@ -40,6 +43,11 @@ public final class FieldNames<E extends Enum<E> & FieldKey> {
 
   public E resolveKey(FieldKey key) {
     return map.get(key);
+  }
+
+  @Override
+  public String toString() {
+    return Arrays.toString(types);
   }
 
 }

@@ -21,6 +21,7 @@ public class TcfEuV2Test {
     tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
     tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
     Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
+    TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES.toString();
   }
 
   @Test
