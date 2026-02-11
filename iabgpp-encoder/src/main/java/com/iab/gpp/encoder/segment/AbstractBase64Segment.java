@@ -4,6 +4,7 @@ import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.DataType;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
 
@@ -24,7 +25,7 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
       try {
         field.encode(bitString, values, i, this);
       } catch (Exception e) {
-        throw new DecodingException("Unable to decode " + field.getName(), e);
+        throw new EncodingException("Unable to decode " + field.getName(), e);
       }
     }
     return getBase64UrlEncoder().encode(bitString);

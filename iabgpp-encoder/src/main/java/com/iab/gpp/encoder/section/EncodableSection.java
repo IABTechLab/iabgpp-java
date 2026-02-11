@@ -2,6 +2,8 @@ package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -30,30 +32,22 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
 
   public abstract int getVersion();
 
+  // this is a default implementation for single segment sections
   @Override
   protected void doDecode(CharSequence encodedString) {
-    int numSegments = size();
-    if (numSegments == 1) {
-      getSegment(0).decode(encodedString);
-      return;
+    if (size() > 1) {
+      throw new DecodingException("too many sections to decode");
     }
-    List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-    for (int i = 0; i < numSegments; i++) {
-      getSegment(i).decode(encodedSegments.get(i));
-    }
+    getSegment(0).decode(encodedString);
   }
 
+  // this is a default implementation for single segment sections
   @Override
   protected CharSequence doEncode() {
-    int numSegments = size();
-    if (numSegments == 1) {
-      return getSegment(0).encodeCharSequence();
+    if (size() > 1) {
+      throw new EncodingException("too many sections to encode");
     }
-    List<CharSequence> encodedSegments = new ArrayList<>(numSegments);
-    for (int i = 0; i < numSegments; i++) {
-      encodedSegments.add(getSegment(i).encodeCharSequence());
-    }
-    return SlicedCharSequence.join('.',  encodedSegments);
+    return getSegment(0).encodeCharSequence();
   }
 
   public final boolean hasField(FieldKey fieldName) {

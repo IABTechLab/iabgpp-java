@@ -658,6 +658,9 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS, Arrays.asList(28));
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.LAST_UPDATED, utcDateTime);
+    Assertions.assertEquals(true, gppModel.hasField(TcfEuV2.NAME, TcfEuV2Field.VERSION));
+    Assertions.assertEquals(true, gppModel.getTcfEuV2Section().hasField(TcfEuV2Field.VERSION));
+    gppModel.toString();
 
     Assertions.assertEquals("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOAAAABAAAAA.QAAA.IAAA", gppModel.encode());
   }
