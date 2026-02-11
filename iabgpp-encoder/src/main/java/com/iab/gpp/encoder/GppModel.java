@@ -70,10 +70,12 @@ public class GppModel extends AbstractEncodable {
     }
   }
 
-  private final HashMap<Integer, EncodableSection<?>> sections = new HashMap<>();
+  private final HashMap<Integer, EncodableSection<?>> sections;
   private final HeaderV1 header;
 
   public GppModel() {
+    // empirically, most gpp strings have around 2 sections, so pad for more
+    this.sections = new HashMap<>(4);
     this.header = new HeaderV1();
   }
 
