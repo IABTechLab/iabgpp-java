@@ -34,19 +34,11 @@ public final class EncodableFixedInteger<E extends Enum<E> & FieldKey> extends A
 
   @Override
   protected void encode(BitString builder, Integer value, EncodableSegment<E> segment) {
-    try {
-      builder.writeInt(value, this.bitStringLength);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    builder.writeInt(value, this.bitStringLength);
   }
 
   @Override
   protected Integer decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return IntegerCache.valueOf(reader.readInt(bitStringLength));
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return IntegerCache.valueOf(reader.readInt(bitStringLength));
   }
 }

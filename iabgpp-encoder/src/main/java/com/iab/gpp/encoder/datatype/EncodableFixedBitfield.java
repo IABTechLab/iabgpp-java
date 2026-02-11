@@ -29,20 +29,12 @@ public final class EncodableFixedBitfield<E extends Enum<E> & FieldKey> extends 
 
   @Override
   protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
-    try {
-      FixedBitfieldEncoder.encode(builder, value, this.numElements);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    FixedBitfieldEncoder.encode(builder, value, this.numElements);
   }
 
   @Override
   protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return reader.readIntegerSet(this.numElements);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return reader.readIntegerSet(this.numElements);
   }
 
   @SuppressWarnings("unchecked")

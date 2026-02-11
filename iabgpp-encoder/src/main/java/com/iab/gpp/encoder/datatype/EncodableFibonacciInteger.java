@@ -22,19 +22,11 @@ public final class EncodableFibonacciInteger<E extends Enum<E> & FieldKey> exten
 
   @Override
   protected void encode(BitString builder, Integer value, EncodableSegment<E> segment) {
-    try {
-      builder.writeFibonacci(value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    builder.writeFibonacci(value);
   }
 
   @Override
   protected Integer decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return reader.readFibonacci();
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return reader.readFibonacci();
   }
 }

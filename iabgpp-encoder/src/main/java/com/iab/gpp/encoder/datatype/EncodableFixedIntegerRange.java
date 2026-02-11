@@ -21,20 +21,12 @@ public final class EncodableFixedIntegerRange<E extends Enum<E> & FieldKey> exte
 
   @Override
   protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
-    try {
-      FixedIntegerRangeEncoder.encode(builder, value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    FixedIntegerRangeEncoder.encode(builder, value);
   }
 
   @Override
   protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return FixedIntegerRangeEncoder.decode(reader);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return FixedIntegerRangeEncoder.decode(reader);
   }
 
   @SuppressWarnings("unchecked")

@@ -25,20 +25,12 @@ public final class EncodableFlexibleBitfield<E extends Enum<E> & FieldKey> exten
 
   @Override
   protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
-    try {
-      FixedBitfieldEncoder.encode(builder, value, this.getLengthSupplier.extract(segment));
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    FixedBitfieldEncoder.encode(builder, value, this.getLengthSupplier.extract(segment));
   }
 
   @Override
   protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return reader.readIntegerSet(getLengthSupplier.extract(segment));
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return reader.readIntegerSet(getLengthSupplier.extract(segment));
   }
 
 

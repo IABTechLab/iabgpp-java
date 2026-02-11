@@ -30,19 +30,11 @@ public final class EncodableFixedString<E extends Enum<E> & FieldKey> extends Ab
   
   @Override
   protected void encode(BitString builder, String value, EncodableSegment<E> segment) {
-    try {
-      FixedStringEncoder.encode(builder, value, this.stringLength);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    FixedStringEncoder.encode(builder, value, this.stringLength);
   }
 
   @Override
   protected String decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return FixedStringEncoder.decode(reader, this.stringLength);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return FixedStringEncoder.decode(reader, this.stringLength);
   }
 }

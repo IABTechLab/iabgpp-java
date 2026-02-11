@@ -31,34 +31,26 @@ public final class EncodableArrayOfFixedIntegerRanges<E extends Enum<E> & FieldK
 
   @Override
   protected void encode(BitString sb, DirtyableList<RangeEntry> entries, EncodableSegment<E> segment) {
-    try {
-      sb.writeInt(entries.size(), 12);
-      for (RangeEntry entry : entries) {
-        sb.writeInt(entry.getKey(), keyBitStringLength);
-        sb.writeInt(entry.getType(), typeBitStringLength);
-        FixedIntegerRangeEncoder.encode(sb, entry.getIds());
-      }
-    } catch (Exception e) {
-      throw new EncodingException(e);
+    sb.writeInt(entries.size(), 12);
+    for (RangeEntry entry : entries) {
+      sb.writeInt(entry.getKey(), keyBitStringLength);
+      sb.writeInt(entry.getType(), typeBitStringLength);
+      FixedIntegerRangeEncoder.encode(sb, entry.getIds());
     }
   }
 
   @Override
   protected DirtyableList<RangeEntry> decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      int size = reader.readInt(12);
-      DirtyableList<RangeEntry> value = initialize();
-      for (int i = 0; i < size; i++) {
-        int key = reader.readInt(keyBitStringLength);
-        int type = reader.readInt(typeBitStringLength);
-        IntegerSet ids = FixedIntegerRangeEncoder.decode(reader);
-        RangeEntry entry = new RangeEntry(key, type, ids);
-        value.add(entry);
-      }
-      return value;
-    } catch (Exception e) {
-      throw new DecodingException(e);
+    int size = reader.readInt(12);
+    DirtyableList<RangeEntry> value = initialize();
+    for (int i = 0; i < size; i++) {
+      int key = reader.readInt(keyBitStringLength);
+      int type = reader.readInt(typeBitStringLength);
+      IntegerSet ids = FixedIntegerRangeEncoder.decode(reader);
+      RangeEntry entry = new RangeEntry(key, type, ids);
+      value.add(entry);
     }
+    return value;
   }
 
   @SuppressWarnings("unchecked")

@@ -32,20 +32,12 @@ public final class EncodableFixedIntegerList<E extends Enum<E> & FieldKey> exten
 
   @Override
   protected void encode(BitString builder, FixedIntegerList value, EncodableSegment<E> segment) {
-    try {
-      FixedIntegerListEncoder.encode(builder, value, this.elementBitStringLength, this.numElements);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    FixedIntegerListEncoder.encode(builder, value, this.elementBitStringLength, this.numElements);
   }
 
   @Override
   protected FixedIntegerList decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return reader.readFixedIntegerList(elementBitStringLength, numElements);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return reader.readFixedIntegerList(elementBitStringLength, numElements);
   }
 
   @SuppressWarnings("unchecked")

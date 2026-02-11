@@ -22,20 +22,12 @@ public final class EncodableOptimizedFixedRange<E extends Enum<E> & FieldKey> ex
 
   @Override
   protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
-    try {
-      OptimizedFixedRangeEncoder.encode(builder, value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    OptimizedFixedRangeEncoder.encode(builder, value);
   }
 
   @Override
   protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return OptimizedFixedRangeEncoder.decode(reader);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return OptimizedFixedRangeEncoder.decode(reader);
   }
 
   @SuppressWarnings("unchecked")

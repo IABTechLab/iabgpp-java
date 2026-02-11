@@ -22,19 +22,11 @@ public final class EncodableBoolean<E extends Enum<E> & FieldKey> extends Abstra
 
   @Override
   protected void encode(BitString builder, Boolean value, EncodableSegment<E> segment){
-    try {
-      builder.writeBoolean(value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    builder.writeBoolean(value);
   }
 
   @Override
   protected Boolean decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return reader.readBoolean();
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return reader.readBoolean();
   }
 }

@@ -21,20 +21,12 @@ public final class EncodableFibonacciIntegerRange<E extends Enum<E> & FieldKey> 
 
   @Override
   protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
-    try {
-      FibonacciIntegerRangeEncoder.encode(builder, value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    FibonacciIntegerRangeEncoder.encode(builder, value);
   }
 
   @Override
   protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return FibonacciIntegerRangeEncoder.decode(reader);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return FibonacciIntegerRangeEncoder.decode(reader);
   }
 
   @SuppressWarnings("unchecked")

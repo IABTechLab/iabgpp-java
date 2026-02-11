@@ -21,19 +21,11 @@ public final class EncodableDatetime<E extends Enum<E> & FieldKey> extends Abstr
 
   @Override
   protected void encode(BitString builder, Instant value, EncodableSegment<E> segment) {
-    try {
-      DatetimeEncoder.encode(builder, value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+    DatetimeEncoder.encode(builder, value);
   }
 
   @Override
   protected Instant decode(BitString reader, EncodableSegment<E> segment) {
-    try {
-      return DatetimeEncoder.decode(reader);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+    return DatetimeEncoder.decode(reader);
   }
 }
