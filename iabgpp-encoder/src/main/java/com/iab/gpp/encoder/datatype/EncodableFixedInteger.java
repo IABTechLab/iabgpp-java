@@ -2,8 +2,6 @@ package com.iab.gpp.encoder.datatype;
 
 import java.util.function.Predicate;
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 

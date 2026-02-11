@@ -10,34 +10,34 @@ import com.iab.gpp.encoder.section.UsNat;
 public enum UsNatField implements FieldKey {
   VERSION(new EncodableFixedInteger<>("Version", 6, UsNat.VERSION)),
   SHARING_NOTICE(
-      new EncodableFixedInteger<>("SharingNotice", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("SharingNotice", 2, 0, VALIDATOR_012)),
   SALE_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
   SHARING_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SharingOptOutNotice", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("SharingOptOutNotice", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SensitiveDataProcessingOptOutNotice",2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("SensitiveDataProcessingOptOutNotice",2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_LIMIT_USE_NOTICE(
-      new EncodableFixedInteger<>("SensitiveDataLimitUseNotice", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("SensitiveDataLimitUseNotice", 2, 0, VALIDATOR_012)),
   SALE_OPT_OUT(
-      new EncodableFixedInteger<>("SaleOptOut", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
   SHARING_OPT_OUT(
-      new EncodableFixedInteger<>("SharingOptOut", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("SharingOptOut", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT(
-      new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_PROCESSING(
-      new EncodableFixedIntegerList<>("SensitiveDataProcessing", 2, 16, nullableBooleanAsTwoBitIntegerListValidator)),
-  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS(new EncodableFixedIntegerList<>("KnownChildSensitiveDataConsents", 2, 3, nullableBooleanAsTwoBitIntegerListValidator)),
+      new EncodableFixedIntegerList<>("SensitiveDataProcessing", 2, 16, VALIDATOR_LIST_012)),
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS(new EncodableFixedIntegerList<>("KnownChildSensitiveDataConsents", 2, 3, VALIDATOR_LIST_012)),
   PERSONAL_DATA_CONSENTS(
-      new EncodableFixedInteger<>("PersonalDataConsents", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("PersonalDataConsents", 2, 0, VALIDATOR_012)),
   MSPA_COVERED_TRANSACTION(
-      new EncodableFixedInteger<>("MspaCoveredTransaction", 2, 1, nonNullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("MspaCoveredTransaction", 2, 1, VALIDATOR_12)),
   MSPA_OPT_OUT_OPTION_MODE(
-      new EncodableFixedInteger<>("MspaOptOutOptionMode", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("MspaOptOutOptionMode", 2, 0, VALIDATOR_012)),
   MSPA_SERVICE_PROVIDER_MODE(
-      new EncodableFixedInteger<>("MspaServiceProviderMode", 2, 0, nullableBooleanAsTwoBitIntegerValidator)),
+      new EncodableFixedInteger<>("MspaServiceProviderMode", 2, 0, VALIDATOR_012)),
 
   GPC_SEGMENT_TYPE(new EncodableFixedInteger<>("GpcSegmentType", 2, 1)),
   GPC_SEGMENT_INCLUDED(new UnencodableBoolean<>("GpcSegmentIncluded", true)),
