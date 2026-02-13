@@ -7,7 +7,7 @@
     <parent>
         <artifactId>iabgpp-core</artifactId>
         <groupId>io.github.xdevanshux</groupId>
-        <version>1.1.2</version>
+        <version>1.1.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>iabgpp-extras-jackson</artifactId>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>io.github.xdevanshux</groupId>
             <artifactId>iabgpp-extras</artifactId>
-            <version>1.1.2</version>
+            <version>1.1.3-SNAPSHOT</version>
         </dependency>
 
         <dependency>
