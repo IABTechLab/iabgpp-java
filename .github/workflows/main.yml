@@ -8,13 +8,13 @@
 #   GPG_PASSPHRASE        - Passphrase for the GPG key
 #   PAT                   - Personal access token with repo scope (for pushing commits/tags)
 #
-name: IABGPP-Java Release
+name: IABGPP-DevJava Release
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'The release version (e.g., 3.x.x)'
+        description: 'The release version (e.g., 1.x.x)'
         required: true
         default: ''
 
@@ -46,8 +46,8 @@ jobs:
       # Token from: https://central.sonatype.com/usertoken
       - name: Create settings.xml
         env:
-          CENTRAL_TOKEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
-          CENTRAL_TOKEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
+          CENTRAL_TOKEN_USERNAME: KFFdn4
+          CENTRAL_TOKEN_PASSWORD: 7Wa4UatigIhxhmTPZT4xmBWVxwuWu0CMm
         run: |
           mkdir -p ~/.m2
           cat > ~/.m2/settings.xml << EOF
@@ -57,8 +57,8 @@ jobs:
             <servers>
               <server>
                 <id>central</id>
-                <username>${CENTRAL_TOKEN_USERNAME}</username>
-                <password>${CENTRAL_TOKEN_PASSWORD}</password>
+                <username>KFFdn4</username>
+                <password>7Wa4UatigIhxhmTPZT4xmBWVxwuWu0CMm</password>
               </server>
             </servers>
           </settings>

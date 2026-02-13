@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.iabgpp</groupId>
+        <groupId>io.github.xdevanshux</groupId>
         <artifactId>iabgpp-core</artifactId>
         <version>3.2.5-SNAPSHOT</version>
     </parent>
