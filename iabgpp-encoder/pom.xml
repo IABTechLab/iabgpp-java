@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.github.xdevanshux</groupId>
         <artifactId>iabgpp-core</artifactId>
-        <version>3.2.5-SNAPSHOT</version>
+        <version>1.1.2</version>
     </parent>
 
     <artifactId>iabgpp-encoder</artifactId>
