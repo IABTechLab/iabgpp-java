@@ -8,7 +8,7 @@
 #   GPG_PASSPHRASE        - Passphrase for the GPG key
 #   PAT                   - Personal access token with repo scope (for pushing commits/tags)
 #
-name: IABGPP-DevJava Release
+name: IABGPP-Java Release
 
 on:
   workflow_dispatch:
