@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>iabgpp-extras-jackson</artifactId>
+    <name>IAB GPP Extras Jackson</name>
     <packaging>jar</packaging>
 
     <dependencies>
