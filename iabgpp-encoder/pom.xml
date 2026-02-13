@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>iabgpp-encoder</artifactId>
+    <name>IAB GPP Encoder</name>
     <packaging>jar</packaging>
 
     <dependencies>
