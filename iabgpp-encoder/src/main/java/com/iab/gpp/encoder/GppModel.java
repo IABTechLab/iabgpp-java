@@ -15,6 +15,7 @@ import com.iab.gpp.encoder.section.UsCt;
 import com.iab.gpp.encoder.section.UsDe;
 import com.iab.gpp.encoder.section.UsFl;
 import com.iab.gpp.encoder.section.UsIa;
+import com.iab.gpp.encoder.section.UsMn;
 import com.iab.gpp.encoder.section.UsMt;
 import com.iab.gpp.encoder.section.UsNat;
 import com.iab.gpp.encoder.section.UsNe;
@@ -62,6 +63,7 @@ public class GppModel extends AbstractEncodable {
     constructors.add(UsNh::new);
     constructors.add(UsNj::new);
     constructors.add(UsTn::new);
+    constructors.add(UsMn::new);
 
     for (Supplier<EncodableSection<?>> constructor : constructors) {
       EncodableSection<?> prototype = constructor.get();
@@ -255,6 +257,10 @@ public class GppModel extends AbstractEncodable {
 
   public UsTn getUsTnSection() {
     return (UsTn) getSection(UsTn.ID);
+  }
+
+  public UsMn getUsMnSection() {
+    return (UsMn) getSection(UsMn.ID);
   }
 
   public List<Integer> getSectionIds() {
