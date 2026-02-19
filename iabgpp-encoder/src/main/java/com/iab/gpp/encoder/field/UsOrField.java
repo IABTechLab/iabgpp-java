@@ -44,7 +44,6 @@ public enum UsOrField implements FieldKey {
     return type;
   }
 
-  // @formatter:off
   public static final FieldNames<UsOrField> USOR_CORE_SEGMENT_FIELD_NAMES =
       new FieldNames<>(
           UsOrField.VERSION,
@@ -59,10 +58,7 @@ public enum UsOrField implements FieldKey {
           UsOrField.MSPA_COVERED_TRANSACTION,
           UsOrField.MSPA_OPT_OUT_OPTION_MODE,
           UsOrField.MSPA_SERVICE_PROVIDER_MODE);
-  // @formatter:on
 
-  // @formatter:off
   public static final FieldNames<UsOrField> USOR_GPC_SEGMENT_FIELD_NAMES =
       new FieldNames<>(UsOrField.GPC_SEGMENT_TYPE, UsOrField.GPC_SEGMENT_INCLUDED, UsOrField.GPC);
-  // @formatter:on
 }

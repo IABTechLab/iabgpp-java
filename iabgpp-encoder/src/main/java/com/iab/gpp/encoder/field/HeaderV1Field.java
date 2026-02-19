@@ -21,9 +21,6 @@ public enum HeaderV1Field implements FieldKey {
     return type;
   }
 
-  // @formatter:off
   public static final FieldNames<HeaderV1Field> HEADER_CORE_SEGMENT_FIELD_NAMES =
       new FieldNames<>(HeaderV1Field.ID, HeaderV1Field.VERSION, HeaderV1Field.SECTION_IDS);
-  // @formatter:on
-
 }

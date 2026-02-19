@@ -38,7 +38,6 @@ public enum UsFlField implements FieldKey {
     return type;
   }
 
-  // @formatter:off
   public static final FieldNames<UsFlField> USFL_CORE_SEGMENT_FIELD_NAMES =
       new FieldNames<>(
           UsFlField.VERSION,
@@ -53,5 +52,4 @@ public enum UsFlField implements FieldKey {
           UsFlField.MSPA_COVERED_TRANSACTION,
           UsFlField.MSPA_OPT_OUT_OPTION_MODE,
           UsFlField.MSPA_SERVICE_PROVIDER_MODE);
-  // @formatter:on
 }

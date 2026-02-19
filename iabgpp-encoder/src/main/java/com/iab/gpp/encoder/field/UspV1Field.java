@@ -24,9 +24,7 @@ public enum UspV1Field implements FieldKey {
     return type;
   }
 
-  // @formatter:off
   public static final FieldNames<UspV1Field> USPV1_CORE_SEGMENT_FIELD_NAMES =
       new FieldNames<>(
           UspV1Field.VERSION, UspV1Field.NOTICE, UspV1Field.OPT_OUT_SALE, UspV1Field.LSPA_COVERED);
-  // @formatter:on
 }

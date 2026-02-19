@@ -44,7 +44,6 @@ public enum UsDeField implements FieldKey {
     return type;
   }
 
-  // @formatter:off
   public static final FieldNames<UsDeField> USDE_CORE_SEGMENT_FIELD_NAMES =
       new FieldNames<>(
           UsDeField.VERSION,
@@ -59,10 +58,7 @@ public enum UsDeField implements FieldKey {
           UsDeField.MSPA_COVERED_TRANSACTION,
           UsDeField.MSPA_OPT_OUT_OPTION_MODE,
           UsDeField.MSPA_SERVICE_PROVIDER_MODE);
-  // @formatter:on
 
-  // @formatter:off
   public static final FieldNames<UsDeField> USDE_GPC_SEGMENT_FIELD_NAMES =
       new FieldNames<>(UsDeField.GPC_SEGMENT_TYPE, UsDeField.GPC_SEGMENT_INCLUDED, UsDeField.GPC);
-  // @formatter:on
 }

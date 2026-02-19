@@ -42,7 +42,6 @@ public enum UsCtField implements FieldKey {
     return type;
   }
 
-  // @formatter:off
   public static final FieldNames<UsCtField> USCT_CORE_SEGMENT_FIELD_NAMES =
       new FieldNames<>(
           UsCtField.VERSION,
@@ -56,10 +55,7 @@ public enum UsCtField implements FieldKey {
           UsCtField.MSPA_COVERED_TRANSACTION,
           UsCtField.MSPA_OPT_OUT_OPTION_MODE,
           UsCtField.MSPA_SERVICE_PROVIDER_MODE);
-  // @formatter:on
 
-  // @formatter:off
   public static final FieldNames<UsCtField> USCT_GPC_SEGMENT_FIELD_NAMES =
       new FieldNames<>(UsCtField.GPC_SEGMENT_TYPE, UsCtField.GPC_SEGMENT_INCLUDED, UsCtField.GPC);
-  // @formatter:on
 }

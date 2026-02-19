@@ -44,7 +44,6 @@ public enum UsNjField implements FieldKey {
     return type;
   }
 
-  // @formatter:off
   public static final FieldNames<UsNjField> USNJ_CORE_SEGMENT_FIELD_NAMES =
       new FieldNames<>(
           UsNjField.VERSION,
@@ -59,10 +58,7 @@ public enum UsNjField implements FieldKey {
           UsNjField.MSPA_COVERED_TRANSACTION,
           UsNjField.MSPA_OPT_OUT_OPTION_MODE,
           UsNjField.MSPA_SERVICE_PROVIDER_MODE);
-  // @formatter:on
 
-  // @formatter:off
   public static final FieldNames<UsNjField> USNJ_GPC_SEGMENT_FIELD_NAMES =
       new FieldNames<>(UsNjField.GPC_SEGMENT_TYPE, UsNjField.GPC_SEGMENT_INCLUDED, UsNjField.GPC);
-  // @formatter:on
 }

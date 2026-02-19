@@ -42,7 +42,6 @@ public enum UsCoField implements FieldKey {
     return type;
   }
 
-  // @formatter:off
   public static final FieldNames<UsCoField> USCO_CORE_SEGMENT_FIELD_NAMES =
       new FieldNames<>(
           UsCoField.VERSION,
@@ -56,10 +55,7 @@ public enum UsCoField implements FieldKey {
           UsCoField.MSPA_COVERED_TRANSACTION,
           UsCoField.MSPA_OPT_OUT_OPTION_MODE,
           UsCoField.MSPA_SERVICE_PROVIDER_MODE);
-  // @formatter:on
 
-  // @formatter:off
   public static final FieldNames<UsCoField> USCO_GPC_SEGMENT_FIELD_NAMES =
       new FieldNames<>(UsCoField.GPC_SEGMENT_TYPE, UsCoField.GPC_SEGMENT_INCLUDED, UsCoField.GPC);
-  // @formatter:on
 }

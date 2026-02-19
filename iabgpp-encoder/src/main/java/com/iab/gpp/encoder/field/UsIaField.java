@@ -44,7 +44,6 @@ public enum UsIaField implements FieldKey {
     return type;
   }
 
-  // @formatter:off
   public static final FieldNames<UsIaField> USIA_CORE_SEGMENT_FIELD_NAMES =
       new FieldNames<>(
           UsIaField.VERSION,
@@ -59,10 +58,7 @@ public enum UsIaField implements FieldKey {
           UsIaField.MSPA_COVERED_TRANSACTION,
           UsIaField.MSPA_OPT_OUT_OPTION_MODE,
           UsIaField.MSPA_SERVICE_PROVIDER_MODE);
-  // @formatter:on
 
-  // @formatter:off
   public static final FieldNames<UsIaField> USIA_GPC_SEGMENT_FIELD_NAMES =
       new FieldNames<>(UsIaField.GPC_SEGMENT_TYPE, UsIaField.GPC_SEGMENT_INCLUDED, UsIaField.GPC);
-  // @formatter:on
 }
