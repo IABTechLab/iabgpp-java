@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.section;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class SlicedCharSequence implements CharSequence {
@@ -35,12 +36,18 @@ public final class SlicedCharSequence implements CharSequence {
       start = 0;
       end = base.length();
     }
-    // most sections/segments have less than 4 components
-    List<CharSequence> out = new ArrayList<>(4);
+    List<CharSequence> out = null;
     int next = 0;
     while ((next = base.indexOf(splitter, start, end)) != -1) {
+      if (out == null) {
+        // most sections/segments have less than 4 components
+        out = new ArrayList<>(4);
+      }
       out.add(new SlicedCharSequence(base, start, next));
       start = next + 1;
+    }
+    if (out == null) {
+      return Collections.singletonList(charSequence);
     }
     out.add(new SlicedCharSequence(base, start, end));
     return out;
