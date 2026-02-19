@@ -148,7 +148,7 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA",
+        "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~CAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA",
         gppString);
   }
 
@@ -771,10 +771,10 @@ public class GppModelTest {
     GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAQA.QA");
     gppModel.getFieldValue(UsNat.NAME, UsNatField.VERSION);
     Assertions.assertEquals(
-        Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
         gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
     Assertions.assertEquals(
-        Arrays.asList(0, 0, 0),
+        Arrays.asList(0, 0),
         gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
   }
 
@@ -795,10 +795,10 @@ public class GppModelTest {
     GppModel gppModel = new GppModel("DBABLA~BAAAAAABEQA.QA");
     gppModel.getFieldValue(UsNat.NAME, UsNatField.VERSION);
     Assertions.assertEquals(
-        Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0),
+        Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
         gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
     Assertions.assertEquals(
-        Arrays.asList(0, 1, 0),
+        Arrays.asList(0, 1),
         gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
   }
 

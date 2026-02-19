@@ -14,6 +14,6 @@ public class SegmentValueProvider<E extends Enum<E> & FieldKey> {
   }
 
   public final int extract(EncodableSegment<E> segment) {
-    return (Integer) segment.getFieldValueUnsafe(key);
+    return modify((Integer) segment.getFieldValueUnsafe(key));
   }
 }

@@ -149,6 +149,24 @@ public final class BitString {
     return bitSet.readInt(from, to);
   }
 
+  // used for usnat v1 to v2 conversion, see note in UsNatCoreSegment
+  public int peekInt(int length) {
+    return bitSet.readInt(0, length);
+  }
+
+  // used for usnat v1 to v2 conversion, see note in UsNatCoreSegment
+  public void putInt(int value, int length) {
+    int mask = 1 << length;
+    if (value >= mask) {
+      throw new EncodingException(
+          "Numeric value '" + value + "' is too large for a bit string length of '" + length + "'");
+    }
+    for (int i = 0; i < length; i++) {
+      mask >>= 1;
+      bitSet.set(i, (mask & value) != 0);
+    }
+  }
+
   public long readLong(int length) {
     int from = readIndex;
     int to = from + length;

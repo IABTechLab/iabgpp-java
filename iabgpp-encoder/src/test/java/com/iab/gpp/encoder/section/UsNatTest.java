@@ -13,7 +13,7 @@ public class UsNatTest {
   public void testEncode1() {
 
     UsNat usNat = new UsNat();
-    Assertions.assertEquals("BAAAAAAAAABA.QA", usNat.encode());
+    Assertions.assertEquals("CAAAAAAAAABA.QA", usNat.encode());
   }
 
   @Test
@@ -39,7 +39,7 @@ public class UsNatTest {
     usNat.setFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNat.setFieldValue(UsNatField.GPC, true);
 
-    Assertions.assertEquals("BVVVkkkkkpFY.YA", usNat.encode());
+    Assertions.assertEquals("CVVVkkkkkpFY.YA", usNat.encode());
   }
 
   @Test
@@ -176,7 +176,7 @@ public class UsNatTest {
     usNat.setFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNat.setFieldValue(UsNatField.GPC, true);
 
-    Assertions.assertEquals("BVVVkkkkkpFY.YA", usNat.encode());
+    Assertions.assertEquals("CVVVkkkkkpFY.YA", usNat.encode());
   }
 
   @Test
@@ -184,12 +184,12 @@ public class UsNatTest {
 
     UsNat usNat = new UsNat();
     usNat.setFieldValue(UsNatField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAAAAABA", usNat.encode());
+    Assertions.assertEquals("CAAAAAAAAABA", usNat.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
-    UsNat usNat = new UsNat("BVVVkkkkkpFY.YA");
+    UsNat usNat = new UsNat("CVVVkkkkkpFY.YA");
 
     Assertions.assertEquals(1, usNat.getSharingNotice());
     Assertions.assertEquals(1, usNat.getSaleOptOutNotice());
@@ -233,6 +233,29 @@ public class UsNatTest {
     Assertions.assertEquals(1, usNat.getMspaOptOutOptionMode());
     Assertions.assertEquals(2, usNat.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usNat.getGpcSegmentIncluded());
+  }
+
+  @Test
+  public void testDecodeBackwardsCompatibility() throws DecodingException {
+    UsNat usNat = new UsNat("BVQqAAAACg");
+
+    Assertions.assertEquals(1, usNat.getSharingNotice());
+    Assertions.assertEquals(1, usNat.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usNat.getSharingOptOutNotice());
+    Assertions.assertEquals(1, usNat.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(0, usNat.getSensitiveDataProcessingOptOutNotice());
+    Assertions.assertEquals(0, usNat.getSensitiveDataLimitUseNotice());
+    Assertions.assertEquals(2, usNat.getSaleOptOut());
+    Assertions.assertEquals(2, usNat.getSharingOptOut());
+    Assertions.assertEquals(2, usNat.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(
+        Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), usNat.getSensitiveDataProcessing());
+    Assertions.assertEquals(Arrays.asList(0, 0), usNat.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(2, usNat.getPersonalDataConsents());
+    Assertions.assertEquals(2, usNat.getMspaCoveredTransaction());
+    Assertions.assertEquals(0, usNat.getMspaOptOutOptionMode());
+    Assertions.assertEquals(0, usNat.getMspaServiceProviderMode());
+    Assertions.assertEquals(false, usNat.getGpc());
   }
 
   @Test()
