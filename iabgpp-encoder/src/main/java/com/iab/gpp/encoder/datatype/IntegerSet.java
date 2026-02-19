@@ -1,19 +1,20 @@
 package com.iab.gpp.encoder.datatype;
 
+import com.iab.gpp.encoder.bitstring.BitSet;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.PrimitiveIterator.OfInt;
 import java.util.Spliterator;
 import java.util.Spliterators;
-import java.util.PrimitiveIterator.OfInt;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
-import com.iab.gpp.encoder.bitstring.BitSet;
 
 /**
- * An optimized implementation of {@literal Set<Integer>} backed by a {@link java.util.BitSet}.
- * Use {@link #containsInt(int)}, {@link #addInt(int)}, and {@link #removeInt(int)} for efficient access.
+ * An optimized implementation of {@literal Set<Integer>} backed by a {@link java.util.BitSet}. Use
+ * {@link #containsInt(int)}, {@link #addInt(int)}, and {@link #removeInt(int)} for efficient
+ * access.
  */
 public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable {
   private static final Logger LOGGER = Logger.getLogger(IntegerSet.class.getName());
@@ -53,7 +54,7 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   private int getOffset(int value) {
-    int offset  = from - adjustment + value;
+    int offset = from - adjustment + value;
     if (offset < from) {
       throw new IndexOutOfBoundsException("Negative index provided");
     }
@@ -104,7 +105,7 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   @Override
-  public Spliterator.OfInt spliterator(){
+  public Spliterator.OfInt spliterator() {
     return Spliterators.spliteratorUnknownSize(
         iterator(),
         Spliterator.ORDERED | Spliterator.DISTINCT | Spliterator.IMMUTABLE | Spliterator.NONNULL);
@@ -115,7 +116,7 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   private static final void logOutOfRange(int value) {
-    LOGGER.warning("Exceeding IntegerBitSet.MAX_COLLECTION_SIZE: "+ value);
+    LOGGER.warning("Exceeding IntegerBitSet.MAX_COLLECTION_SIZE: " + value);
   }
 
   public void addRange(int start, int end) {

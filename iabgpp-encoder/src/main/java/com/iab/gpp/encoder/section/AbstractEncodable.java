@@ -3,7 +3,7 @@ package com.iab.gpp.encoder.section;
 import com.iab.gpp.encoder.datatype.Dirtyable;
 
 public abstract class AbstractEncodable implements Dirtyable {
-  
+
   private CharSequence encoded;
 
   private boolean decoded = true;
@@ -43,5 +43,4 @@ public abstract class AbstractEncodable implements Dirtyable {
     }
     return this.encoded;
   }
-
 }

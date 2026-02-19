@@ -11,7 +11,9 @@ public class UsIa extends AbstractUsSectionWithGpc<UsIaField> {
   public static final String NAME = "usia";
 
   public UsIa() {
-    super(new Base64Segment<>(UsIaField.USIA_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsIaField.USIA_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsIaField.USIA_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsIaField.USIA_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsIa(CharSequence encodedString) {

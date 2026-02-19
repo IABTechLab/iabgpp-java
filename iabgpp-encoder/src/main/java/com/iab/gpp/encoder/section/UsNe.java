@@ -11,7 +11,9 @@ public class UsNe extends AbstractUsSectionWithGpc<UsNeField> {
   public static final String NAME = "usne";
 
   public UsNe() {
-    super(new Base64Segment<>(UsNeField.USNE_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsNeField.USNE_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsNeField.USNE_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsNeField.USNE_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsNe(CharSequence encodedString) {
@@ -38,7 +40,6 @@ public class UsNe extends AbstractUsSectionWithGpc<UsNeField> {
   protected final UsNeField getGpcSegmentIncludedKey() {
     return UsNeField.GPC_SEGMENT_INCLUDED;
   }
-
 
   public Integer getProcessingNotice() {
     return (Integer) this.getFieldValue(UsNeField.PROCESSING_NOTICE);

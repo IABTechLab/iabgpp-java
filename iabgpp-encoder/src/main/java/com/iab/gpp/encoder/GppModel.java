@@ -1,10 +1,5 @@
 package com.iab.gpp.encoder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.PrimitiveIterator;
-import java.util.function.Supplier;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.FieldKey;
@@ -31,13 +26,19 @@ import com.iab.gpp.encoder.section.UsTx;
 import com.iab.gpp.encoder.section.UsUt;
 import com.iab.gpp.encoder.section.UsVa;
 import com.iab.gpp.encoder.section.UspV1;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.PrimitiveIterator;
+import java.util.function.Supplier;
 
 public class GppModel extends AbstractEncodable {
 
   // NOTE: we genrally use concrete types to avoid the cost of interface calls
-  private static final HashMap<Integer, Supplier<EncodableSection<?>>> SECTION_ID_TO_CONSTRUCTOR = new HashMap<>();
+  private static final HashMap<Integer, Supplier<EncodableSection<?>>> SECTION_ID_TO_CONSTRUCTOR =
+      new HashMap<>();
   private static final HashMap<String, Integer> SECTION_NAME_TO_ID = new HashMap<>();
-  
+
   static {
     List<Supplier<EncodableSection<?>>> constructors = new ArrayList<>();
 
@@ -265,7 +266,7 @@ public class GppModel extends AbstractEncodable {
   protected CharSequence doEncode() {
     List<CharSequence> encodedSections = new ArrayList<>();
     encodedSections.add(header.encodeCharSequence());
-    for (Integer sectionId: header.getSectionsIds()) {
+    for (Integer sectionId : header.getSectionsIds()) {
       EncodableSection<?> section = sections.get(sectionId);
       encodedSections.add(section.encodeCharSequence());
     }
@@ -280,7 +281,7 @@ public class GppModel extends AbstractEncodable {
         header.getSectionsIds().clear();
       }
 
-      if(str != null && !str.isEmpty()) {
+      if (str != null && !str.isEmpty()) {
         List<CharSequence> encodedSections = SlicedCharSequence.split(str, '~');
         header.decode(encodedSections.get(0));
 
@@ -336,7 +337,7 @@ public class GppModel extends AbstractEncodable {
     ensureDecode();
     StringBuilder sb = new StringBuilder();
     sb.append('[').append(header);
-    for (Integer sectionId: header.getSectionsIds()) {
+    for (Integer sectionId : header.getSectionsIds()) {
       EncodableSection<?> section = sections.get(sectionId);
       sb.append(", ").append(section);
     }
@@ -349,7 +350,7 @@ public class GppModel extends AbstractEncodable {
     if (header.isDirty()) {
       return true;
     }
-    for (Integer sectionId: header.getSectionsIds()) {
+    for (Integer sectionId : header.getSectionsIds()) {
       EncodableSection<?> section = sections.get(sectionId);
       if (section != null && section.isDirty()) {
         return true;
@@ -361,12 +362,11 @@ public class GppModel extends AbstractEncodable {
   @Override
   public void setDirty(boolean dirty) {
     header.setDirty(dirty);
-    for (Integer sectionId: header.getSectionsIds()) {
+    for (Integer sectionId : header.getSectionsIds()) {
       EncodableSection<?> section = sections.get(sectionId);
       if (section != null) {
         section.setDirty(true);
       }
     }
   }
-
 }

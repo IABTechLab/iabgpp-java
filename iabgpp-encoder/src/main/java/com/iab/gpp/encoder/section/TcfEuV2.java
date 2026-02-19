@@ -1,13 +1,13 @@
 package com.iab.gpp.encoder.section;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 import com.iab.gpp.encoder.segment.TraditionalBase64Segment;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
 
@@ -16,7 +16,11 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
   public static final String NAME = "tcfeuv2";
 
   public TcfEuV2() {
-    super(new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES), new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES), new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES), new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES));
+    super(
+        new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES),
+        new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES),
+        new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES),
+        new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES));
   }
 
   public TcfEuV2(CharSequence encodedString) {
@@ -46,29 +50,28 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
     for (int i = 0; i < numEncodedSegments; i++) {
 
       /**
-       * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
+       * The first 3 bits contain the segment id. Rather than decode the entire string, just check
+       * the first character.
        *
-       * A-H     = '000' = 0
-       * I-P     = '001' = 1
-       * Q-X     = '010' = 2
-       * Y-Z,a-f = '011' = 3
+       * <p>A-H = '000' = 0 I-P = '001' = 1 Q-X = '010' = 2 Y-Z,a-f = '011' = 3
        *
-       * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
-       * for the encoding version which only coincidentally works here because the version value is less than 8.
+       * <p>Note that there is no segment id field for the core segment. Instead the first 6 bits
+       * are reserved for the encoding version which only coincidentally works here because the
+       * version value is less than 8.
        */
-
       CharSequence encodedSegment = encodedSegments.get(i);
       if (encodedSegment.length() > 0) {
         char firstChar = encodedSegment.charAt(0);
 
         // unfortunately, the segment ordering doesn't match the segment ids
-        if(firstChar >= 'A' && firstChar <= 'H') {
+        if (firstChar >= 'A' && firstChar <= 'H') {
           getSegment(0).decode(encodedSegment);
-        } else if(firstChar >= 'I' && firstChar <= 'P') {
+        } else if (firstChar >= 'I' && firstChar <= 'P') {
           getSegment(3).decode(encodedSegment);
-        } else if(firstChar >= 'Q' && firstChar <= 'X') {
+        } else if (firstChar >= 'Q' && firstChar <= 'X') {
           getSegment(2).decode(encodedSegment);
-        } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
+        } else if ((firstChar >= 'Y' && firstChar <= 'Z')
+            || (firstChar >= 'a' && firstChar <= 'f')) {
           getSegment(1).decode(encodedSegment);
         } else {
           throw new DecodingException("Invalid segment '" + encodedSegment + "'");
@@ -99,7 +102,7 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
       }
     }
 
-    return SlicedCharSequence.join('.',  encodedSegments);
+    return SlicedCharSequence.join('.', encodedSegments);
   }
 
   @Override
@@ -224,6 +227,4 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
   public IntegerSet getVendorsDisclosed() {
     return (IntegerSet) this.getFieldValue(TcfEuV2Field.VENDORS_DISCLOSED);
   }
-
-
 }

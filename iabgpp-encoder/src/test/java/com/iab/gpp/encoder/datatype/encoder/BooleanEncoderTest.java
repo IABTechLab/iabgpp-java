@@ -1,10 +1,9 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class BooleanEncoderTest {
 
@@ -51,5 +50,4 @@ public class BooleanEncoderTest {
 
     }
   }
-
 }

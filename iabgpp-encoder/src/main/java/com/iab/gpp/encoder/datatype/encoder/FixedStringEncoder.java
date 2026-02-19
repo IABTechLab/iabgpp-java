@@ -5,6 +5,7 @@ import com.iab.gpp.encoder.error.EncodingException;
 
 public class FixedStringEncoder {
   private FixedStringEncoder() {}
+
   private static final char SPACE = ' ';
 
   public static void encode(BitString builder, String value, int stringLength) {

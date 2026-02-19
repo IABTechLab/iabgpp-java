@@ -1,11 +1,10 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class FixedLongEncoderTest {
 
@@ -44,14 +43,13 @@ public class FixedLongEncoderTest {
     Assertions.assertEquals("00000111", builder.toString());
   }
 
-  
   @Test
   public void testEncode6() {
     BitString builder = new BitString();
     builder.writeLong(16630898421L, 36);
     Assertions.assertEquals("001111011111010001110101111011110101", builder.toString());
   }
-  
+
   @Test
   public void testEncode7() {
     try {

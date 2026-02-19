@@ -20,7 +20,7 @@ public final class BitString {
     this.bitSet = bitSet;
     this.writeIndex = length;
   }
-  
+
   public BitString() {
     this(new BitSet(), 0);
   }
@@ -73,7 +73,7 @@ public final class BitString {
     int mask = 1 << length;
     if (value >= mask) {
       throw new EncodingException(
-        "Numeric value '" + value + "' is too large for a bit string length of '" + length + "'");
+          "Numeric value '" + value + "' is too large for a bit string length of '" + length + "'");
     }
     for (int i = 0; i < length; i++) {
       mask >>= 1;
@@ -85,7 +85,7 @@ public final class BitString {
     long mask = 1L << length;
     if (value >= mask) {
       throw new EncodingException(
-        "Numeric value '" + value + "' is too large for a bit string length of '" + length + "'");
+          "Numeric value '" + value + "' is too large for a bit string length of '" + length + "'");
     }
     for (int i = 0; i < length; i++) {
       mask >>= 1;
@@ -158,7 +158,7 @@ public final class BitString {
     readIndex = to;
     return bitSet.readLong(from, to);
   }
-  
+
   public boolean readBoolean() {
     return getValue(readIndex++);
   }
@@ -201,5 +201,4 @@ public final class BitString {
     readIndex = newReadIndex;
     return out;
   }
-
 }

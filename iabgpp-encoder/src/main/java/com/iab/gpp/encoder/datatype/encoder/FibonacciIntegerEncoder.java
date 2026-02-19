@@ -7,6 +7,7 @@ public class FibonacciIntegerEncoder {
   // which does not overflow a 32-bit integer
   public static final int FIBONACCI_LIMIT = 42;
   public static final int[] FIBONACCI_NUMBERS = new int[FIBONACCI_LIMIT];
+
   static {
     for (int i = 0; i < FIBONACCI_LIMIT; i++) {
       if (i == 0) {

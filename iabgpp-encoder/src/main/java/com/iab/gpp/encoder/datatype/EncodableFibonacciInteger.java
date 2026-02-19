@@ -4,7 +4,8 @@ import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public final class EncodableFibonacciInteger<E extends Enum<E> & FieldKey> extends AbstractEncodableBitStringDataType<E, Integer> {
+public final class EncodableFibonacciInteger<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, Integer> {
 
   private final Integer initial;
 

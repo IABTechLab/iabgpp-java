@@ -11,7 +11,9 @@ public class UsMt extends AbstractUsSectionWithGpc<UsMtField> {
   public static final String NAME = "usmt";
 
   public UsMt() {
-    super(new Base64Segment<>(UsMtField.USMT_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsMtField.USMT_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsMtField.USMT_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsMtField.USMT_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsMt(CharSequence encodedString) {

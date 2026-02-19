@@ -1,12 +1,11 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.Set;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
+import java.util.Set;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class FixedBitfieldEncoderTest {
 
@@ -74,17 +73,17 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode8() {
     IntegerSet set = new IntegerSet(5);
-    for(int i = 0; i <= 10; i++) {
+    for (int i = 0; i <= 10; i++) {
       set.addInt(i);
     }
-    Assertions.assertEquals(Set.of(0,1,2,3,4), set);
+    Assertions.assertEquals(Set.of(0, 1, 2, 3, 4), set);
   }
 
   @Test
   public void testEncode9() {
     IntegerSet set = new IntegerSet(5);
-    set.addRange(0,10);
-    Assertions.assertEquals(Set.of(0,1,2,3,4), set);
+    set.addRange(0, 10);
+    Assertions.assertEquals(Set.of(0, 1, 2, 3, 4), set);
   }
 
   private IntegerSet decode(String str) {

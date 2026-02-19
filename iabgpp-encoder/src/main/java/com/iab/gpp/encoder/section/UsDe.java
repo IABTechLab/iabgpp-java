@@ -11,7 +11,9 @@ public class UsDe extends AbstractUsSectionWithGpc<UsDeField> {
   public static final String NAME = "usde";
 
   public UsDe() {
-    super(new Base64Segment<>(UsDeField.USDE_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsDeField.USDE_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsDeField.USDE_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsDeField.USDE_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsDe(CharSequence encodedString) {

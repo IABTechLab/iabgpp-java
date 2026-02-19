@@ -1,11 +1,10 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class FixedIntegerEncoderTest {
 
@@ -43,7 +42,7 @@ public class FixedIntegerEncoderTest {
     builder.writeInt(7, 8);
     Assertions.assertEquals("00000111", builder.toString());
   }
-  
+
   @Test
   public void testEncode6() {
     try {

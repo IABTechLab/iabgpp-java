@@ -4,7 +4,8 @@ import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public final class EncodableBoolean<E extends Enum<E> & FieldKey> extends AbstractEncodableBitStringDataType<E, Boolean> {
+public final class EncodableBoolean<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, Boolean> {
 
   private final Boolean initial;
 
@@ -19,7 +20,7 @@ public final class EncodableBoolean<E extends Enum<E> & FieldKey> extends Abstra
   }
 
   @Override
-  protected void encode(BitString builder, Boolean value, EncodableSegment<E> segment){
+  protected void encode(BitString builder, Boolean value, EncodableSegment<E> segment) {
     builder.writeBoolean(value);
   }
 

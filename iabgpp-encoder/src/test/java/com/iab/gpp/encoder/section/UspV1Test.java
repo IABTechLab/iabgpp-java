@@ -1,10 +1,10 @@
 package com.iab.gpp.encoder.section;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.UspV1Field;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class UspV1Test {
 
@@ -62,5 +62,4 @@ public class UspV1Test {
     Assertions.assertEquals(uspv1.getFieldValue(UspV1Field.OPT_OUT_SALE), uspv1.getOptOutSale());
     Assertions.assertEquals(uspv1.getFieldValue(UspV1Field.LSPA_COVERED), uspv1.getLspaCovered());
   }
-
 }

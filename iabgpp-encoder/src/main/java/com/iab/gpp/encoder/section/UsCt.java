@@ -11,7 +11,9 @@ public class UsCt extends AbstractUsSectionWithGpc<UsCtField> {
   public static final String NAME = "usct";
 
   public UsCt() {
-    super(new Base64Segment<>(UsCtField.USCT_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsCtField.USCT_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsCtField.USCT_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsCtField.USCT_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsCt(CharSequence encodedString) {

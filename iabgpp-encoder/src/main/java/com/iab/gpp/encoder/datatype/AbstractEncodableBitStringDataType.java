@@ -1,25 +1,28 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.function.Predicate;
 
-public abstract class AbstractEncodableBitStringDataType<E extends Enum<E> & FieldKey, T> extends DataType<E, T> {
+public abstract class AbstractEncodableBitStringDataType<E extends Enum<E> & FieldKey, T>
+    extends DataType<E, T> {
 
   protected AbstractEncodableBitStringDataType(String name, Predicate<T> validator) {
     super(name, validator);
   }
 
   @Override
-  public final void encode(BitString writer, Object[] values, int index, EncodableSegment<E> segment) {
+  public final void encode(
+      BitString writer, Object[] values, int index, EncodableSegment<E> segment) {
     encode(writer, get(values, index), segment);
   }
 
   protected abstract void encode(BitString writer, T value, EncodableSegment<E> segment);
 
   @Override
-  public final void decode(BitString reader, Object[] values, int index, EncodableSegment<E> segment) {
+  public final void decode(
+      BitString reader, Object[] values, int index, EncodableSegment<E> segment) {
     values[index] = decode(reader, segment);
   }
 

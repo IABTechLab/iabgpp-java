@@ -7,16 +7,13 @@ import com.iab.gpp.encoder.section.UsUt;
 
 public enum UsUtField implements FieldKey {
   VERSION(new EncodableFixedInteger<>("Version", 6, UsUt.VERSION)),
-  SHARING_NOTICE(
-      new EncodableFixedInteger<>("SharingNotice", 2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
+  SHARING_NOTICE(new EncodableFixedInteger<>("SharingNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT_NOTICE(new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT_NOTICE(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SensitiveDataProcessingOptOutNotice",2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT(
-      new EncodableFixedInteger<>("SaleOptOut",2, 0, VALIDATOR_012)),
+      new EncodableFixedInteger<>("SensitiveDataProcessingOptOutNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT(new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_PROCESSING(
@@ -41,20 +38,20 @@ public enum UsUtField implements FieldKey {
     return type;
   }
 
-  //@formatter:off
-  public static final FieldNames<UsUtField> USUT_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
-      UsUtField.VERSION,
-      UsUtField.SHARING_NOTICE,
-      UsUtField.SALE_OPT_OUT_NOTICE,
-      UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-      UsUtField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE,
-      UsUtField.SALE_OPT_OUT,
-      UsUtField.TARGETED_ADVERTISING_OPT_OUT,
-      UsUtField.SENSITIVE_DATA_PROCESSING,
-      UsUtField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-      UsUtField.MSPA_COVERED_TRANSACTION,
-      UsUtField.MSPA_OPT_OUT_OPTION_MODE,
-      UsUtField.MSPA_SERVICE_PROVIDER_MODE
-  );
-  //@formatter:on
+  // @formatter:off
+  public static final FieldNames<UsUtField> USUT_CORE_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          UsUtField.VERSION,
+          UsUtField.SHARING_NOTICE,
+          UsUtField.SALE_OPT_OUT_NOTICE,
+          UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+          UsUtField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE,
+          UsUtField.SALE_OPT_OUT,
+          UsUtField.TARGETED_ADVERTISING_OPT_OUT,
+          UsUtField.SENSITIVE_DATA_PROCESSING,
+          UsUtField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+          UsUtField.MSPA_COVERED_TRANSACTION,
+          UsUtField.MSPA_OPT_OUT_OPTION_MODE,
+          UsUtField.MSPA_SERVICE_PROVIDER_MODE);
+  // @formatter:on
 }

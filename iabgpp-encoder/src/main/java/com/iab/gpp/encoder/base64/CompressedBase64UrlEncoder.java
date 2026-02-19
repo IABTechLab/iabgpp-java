@@ -6,9 +6,7 @@ public final class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
 
   private static final CompressedBase64UrlEncoder instance = new CompressedBase64UrlEncoder();
 
-  private CompressedBase64UrlEncoder() {
-
-  }
+  private CompressedBase64UrlEncoder() {}
 
   public static CompressedBase64UrlEncoder getInstance() {
     return instance;
@@ -17,7 +15,7 @@ public final class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
   @Override
   protected void pad(BitString bitString) {
     int remainder = bitString.length() % 8;
-    if(remainder > 0) {
+    if (remainder > 0) {
       int padding = 8 - remainder;
       for (int i = 0; i < padding; i++) {
         bitString.writeBoolean(false);
@@ -25,12 +23,11 @@ public final class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
     }
 
     remainder = bitString.length() % 6;
-    if(remainder > 0) {
+    if (remainder > 0) {
       int padding = 6 - remainder;
       for (int i = 0; i < padding; i++) {
         bitString.writeBoolean(false);
       }
     }
   }
-
 }

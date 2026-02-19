@@ -1,13 +1,15 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class AbstractUsSectionWithGpc<E extends Enum<E> & FieldKey> extends AbstractUsSection<E> {
+public abstract class AbstractUsSectionWithGpc<E extends Enum<E> & FieldKey>
+    extends AbstractUsSection<E> {
 
-  protected AbstractUsSectionWithGpc(EncodableSegment<E> coreSegment, EncodableSegment<E> gpcSegment) {
+  protected AbstractUsSectionWithGpc(
+      EncodableSegment<E> coreSegment, EncodableSegment<E> gpcSegment) {
     super(coreSegment, gpcSegment);
   }
 
@@ -37,11 +39,11 @@ public abstract class AbstractUsSectionWithGpc<E extends Enum<E> & FieldKey> ext
     List<CharSequence> encodedSegments = new ArrayList<>(size);
 
     encodedSegments.add(getSegment(0).encodeCharSequence());
-    if(size >= 2 && getGpcSegmentIncluded()) {
+    if (size >= 2 && getGpcSegmentIncluded()) {
       encodedSegments.add(getSegment(1).encodeCharSequence());
     }
 
-    return SlicedCharSequence.join('.',  encodedSegments);
+    return SlicedCharSequence.join('.', encodedSegments);
   }
 
   public abstract Integer getGpcSegmentType();

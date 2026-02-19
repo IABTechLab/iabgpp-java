@@ -1,10 +1,10 @@
 package com.iab.gpp.encoder.base64;
 
-import java.util.Arrays;
 import com.iab.gpp.encoder.bitstring.BitSet;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import java.util.Arrays;
 
 public abstract class AbstractBase64UrlEncoder {
 
@@ -12,13 +12,17 @@ public abstract class AbstractBase64UrlEncoder {
 
   private static final int BASE64_BITS = 6;
   private static final int NO_SYMBOL = -1;
+
   /**
    * Base 64 URL character set. Different from standard Base64 char set in that '+' and '/' are
    * replaced with '-' and '_'.
    */
-  private static final String DICT = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  private static final String DICT =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+
   private static final int REVERSE_DICT_SIZE = 128;
   private static final int[] REVERSE_DICT = new int[REVERSE_DICT_SIZE];
+
   static {
     Arrays.fill(REVERSE_DICT, NO_SYMBOL);
     for (int i = 0; i < DICT.length(); i++) {
@@ -59,9 +63,9 @@ public abstract class AbstractBase64UrlEncoder {
           throw new DecodingException("Undecodable Base64URL string");
         }
         int bits0 = b1 << 18 | b2 << 12 | b3 << 6 | b4;
-        words[dst++] = (byte)(bits0 >> 16);
-        words[dst++] = (byte)(bits0 >>  8);
-        words[dst++] = (byte)(bits0);
+        words[dst++] = (byte) (bits0 >> 16);
+        words[dst++] = (byte) (bits0 >> 8);
+        words[dst++] = (byte) (bits0);
       }
       if (length > limit) {
         remainder(str, words, length, src, dst);
@@ -72,7 +76,8 @@ public abstract class AbstractBase64UrlEncoder {
     }
   }
 
-  private static final void remainder(CharSequence str, byte[] words, int length, int src, int dst) {
+  private static final void remainder(
+      CharSequence str, byte[] words, int length, int src, int dst) {
     int b1 = src < length ? REVERSE_DICT[str.charAt(src)] : 0;
     src++;
     int b2 = src < length ? REVERSE_DICT[str.charAt(src)] : 0;
@@ -85,8 +90,8 @@ public abstract class AbstractBase64UrlEncoder {
       throw new DecodingException("Undecodable Base64URL string");
     }
     int bits0 = b1 << 18 | b2 << 12 | b3 << 6 | b4;
-    words[dst++] = (byte)(bits0 >> 16);
-    words[dst++] = (byte)(bits0 >>  8);
-    words[dst++] = (byte)(bits0);
+    words[dst++] = (byte) (bits0 >> 16);
+    words[dst++] = (byte) (bits0 >> 8);
+    words[dst++] = (byte) (bits0);
   }
 }

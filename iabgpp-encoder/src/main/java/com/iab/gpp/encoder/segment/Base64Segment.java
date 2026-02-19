@@ -14,5 +14,4 @@ public final class Base64Segment<E extends Enum<E> & FieldKey> extends AbstractB
   protected AbstractBase64UrlEncoder getBase64UrlEncoder() {
     return CompressedBase64UrlEncoder.getInstance();
   }
-
 }

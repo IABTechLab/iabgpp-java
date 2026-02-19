@@ -6,9 +6,7 @@ public final class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder 
 
   private static final TraditionalBase64UrlEncoder instance = new TraditionalBase64UrlEncoder();
 
-  private TraditionalBase64UrlEncoder() {
-
-  }
+  private TraditionalBase64UrlEncoder() {}
 
   public static TraditionalBase64UrlEncoder getInstance() {
     return instance;
@@ -24,5 +22,4 @@ public final class TraditionalBase64UrlEncoder extends AbstractBase64UrlEncoder 
       }
     }
   }
-
 }

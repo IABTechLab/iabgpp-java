@@ -1,11 +1,10 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.error.DecodingException;
 import java.time.Instant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.error.DecodingException;
 
 public class DatetimeEncoderTest {
 

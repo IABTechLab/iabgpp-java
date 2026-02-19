@@ -1,12 +1,13 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.Collection;
 
-public final class EncodableFixedBitfield<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
+public final class EncodableFixedBitfield<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
   private final int numElements;
 

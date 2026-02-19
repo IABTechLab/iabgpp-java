@@ -9,29 +9,24 @@ import com.iab.gpp.encoder.section.UsNat;
 
 public enum UsNatField implements FieldKey {
   VERSION(new EncodableFixedInteger<>("Version", 6, UsNat.VERSION)),
-  SHARING_NOTICE(
-      new EncodableFixedInteger<>("SharingNotice", 2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
-  SHARING_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SharingOptOutNotice", 2, 0, VALIDATOR_012)),
+  SHARING_NOTICE(new EncodableFixedInteger<>("SharingNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT_NOTICE(new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
+  SHARING_OPT_OUT_NOTICE(new EncodableFixedInteger<>("SharingOptOutNotice", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT_NOTICE(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SensitiveDataProcessingOptOutNotice",2, 0, VALIDATOR_012)),
+      new EncodableFixedInteger<>("SensitiveDataProcessingOptOutNotice", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_LIMIT_USE_NOTICE(
       new EncodableFixedInteger<>("SensitiveDataLimitUseNotice", 2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT(
-      new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
-  SHARING_OPT_OUT(
-      new EncodableFixedInteger<>("SharingOptOut", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT(new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
+  SHARING_OPT_OUT(new EncodableFixedInteger<>("SharingOptOut", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_PROCESSING(
       new EncodableFixedIntegerList<>("SensitiveDataProcessing", 2, 16, VALIDATOR_LIST_012)),
-  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS(new EncodableFixedIntegerList<>("KnownChildSensitiveDataConsents", 2, 3, VALIDATOR_LIST_012)),
-  PERSONAL_DATA_CONSENTS(
-      new EncodableFixedInteger<>("PersonalDataConsents", 2, 0, VALIDATOR_012)),
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS(
+      new EncodableFixedIntegerList<>("KnownChildSensitiveDataConsents", 2, 3, VALIDATOR_LIST_012)),
+  PERSONAL_DATA_CONSENTS(new EncodableFixedInteger<>("PersonalDataConsents", 2, 0, VALIDATOR_012)),
   MSPA_COVERED_TRANSACTION(
       new EncodableFixedInteger<>("MspaCoveredTransaction", 2, 1, VALIDATOR_12)),
   MSPA_OPT_OUT_OPTION_MODE(
@@ -54,32 +49,30 @@ public enum UsNatField implements FieldKey {
     return type;
   }
 
-  //@formatter:off
-  public static final FieldNames<UsNatField> USNAT_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
-      UsNatField.VERSION,
-      UsNatField.SHARING_NOTICE,
-      UsNatField.SALE_OPT_OUT_NOTICE,
-      UsNatField.SHARING_OPT_OUT_NOTICE,
-      UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-      UsNatField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE,
-      UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE,
-      UsNatField.SALE_OPT_OUT,
-      UsNatField.SHARING_OPT_OUT,
-      UsNatField.TARGETED_ADVERTISING_OPT_OUT,
-      UsNatField.SENSITIVE_DATA_PROCESSING,
-      UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-      UsNatField.PERSONAL_DATA_CONSENTS,
-      UsNatField.MSPA_COVERED_TRANSACTION,
-      UsNatField.MSPA_OPT_OUT_OPTION_MODE,
-      UsNatField.MSPA_SERVICE_PROVIDER_MODE
-   );
-  //@formatter:on
+  // @formatter:off
+  public static final FieldNames<UsNatField> USNAT_CORE_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          UsNatField.VERSION,
+          UsNatField.SHARING_NOTICE,
+          UsNatField.SALE_OPT_OUT_NOTICE,
+          UsNatField.SHARING_OPT_OUT_NOTICE,
+          UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+          UsNatField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE,
+          UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE,
+          UsNatField.SALE_OPT_OUT,
+          UsNatField.SHARING_OPT_OUT,
+          UsNatField.TARGETED_ADVERTISING_OPT_OUT,
+          UsNatField.SENSITIVE_DATA_PROCESSING,
+          UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+          UsNatField.PERSONAL_DATA_CONSENTS,
+          UsNatField.MSPA_COVERED_TRANSACTION,
+          UsNatField.MSPA_OPT_OUT_OPTION_MODE,
+          UsNatField.MSPA_SERVICE_PROVIDER_MODE);
+  // @formatter:on
 
-  //@formatter:off
-  public static final FieldNames<UsNatField> USNAT_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
-      UsNatField.GPC_SEGMENT_TYPE,
-      UsNatField.GPC_SEGMENT_INCLUDED,
-      UsNatField.GPC
-  );
-  //@formatter:on
+  // @formatter:off
+  public static final FieldNames<UsNatField> USNAT_GPC_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          UsNatField.GPC_SEGMENT_TYPE, UsNatField.GPC_SEGMENT_INCLUDED, UsNatField.GPC);
+  // @formatter:on
 }

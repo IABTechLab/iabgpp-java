@@ -26,7 +26,7 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1
     }
 
     try {
-      setFieldValueUnsafe(UspV1Field.VERSION, (int)(encodedString.charAt(0) - '0'));
+      setFieldValueUnsafe(UspV1Field.VERSION, (int) (encodedString.charAt(0) - '0'));
       setFieldValueUnsafe(UspV1Field.NOTICE, encodedString.charAt(1));
       setFieldValueUnsafe(UspV1Field.OPT_OUT_SALE, encodedString.charAt(2));
       setFieldValueUnsafe(UspV1Field.LSPA_COVERED, encodedString.charAt(3));
@@ -34,6 +34,4 @@ public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1
       throw new DecodingException("Unable to decode UspV1CoreSegment '" + encodedString + "'", e);
     }
   }
-
 }
-

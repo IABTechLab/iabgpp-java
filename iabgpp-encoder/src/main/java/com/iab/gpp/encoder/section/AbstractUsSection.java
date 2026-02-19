@@ -9,5 +9,4 @@ public abstract class AbstractUsSection<E extends Enum<E> & FieldKey> extends En
   protected AbstractUsSection(EncodableSegment<E>... segments) {
     super(segments);
   }
-
 }

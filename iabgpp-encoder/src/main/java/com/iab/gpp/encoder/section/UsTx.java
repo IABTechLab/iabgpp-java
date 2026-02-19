@@ -11,7 +11,9 @@ public class UsTx extends AbstractUsSectionWithGpc<UsTxField> {
   public static final String NAME = "ustx";
 
   public UsTx() {
-    super(new Base64Segment<>(UsTxField.USTX_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsTxField.USTX_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsTxField.USTX_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsTxField.USTX_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsTx(CharSequence encodedString) {

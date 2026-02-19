@@ -8,14 +8,15 @@ import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
 
-abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends AbstractLazilyEncodableSegment<E> {
-  
+abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey>
+    extends AbstractLazilyEncodableSegment<E> {
+
   protected AbstractBase64Segment(FieldNames<E> fieldNames) {
     super(fieldNames);
   }
 
   protected abstract AbstractBase64UrlEncoder getBase64UrlEncoder();
-  
+
   @Override
   protected final CharSequence doEncode() {
     BitString bitString = new BitString();
@@ -45,12 +46,12 @@ abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey> extends Abstr
         }
       }
     } catch (Exception e) {
-      throw new DecodingException("Unable to decode "+ getClass().getSimpleName() +" '" + encodedString + "'", e);
+      throw new DecodingException(
+          "Unable to decode " + getClass().getSimpleName() + " '" + encodedString + "'", e);
     }
   }
 
   protected BitString decodeBitString(CharSequence encodedString) {
     return getBase64UrlEncoder().decode(encodedString);
   }
-
 }

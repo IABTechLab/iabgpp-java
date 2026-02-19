@@ -11,7 +11,9 @@ public class UsCa extends AbstractUsSectionWithGpc<UsCaField> {
   public static final String NAME = "usca";
 
   public UsCa() {
-    super(new Base64Segment<>(UsCaField.USCA_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsCaField.USCA_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsCaField.USCA_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsCaField.USCA_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsCa(CharSequence encodedString) {

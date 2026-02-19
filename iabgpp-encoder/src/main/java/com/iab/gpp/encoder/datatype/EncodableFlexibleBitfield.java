@@ -1,13 +1,14 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
 import com.iab.gpp.encoder.field.FieldKey;
-import com.iab.gpp.encoder.segment.SegmentValueProvider;
 import com.iab.gpp.encoder.segment.EncodableSegment;
+import com.iab.gpp.encoder.segment.SegmentValueProvider;
+import java.util.Collection;
 
-public final class EncodableFlexibleBitfield<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
+public final class EncodableFlexibleBitfield<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
   private final SegmentValueProvider<E> getLengthSupplier;
 
@@ -30,7 +31,6 @@ public final class EncodableFlexibleBitfield<E extends Enum<E> & FieldKey> exten
   protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
     return reader.readIntegerSet(getLengthSupplier.extract(segment));
   }
-
 
   @SuppressWarnings("unchecked")
   @Override

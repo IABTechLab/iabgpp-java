@@ -1,12 +1,13 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.Collection;
 
-public final class EncodableFibonacciIntegerRange<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
+public final class EncodableFibonacciIntegerRange<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
   public EncodableFibonacciIntegerRange(String name) {
     super(name, null);

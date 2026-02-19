@@ -77,6 +77,4 @@ public class UsUt extends AbstractUsSection<UsUtField> {
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE);
   }
-
-
 }

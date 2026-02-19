@@ -1,12 +1,13 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.time.Instant;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.time.Instant;
 
-public final class EncodableDatetime<E extends Enum<E> & FieldKey> extends AbstractEncodableBitStringDataType<E, Instant> {
+public final class EncodableDatetime<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, Instant> {
 
   public EncodableDatetime(String name) {
     super(name, null);

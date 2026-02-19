@@ -20,20 +20,23 @@ package com.iab.gpp.extras.jackson.gvl;
  * #L%
  */
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import com.iab.gpp.extras.gvl.Gvl;
 import com.iab.gpp.extras.jackson.Loader;
+import java.io.IOException;
+import java.util.Arrays;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class GvlV2Test {
 
   @Test
   public void test() throws IOException {
-    Gvl gvl = new Loader()
-        .globalVendorList(GvlV2Test.class.getClassLoader().getResourceAsStream("vendorlist/v2/vendor-list.json"));
+    Gvl gvl =
+        new Loader()
+            .globalVendorList(
+                GvlV2Test.class
+                    .getClassLoader()
+                    .getResourceAsStream("vendorlist/v2/vendor-list.json"));
     Assertions.assertFalse(gvl.getDataCategories().isPresent());
     Assertions.assertEquals(3, gvl.getFeatures().size());
     Assertions.assertEquals(2, gvl.getGvlSpecificationVersion());
@@ -47,7 +50,8 @@ public class GvlV2Test {
     Assertions.assertEquals(496, gvl.getVendors().size());
 
     Assertions.assertEquals(1, gvl.getPurposes().get(0).getId());
-    Assertions.assertEquals("Store and/or access information on a device", gvl.getPurposes().get(0).getName());
+    Assertions.assertEquals(
+        "Store and/or access information on a device", gvl.getPurposes().get(0).getName());
     Assertions.assertEquals(
         "Cookies, device identifiers, or other information can be stored or accessed on your device for the purposes presented to you.",
         gvl.getPurposes().get(0).getDescription());
@@ -58,7 +62,8 @@ public class GvlV2Test {
     Assertions.assertFalse(gvl.getPurposes().get(0).getIllustrations().isPresent());
 
     Assertions.assertEquals(1, gvl.getSpecialPurposes().get(0).getId());
-    Assertions.assertEquals("Ensure security, prevent fraud, and debug", gvl.getSpecialPurposes().get(0).getName());
+    Assertions.assertEquals(
+        "Ensure security, prevent fraud, and debug", gvl.getSpecialPurposes().get(0).getName());
     Assertions.assertEquals(
         "Your data can be used to monitor for and prevent fraudulent activity, and ensure systems and processes work properly and securely.",
         gvl.getSpecialPurposes().get(0).getDescription());
@@ -69,7 +74,8 @@ public class GvlV2Test {
     Assertions.assertFalse(gvl.getSpecialPurposes().get(0).getIllustrations().isPresent());
 
     Assertions.assertEquals(1, gvl.getFeatures().get(0).getId());
-    Assertions.assertEquals("Match and combine offline data sources", gvl.getFeatures().get(0).getName());
+    Assertions.assertEquals(
+        "Match and combine offline data sources", gvl.getFeatures().get(0).getName());
     Assertions.assertEquals(
         "Data from offline data sources can be combined with your online activity in support of one or more purposes",
         gvl.getFeatures().get(0).getDescription());
@@ -80,7 +86,8 @@ public class GvlV2Test {
     Assertions.assertFalse(gvl.getFeatures().get(0).getIllustrations().isPresent());
 
     Assertions.assertEquals(1, gvl.getSpecialFeatures().get(0).getId());
-    Assertions.assertEquals("Use precise geolocation data", gvl.getSpecialFeatures().get(0).getName());
+    Assertions.assertEquals(
+        "Use precise geolocation data", gvl.getSpecialFeatures().get(0).getName());
     Assertions.assertEquals(
         "Your precise geolocation data can be used in support of one or more purposes. This means your location can be accurate to within several meters.",
         gvl.getSpecialFeatures().get(0).getDescription());
@@ -91,32 +98,39 @@ public class GvlV2Test {
     Assertions.assertFalse(gvl.getSpecialFeatures().get(0).getIllustrations().isPresent());
 
     Assertions.assertEquals(1, gvl.getStacks().get(0).getId());
-    Assertions.assertEquals("Precise geolocation data, and identification through device scanning", gvl.getStacks().get(0).getName());
-    Assertions.assertEquals("Precise geolocation and information about device characteristics can be used.", gvl.getStacks().get(0).getDescription());
+    Assertions.assertEquals(
+        "Precise geolocation data, and identification through device scanning",
+        gvl.getStacks().get(0).getName());
+    Assertions.assertEquals(
+        "Precise geolocation and information about device characteristics can be used.",
+        gvl.getStacks().get(0).getDescription());
     Assertions.assertTrue(gvl.getStacks().get(0).getPurposes().isEmpty());
     Assertions.assertEquals(Arrays.asList(1, 2), gvl.getStacks().get(0).getSpecialFeatures());
-   
+
     Assertions.assertEquals(2, gvl.getStacks().get(1).getId());
     Assertions.assertEquals("Basic ads, and ad measurement", gvl.getStacks().get(1).getName());
-    Assertions.assertEquals("Basic ads can be served. Ad performance can be measured.", gvl.getStacks().get(1).getDescription());
+    Assertions.assertEquals(
+        "Basic ads can be served. Ad performance can be measured.",
+        gvl.getStacks().get(1).getDescription());
     Assertions.assertEquals(Arrays.asList(2, 7), gvl.getStacks().get(1).getPurposes());
     Assertions.assertTrue(gvl.getStacks().get(1).getSpecialFeatures().isEmpty());
-    
-    Assertions.assertEquals(8,  gvl.getVendors().get(0).getId());
+
+    Assertions.assertEquals(8, gvl.getVendors().get(0).getId());
     Assertions.assertFalse(gvl.getVendors().get(0).getDeletedDate().isPresent());
     Assertions.assertEquals("Emerse Sverige AB", gvl.getVendors().get(0).getName());
     Assertions.assertEquals(Arrays.asList(1, 3, 4), gvl.getVendors().get(0).getPurposes());
     Assertions.assertTrue(gvl.getVendors().get(0).getLegIntPurposes().isPresent());
-    Assertions.assertEquals(Arrays.asList(2, 7, 8, 9),  gvl.getVendors().get(0).getLegIntPurposes().get());
-    Assertions.assertEquals(Arrays.asList(2, 9),  gvl.getVendors().get(0).getFlexiblePurposes());
-    Assertions.assertEquals(Arrays.asList(1, 2),  gvl.getVendors().get(0).getSpecialPurposes());
-    Assertions.assertEquals(Arrays.asList(1, 2),  gvl.getVendors().get(0).getFeatures());
+    Assertions.assertEquals(
+        Arrays.asList(2, 7, 8, 9), gvl.getVendors().get(0).getLegIntPurposes().get());
+    Assertions.assertEquals(Arrays.asList(2, 9), gvl.getVendors().get(0).getFlexiblePurposes());
+    Assertions.assertEquals(Arrays.asList(1, 2), gvl.getVendors().get(0).getSpecialPurposes());
+    Assertions.assertEquals(Arrays.asList(1, 2), gvl.getVendors().get(0).getFeatures());
     Assertions.assertTrue(gvl.getVendors().get(0).getSpecialFeatures().isEmpty());
     Assertions.assertTrue(gvl.getVendors().get(0).getPolicyUrl().isPresent());
-    Assertions.assertEquals("https://www.emerse.com/privacy-policy/",  gvl.getVendors().get(0).getPolicyUrl().get());
-    
-    Assertions.assertEquals(9,  gvl.getVendors().get(1).getId());
+    Assertions.assertEquals(
+        "https://www.emerse.com/privacy-policy/", gvl.getVendors().get(0).getPolicyUrl().get());
+
+    Assertions.assertEquals(9, gvl.getVendors().get(1).getId());
     Assertions.assertTrue(gvl.getVendors().get(1).getDeletedDate().isPresent());
   }
-
 }

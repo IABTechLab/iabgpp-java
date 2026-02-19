@@ -9,14 +9,11 @@ import com.iab.gpp.encoder.section.UsDe;
 
 public enum UsDeField implements FieldKey {
   VERSION(new EncodableFixedInteger<>("Version", 6, UsDe.VERSION)),
-  PROCESSING_NOTICE(
-      new EncodableFixedInteger<>("ProcessingNotice", 2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
+  PROCESSING_NOTICE(new EncodableFixedInteger<>("ProcessingNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT_NOTICE(new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT_NOTICE(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT(
-      new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT(new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_PROCESSING(
@@ -47,28 +44,25 @@ public enum UsDeField implements FieldKey {
     return type;
   }
 
-  //@formatter:off
-  public static final FieldNames<UsDeField> USDE_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
-      UsDeField.VERSION,
-      UsDeField.PROCESSING_NOTICE,
-      UsDeField.SALE_OPT_OUT_NOTICE,
-      UsDeField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-      UsDeField.SALE_OPT_OUT,
-      UsDeField.TARGETED_ADVERTISING_OPT_OUT,
-      UsDeField.SENSITIVE_DATA_PROCESSING,
-      UsDeField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-      UsDeField.ADDITIONAL_DATA_PROCESSING_CONSENT,
-      UsDeField.MSPA_COVERED_TRANSACTION,
-      UsDeField.MSPA_OPT_OUT_OPTION_MODE,
-      UsDeField.MSPA_SERVICE_PROVIDER_MODE
-  );
-  //@formatter:on
+  // @formatter:off
+  public static final FieldNames<UsDeField> USDE_CORE_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          UsDeField.VERSION,
+          UsDeField.PROCESSING_NOTICE,
+          UsDeField.SALE_OPT_OUT_NOTICE,
+          UsDeField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+          UsDeField.SALE_OPT_OUT,
+          UsDeField.TARGETED_ADVERTISING_OPT_OUT,
+          UsDeField.SENSITIVE_DATA_PROCESSING,
+          UsDeField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+          UsDeField.ADDITIONAL_DATA_PROCESSING_CONSENT,
+          UsDeField.MSPA_COVERED_TRANSACTION,
+          UsDeField.MSPA_OPT_OUT_OPTION_MODE,
+          UsDeField.MSPA_SERVICE_PROVIDER_MODE);
+  // @formatter:on
 
-  //@formatter:off
-  public static final FieldNames<UsDeField> USDE_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
-      UsDeField.GPC_SEGMENT_TYPE,
-      UsDeField.GPC_SEGMENT_INCLUDED,
-      UsDeField.GPC
-  );
-  //@formatter:on
+  // @formatter:off
+  public static final FieldNames<UsDeField> USDE_GPC_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(UsDeField.GPC_SEGMENT_TYPE, UsDeField.GPC_SEGMENT_INCLUDED, UsDeField.GPC);
+  // @formatter:on
 }

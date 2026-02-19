@@ -11,7 +11,9 @@ public class UsTn extends AbstractUsSectionWithGpc<UsTnField> {
   public static final String NAME = "ustn";
 
   public UsTn() {
-    super(new Base64Segment<>(UsTnField.USTN_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsTnField.USTN_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsTnField.USTN_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsTnField.USTN_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsTn(CharSequence encodedString) {

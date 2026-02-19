@@ -1,8 +1,8 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.time.Instant;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
+import java.time.Instant;
 
 public class DatetimeEncoder {
 

@@ -1,25 +1,27 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.function.Predicate;
 
-public final class EncodableFixedInteger<E extends Enum<E> & FieldKey> extends AbstractEncodableBitStringDataType<E, Integer> {
+public final class EncodableFixedInteger<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, Integer> {
 
   private final int bitStringLength;
   private final Integer initial;
-  
-  public EncodableFixedInteger(String name, int bitStringLength, Integer initial, Predicate<Integer> validator) {
+
+  public EncodableFixedInteger(
+      String name, int bitStringLength, Integer initial, Predicate<Integer> validator) {
     super(name, validator);
     this.bitStringLength = bitStringLength;
     this.initial = initial;
   }
-  
+
   public EncodableFixedInteger(String name, int bitStringLength, Integer initial) {
     this(name, bitStringLength, initial, null);
   }
-  
+
   @Override
   public String toString() {
     return name + "=Int(" + bitStringLength + ")";

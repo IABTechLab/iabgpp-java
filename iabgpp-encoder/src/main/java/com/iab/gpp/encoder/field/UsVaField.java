@@ -7,14 +7,11 @@ import com.iab.gpp.encoder.section.UsVa;
 
 public enum UsVaField implements FieldKey {
   VERSION(new EncodableFixedInteger<>("Version", 6, UsVa.VERSION)),
-  SHARING_NOTICE(
-      new EncodableFixedInteger<>("SharingNotice", 2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
+  SHARING_NOTICE(new EncodableFixedInteger<>("SharingNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT_NOTICE(new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT_NOTICE(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT(
-      new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT(new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_PROCESSING(
@@ -39,19 +36,19 @@ public enum UsVaField implements FieldKey {
     return type;
   }
 
-  //@formatter:off
-  public static final FieldNames<UsVaField> USVA_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
-      UsVaField.VERSION,
-      UsVaField.SHARING_NOTICE,
-      UsVaField.SALE_OPT_OUT_NOTICE,
-      UsVaField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-      UsVaField.SALE_OPT_OUT,
-      UsVaField.TARGETED_ADVERTISING_OPT_OUT,
-      UsVaField.SENSITIVE_DATA_PROCESSING,
-      UsVaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-      UsVaField.MSPA_COVERED_TRANSACTION,
-      UsVaField.MSPA_OPT_OUT_OPTION_MODE,
-      UsVaField.MSPA_SERVICE_PROVIDER_MODE
-  );
-  //@formatter:on
+  // @formatter:off
+  public static final FieldNames<UsVaField> USVA_CORE_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          UsVaField.VERSION,
+          UsVaField.SHARING_NOTICE,
+          UsVaField.SALE_OPT_OUT_NOTICE,
+          UsVaField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+          UsVaField.SALE_OPT_OUT,
+          UsVaField.TARGETED_ADVERTISING_OPT_OUT,
+          UsVaField.SENSITIVE_DATA_PROCESSING,
+          UsVaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+          UsVaField.MSPA_COVERED_TRANSACTION,
+          UsVaField.MSPA_OPT_OUT_OPTION_MODE,
+          UsVaField.MSPA_SERVICE_PROVIDER_MODE);
+  // @formatter:on
 }

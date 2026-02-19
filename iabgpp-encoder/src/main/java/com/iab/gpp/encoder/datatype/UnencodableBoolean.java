@@ -4,7 +4,8 @@ import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public final class UnencodableBoolean<E extends Enum<E> & FieldKey> extends AbstractEncodableBitStringDataType<E, Boolean> {
+public final class UnencodableBoolean<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, Boolean> {
 
   private final Boolean initial;
 
@@ -12,7 +13,7 @@ public final class UnencodableBoolean<E extends Enum<E> & FieldKey> extends Abst
     super(name, null);
     this.initial = initial;
   }
-  
+
   @Override
   protected Boolean initialize() {
     return initial;
@@ -27,5 +28,4 @@ public final class UnencodableBoolean<E extends Enum<E> & FieldKey> extends Abst
   protected Boolean decode(BitString reader, EncodableSegment<E> segment) {
     return Boolean.FALSE;
   }
-
 }

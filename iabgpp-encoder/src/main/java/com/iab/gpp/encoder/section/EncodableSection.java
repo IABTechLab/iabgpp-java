@@ -129,7 +129,7 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
       EncodableSegment<E> segment = getSegment(i);
-      if(segment.hasField(fieldName)) {
+      if (segment.hasField(fieldName)) {
         segment.setFieldValue(fieldName, value);
         onSet(fieldName);
         return;
@@ -166,7 +166,12 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
   public final String toString() {
     ensureDecode();
     StringBuilder sb = new StringBuilder();
-    sb.append("{id=").append(getId()).append(", name=").append(getName()).append(", version=").append(getVersion());
+    sb.append("{id=")
+        .append(getId())
+        .append(", name=")
+        .append(getName())
+        .append(", version=")
+        .append(getVersion());
     int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
       sb.append(", ").append(getSegment(i).toString());
@@ -174,5 +179,4 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
     sb.append('}');
     return sb.toString();
   }
-
 }

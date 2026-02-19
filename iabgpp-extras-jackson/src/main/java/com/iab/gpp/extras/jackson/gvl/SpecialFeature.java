@@ -25,6 +25,4 @@ package com.iab.gpp.extras.jackson.gvl;
  * signal an opt-in choice as to whether vendors may employ the feature when performing any purpose
  * processing. See Policies for specifics.
  */
-public class SpecialFeature extends Feature implements com.iab.gpp.extras.gvl.SpecialFeature {
-
-}
+public class SpecialFeature extends Feature implements com.iab.gpp.extras.gvl.SpecialFeature {}

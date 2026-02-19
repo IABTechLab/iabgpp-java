@@ -1,17 +1,19 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.List;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.List;
 
-public final class EncodableArrayOfFixedIntegerRanges<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, DirtyableList<RangeEntry>> {
+public final class EncodableArrayOfFixedIntegerRanges<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, DirtyableList<RangeEntry>> {
 
   private final int keyBitStringLength;
   private final int typeBitStringLength;
 
-  public EncodableArrayOfFixedIntegerRanges(String name, int keyBitStringLength, int typeBitStringLength) {
+  public EncodableArrayOfFixedIntegerRanges(
+      String name, int keyBitStringLength, int typeBitStringLength) {
     super(name, null);
     this.keyBitStringLength = keyBitStringLength;
     this.typeBitStringLength = typeBitStringLength;
@@ -28,7 +30,8 @@ public final class EncodableArrayOfFixedIntegerRanges<E extends Enum<E> & FieldK
   }
 
   @Override
-  protected void encode(BitString sb, DirtyableList<RangeEntry> entries, EncodableSegment<E> segment) {
+  protected void encode(
+      BitString sb, DirtyableList<RangeEntry> entries, EncodableSegment<E> segment) {
     sb.writeInt(entries.size(), 12);
     for (RangeEntry entry : entries) {
       sb.writeInt(entry.getKey(), keyBitStringLength);
@@ -53,7 +56,8 @@ public final class EncodableArrayOfFixedIntegerRanges<E extends Enum<E> & FieldK
 
   @SuppressWarnings("unchecked")
   @Override
-  protected DirtyableList<RangeEntry> processValue(DirtyableList<RangeEntry> oldValue, Object newValue) {
+  protected DirtyableList<RangeEntry> processValue(
+      DirtyableList<RangeEntry> oldValue, Object newValue) {
     oldValue.clear();
     oldValue.addAll((List<RangeEntry>) newValue);
     return oldValue;

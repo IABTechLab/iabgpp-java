@@ -62,5 +62,4 @@ public final class RangeEntry implements Dirtyable {
     this.dirty = dirty;
     ids.setDirty(dirty);
   }
-
 }

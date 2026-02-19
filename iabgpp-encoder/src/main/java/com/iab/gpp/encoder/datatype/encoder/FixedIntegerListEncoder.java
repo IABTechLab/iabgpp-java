@@ -1,13 +1,14 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.List;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.EncodingException;
+import java.util.List;
 
 public class FixedIntegerListEncoder {
   private FixedIntegerListEncoder() {}
 
-  public static void encode(BitString builder, List<Integer> value, int elementBitStringLength, int numElements) {
+  public static void encode(
+      BitString builder, List<Integer> value, int elementBitStringLength, int numElements) {
     int length = value.size();
     if (length > numElements) {
       throw new EncodingException("Too many values '" + value.size() + "'");

@@ -5,7 +5,8 @@ import com.iab.gpp.encoder.base64.TraditionalBase64UrlEncoder;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
 
-public final class TraditionalBase64Segment<E extends Enum<E> & FieldKey> extends AbstractBase64Segment<E> {
+public final class TraditionalBase64Segment<E extends Enum<E> & FieldKey>
+    extends AbstractBase64Segment<E> {
 
   public TraditionalBase64Segment(FieldNames<E> fieldNames) {
     super(fieldNames);
@@ -14,5 +15,4 @@ public final class TraditionalBase64Segment<E extends Enum<E> & FieldKey> extend
   protected AbstractBase64UrlEncoder getBase64UrlEncoder() {
     return TraditionalBase64UrlEncoder.getInstance();
   }
-
 }

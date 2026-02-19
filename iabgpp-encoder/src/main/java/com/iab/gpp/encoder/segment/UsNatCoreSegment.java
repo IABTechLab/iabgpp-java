@@ -19,11 +19,12 @@ public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
   protected BitString decodeBitString(CharSequence encodedString) {
     BitString bitString = super.decodeBitString(encodedString);
     // Necessary to maintain backwards compatibility when sensitive data processing changed from a
-    // length of 12 to 16 and known child sensitive data consents changed from a length of 2 to 3 in the
+    // length of 12 to 16 and known child sensitive data consents changed from a length of 2 to 3 in
+    // the
     // DE, IA, NE, NH, NJ, TN release
     if (bitString.length() == 66) {
       BitString builder = new BitString();
-      
+
       builder.write(bitString, 0, 48);
       builder.writeEmpty(8);
       builder.write(bitString, 48, 52);
@@ -33,5 +34,4 @@ public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
     }
     return bitString;
   }
-  
 }

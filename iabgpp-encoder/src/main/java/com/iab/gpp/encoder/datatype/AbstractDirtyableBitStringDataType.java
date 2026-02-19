@@ -1,11 +1,12 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.field.FieldKey;
+import java.util.function.Predicate;
 
 // This class is used to handle collection types.
 // It is important that we monitor the collections we return for changes.
-public abstract class AbstractDirtyableBitStringDataType<E extends Enum<E> & FieldKey, T extends Dirtyable>
+public abstract class AbstractDirtyableBitStringDataType<
+        E extends Enum<E> & FieldKey, T extends Dirtyable>
     extends AbstractEncodableBitStringDataType<E, T> {
 
   protected AbstractDirtyableBitStringDataType(String name, Predicate<T> validator) {

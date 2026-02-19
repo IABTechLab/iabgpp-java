@@ -9,14 +9,11 @@ import com.iab.gpp.encoder.section.UsTn;
 
 public enum UsTnField implements FieldKey {
   VERSION(new EncodableFixedInteger<>("Version", 6, UsTn.VERSION)),
-  PROCESSING_NOTICE(
-      new EncodableFixedInteger<>("ProcessingNotice", 2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT_NOTICE(
-      new EncodableFixedInteger<>("SaleOptOutNotice",2, 0, VALIDATOR_012)),
+  PROCESSING_NOTICE(new EncodableFixedInteger<>("ProcessingNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT_NOTICE(new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT_NOTICE(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, VALIDATOR_012)),
-  SALE_OPT_OUT(
-      new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT(new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
   TARGETED_ADVERTISING_OPT_OUT(
       new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, VALIDATOR_012)),
   SENSITIVE_DATA_PROCESSING(
@@ -47,28 +44,25 @@ public enum UsTnField implements FieldKey {
     return type;
   }
 
-  //@formatter:off
-  public static final FieldNames<UsTnField> USTN_CORE_SEGMENT_FIELD_NAMES = new FieldNames<>(
-      UsTnField.VERSION,
-      UsTnField.PROCESSING_NOTICE,
-      UsTnField.SALE_OPT_OUT_NOTICE,
-      UsTnField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-      UsTnField.SALE_OPT_OUT,
-      UsTnField.TARGETED_ADVERTISING_OPT_OUT,
-      UsTnField.SENSITIVE_DATA_PROCESSING,
-      UsTnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-      UsTnField.ADDITIONAL_DATA_PROCESSING_CONSENT,
-      UsTnField.MSPA_COVERED_TRANSACTION,
-      UsTnField.MSPA_OPT_OUT_OPTION_MODE,
-      UsTnField.MSPA_SERVICE_PROVIDER_MODE
-  );
-  //@formatter:on
+  // @formatter:off
+  public static final FieldNames<UsTnField> USTN_CORE_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          UsTnField.VERSION,
+          UsTnField.PROCESSING_NOTICE,
+          UsTnField.SALE_OPT_OUT_NOTICE,
+          UsTnField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+          UsTnField.SALE_OPT_OUT,
+          UsTnField.TARGETED_ADVERTISING_OPT_OUT,
+          UsTnField.SENSITIVE_DATA_PROCESSING,
+          UsTnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+          UsTnField.ADDITIONAL_DATA_PROCESSING_CONSENT,
+          UsTnField.MSPA_COVERED_TRANSACTION,
+          UsTnField.MSPA_OPT_OUT_OPTION_MODE,
+          UsTnField.MSPA_SERVICE_PROVIDER_MODE);
+  // @formatter:on
 
-  //@formatter:off
-  public static final FieldNames<UsTnField> USTN_GPC_SEGMENT_FIELD_NAMES = new FieldNames<>(
-      UsTnField.GPC_SEGMENT_TYPE,
-      UsTnField.GPC_SEGMENT_INCLUDED,
-      UsTnField.GPC
-  );
-  //@formatter:on
+  // @formatter:off
+  public static final FieldNames<UsTnField> USTN_GPC_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(UsTnField.GPC_SEGMENT_TYPE, UsTnField.GPC_SEGMENT_INCLUDED, UsTnField.GPC);
+  // @formatter:on
 }

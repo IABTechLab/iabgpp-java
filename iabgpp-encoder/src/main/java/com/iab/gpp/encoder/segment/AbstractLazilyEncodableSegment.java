@@ -4,7 +4,8 @@ import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.field.FieldNames;
 
-abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> extends EncodableSegment<E> {
+abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey>
+    extends EncodableSegment<E> {
 
   protected final FieldNames<E> fieldNames;
   protected final Object[] values;
@@ -92,5 +93,4 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey> exte
     sb.append('}');
     return sb.toString();
   }
-
 }

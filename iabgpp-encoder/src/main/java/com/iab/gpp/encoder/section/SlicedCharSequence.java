@@ -66,7 +66,6 @@ public final class SlicedCharSequence implements CharSequence {
     return EMPTY;
   }
 
-
   @Override
   public int length() {
     return end - start;
@@ -86,5 +85,4 @@ public final class SlicedCharSequence implements CharSequence {
   public String toString() {
     return base.substring(start, end);
   }
-
 }

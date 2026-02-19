@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class FixedIntegerListTest {
     assertThrows(IllegalArgumentException.class, () -> list.set(4, 128));
     assertThrows(IllegalArgumentException.class, () -> list.set(4, -1));
     assertEquals(5, list.size());
-    assertEquals(List.of(2,1,5,8,3), list);
+    assertEquals(List.of(2, 1, 5, 8, 3), list);
     assertEquals(2, list.get(0));
     assertEquals(1, list.get(1));
     assertEquals(5, list.get(2));
@@ -28,5 +29,4 @@ class FixedIntegerListTest {
     list.setDirty(false);
     assertFalse(list.isDirty());
   }
-
 }

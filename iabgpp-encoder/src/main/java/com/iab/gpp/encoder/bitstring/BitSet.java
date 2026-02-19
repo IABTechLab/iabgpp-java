@@ -1,11 +1,11 @@
 package com.iab.gpp.encoder.bitstring;
 
-import java.util.Arrays;
 import com.iab.gpp.encoder.error.DecodingException;
+import java.util.Arrays;
 
 // a thin version of java.util.BitSet
 public final class BitSet {
-  
+
   private static final byte[] EMPTY = new byte[0];
   private static final int ADDRESS_BITS_PER_WORD = 3;
   private static final int BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
@@ -13,13 +13,13 @@ public final class BitSet {
   private static final int MODULO = BITS_PER_WORD - 1;
   private static final int CORRECTION = Integer.SIZE - BITS_PER_WORD;
   private static final int WORD_MASK = 0xff;
-  
+
   private byte[] words;
 
   public BitSet(byte[] words) {
     this.words = words;
   }
-  
+
   public BitSet(int initialCapacity) {
     this(new byte[wordIndex(initialCapacity) + 1]);
   }
@@ -54,8 +54,7 @@ public final class BitSet {
   public boolean get(int bitIndex) {
     int wordIndex = wordIndex(bitIndex);
     byte[] words = this.words;
-    return (wordIndex < words.length)
-        && (words[wordIndex] & wordMask(bitIndex)) != 0;
+    return (wordIndex < words.length) && (words[wordIndex] & wordMask(bitIndex)) != 0;
   }
 
   public void clear(int from, int to) {
@@ -77,21 +76,21 @@ public final class BitSet {
     int wordsInUse = words.length;
     int u = wordIndex(fromIndex);
     if (u >= wordsInUse) {
-        return -1;
+      return -1;
     }
 
     int bit = fromIndex & MODULO;
     int word = words[u] & (WORD_MASK >>> bit);
 
     while (true) {
-        word &= WORD_MASK;
-        if (word != 0) {
-            return (u * BITS_PER_WORD) + Integer.numberOfLeadingZeros(word) - CORRECTION;
-        }
-        if (++u == wordsInUse) {
-            return -1;
-        }
-        word = words[u];
+      word &= WORD_MASK;
+      if (word != 0) {
+        return (u * BITS_PER_WORD) + Integer.numberOfLeadingZeros(word) - CORRECTION;
+      }
+      if (++u == wordsInUse) {
+        return -1;
+      }
+      word = words[u];
     }
   }
 
@@ -121,8 +120,7 @@ public final class BitSet {
     }
     return prior;
   }
-  
-  
+
   public int readInt(int from, int to) {
     int startWordIndex = wordIndex(from);
     int startBit = from & MODULO;
@@ -131,7 +129,7 @@ public final class BitSet {
     // TODO: is this needed if the caller checks range?
     byte[] words = ensureIndex(endWordIndex);
     int out = 0;
-    for(int wordIndex = startWordIndex; wordIndex <= endWordIndex; wordIndex++) {
+    for (int wordIndex = startWordIndex; wordIndex <= endWordIndex; wordIndex++) {
       int word = words[wordIndex] & WORD_MASK;
       if (wordIndex == startWordIndex) {
         word &= WORD_MASK >>> startBit;
@@ -146,7 +144,7 @@ public final class BitSet {
     }
     return out;
   }
-  
+
   public long readLong(int from, int to) {
     int startWordIndex = wordIndex(from);
     int startBit = from & MODULO;
@@ -155,7 +153,7 @@ public final class BitSet {
     // TODO: is this needed if the caller checks range?
     byte[] words = ensureIndex(endWordIndex);
     long out = 0;
-    for(int wordIndex = startWordIndex; wordIndex <= endWordIndex; wordIndex++) {
+    for (int wordIndex = startWordIndex; wordIndex <= endWordIndex; wordIndex++) {
       long word = words[wordIndex] & WORD_MASK;
       if (wordIndex == startWordIndex) {
         word &= (WORD_MASK >>> startBit);

@@ -11,7 +11,9 @@ public class UsCo extends AbstractUsSectionWithGpc<UsCoField> {
   public static final String NAME = "usco";
 
   public UsCo() {
-    super(new Base64Segment<>(UsCoField.USCO_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsCoField.USCO_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsCoField.USCO_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsCoField.USCO_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsCo(CharSequence encodedString) {

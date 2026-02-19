@@ -1,11 +1,10 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class FibonacciIntegerEncoderTest {
 
@@ -61,8 +60,8 @@ public class FibonacciIntegerEncoderTest {
   @Test
   public void testEncodeTooLarge() {
     BitString builder = new BitString();
-    Assertions.assertThrows(EncodingException.class, () -> 
-      builder.writeFibonacci(Integer.MAX_VALUE));
+    Assertions.assertThrows(
+        EncodingException.class, () -> builder.writeFibonacci(Integer.MAX_VALUE));
   }
 
   private int decode(String str) {
@@ -106,8 +105,7 @@ public class FibonacciIntegerEncoderTest {
 
   @Test
   public void testDecodeTooLarge() {
-    Assertions.assertThrows(DecodingException.class, () -> 
-      decode("0001010001000101001000001001000100001000100011"));
+    Assertions.assertThrows(
+        DecodingException.class, () -> decode("0001010001000101001000001001000100001000100011"));
   }
-
 }

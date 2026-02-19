@@ -1,11 +1,11 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.AbstractList;
 import com.iab.gpp.encoder.bitstring.BitSet;
+import java.util.AbstractList;
 
 /**
- * An optimized implementation of {@literal List<Integer>} of fixed size.
- * Use {@link #getInt(int)} and {@link #setInt(int, int)} for efficient access.
+ * An optimized implementation of {@literal List<Integer>} of fixed size. Use {@link #getInt(int)}
+ * and {@link #setInt(int, int)} for efficient access.
  */
 public final class FixedIntegerList extends AbstractList<Integer> implements Dirtyable {
 
@@ -21,7 +21,7 @@ public final class FixedIntegerList extends AbstractList<Integer> implements Dir
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = numElements;
   }
-  
+
   public FixedIntegerList(int elementBitStringLength, int numElements) {
     this(new BitSet(elementBitStringLength * numElements), 0, elementBitStringLength, numElements);
   }
@@ -61,7 +61,11 @@ public final class FixedIntegerList extends AbstractList<Integer> implements Dir
     int mask = 1 << length;
     if (value < 0 || value >= mask) {
       throw new IllegalArgumentException(
-        "Numeric value '" + value + "' is too large for a bit string length of '" + elementBitStringLength + "'");
+          "Numeric value '"
+              + value
+              + "' is too large for a bit string length of '"
+              + elementBitStringLength
+              + "'");
     }
     int from = offset + index * length;
     int to = from + length;

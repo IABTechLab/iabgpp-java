@@ -5,7 +5,7 @@ import com.iab.gpp.encoder.field.FieldKey;
 public final class UnencodableInteger<E extends Enum<E> & FieldKey> extends DataType<E, Integer> {
 
   private final Integer initial;
-  
+
   public UnencodableInteger(String name, Integer initial) {
     super(name, null);
     this.initial = initial;
@@ -15,5 +15,4 @@ public final class UnencodableInteger<E extends Enum<E> & FieldKey> extends Data
   protected Integer initialize() {
     return initial;
   }
-
 }

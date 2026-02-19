@@ -1,18 +1,23 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.List;
-import java.util.function.Predicate;
 import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.List;
+import java.util.function.Predicate;
 
-public final class EncodableFixedIntegerList<E extends Enum<E> & FieldKey> extends AbstractDirtyableBitStringDataType<E, FixedIntegerList> {
+public final class EncodableFixedIntegerList<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, FixedIntegerList> {
 
   private final int elementBitStringLength;
   private final int numElements;
 
-  public EncodableFixedIntegerList(String name, int elementBitStringLength, int numElements, Predicate<FixedIntegerList> validator) {
+  public EncodableFixedIntegerList(
+      String name,
+      int elementBitStringLength,
+      int numElements,
+      Predicate<FixedIntegerList> validator) {
     super(name, validator);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = numElements;

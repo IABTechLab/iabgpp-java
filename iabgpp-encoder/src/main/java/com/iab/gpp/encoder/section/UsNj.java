@@ -11,7 +11,9 @@ public class UsNj extends AbstractUsSectionWithGpc<UsNjField> {
   public static final String NAME = "usnj";
 
   public UsNj() {
-    super(new Base64Segment<>(UsNjField.USNJ_CORE_SEGMENT_FIELD_NAMES), new Base64Segment<>(UsNjField.USNJ_GPC_SEGMENT_FIELD_NAMES));
+    super(
+        new Base64Segment<>(UsNjField.USNJ_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsNjField.USNJ_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsNj(CharSequence encodedString) {
