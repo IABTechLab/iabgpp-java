@@ -1,12 +1,11 @@
 package com.iab.gpp.encoder.section;
 
-
-import java.util.Arrays;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.UsTnField;
+import java.util.Arrays;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class UsTnTest {
 
@@ -35,7 +34,7 @@ public class UsTnTest {
 
     Assertions.assertEquals("BVWSSVWA.YA", usTn.encode());
   }
-  
+
   @Test
   public void testSetInvalidValues() {
     UsTn usTn = new UsTn();
@@ -44,77 +43,78 @@ public class UsTnTest {
       usTn.setFieldValue(UsTnField.PROCESSING_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usTn.setFieldValue(UsTnField.SALE_OPT_OUT_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usTn.setFieldValue(UsTnField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usTn.setFieldValue(UsTnField.SALE_OPT_OUT, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usTn.setFieldValue(UsTnField.TARGETED_ADVERTISING_OPT_OUT, -1);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
-      usTn.setFieldValue(UsTnField.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 1, 2, 3, 1, 2, 0, 1));
+      usTn.setFieldValue(
+          UsTnField.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 1, 2, 3, 1, 2, 0, 1));
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usTn.setFieldValue(UsTnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usTn.setFieldValue(UsTnField.ADDITIONAL_DATA_PROCESSING_CONSENT, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usTn.setFieldValue(UsTnField.MSPA_COVERED_TRANSACTION, 0);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usTn.setFieldValue(UsTnField.MSPA_OPT_OUT_OPTION_MODE, 4);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usTn.setFieldValue(UsTnField.MSPA_SERVICE_PROVIDER_MODE, -1);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
   }
 
@@ -134,7 +134,8 @@ public class UsTnTest {
     Assertions.assertEquals(1, usTn.getTargetedAdvertisingOptOutNotice());
     Assertions.assertEquals(1, usTn.getSaleOptOut());
     Assertions.assertEquals(1, usTn.getTargetedAdvertisingOptOut());
-    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usTn.getSensitiveDataProcessing());
+    Assertions.assertEquals(
+        Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usTn.getSensitiveDataProcessing());
     Assertions.assertEquals(1, usTn.getKnownChildSensitiveDataConsents());
     Assertions.assertEquals(1, usTn.getAdditionalDataProcessingConsent());
     Assertions.assertEquals(1, usTn.getMspaCoveredTransaction());
@@ -152,7 +153,8 @@ public class UsTnTest {
     Assertions.assertEquals(1, usTn.getTargetedAdvertisingOptOutNotice());
     Assertions.assertEquals(1, usTn.getSaleOptOut());
     Assertions.assertEquals(1, usTn.getTargetedAdvertisingOptOut());
-    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usTn.getSensitiveDataProcessing());
+    Assertions.assertEquals(
+        Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usTn.getSensitiveDataProcessing());
     Assertions.assertEquals(1, usTn.getKnownChildSensitiveDataConsents());
     Assertions.assertEquals(1, usTn.getAdditionalDataProcessingConsent());
     Assertions.assertEquals(1, usTn.getMspaCoveredTransaction());
@@ -160,11 +162,13 @@ public class UsTnTest {
     Assertions.assertEquals(2, usTn.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usTn.getGpcSegmentIncluded());
   }
-  
+
   @Test()
   public void testDecodeGarbage() {
-    Assertions.assertThrows(DecodingException.class, () -> {
-      new UsTn("z").getProcessingNotice();
-    });
+    Assertions.assertThrows(
+        DecodingException.class,
+        () -> {
+          new UsTn("z").getProcessingNotice();
+        });
   }
 }

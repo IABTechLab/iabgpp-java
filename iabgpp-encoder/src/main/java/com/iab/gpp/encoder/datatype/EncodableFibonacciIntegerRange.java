@@ -1,65 +1,38 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
-import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.Collection;
 
-public final class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableFibonacciIntegerRange<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
-  public EncodableFibonacciIntegerRange() {
-    super(true);
-    this.value = new IntegerBitSet();
+  public EncodableFibonacciIntegerRange(String name) {
+    super(name, null);
   }
 
-  public void encode(BitStringBuilder builder) {
-    try {
-      FibonacciIntegerRangeEncoder.encode(builder, this.value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+  @Override
+  public IntegerSet initialize() {
+    return new IntegerSet();
   }
 
-  public void decode(BitString bitString) {
-    try {
-      this.value = FibonacciIntegerRangeEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+  @Override
+  protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
+    FibonacciIntegerRangeEncoder.encode(builder, value);
   }
 
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      int count = FixedIntegerEncoder.decode(bitString, fromIndex, 12);
-      int index = fromIndex + 12;
-      for (int i = 0; i < count; i++) {
-        if (bitString.getValue(index)) {
-          index = FibonacciIntegerEncoder.indexOfEndTag(bitString, FibonacciIntegerEncoder.indexOfEndTag(bitString, index + 1) + 2) + 2;
-        } else {
-          index = FibonacciIntegerEncoder.indexOfEndTag(bitString, index + 1) + 2;
-        }
-      }
-      return bitString.substring(fromIndex, index);
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
+    return FibonacciIntegerRangeEncoder.decode(reader);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    this.value.clear();
-    this.value.addAll((Collection<Integer>) value);
-  }
-
-  @Override
-  public IntegerSet getValue() {
-    return new ManagedIntegerSet(this, super.getValue());
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

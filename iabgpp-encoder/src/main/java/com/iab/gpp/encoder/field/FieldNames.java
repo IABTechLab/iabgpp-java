@@ -1,36 +1,50 @@
 package com.iab.gpp.encoder.field;
 
+import com.iab.gpp.encoder.datatype.DataType;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
-public final class FieldNames {
+public final class FieldNames<E extends Enum<E> & FieldKey> {
 
-  private final List<String> list;
-  private final Map<String, Integer> map;
+  private final LinkedHashMap<FieldKey, E> map;
+  private final Integer[] indices;
+  private final DataType<?, ?>[] types;
 
-  FieldNames(String... names) {
-    this.list = Collections.unmodifiableList(Arrays.asList(names));
+  @SafeVarargs
+  FieldNames(E... keys) {
     this.map = new LinkedHashMap<>();
-    for (int i = 0; i < names.length; i++) {
-      this.map.put(names[i], i);
+    this.indices = new Integer[keys[0].getClass().getEnumConstants().length];
+    this.types = new DataType[keys.length];
+    for (int i = 0; i < keys.length; i++) {
+      E key = keys[i];
+      this.map.put(key, key);
+      this.indices[key.ordinal()] = i;
+      this.types[i] = key.getType();
     }
   }
 
-  public boolean contains(String name) {
-    return map.containsKey(name);
+  public int size() {
+    return types.length;
   }
 
-  static final FieldNames of(String... names) {
-    return new FieldNames(names);
+  @SuppressWarnings("unchecked")
+  public DataType<E, ?> get(int i) {
+    return (DataType<E, ?>) types[i];
   }
 
-  public List<String> getNames() {
-    return list;
+  public Integer getIndex(E key) {
+    if (key == null) {
+      return null;
+    }
+    return indices[key.ordinal()];
   }
-  public Integer convertKey(String key) {
+
+  public E resolveKey(FieldKey key) {
     return map.get(key);
+  }
+
+  @Override
+  public String toString() {
+    return Arrays.toString(types);
   }
 }

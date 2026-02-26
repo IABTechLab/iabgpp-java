@@ -1,47 +1,39 @@
 package com.iab.gpp.encoder.datatype;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
 import com.iab.gpp.encoder.datatype.encoder.FixedStringEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public final class EncodableFixedString extends AbstractEncodableBitStringDataType<String> {
+public final class EncodableFixedString<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, String> {
 
-  private int stringLength;
+  private final int stringLength;
+  private final String initial;
 
-  protected EncodableFixedString(int stringLength) {
-    super(true);
+  public EncodableFixedString(String name, int stringLength, String initial) {
+    super(name, null);
     this.stringLength = stringLength;
+    this.initial = initial;
   }
 
-  public EncodableFixedString(int stringLength, String value) {
-    super(true);
-    this.stringLength = stringLength;
-    setValue(value);
+  @Override
+  public String toString() {
+    return name + "=String(" + stringLength + ")";
   }
 
-  public void encode(BitStringBuilder builder) {
-    try {
-      FixedStringEncoder.encode(builder, this.value, this.stringLength);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+  @Override
+  protected String initialize() {
+    return initial;
   }
 
-  public void decode(BitString bitString) {
-    try {
-      this.value = FixedStringEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+  @Override
+  protected void encode(BitString builder, String value, EncodableSegment<E> segment) {
+    FixedStringEncoder.encode(builder, value, this.stringLength);
   }
 
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + this.stringLength * 6);
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected String decode(BitString reader, EncodableSegment<E> segment) {
+    return FixedStringEncoder.decode(reader, this.stringLength);
   }
 }

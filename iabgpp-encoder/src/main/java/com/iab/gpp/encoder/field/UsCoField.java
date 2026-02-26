@@ -1,45 +1,61 @@
 package com.iab.gpp.encoder.field;
 
-public final class UsCoField {
-  private UsCoField() {}
+import com.iab.gpp.encoder.datatype.DataType;
+import com.iab.gpp.encoder.datatype.EncodableBoolean;
+import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
+import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
+import com.iab.gpp.encoder.datatype.UnencodableBoolean;
+import com.iab.gpp.encoder.section.UsCo;
 
-  public static final String VERSION = "Version";
-  public static final String SHARING_NOTICE = "SharingNotice";
-  public static final String SALE_OPT_OUT_NOTICE = "SaleOptOutNotice";
-  public static final String TARGETED_ADVERTISING_OPT_OUT_NOTICE = "TargetedAdvertisingOptOutNotice";
-  public static final String SALE_OPT_OUT = "SaleOptOut";
-  public static final String TARGETED_ADVERTISING_OPT_OUT = "TargetedAdvertisingOptOut";
-  public static final String SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing";
-  public static final String KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents";
-  public static final String MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction";
-  public static final String MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode";
-  public static final String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
+public enum UsCoField implements FieldKey {
+  VERSION(new EncodableFixedInteger<>("Version", 6, UsCo.VERSION)),
+  SHARING_NOTICE(new EncodableFixedInteger<>("SharingNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT_NOTICE(new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
+  TARGETED_ADVERTISING_OPT_OUT_NOTICE(
+      new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT(new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
+  TARGETED_ADVERTISING_OPT_OUT(
+      new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, VALIDATOR_012)),
+  SENSITIVE_DATA_PROCESSING(
+      new EncodableFixedIntegerList<>("SensitiveDataProcessing", 2, 7, VALIDATOR_LIST_012)),
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS(
+      new EncodableFixedInteger<>("KnownChildSensitiveDataConsents", 2, 0, VALIDATOR_012)),
+  MSPA_COVERED_TRANSACTION(
+      new EncodableFixedInteger<>("MspaCoveredTransaction", 2, 1, VALIDATOR_12)),
+  MSPA_OPT_OUT_OPTION_MODE(
+      new EncodableFixedInteger<>("MspaOptOutOptionMode", 2, 0, VALIDATOR_012)),
+  MSPA_SERVICE_PROVIDER_MODE(
+      new EncodableFixedInteger<>("MspaServiceProviderMode", 2, 0, VALIDATOR_012)),
 
-  public static final String GPC_SEGMENT_TYPE = "GpcSegmentType";
-  public static final String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
-  public static final String GPC = "Gpc";
+  GPC_SEGMENT_TYPE(new EncodableFixedInteger<>("GpcSegmentType", 2, 1)),
+  GPC_SEGMENT_INCLUDED(new UnencodableBoolean<>("GpcSegmentIncluded", true)),
+  GPC(new EncodableBoolean<>("Gpc", false));
 
-  //@formatter:off
-  public static final FieldNames USCO_CORE_SEGMENT_FIELD_NAMES = FieldNames.of(
-      UsCoField.VERSION,
-      UsCoField.SHARING_NOTICE,
-      UsCoField.SALE_OPT_OUT_NOTICE,
-      UsCoField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-      UsCoField.SALE_OPT_OUT,
-      UsCoField.TARGETED_ADVERTISING_OPT_OUT,
-      UsCoField.SENSITIVE_DATA_PROCESSING,
-      UsCoField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-      UsCoField.MSPA_COVERED_TRANSACTION,
-      UsCoField.MSPA_OPT_OUT_OPTION_MODE,
-      UsCoField.MSPA_SERVICE_PROVIDER_MODE
-  );
-  //@formatter:on
+  private final DataType<UsCoField, ?> type;
 
-  //@formatter:off
-  public static final FieldNames USCO_GPC_SEGMENT_FIELD_NAMES = FieldNames.of(
-      UsCoField.GPC_SEGMENT_TYPE,
-      UsCoField.GPC_SEGMENT_INCLUDED,
-      UsCoField.GPC
-  );
-  //@formatter:on
+  UsCoField(DataType<UsCoField, ?> type) {
+    this.type = type;
+  }
+
+  @Override
+  public DataType<UsCoField, ?> getType() {
+    return type;
+  }
+
+  public static final FieldNames<UsCoField> USCO_CORE_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          UsCoField.VERSION,
+          UsCoField.SHARING_NOTICE,
+          UsCoField.SALE_OPT_OUT_NOTICE,
+          UsCoField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+          UsCoField.SALE_OPT_OUT,
+          UsCoField.TARGETED_ADVERTISING_OPT_OUT,
+          UsCoField.SENSITIVE_DATA_PROCESSING,
+          UsCoField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+          UsCoField.MSPA_COVERED_TRANSACTION,
+          UsCoField.MSPA_OPT_OUT_OPTION_MODE,
+          UsCoField.MSPA_SERVICE_PROVIDER_MODE);
+
+  public static final FieldNames<UsCoField> USCO_GPC_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(UsCoField.GPC_SEGMENT_TYPE, UsCoField.GPC_SEGMENT_INCLUDED, UsCoField.GPC);
 }

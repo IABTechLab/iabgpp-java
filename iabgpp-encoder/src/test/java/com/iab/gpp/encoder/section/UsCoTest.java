@@ -1,12 +1,11 @@
 package com.iab.gpp.encoder.section;
 
-
-import java.util.Arrays;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.UsCoField;
+import java.util.Arrays;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class UsCoTest {
 
@@ -34,7 +33,7 @@ public class UsCoTest {
 
     Assertions.assertEquals("BVWSSVg.YA", usCo.encode());
   }
-  
+
   @Test
   public void testSetInvalidValues() {
     UsCo usCo = new UsCo();
@@ -43,72 +42,71 @@ public class UsCoTest {
       usCo.setFieldValue(UsCoField.SHARING_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCo.setFieldValue(UsCoField.SALE_OPT_OUT_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCo.setFieldValue(UsCoField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCo.setFieldValue(UsCoField.SALE_OPT_OUT, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCo.setFieldValue(UsCoField.TARGETED_ADVERTISING_OPT_OUT, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCo.setFieldValue(UsCoField.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 1, 2, 3, 0, 1, 2));
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCo.setFieldValue(UsCoField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCo.setFieldValue(UsCoField.MSPA_COVERED_TRANSACTION, 0);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCo.setFieldValue(UsCoField.MSPA_OPT_OUT_OPTION_MODE, -1);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usCo.setFieldValue(UsCoField.MSPA_SERVICE_PROVIDER_MODE, 5);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
-    }
 
+    }
   }
 
   @Test
@@ -151,11 +149,13 @@ public class UsCoTest {
     Assertions.assertEquals(2, usCo.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usCo.getGpcSegmentIncluded());
   }
-  
+
   @Test()
   public void testDecodeGarbage() {
-    Assertions.assertThrows(DecodingException.class, () -> {
-      new UsCo("z").getTargetedAdvertisingOptOut();
-    });
+    Assertions.assertThrows(
+        DecodingException.class,
+        () -> {
+          new UsCo("z").getTargetedAdvertisingOptOut();
+        });
   }
 }

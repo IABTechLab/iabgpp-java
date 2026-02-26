@@ -20,8 +20,6 @@ package com.iab.gpp.extras.jackson;
  * #L%
  */
 
-import java.io.IOException;
-import java.io.InputStream;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
@@ -40,6 +38,8 @@ import com.iab.gpp.extras.jackson.gvl.SpecialPurpose;
 import com.iab.gpp.extras.jackson.gvl.Stack;
 import com.iab.gpp.extras.jackson.gvl.Vendor;
 import com.iab.gpp.extras.jackson.gvl.VendorUrl;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Loader {
   private ObjectMapper objectMapper = new ObjectMapper();

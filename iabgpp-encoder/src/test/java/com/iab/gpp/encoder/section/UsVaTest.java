@@ -1,14 +1,13 @@
 package com.iab.gpp.encoder.section;
 
-
-import java.util.Arrays;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.UsVaField;
+import java.util.Arrays;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class UsVaTest {
 
@@ -28,7 +27,8 @@ public class UsVaTest {
       usVa.setFieldValue(UsVaField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 1);
       usVa.setFieldValue(UsVaField.SALE_OPT_OUT, 1);
       usVa.setFieldValue(UsVaField.TARGETED_ADVERTISING_OPT_OUT, 1);
-      usVa.setFieldValue(UsVaField.SENSITIVE_DATA_PROCESSING, Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1));
+      usVa.setFieldValue(
+          UsVaField.SENSITIVE_DATA_PROCESSING, Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1));
       usVa.setFieldValue(UsVaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, 1);
       usVa.setFieldValue(UsVaField.MSPA_COVERED_TRANSACTION, 1);
       usVa.setFieldValue(UsVaField.MSPA_OPT_OUT_OPTION_MODE, 1);
@@ -80,7 +80,8 @@ public class UsVaTest {
     }
 
     try {
-      usVa.setFieldValue(UsVaField.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 1, 2, 3, 1, 2, 0, 1));
+      usVa.setFieldValue(
+          UsVaField.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 1, 2, 3, 1, 2, 0, 1));
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
 
@@ -113,7 +114,6 @@ public class UsVaTest {
     } catch (ValidationException e) {
 
     }
-
   }
 
   @Test
@@ -125,7 +125,8 @@ public class UsVaTest {
     Assertions.assertEquals(1, usVa.getTargetedAdvertisingOptOutNotice());
     Assertions.assertEquals(1, usVa.getSaleOptOut());
     Assertions.assertEquals(1, usVa.getTargetedAdvertisingOptOut());
-    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usVa.getSensitiveDataProcessing());
+    Assertions.assertEquals(
+        Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usVa.getSensitiveDataProcessing());
     Assertions.assertEquals(1, usVa.getKnownChildSensitiveDataConsents());
     Assertions.assertEquals(1, usVa.getMspaCoveredTransaction());
     Assertions.assertEquals(1, usVa.getMspaOptOutOptionMode());
@@ -134,8 +135,10 @@ public class UsVaTest {
 
   @Test()
   public void testDecodeGarbage() {
-    Assertions.assertThrows(DecodingException.class, () -> {
-      new UsVa("z").getMspaCoveredTransaction();
-    });
+    Assertions.assertThrows(
+        DecodingException.class,
+        () -> {
+          new UsVa("z").getMspaCoveredTransaction();
+        });
   }
 }

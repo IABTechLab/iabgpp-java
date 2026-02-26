@@ -20,9 +20,5 @@ package com.iab.gpp.extras.jackson.gvl;
  * #L%
  */
 
-/**
- * A special purpose declared as performed on the legal basis of a legitimate interest
- */
-public class SpecialPurpose extends Purpose implements com.iab.gpp.extras.gvl.SpecialPurpose {
-
-}
+/** A special purpose declared as performed on the legal basis of a legitimate interest */
+public class SpecialPurpose extends Purpose implements com.iab.gpp.extras.gvl.SpecialPurpose {}

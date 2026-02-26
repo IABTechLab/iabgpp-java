@@ -1,25 +1,23 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsDeField;
-import com.iab.gpp.encoder.segment.EncodableSegment;
-import com.iab.gpp.encoder.segment.UsDeCoreSegment;
-import com.iab.gpp.encoder.segment.UsDeGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
-public class UsDe extends AbstractLazilyEncodableSection {
+public class UsDe extends AbstractUsSectionWithGpc<UsDeField> {
 
   public static final int ID = 17;
   public static final int VERSION = 1;
   public static final String NAME = "usde";
 
   public UsDe() {
-    super();
+    super(
+        new Base64Segment<>(UsDeField.USDE_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsDeField.USDE_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsDe(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -39,44 +37,9 @@ public class UsDe extends AbstractLazilyEncodableSection {
   }
 
   @Override
-  protected List<EncodableSegment> initializeSegments() {
-    return Arrays.asList(new UsDeCoreSegment(), new UsDeGpcSegment());
+  protected final UsDeField getGpcSegmentIncludedKey() {
+    return UsDeField.GPC_SEGMENT_INCLUDED;
   }
-
-  @Override
-  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
-    if (encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-
-      if (encodedSegments.size() > 0) {
-        segments.get(0).decode(encodedSegments.get(0));
-      }
-
-      if (encodedSegments.size() > 1) {
-        segments.get(1).setFieldValue(UsDeField.GPC_SEGMENT_INCLUDED, true);
-        segments.get(1).decode(encodedSegments.get(1));
-      } else {
-        segments.get(1).setFieldValue(UsDeField.GPC_SEGMENT_INCLUDED, false);
-      }
-    }
-
-    return segments;
-  }
-
-  @Override
-  protected CharSequence encodeSection(List<EncodableSegment> segments) {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
-
-    if (!segments.isEmpty()) {
-      encodedSegments.add(segments.get(0).encodeCharSequence());
-      if (segments.size() >= 2 && segments.get(1).getFieldValue(UsDeField.GPC_SEGMENT_INCLUDED).equals(true)) {
-        encodedSegments.add(segments.get(1).encodeCharSequence());
-      }
-    }
-
-    return SlicedCharSequence.join('.',  encodedSegments);
-  }
-
 
   public Integer getProcessingNotice() {
     return (Integer) this.getFieldValue(UsDeField.PROCESSING_NOTICE);
@@ -98,14 +61,12 @@ public class UsDe extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(UsDeField.TARGETED_ADVERTISING_OPT_OUT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.getFieldValue(UsDeField.SENSITIVE_DATA_PROCESSING);
+  public FixedIntegerList getSensitiveDataProcessing() {
+    return (FixedIntegerList) this.getFieldValue(UsDeField.SENSITIVE_DATA_PROCESSING);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getKnownChildSensitiveDataConsents() {
-    return (List<Integer>) this.getFieldValue(UsDeField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS);
+  public FixedIntegerList getKnownChildSensitiveDataConsents() {
+    return (FixedIntegerList) this.getFieldValue(UsDeField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS);
   }
 
   public Integer getAdditionalDataProcessingConsent() {
@@ -126,10 +87,6 @@ public class UsDe extends AbstractLazilyEncodableSection {
 
   public Integer getGpcSegmentType() {
     return (Integer) this.getFieldValue(UsDeField.GPC_SEGMENT_TYPE);
-  }
-
-  public Boolean getGpcSegmentIncluded() {
-    return (Boolean) this.getFieldValue(UsDeField.GPC_SEGMENT_INCLUDED);
   }
 
   public Boolean getGpc() {
