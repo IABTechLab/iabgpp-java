@@ -1,8 +1,8 @@
 package com.iab.gpp.encoder.section;
 
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsMnField;
 import com.iab.gpp.encoder.segment.Base64Segment;
-import java.util.List;
 
 public class UsMn extends AbstractUsSectionWithGpc<UsMnField> {
 
@@ -61,12 +61,10 @@ public class UsMn extends AbstractUsSectionWithGpc<UsMnField> {
     return (Integer) this.getFieldValue(UsMnField.TARGETED_ADVERTISING_OPT_OUT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.getFieldValue(UsMnField.SENSITIVE_DATA_PROCESSING);
+  public FixedIntegerList getSensitiveDataProcessing() {
+    return (FixedIntegerList) this.getFieldValue(UsMnField.SENSITIVE_DATA_PROCESSING);
   }
 
-  @SuppressWarnings("unchecked")
   public Integer getKnownChildSensitiveDataConsents() {
     return (Integer) this.getFieldValue(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS);
   }
