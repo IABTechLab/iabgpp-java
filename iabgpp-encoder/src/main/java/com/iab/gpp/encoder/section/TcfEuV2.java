@@ -114,7 +114,14 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
     for (final EncodableSegment segment: segments) {
       final boolean encode;
 
-      if (segment instanceof TcfEuV2CoreSegment) {
+      if (
+          segment instanceof TcfEuV2CoreSegment
+            || segment instanceof TcfEuV2VendorsDisclosedSegment
+      ) {
+        /*
+        TcfEuV2VendorsDisclosedSegment is required in the TC string as of TCF 2.3.
+        https://iabeurope.eu/all-you-need-to-know-about-the-transition-to-tcf-v2-3/
+         */
         encode = true;
       } else if (segment instanceof TcfEuV2PublisherPurposesSegment) {
         final List<Boolean> publisherConsents = getPublisherConsents();
@@ -124,8 +131,6 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
             || !Objects.equals(getNumCustomPurposes(), 0);
       } else if (segment instanceof TcfEuV2VendorsAllowedSegment) {
         encode = !Objects.equals(getVendorsAllowed(), Collections.emptyList());
-      } else if (segment instanceof TcfEuV2VendorsDisclosedSegment) {
-        encode = !Objects.equals(getVendorsDisclosed(), Collections.emptyList());
       } else {
         throw new EncodingException(String.format("Unknown segment type '%s' for section %s.", segment.getClass().getName(), NAME));
       }

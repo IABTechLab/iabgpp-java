@@ -33,7 +33,7 @@ public class TcfEuV2Test {
     tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, time);
 
     final String encoded = tcfEuV2.encode();
-    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA", encoded);
+    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.IAAA", encoded);
 
     final TcfEuV2 decoded = new TcfEuV2(encoded);
 
@@ -61,7 +61,7 @@ public class TcfEuV2Test {
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS));
 
     final String encoded = tcfEuV2.encode();
-    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA", encoded);
+    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.IAAA", encoded);
 
     final TcfEuV2 decoded = new TcfEuV2(encoded);
 
