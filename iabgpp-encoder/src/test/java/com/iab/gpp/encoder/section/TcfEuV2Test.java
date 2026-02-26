@@ -1,23 +1,43 @@
 package com.iab.gpp.encoder.section;
 
+import com.iab.gpp.encoder.datatype.RangeEntry;
+import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.field.TcfEuV2Field;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.iab.gpp.encoder.datatype.RangeEntry;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.field.TcfEuV2Field;
 
 public class TcfEuV2Test {
+
+  static final Set<String> FIELD_NAMES =
+      new TcfEuV2().initializeSegments().stream()
+          .flatMap(s -> s.getFieldNames().stream())
+          .collect(Collectors.toSet());
+
+  static void assertEqualFields(final TcfEuV2 expected, TcfEuV2 actual) {
+    for (String fieldName: FIELD_NAMES) {
+      Assertions.assertEquals(expected.getFieldValue(fieldName), actual.getFieldValue(fieldName));
+    }
+  }
 
   @Test
   public void testEncode1() {
     TcfEuV2 tcfEuV2 = new TcfEuV2();
-    tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", tcfEuV2.encode());
+    final ZonedDateTime time = ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
+    tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, time);
+    tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, time);
+
+    final String encoded = tcfEuV2.encode();
+    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA", encoded);
+
+    final TcfEuV2 decoded = new TcfEuV2(encoded);
+
+    assertEqualFields(tcfEuV2, decoded);
   }
 
   @Test
@@ -40,12 +60,24 @@ public class TcfEuV2Test {
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS));
     Assertions.assertEquals(Arrays.asList(), tcfEuV2.getFieldValue(TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS));
 
-    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA", tcfEuV2.encode());
+    final String encoded = tcfEuV2.encode();
+    Assertions.assertEquals("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA", encoded);
+
+    final TcfEuV2 decoded = new TcfEuV2(encoded);
+
+    assertEqualFields(tcfEuV2, decoded);
+  }
+
+  @Test
+  public void testAlwaysEncodeCoreSegment() {
+    final TcfEuV2 tcfEuV2 = new TcfEuV2();
+    final char firstChar = tcfEuV2.encode().charAt(0);
+    Assertions.assertTrue(firstChar >= 'A' && firstChar <= 'H');
   }
 
   @Test
   public void testDecode1() {
-    TcfEuV2 tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
+    TcfEuV2 tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA");
 
     Assertions.assertEquals(2, tcfEuV2.getVersion());
     Assertions.assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getCreated());
@@ -98,7 +130,7 @@ public class TcfEuV2Test {
 
   @Test
   public void testDecode2() {
-    TcfEuV2 tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
+    TcfEuV2 tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA");
 
     Assertions.assertEquals(2, tcfEuV2.getVersion());
     Assertions.assertEquals(ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")), tcfEuV2.getCreated());
@@ -153,7 +185,7 @@ public class TcfEuV2Test {
   @Test
   public void testDecode3() {
     TcfEuV2 tcfEuV2 = new TcfEuV2(
-        "CPcqBNJPcqBNJNwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.QGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g.IGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g");
+        "CPcqBNJPcqBNJNwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g.IGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g");
 
 
     Assertions.assertEquals(2, tcfEuV2.getFieldValue("Version"));
@@ -328,7 +360,7 @@ public class TcfEuV2Test {
 
   @Test
   public void testDecode6() {
-    TcfEuV2 tcfEuV2 = new TcfEuV2("COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA.YAAAAAAAAAAAAAAAAAA");
+    TcfEuV2 tcfEuV2 = new TcfEuV2("COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA");
 
     Assertions.assertEquals(2, tcfEuV2.getFieldValue("Version"));
     Assertions.assertEquals(14, tcfEuV2.getFieldValue("CmpId"));
