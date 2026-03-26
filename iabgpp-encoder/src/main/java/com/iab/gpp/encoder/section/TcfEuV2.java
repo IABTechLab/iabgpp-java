@@ -4,6 +4,7 @@ import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
+import com.iab.gpp.encoder.segment.EncodableSegment;
 import com.iab.gpp.encoder.segment.TraditionalBase64Segment;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
   public TcfEuV2() {
     super(
         new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_CORE_SEGMENT_FIELD_NAMES),
-        new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES),
-        new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES),
+        new TraditionalBase64Segment<>(
+            TcfEuV2Field.TCFEUV2_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES, true),
+        new TraditionalBase64Segment<>(
+            TcfEuV2Field.TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES, true),
         new TraditionalBase64Segment<>(TcfEuV2Field.TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES));
   }
 
@@ -40,7 +43,7 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
 
   @Override
   public int getVersion() {
-    return TcfEuV2.VERSION;
+    return (Integer) this.getFieldValue(TcfEuV2Field.VERSION);
   }
 
   @Override
@@ -82,26 +85,14 @@ public class TcfEuV2 extends EncodableSection<TcfEuV2Field> {
 
   @Override
   public CharSequence doEncode() {
-    List<CharSequence> encodedSegments = new ArrayList<>(size());
-    if (size() >= 1) {
-      encodedSegments.add(getSegment(0).encodeCharSequence());
-
-      Boolean isServiceSpecific = (Boolean) this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
-      if (isServiceSpecific) {
-        if (size() >= 2) {
-          encodedSegments.add(getSegment(1).encodeCharSequence());
-        }
-      } else {
-        if (size() >= 2) {
-          encodedSegments.add(getSegment(2).encodeCharSequence());
-
-          if (size() >= 3) {
-            encodedSegments.add(getSegment(3).encodeCharSequence());
-          }
-        }
+    int size = size();
+    List<CharSequence> encodedSegments = new ArrayList<>(size);
+    for (int i = 0; i < size; i++) {
+      EncodableSegment<TcfEuV2Field> segment = getSegment(i);
+      if (segment.shouldEncode()) {
+        encodedSegments.add(segment.encodeCharSequence());
       }
     }
-
     return SlicedCharSequence.join('.', encodedSegments);
   }
 
