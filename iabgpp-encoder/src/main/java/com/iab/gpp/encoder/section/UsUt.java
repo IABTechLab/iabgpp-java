@@ -31,7 +31,7 @@ public class UsUt extends AbstractUsSection<UsUtField> {
 
   @Override
   public int getVersion() {
-    return UsUt.VERSION;
+    return (Integer) this.getFieldValue(UsUtField.VERSION);
   }
 
   public Integer getSharingNotice() {

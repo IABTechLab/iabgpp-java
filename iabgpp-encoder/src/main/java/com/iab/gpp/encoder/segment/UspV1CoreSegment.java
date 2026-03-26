@@ -6,7 +6,7 @@ import com.iab.gpp.encoder.field.UspV1Field;
 public final class UspV1CoreSegment extends AbstractLazilyEncodableSegment<UspV1Field> {
 
   public UspV1CoreSegment() {
-    super(UspV1Field.USPV1_CORE_SEGMENT_FIELD_NAMES);
+    super(UspV1Field.USPV1_CORE_SEGMENT_FIELD_NAMES, false);
   }
 
   @Override

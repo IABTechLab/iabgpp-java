@@ -130,6 +130,7 @@ public class UsNjTest {
   public void testDecode1() throws DecodingException {
     UsNj usNj = new UsNj("BVWSSRklWA.YA");
 
+    Assertions.assertEquals(1, usNj.getVersion());
     Assertions.assertEquals(1, usNj.getProcessingNotice());
     Assertions.assertEquals(1, usNj.getSaleOptOutNotice());
     Assertions.assertEquals(1, usNj.getTargetedAdvertisingOptOutNotice());

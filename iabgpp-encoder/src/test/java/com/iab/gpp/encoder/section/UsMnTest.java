@@ -129,6 +129,7 @@ public class UsMnTest {
   public void testDecode1() throws DecodingException {
     UsMn usMn = new UsMn("BVWSSVWA.YA");
 
+    Assertions.assertEquals(1, usMn.getVersion());
     Assertions.assertEquals(1, usMn.getProcessingNotice());
     Assertions.assertEquals(1, usMn.getSaleOptOutNotice());
     Assertions.assertEquals(1, usMn.getTargetedAdvertisingOptOutNotice());

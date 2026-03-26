@@ -33,7 +33,7 @@ public class UsDe extends AbstractUsSectionWithGpc<UsDeField> {
 
   @Override
   public int getVersion() {
-    return UsDe.VERSION;
+    return (Integer) this.getFieldValue(UsDeField.VERSION);
   }
 
   @Override
@@ -83,10 +83,6 @@ public class UsDe extends AbstractUsSectionWithGpc<UsDeField> {
 
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsDeField.MSPA_SERVICE_PROVIDER_MODE);
-  }
-
-  public Integer getGpcSegmentType() {
-    return (Integer) this.getFieldValue(UsDeField.GPC_SEGMENT_TYPE);
   }
 
   public Boolean getGpc() {

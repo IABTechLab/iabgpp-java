@@ -69,6 +69,16 @@ public abstract class DataType<E extends Enum<E> & FieldKey, T> {
     return value;
   }
 
+  @SuppressWarnings("unchecked")
+  public final boolean isPresent(Object[] values, int index) {
+    T value = (T) values[index];
+    return value != null && isPresent(value);
+  }
+
+  protected boolean isPresent(T value) {
+    return true;
+  }
+
   public final void set(Object[] values, int index, Object newValue) {
     T oldValue = get(values, index);
     T effectiveValue = processValue(oldValue, newValue);

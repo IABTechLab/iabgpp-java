@@ -10,7 +10,7 @@ public final class UsNatCoreSegment extends AbstractBase64Segment<UsNatField> {
   private static final int VERSION_LENGTH = 6;
 
   public UsNatCoreSegment() {
-    super(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES);
+    super(UsNatField.USNAT_CORE_SEGMENT_FIELD_NAMES, false);
   }
 
   protected AbstractBase64UrlEncoder getBase64UrlEncoder() {

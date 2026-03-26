@@ -120,6 +120,7 @@ public class UsCoTest {
   public void testDecode1() {
     UsCo usCo = new UsCo("BVWSSVg.YA");
 
+    Assertions.assertEquals(1, usCo.getVersion());
     Assertions.assertEquals(1, usCo.getSharingNotice());
     Assertions.assertEquals(1, usCo.getSaleOptOutNotice());
     Assertions.assertEquals(1, usCo.getTargetedAdvertisingOptOutNotice());

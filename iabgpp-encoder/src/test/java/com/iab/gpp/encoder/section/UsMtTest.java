@@ -129,6 +129,7 @@ public class UsMtTest {
   public void testDecode1() throws DecodingException {
     UsMt usMt = new UsMt("BVWSSZFY.YA");
 
+    Assertions.assertEquals(1, usMt.getVersion());
     Assertions.assertEquals(1, usMt.getSharingNotice());
     Assertions.assertEquals(1, usMt.getSaleOptOutNotice());
     Assertions.assertEquals(1, usMt.getTargetedAdvertisingOptOutNotice());

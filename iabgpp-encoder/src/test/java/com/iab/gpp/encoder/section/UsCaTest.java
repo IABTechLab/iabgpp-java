@@ -153,8 +153,10 @@ public class UsCaTest {
   public void testDecode1() {
     UsCa usCa = new UsCa("BVWSSSVY.YA");
 
+    Assertions.assertEquals(1, usCa.getVersion());
     Assertions.assertEquals(1, usCa.getSaleOptOutNotice());
     Assertions.assertEquals(1, usCa.getSharingOptOut());
+    Assertions.assertEquals(1, usCa.getSharingOptOutNotice());
     Assertions.assertEquals(1, usCa.getSensitiveDataLimitUseNotice());
     Assertions.assertEquals(1, usCa.getSaleOptOut());
     Assertions.assertEquals(1, usCa.getSharingOptOut());

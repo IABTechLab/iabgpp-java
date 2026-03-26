@@ -19,6 +19,9 @@ public abstract class AbstractDirtyableBitStringDataType<
     return (value != null && value.isDirty());
   }
 
+  @Override
+  protected abstract boolean isPresent(T value);
+
   @SuppressWarnings("unchecked")
   @Override
   public void setDirty(Object[] values, int index, boolean dirty) {

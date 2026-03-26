@@ -33,7 +33,7 @@ public class UsCo extends AbstractUsSectionWithGpc<UsCoField> {
 
   @Override
   public int getVersion() {
-    return UsCo.VERSION;
+    return (Integer) this.getFieldValue(UsCoField.VERSION);
   }
 
   @Override
@@ -79,10 +79,6 @@ public class UsCo extends AbstractUsSectionWithGpc<UsCoField> {
 
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsCoField.MSPA_SERVICE_PROVIDER_MODE);
-  }
-
-  public Integer getGpcSegmentType() {
-    return (Integer) this.getFieldValue(UsCoField.GPC_SEGMENT_TYPE);
   }
 
   public Boolean getGpc() {

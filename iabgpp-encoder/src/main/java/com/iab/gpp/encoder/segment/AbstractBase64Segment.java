@@ -11,8 +11,8 @@ import com.iab.gpp.encoder.field.FieldNames;
 abstract class AbstractBase64Segment<E extends Enum<E> & FieldKey>
     extends AbstractLazilyEncodableSegment<E> {
 
-  protected AbstractBase64Segment(FieldNames<E> fieldNames) {
-    super(fieldNames);
+  protected AbstractBase64Segment(FieldNames<E> fieldNames, boolean optional) {
+    super(fieldNames, optional);
   }
 
   protected abstract AbstractBase64UrlEncoder getBase64UrlEncoder();

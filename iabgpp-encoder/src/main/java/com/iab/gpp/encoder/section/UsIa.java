@@ -33,7 +33,7 @@ public class UsIa extends AbstractUsSectionWithGpc<UsIaField> {
 
   @Override
   public int getVersion() {
-    return UsIa.VERSION;
+    return (Integer) this.getFieldValue(UsIaField.VERSION);
   }
 
   @Override
@@ -83,10 +83,6 @@ public class UsIa extends AbstractUsSectionWithGpc<UsIaField> {
 
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsIaField.MSPA_SERVICE_PROVIDER_MODE);
-  }
-
-  public Integer getGpcSegmentType() {
-    return (Integer) this.getFieldValue(UsIaField.GPC_SEGMENT_TYPE);
   }
 
   public Boolean getGpc() {

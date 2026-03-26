@@ -101,10 +101,6 @@ public class UsNat extends AbstractUsSectionWithGpc<UsNatField> {
     return (Integer) this.getFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE);
   }
 
-  public Integer getGpcSegmentType() {
-    return (Integer) this.getFieldValue(UsNatField.GPC_SEGMENT_TYPE);
-  }
-
   public Boolean getGpc() {
     return (Boolean) this.getFieldValue(UsNatField.GPC);
   }

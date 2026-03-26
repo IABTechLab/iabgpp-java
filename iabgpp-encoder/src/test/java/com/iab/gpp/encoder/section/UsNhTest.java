@@ -129,6 +129,7 @@ public class UsNhTest {
   public void testDecode1() throws DecodingException {
     UsNh usNh = new UsNh("BVWSSZFY.YA");
 
+    Assertions.assertEquals(1, usNh.getVersion());
     Assertions.assertEquals(1, usNh.getProcessingNotice());
     Assertions.assertEquals(1, usNh.getSaleOptOutNotice());
     Assertions.assertEquals(1, usNh.getTargetedAdvertisingOptOutNotice());

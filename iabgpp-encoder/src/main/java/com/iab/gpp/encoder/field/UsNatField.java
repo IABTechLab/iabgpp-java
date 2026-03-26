@@ -108,6 +108,11 @@ public enum UsNatField implements FieldKey {
     }
 
     @Override
+    protected boolean isPresent(FixedIntegerList value) {
+      return value.isPresent();
+    }
+
+    @Override
     protected void encode(
         BitString builder, FixedIntegerList value, EncodableSegment<UsNatField> segment) {
       FixedIntegerListEncoder.encode(

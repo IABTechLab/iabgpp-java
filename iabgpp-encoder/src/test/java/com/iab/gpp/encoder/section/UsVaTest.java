@@ -120,6 +120,7 @@ public class UsVaTest {
   public void testDecode1() throws DecodingException {
     UsVa usVa = new UsVa("BVWSSVY");
 
+    Assertions.assertEquals(1, usVa.getVersion());
     Assertions.assertEquals(1, usVa.getSharingNotice());
     Assertions.assertEquals(1, usVa.getSaleOptOutNotice());
     Assertions.assertEquals(1, usVa.getTargetedAdvertisingOptOutNotice());

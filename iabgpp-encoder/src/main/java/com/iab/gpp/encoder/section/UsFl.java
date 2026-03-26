@@ -31,7 +31,7 @@ public class UsFl extends AbstractUsSection<UsFlField> {
 
   @Override
   public int getVersion() {
-    return UsFl.VERSION;
+    return (Integer) this.getFieldValue(UsFlField.VERSION);
   }
 
   public Integer getProcessingNotice() {

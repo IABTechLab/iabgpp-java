@@ -44,7 +44,6 @@ import com.iab.gpp.encoder.section.UspV1;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -70,7 +69,7 @@ public class GppModelTest {
     String gppString = gppModel.encode();
     Assertions.assertEquals("DBAA", gppString);
 
-    Assertions.assertEquals(new ArrayList<>(), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(), gppModel.getSectionIds());
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.ID));
@@ -152,7 +151,7 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOYs~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~CAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA~BAAAAAQA.QA",
+        "DBACOYs~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAAAAAAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~CAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA~BAAAAAQA.QA",
         gppString);
   }
 
@@ -189,7 +188,7 @@ public class GppModelTest {
     gppModel.setFieldValue(UspV1.NAME, UspV1Field.OPT_OUT_SALE, 'N');
     gppModel.setFieldValue(UspV1.NAME, UspV1Field.LSPA_COVERED, 'N');
 
-    Assertions.assertEquals(Arrays.asList(6), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(6), gppModel.getSectionIds());
     Assertions.assertEquals(true, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.ID));
@@ -200,8 +199,11 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals("DBABTA~1YNN", gppString);
+    Assertions.assertEquals("1YNN", gppModel.encodeSection(UspV1.ID));
+    Assertions.assertEquals("1YNN", gppModel.encodeSection(UspV1.NAME));
 
-    Assertions.assertEquals(Arrays.asList(6), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(6), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(6), gppModel.getHeader().getSectionsIds());
     Assertions.assertEquals(true, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.ID));
@@ -235,7 +237,7 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.LAST_UPDATED, utcDateTime);
 
-    Assertions.assertEquals(Arrays.asList(2), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(2), gppModel.getSectionIds());
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.ID));
@@ -245,12 +247,11 @@ public class GppModelTest {
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.NAME));
 
     String gppString = gppModel.encode();
-    Assertions.assertEquals(
-        "DBABMA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA", gppString);
+    Assertions.assertEquals("DBABMA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.IAAA", gppString);
 
     Assertions.assertEquals(2, gppString.split("~").length);
 
-    Assertions.assertEquals(Arrays.asList(2), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(2), gppModel.getSectionIds());
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.ID));
@@ -280,7 +281,7 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.LAST_UPDATED, utcDateTime);
 
-    Assertions.assertEquals(Arrays.asList(2), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(2), gppModel.getSectionIds());
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.NAME));
@@ -295,11 +296,11 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~1YNN", gppString);
+        "DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.IAAA~1YNN", gppString);
 
     Assertions.assertEquals(3, gppString.split("~").length);
 
-    Assertions.assertEquals(Arrays.asList(2, 6), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(2, 6), gppModel.getSectionIds());
     Assertions.assertEquals(true, gppModel.hasSection(UspV1.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.NAME));
@@ -329,7 +330,7 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.LAST_UPDATED, utcDateTime);
 
-    Assertions.assertEquals(Arrays.asList(2), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(2), gppModel.getSectionIds());
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.ID));
@@ -396,12 +397,12 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN",
+        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN",
         gppString);
 
     Assertions.assertEquals(4, gppString.split("~").length);
 
-    Assertions.assertEquals(Arrays.asList(2, 5, 6), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(2, 5, 6), gppModel.getSectionIds());
     Assertions.assertEquals(true, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(true, gppModel.hasSection(TcfCaV1.ID));
@@ -428,7 +429,7 @@ public class GppModelTest {
   @Test
   public void testDecodeDefaultsAll() {
     String gppString =
-        "DBACOYs~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA~BAAAAAABAA.QA";
+        "DBACOcGA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAAAAAAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~CAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA~BAAAAAQA.QA~YBAA.AQAA~ZBAA.AQAA~aBAA.AQAA~bBAA.AQAA";
     GppModel gppModel = new GppModel(gppString);
 
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));
@@ -458,7 +459,7 @@ public class GppModelTest {
     String gppString = "DBABTA~1YNN";
     GppModel gppModel = new GppModel(gppString);
 
-    Assertions.assertEquals(Arrays.asList(6), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(6), gppModel.getSectionIds());
     Assertions.assertEquals(true, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.ID));
@@ -481,7 +482,7 @@ public class GppModelTest {
     String gppString = "DBABMA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA";
     GppModel gppModel = new GppModel(gppString);
 
-    Assertions.assertEquals(Arrays.asList(2), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(2), gppModel.getSectionIds());
     Assertions.assertEquals(false, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.ID));
@@ -539,7 +540,7 @@ public class GppModelTest {
     String gppString = "DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~1YNN";
     GppModel gppModel = new GppModel(gppString);
 
-    Assertions.assertEquals(Arrays.asList(2, 6), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(2, 6), gppModel.getSectionIds());
     Assertions.assertEquals(true, gppModel.hasSection(UspV1.ID));
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.ID));
     Assertions.assertEquals(false, gppModel.hasSection(TcfCaV1.ID));
@@ -618,7 +619,7 @@ public class GppModelTest {
         "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN";
     GppModel gppModel = new GppModel(gppString);
 
-    Assertions.assertEquals(Arrays.asList(2, 5, 6), gppModel.getSectionIds());
+    Assertions.assertEquals(Set.of(2, 5, 6), gppModel.getSectionIds());
     Assertions.assertEquals(true, gppModel.hasSection(UspV1.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(TcfEuV2.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(TcfCaV1.NAME));
@@ -707,7 +708,7 @@ public class GppModelTest {
     gppModel.toString();
 
     Assertions.assertEquals(
-        "DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOAAAABAAAAA.QAAA.IAAA", gppModel.encode());
+        "DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOAAAABAAAAA.IAAA", gppModel.encode());
   }
 
   @Test
@@ -719,7 +720,7 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.LAST_UPDATED, utcDateTime);
 
     Assertions.assertEquals(
-        "DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOwAQAOgAAAA.QAAA.IAAA", gppModel.encode());
+        "DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOwAQAOgAAAA.IAAA", gppModel.encode());
   }
 
   @Test
@@ -731,8 +732,7 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.LAST_UPDATED, utcDateTime);
 
     Assertions.assertEquals(
-        "DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA",
-        gppModel.encode());
+        "DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.IAAA", gppModel.encode());
   }
 
   @Test

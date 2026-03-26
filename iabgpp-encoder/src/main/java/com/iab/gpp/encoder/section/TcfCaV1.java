@@ -39,7 +39,7 @@ public class TcfCaV1 extends EncodableSection<TcfCaV1Field> {
 
   @Override
   public int getVersion() {
-    return TcfCaV1.VERSION;
+    return (Integer) this.getFieldValue(TcfCaV1Field.VERSION);
   }
 
   @Override

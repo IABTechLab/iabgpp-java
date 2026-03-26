@@ -31,7 +31,7 @@ public class UsVa extends AbstractUsSection<UsVaField> {
 
   @Override
   public int getVersion() {
-    return UsVa.VERSION;
+    return (Integer) this.getFieldValue(UsVaField.VERSION);
   }
 
   public Integer getSharingNotice() {

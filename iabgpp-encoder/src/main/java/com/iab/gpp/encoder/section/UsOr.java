@@ -33,7 +33,7 @@ public class UsOr extends AbstractUsSectionWithGpc<UsOrField> {
 
   @Override
   public int getVersion() {
-    return UsOr.VERSION;
+    return (Integer) this.getFieldValue(UsOrField.VERSION);
   }
 
   @Override
@@ -83,10 +83,6 @@ public class UsOr extends AbstractUsSectionWithGpc<UsOrField> {
 
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsOrField.MSPA_SERVICE_PROVIDER_MODE);
-  }
-
-  public Integer getGpcSegmentType() {
-    return (Integer) this.getFieldValue(UsOrField.GPC_SEGMENT_TYPE);
   }
 
   public Boolean getGpc() {

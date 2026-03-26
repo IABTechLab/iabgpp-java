@@ -130,6 +130,7 @@ public class UsOrTest {
   public void testDecode1() throws DecodingException {
     UsOr usOr = new UsOr("BVWSSRpFYA.YA");
 
+    Assertions.assertEquals(1, usOr.getVersion());
     Assertions.assertEquals(1, usOr.getProcessingNotice());
     Assertions.assertEquals(1, usOr.getSaleOptOutNotice());
     Assertions.assertEquals(1, usOr.getTargetedAdvertisingOptOutNotice());

@@ -19,6 +19,11 @@ public final class EncodableFibonacciIntegerRange<E extends Enum<E> & FieldKey>
   }
 
   @Override
+  protected boolean isPresent(IntegerSet value) {
+    return !value.isEmpty();
+  }
+
+  @Override
   protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
     FibonacciIntegerRangeEncoder.encode(builder, value);
   }

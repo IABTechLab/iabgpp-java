@@ -34,6 +34,11 @@ public final class EncodableFixedIntegerList<E extends Enum<E> & FieldKey>
   }
 
   @Override
+  protected boolean isPresent(FixedIntegerList value) {
+    return value.isPresent();
+  }
+
+  @Override
   protected void encode(BitString builder, FixedIntegerList value, EncodableSegment<E> segment) {
     FixedIntegerListEncoder.encode(builder, value, this.elementBitStringLength, this.numElements);
   }

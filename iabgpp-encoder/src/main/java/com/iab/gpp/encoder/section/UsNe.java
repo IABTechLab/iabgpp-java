@@ -33,7 +33,7 @@ public class UsNe extends AbstractUsSectionWithGpc<UsNeField> {
 
   @Override
   public int getVersion() {
-    return UsNe.VERSION;
+    return (Integer) this.getFieldValue(UsNeField.VERSION);
   }
 
   @Override
@@ -83,10 +83,6 @@ public class UsNe extends AbstractUsSectionWithGpc<UsNeField> {
 
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsNeField.MSPA_SERVICE_PROVIDER_MODE);
-  }
-
-  public Integer getGpcSegmentType() {
-    return (Integer) this.getFieldValue(UsNeField.GPC_SEGMENT_TYPE);
   }
 
   public Boolean getGpc() {

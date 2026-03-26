@@ -129,6 +129,7 @@ public class UsTnTest {
   public void testDecode1() throws DecodingException {
     UsTn usTn = new UsTn("BVWSSVWA.YA");
 
+    Assertions.assertEquals(1, usTn.getVersion());
     Assertions.assertEquals(1, usTn.getProcessingNotice());
     Assertions.assertEquals(1, usTn.getSaleOptOutNotice());
     Assertions.assertEquals(1, usTn.getTargetedAdvertisingOptOutNotice());

@@ -128,6 +128,7 @@ public class UsFlTest {
   public void testDecode1() throws DecodingException {
     UsFl usFl = new UsFl("BVWSSZlY");
 
+    Assertions.assertEquals(1, usFl.getVersion());
     Assertions.assertEquals(1, usFl.getProcessingNotice());
     Assertions.assertEquals(1, usFl.getSaleOptOutNotice());
     Assertions.assertEquals(1, usFl.getTargetedAdvertisingOptOutNotice());

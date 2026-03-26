@@ -33,7 +33,7 @@ public class UsTx extends AbstractUsSectionWithGpc<UsTxField> {
 
   @Override
   public int getVersion() {
-    return UsTx.VERSION;
+    return (Integer) this.getFieldValue(UsTxField.VERSION);
   }
 
   @Override
@@ -83,10 +83,6 @@ public class UsTx extends AbstractUsSectionWithGpc<UsTxField> {
 
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsTxField.MSPA_SERVICE_PROVIDER_MODE);
-  }
-
-  public Integer getGpcSegmentType() {
-    return (Integer) this.getFieldValue(UsTxField.GPC_SEGMENT_TYPE);
   }
 
   public Boolean getGpc() {

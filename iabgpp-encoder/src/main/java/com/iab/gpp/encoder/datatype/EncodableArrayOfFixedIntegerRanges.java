@@ -30,6 +30,11 @@ public final class EncodableArrayOfFixedIntegerRanges<E extends Enum<E> & FieldK
   }
 
   @Override
+  protected boolean isPresent(DirtyableList<RangeEntry> value) {
+    return !value.isEmpty();
+  }
+
+  @Override
   protected void encode(
       BitString sb, DirtyableList<RangeEntry> entries, EncodableSegment<E> segment) {
     sb.writeInt(entries.size(), 12);

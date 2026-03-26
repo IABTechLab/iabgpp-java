@@ -121,6 +121,7 @@ public class UsCtTest {
   public void testDecode1() throws DecodingException {
     UsCt usCt = new UsCt("BVWSSZFg.YA");
 
+    Assertions.assertEquals(1, usCt.getVersion());
     Assertions.assertEquals(1, usCt.getSharingNotice());
     Assertions.assertEquals(1, usCt.getSaleOptOutNotice());
     Assertions.assertEquals(1, usCt.getTargetedAdvertisingOptOutNotice());

@@ -114,6 +114,9 @@ public class TcfCaV1Test {
     Assertions.assertEquals(0, tcfCaV1.getCmpId());
     Assertions.assertEquals(0, tcfCaV1.getCmpVersion());
     Assertions.assertEquals(0, tcfCaV1.getVendorListVersion());
+    Assertions.assertEquals(0, tcfCaV1.getConsentScreen());
+    Assertions.assertEquals(2, tcfCaV1.getPolicyVersion());
+    Assertions.assertEquals(1, tcfCaV1.getVersion());
     Assertions.assertEquals(false, tcfCaV1.getUseNonStandardStacks());
     Assertions.assertEquals(Set.of(), tcfCaV1.getSpecialFeatureExpressConsent());
     Assertions.assertEquals(Set.of(), tcfCaV1.getPurposesExpressConsent());

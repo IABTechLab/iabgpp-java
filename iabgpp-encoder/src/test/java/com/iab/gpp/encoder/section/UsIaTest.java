@@ -129,6 +129,7 @@ public class UsIaTest {
   public void testDecode1() throws DecodingException {
     UsIa usIa = new UsIa("BVVkklWA.YA");
 
+    Assertions.assertEquals(1, usIa.getVersion());
     Assertions.assertEquals(1, usIa.getProcessingNotice());
     Assertions.assertEquals(1, usIa.getSaleOptOutNotice());
     Assertions.assertEquals(1, usIa.getTargetedAdvertisingOptOutNotice());

@@ -191,6 +191,7 @@ public class UsNatTest {
   public void testDecode1() throws DecodingException {
     UsNat usNat = new UsNat("CVVVkkkkkpFY.YA");
 
+    Assertions.assertEquals(2, usNat.getVersion());
     Assertions.assertEquals(1, usNat.getSharingNotice());
     Assertions.assertEquals(1, usNat.getSaleOptOutNotice());
     Assertions.assertEquals(1, usNat.getSharingOptOutNotice());
@@ -215,6 +216,7 @@ public class UsNatTest {
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
     UsNat usNat = new UsNat("BVVVkkkkkpFY");
 
+    Assertions.assertEquals(2, usNat.getVersion());
     Assertions.assertEquals(1, usNat.getSharingNotice());
     Assertions.assertEquals(1, usNat.getSaleOptOutNotice());
     Assertions.assertEquals(1, usNat.getSharingOptOutNotice());
@@ -239,6 +241,7 @@ public class UsNatTest {
   public void testDecodeBackwardsCompatibility() throws DecodingException {
     UsNat usNat = new UsNat("BVQqAAAACg");
 
+    Assertions.assertEquals(1, usNat.getVersion());
     Assertions.assertEquals(1, usNat.getSharingNotice());
     Assertions.assertEquals(1, usNat.getSaleOptOutNotice());
     Assertions.assertEquals(1, usNat.getSharingOptOutNotice());

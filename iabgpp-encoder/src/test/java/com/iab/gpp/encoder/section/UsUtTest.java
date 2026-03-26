@@ -121,10 +121,12 @@ public class UsUtTest {
   public void testDecode1() throws DecodingException {
     UsUt usUt = new UsUt("BVVkklWA");
 
+    Assertions.assertEquals(1, usUt.getVersion());
     Assertions.assertEquals(1, usUt.getSharingNotice());
     Assertions.assertEquals(1, usUt.getSaleOptOutNotice());
     Assertions.assertEquals(1, usUt.getTargetedAdvertisingOptOutNotice());
     Assertions.assertEquals(1, usUt.getSaleOptOut());
+    Assertions.assertEquals(1, usUt.getSensitiveDataProcessingOptOutNotice());
     Assertions.assertEquals(1, usUt.getTargetedAdvertisingOptOut());
     Assertions.assertEquals(
         Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usUt.getSensitiveDataProcessing());

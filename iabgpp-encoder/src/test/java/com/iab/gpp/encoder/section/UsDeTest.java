@@ -130,6 +130,7 @@ public class UsDeTest {
   public void testDecode1() throws DecodingException {
     UsDe usDe = new UsDe("BVWSSSSVYA.YA");
 
+    Assertions.assertEquals(1, usDe.getVersion());
     Assertions.assertEquals(1, usDe.getProcessingNotice());
     Assertions.assertEquals(1, usDe.getSaleOptOutNotice());
     Assertions.assertEquals(1, usDe.getTargetedAdvertisingOptOutNotice());

@@ -129,6 +129,7 @@ public class UsNeTest {
   public void testDecode1() throws DecodingException {
     UsNe usNe = new UsNe("BVWSSVWA.YA");
 
+    Assertions.assertEquals(1, usNe.getVersion());
     Assertions.assertEquals(1, usNe.getProcessingNotice());
     Assertions.assertEquals(1, usNe.getSaleOptOutNotice());
     Assertions.assertEquals(1, usNe.getTargetedAdvertisingOptOutNotice());

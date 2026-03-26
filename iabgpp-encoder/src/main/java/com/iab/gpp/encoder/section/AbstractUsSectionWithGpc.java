@@ -46,8 +46,6 @@ public abstract class AbstractUsSectionWithGpc<E extends Enum<E> & FieldKey>
     return SlicedCharSequence.join('.', encodedSegments);
   }
 
-  public abstract Integer getGpcSegmentType();
-
   public Boolean getGpcSegmentIncluded() {
     return (Boolean) getSegment(1).getFieldValue(getGpcSegmentIncludedKey());
   }

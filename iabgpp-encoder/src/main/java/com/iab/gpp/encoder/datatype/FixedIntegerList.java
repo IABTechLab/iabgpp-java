@@ -26,6 +26,17 @@ public final class FixedIntegerList extends AbstractList<Integer> implements Dir
     this(new BitSet(elementBitStringLength * numElements), 0, elementBitStringLength, numElements);
   }
 
+  public boolean isPresent() {
+    int start = offset;
+    int end = start + elementBitStringLength * numElements;
+    for (int i = start; i < end; i++) {
+      if (bitSet.get(i)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @Override
   public int size() {
     return numElements;
