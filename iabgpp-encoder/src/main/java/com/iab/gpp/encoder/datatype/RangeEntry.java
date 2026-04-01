@@ -62,4 +62,9 @@ public final class RangeEntry implements Dirtyable {
     this.dirty = dirty;
     ids.setDirty(dirty);
   }
+
+  @Override
+  public String toString() {
+    return "{key=" + key + ", type=" + type + ", ids=" + ids + "}";
+  }
 }
