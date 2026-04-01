@@ -52,15 +52,23 @@ class IntegerSetTest {
 
   @Test
   void boundsTest() {
-    IntegerSet set = new IntegerSet(new BitSet(), 10, 13, 1);
+    BitSet bitSet = new BitSet();
+    
+    bitSet.set(10);
+    bitSet.set(11);
+    bitSet.set(12);
+    bitSet.set(13);
+    
+    IntegerSet set = new IntegerSet(bitSet, 10, 13, 1);
+    assertEquals(Set.of(1,2,3), set);
 
-    set.add(1);
-    set.add(2);
-    set.add(3);
     assertThrows(IndexOutOfBoundsException.class, () -> set.add(0));
     assertThrows(IndexOutOfBoundsException.class, () -> set.add(-1));
     assertFalse(set.contains(0));
     assertFalse(set.contains(-1));
+    assertTrue(set.contains(1));
+    assertTrue(set.contains(2));
+    assertTrue(set.contains(3));
     assertFalse(set.contains(4));
     assertFalse(set.contains(100));
   }
