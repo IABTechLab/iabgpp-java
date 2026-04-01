@@ -2,6 +2,7 @@ package com.iab.gpp.encoder.datatype.encoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.iab.gpp.encoder.bitstring.BitSet;
 import com.iab.gpp.encoder.datatype.IntegerSet;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,5 +48,20 @@ class IntegerSetTest {
     assertTrue(set.isEmpty());
     set.addRange(1, 3);
     assertEquals(Set.of(1, 2), set);
+  }
+
+  @Test
+  void boundsTest() {
+    IntegerSet set = new IntegerSet(new BitSet(), 10, 13, 1);
+
+    set.add(1);
+    set.add(2);
+    set.add(3);
+    assertThrows(IndexOutOfBoundsException.class, () -> set.add(0));
+    assertThrows(IndexOutOfBoundsException.class, () -> set.add(-1));
+    assertFalse(set.contains(0));
+    assertFalse(set.contains(-1));
+    assertFalse(set.contains(4));
+    assertFalse(set.contains(100));
   }
 }

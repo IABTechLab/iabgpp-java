@@ -73,6 +73,9 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   public boolean containsInt(int value) {
+    if (value < adjustment) {
+      return false;
+    }
     int offset = getOffset(value);
     return offset < to && bitSet.get(offset);
   }
