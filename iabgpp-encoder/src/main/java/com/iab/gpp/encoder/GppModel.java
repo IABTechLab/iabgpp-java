@@ -373,7 +373,7 @@ public class GppModel extends AbstractEncodable {
     for (Integer sectionId : header.getSectionsIds()) {
       EncodableSection<?> section = sections.get(sectionId);
       if (section != null) {
-        section.setDirty(true);
+        section.setDirty(dirty);
       }
     }
   }

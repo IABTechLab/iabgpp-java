@@ -45,7 +45,7 @@ abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey>
   @Override
   public final boolean isDirty() {
     if (dirty) {
-      return dirty;
+      return true;
     }
     int size = fieldNames.size();
     for (int i = 0; i < size; i++) {

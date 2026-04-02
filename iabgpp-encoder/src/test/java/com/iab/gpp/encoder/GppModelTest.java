@@ -768,6 +768,7 @@ public class GppModelTest {
   @Test
   public void testDecode5() {
     GppModel gppModel = new GppModel("DBABLA~BVQqAAAAAgA.QA");
+    Assertions.assertEquals("BVQqAAAAAgA.QA", gppModel.getUsNatSection().encode());
     gppModel.getFieldValue(UsNat.NAME, UsNatField.VERSION);
   }
 
