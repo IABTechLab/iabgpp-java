@@ -36,7 +36,7 @@ import java.util.function.Supplier;
 
 public class GppModel extends AbstractEncodable {
 
-  // NOTE: we genrally use concrete types to avoid the cost of interface calls
+  // NOTE: we generally use concrete types to avoid the cost of interface calls
   private static final HashMap<Integer, Supplier<EncodableSection<?>>> SECTION_ID_TO_CONSTRUCTOR =
       new HashMap<>();
   private static final HashMap<String, Integer> SECTION_NAME_TO_ID = new HashMap<>();
