@@ -53,14 +53,14 @@ class IntegerSetTest {
   @Test
   void boundsTest() {
     BitSet bitSet = new BitSet();
-    
+
     bitSet.set(10);
     bitSet.set(11);
     bitSet.set(12);
     bitSet.set(13);
-    
+
     IntegerSet set = new IntegerSet(bitSet, 10, 13, 1);
-    assertEquals(Set.of(1,2,3), set);
+    assertEquals(Set.of(1, 2, 3), set);
 
     assertThrows(IndexOutOfBoundsException.class, () -> set.add(0));
     assertThrows(IndexOutOfBoundsException.class, () -> set.add(-1));
