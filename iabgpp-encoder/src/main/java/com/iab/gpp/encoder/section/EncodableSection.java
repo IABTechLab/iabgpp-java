@@ -174,7 +174,11 @@ public abstract class EncodableSection<E extends Enum<E> & FieldKey> extends Abs
         .append(getVersion());
     int numSegments = size();
     for (int i = 0; i < numSegments; i++) {
-      sb.append(", ").append(getSegment(i).toString());
+      EncodableSegment<E> segment = getSegment(i);
+      String segmentInfo = segment.toString();
+      if (segment.shouldEncode()) {
+        sb.append(", ").append(segmentInfo);
+      }
     }
     sb.append('}');
     return sb.toString();
