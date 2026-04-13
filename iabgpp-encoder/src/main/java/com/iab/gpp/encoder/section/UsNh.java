@@ -1,25 +1,23 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsNhField;
-import com.iab.gpp.encoder.segment.EncodableSegment;
-import com.iab.gpp.encoder.segment.UsNhCoreSegment;
-import com.iab.gpp.encoder.segment.UsNhGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
-public class UsNh extends AbstractLazilyEncodableSection {
+public class UsNh extends AbstractUsSectionWithGpc<UsNhField> {
 
   public static final int ID = 20;
   public static final int VERSION = 1;
   public static final String NAME = "usnh";
 
   public UsNh() {
-    super();
+    super(
+        new Base64Segment<>(UsNhField.USNH_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsNhField.USNH_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsNh(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -35,48 +33,13 @@ public class UsNh extends AbstractLazilyEncodableSection {
 
   @Override
   public int getVersion() {
-    return UsNh.VERSION;
+    return (Integer) this.getFieldValue(UsNhField.VERSION);
   }
 
   @Override
-  protected List<EncodableSegment> initializeSegments() {
-    return Arrays.asList(new UsNhCoreSegment(), new UsNhGpcSegment());
+  protected final UsNhField getGpcSegmentIncludedKey() {
+    return UsNhField.GPC_SEGMENT_INCLUDED;
   }
-
-  @Override
-  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
-    if(encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-
-      if (encodedSegments.size() > 0) {
-        segments.get(0).decode(encodedSegments.get(0));
-      }
-
-      if (encodedSegments.size() > 1) {
-        segments.get(1).setFieldValue(UsNhField.GPC_SEGMENT_INCLUDED, true);
-        segments.get(1).decode(encodedSegments.get(1));
-      } else {
-        segments.get(1).setFieldValue(UsNhField.GPC_SEGMENT_INCLUDED, false);
-      }
-    }
-
-    return segments;
-  }
-
-  @Override
-  protected CharSequence encodeSection(List<EncodableSegment> segments) {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
-
-    if(!segments.isEmpty()) {
-      encodedSegments.add(segments.get(0).encodeCharSequence());
-      if(segments.size() >= 2 && segments.get(1).getFieldValue(UsNhField.GPC_SEGMENT_INCLUDED).equals(true)) {
-        encodedSegments.add(segments.get(1).encodeCharSequence());
-      }
-    }
-
-    return SlicedCharSequence.join('.',  encodedSegments);
-  }
-
 
   public Integer getProcessingNotice() {
     return (Integer) this.getFieldValue(UsNhField.PROCESSING_NOTICE);
@@ -98,14 +61,12 @@ public class UsNh extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(UsNhField.TARGETED_ADVERTISING_OPT_OUT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.getFieldValue(UsNhField.SENSITIVE_DATA_PROCESSING);
+  public FixedIntegerList getSensitiveDataProcessing() {
+    return (FixedIntegerList) this.getFieldValue(UsNhField.SENSITIVE_DATA_PROCESSING);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getKnownChildSensitiveDataConsents() {
-    return (List<Integer>) this.getFieldValue(UsNhField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS);
+  public FixedIntegerList getKnownChildSensitiveDataConsents() {
+    return (FixedIntegerList) this.getFieldValue(UsNhField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS);
   }
 
   public Integer getAdditionalDataProcessingConsent() {
@@ -122,14 +83,6 @@ public class UsNh extends AbstractLazilyEncodableSection {
 
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsNhField.MSPA_SERVICE_PROVIDER_MODE);
-  }
-
-  public Integer getGpcSegmentType() {
-    return (Integer) this.getFieldValue(UsNhField.GPC_SEGMENT_TYPE);
-  }
-
-  public Boolean getGpcSegmentIncluded() {
-    return (Boolean) this.getFieldValue(UsNhField.GPC_SEGMENT_INCLUDED);
   }
 
   public Boolean getGpc() {

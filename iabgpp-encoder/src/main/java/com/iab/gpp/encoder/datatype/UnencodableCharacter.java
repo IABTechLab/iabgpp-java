@@ -1,61 +1,20 @@
 package com.iab.gpp.encoder.datatype;
 
+import com.iab.gpp.encoder.field.FieldKey;
 import java.util.function.Predicate;
-import com.iab.gpp.encoder.error.ValidationException;
 
-public final class UnencodableCharacter implements DataType<Character> {
+public final class UnencodableCharacter<E extends Enum<E> & FieldKey>
+    extends DataType<E, Character> {
 
-  private boolean dirty = false;
-  private Predicate<Character> validator;
-  private Character value = null;
+  private final Character initial;
 
-  public UnencodableCharacter() {
-    this.validator = v -> true;
-  }
-
-  public UnencodableCharacter(Character value) {
-    this.validator = v -> true;
-    setValue(value);
-  }
-
-  public UnencodableCharacter(Character value, Predicate<Character> validator) {
-    this.validator = validator;
-    setValue(value);
-  }
-
-  public void setValidator(Predicate<Character> validator) {
-    this.validator = validator;
+  public UnencodableCharacter(String name, Character initial, Predicate<Character> validator) {
+    super(name, validator);
+    this.initial = initial;
   }
 
   @Override
-  public boolean hasValue() {
-    return this.value != null;
+  protected Character initialize() {
+    return initial;
   }
-
-  @Override
-  public Character getValue() {
-    return this.value;
-  }
-
-  @Override
-  public void setValue(Object value) {
-    Character c = (Character)value.toString().charAt(0);
-    if(validator.test(c)) {
-      this.value = c;
-      this.dirty = true;
-    } else {
-      throw new ValidationException("Invalid value '" + c + "'");
-    }
-  }
-
-  @Override
-  public boolean isDirty() {
-    return dirty;
-  }
-
-  @Override
-  public void setDirty(boolean dirty) {
-    this.dirty = dirty;
-  }
-
 }

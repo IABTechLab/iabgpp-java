@@ -1,57 +1,51 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.Collection;
 
-public final class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableFixedBitfield<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
   private final int numElements;
 
-  public EncodableFixedBitfield(int numElements) {
-    super(true);
+  public EncodableFixedBitfield(String name, int numElements) {
+    super(name, null);
     this.numElements = numElements;
-    this.value = new IntegerBitSet(numElements);
   }
 
-  public void encode(BitStringBuilder builder) {
-    try {
-      FixedBitfieldEncoder.encode(builder, this.value, this.numElements);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+  @Override
+  public String toString() {
+    return name + "=Bitfield(" + numElements + ")";
   }
 
-  public void decode(BitString bitString) {
-    try {
-      this.value = FixedBitfieldEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+  @Override
+  protected IntegerSet initialize() {
+    return new IntegerSet(numElements);
   }
 
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + this.numElements);
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected boolean isPresent(IntegerSet value) {
+    return !value.isEmpty();
+  }
+
+  @Override
+  protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
+    FixedBitfieldEncoder.encode(builder, value, this.numElements);
+  }
+
+  @Override
+  protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
+    return reader.readIntegerSet(this.numElements);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    this.value.clear();
-    this.value.addAll((Collection<Integer>) value);
-  }
-
-  @Override
-  public IntegerSet getValue() {
-    return new ManagedIntegerSet(this, super.getValue());
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

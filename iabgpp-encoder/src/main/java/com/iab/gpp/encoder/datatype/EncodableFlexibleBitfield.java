@@ -1,59 +1,47 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.Collection;
-import java.util.function.IntSupplier;
-
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerBitSet;
 import com.iab.gpp.encoder.datatype.encoder.FixedBitfieldEncoder;
-import com.iab.gpp.encoder.datatype.encoder.IntegerSet;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import com.iab.gpp.encoder.segment.SegmentValueProvider;
+import java.util.Collection;
 
-public final class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<IntegerSet> {
+public final class EncodableFlexibleBitfield<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
-  private IntSupplier getLengthSupplier;
+  private final SegmentValueProvider<E> getLengthSupplier;
 
-  public EncodableFlexibleBitfield(IntSupplier getLengthSupplier) {
-    super(true);
-    this.getLengthSupplier = getLengthSupplier;
-    this.value = new IntegerBitSet();
+  public EncodableFlexibleBitfield(String name, E key) {
+    super(name, null);
+    this.getLengthSupplier = new SegmentValueProvider<>(key);
   }
 
-  public void encode(BitStringBuilder builder) {
-    try {
-      FixedBitfieldEncoder.encode(builder, this.value, this.getLengthSupplier.getAsInt());
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+  @Override
+  protected IntegerSet initialize() {
+    return new IntegerSet();
   }
 
-  public void decode(BitString bitString) {
-    try {
-      this.value = FixedBitfieldEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+  @Override
+  protected boolean isPresent(IntegerSet value) {
+    return !value.isEmpty();
   }
 
-  public BitString substring(BitString bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + this.getLengthSupplier.getAsInt());
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
+    FixedBitfieldEncoder.encode(builder, value, this.getLengthSupplier.extract(segment));
+  }
+
+  @Override
+  protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
+    return reader.readIntegerSet(getLengthSupplier.extract(segment));
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    this.value.clear();
-    this.value.addAll((Collection<Integer>) value);
-  }
-
-  @Override
-  public IntegerSet getValue() {
-    return new ManagedIntegerSet(this, super.getValue());
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

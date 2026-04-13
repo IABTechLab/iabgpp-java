@@ -1,11 +1,13 @@
 package com.iab.gpp.extras.jackson.cmp;
 
+import com.iab.gpp.extras.cmp.Cmp;
+import com.iab.gpp.extras.cmp.CmpList;
+import com.iab.gpp.extras.jackson.Loader;
 import java.io.IOException;
 import java.time.Instant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import com.iab.gpp.extras.cmp.Cmp;
 
 /*-
  * #%L
@@ -27,9 +29,6 @@ import com.iab.gpp.extras.cmp.Cmp;
  * #L%
  */
 
-import com.iab.gpp.extras.cmp.CmpList;
-import com.iab.gpp.extras.jackson.Loader;
-
 public class CmpListTest {
 
   private static CmpList cmpList;
@@ -38,9 +37,12 @@ public class CmpListTest {
 
   @BeforeAll
   public static void setUpBeforeClass() throws IOException {
-    cmpList = new Loader().cmpList(CmpListTest.class.getClassLoader().getResourceAsStream("cmpList.json"));
+    cmpList =
+        new Loader()
+            .cmpList(CmpListTest.class.getClassLoader().getResourceAsStream("cmpList.json"));
     cmpThree = cmpList.getCmps().stream().filter(o -> o.getId() == 3).findFirst().orElse(null);
-    cmpTwentyThree = cmpList.getCmps().stream().filter(o -> o.getId() == 23).findFirst().orElse(null);
+    cmpTwentyThree =
+        cmpList.getCmps().stream().filter(o -> o.getId() == 23).findFirst().orElse(null);
   }
 
   @Test

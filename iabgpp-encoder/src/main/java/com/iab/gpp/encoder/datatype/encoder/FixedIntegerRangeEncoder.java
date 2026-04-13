@@ -1,15 +1,15 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.Collection;
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
+import java.util.Collection;
 
 public class FixedIntegerRangeEncoder {
   private FixedIntegerRangeEncoder() {}
 
-  public static int encode(BitStringBuilder builder, Collection<Integer> value) {
-    BitStringBuilder rangeBuilder = new BitStringBuilder();
+  public static int encode(BitString builder, Collection<Integer> value) {
+    BitString rangeBuilder = new BitString();
     int groupStart = -1;
     int last = Integer.MIN_VALUE;
     int groupCount = 0;
@@ -27,49 +27,35 @@ public class FixedIntegerRangeEncoder {
       groupCount++;
       writeGroup(rangeBuilder, groupStart, last);
     }
-    FixedIntegerEncoder.encode(builder,groupCount, 12);
-    builder.append(rangeBuilder);
+    builder.writeInt(groupCount, 12);
+    builder.write(rangeBuilder);
     return last;
   }
 
-  private static void writeGroup(BitStringBuilder builder, int groupStart, int last) {
+  private static void writeGroup(BitString builder, int groupStart, int last) {
     if (groupStart == last) {
-      builder.append(false);
-      FixedIntegerEncoder.encode(builder, groupStart, 16);
+      builder.writeBoolean(false);
+      builder.writeInt(groupStart, 16);
     } else {
-      builder.append(true);
-      FixedIntegerEncoder.encode(builder, groupStart, 16);
-      FixedIntegerEncoder.encode(builder, last, 16);
+      builder.writeBoolean(true);
+      builder.writeInt(groupStart, 16);
+      builder.writeInt(last, 16);
     }
   }
 
-  public static IntegerSet decode(BitString bitString) throws DecodingException {
-    if (bitString.length() < 12) {
-      throw new DecodingException("Undecodable FixedIntegerRange '" + bitString + "'");
-    }
-
-    int count = FixedIntegerEncoder.decode(bitString, 0, 12);
-    IntegerBitSet value = new IntegerBitSet();
-    int startIndex = 12;
+  public static IntegerSet decode(BitString reader) throws DecodingException {
+    int count = reader.readInt(12);
+    IntegerSet value = new IntegerSet();
     for (int i = 0; i < count; i++) {
-      boolean group = BooleanEncoder.decode(bitString, startIndex, 1);
-      startIndex++;
-
+      boolean group = reader.readBoolean();
       if (group) {
-        int start = FixedIntegerEncoder.decode(bitString, startIndex, 16);
-        startIndex += 16;
-
-        int end = FixedIntegerEncoder.decode(bitString, startIndex, 16);
-        startIndex += 16;
-
+        int start = reader.readInt(16);
+        int end = reader.readInt(16);
         value.addRange(start, end + 1);
       } else {
-        int val = FixedIntegerEncoder.decode(bitString, startIndex, 16);
-        value.addInt(val);
-        startIndex += 16;
+        value.addInt(reader.readInt(16));
       }
     }
-
     return value;
   }
 }

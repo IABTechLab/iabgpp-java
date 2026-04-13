@@ -46,5 +46,4 @@ public interface CmpList {
    * @return {@link Cmp} object
    */
   Cmp getCmp(int cmpId);
-
 }

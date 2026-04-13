@@ -1,25 +1,23 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.List;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsTxField;
-import com.iab.gpp.encoder.segment.EncodableSegment;
-import com.iab.gpp.encoder.segment.UsTxCoreSegment;
-import com.iab.gpp.encoder.segment.UsTxGpcSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
-public class UsTx extends AbstractLazilyEncodableSection {
+public class UsTx extends AbstractUsSectionWithGpc<UsTxField> {
 
   public static final int ID = 16;
   public static final int VERSION = 1;
   public static final String NAME = "ustx";
 
   public UsTx() {
-    super();
+    super(
+        new Base64Segment<>(UsTxField.USTX_CORE_SEGMENT_FIELD_NAMES),
+        new Base64Segment<>(UsTxField.USTX_GPC_SEGMENT_FIELD_NAMES));
   }
 
   public UsTx(CharSequence encodedString) {
-    super();
+    this();
     decode(encodedString);
   }
 
@@ -35,48 +33,13 @@ public class UsTx extends AbstractLazilyEncodableSection {
 
   @Override
   public int getVersion() {
-    return UsTx.VERSION;
+    return (Integer) this.getFieldValue(UsTxField.VERSION);
   }
 
   @Override
-  protected List<EncodableSegment> initializeSegments() {
-    return Arrays.asList(new UsTxCoreSegment(), new UsTxGpcSegment());
+  protected final UsTxField getGpcSegmentIncludedKey() {
+    return UsTxField.GPC_SEGMENT_INCLUDED;
   }
-
-  @Override
-  protected List<EncodableSegment> decodeSection(CharSequence encodedString) {
-    if(encodedString != null && encodedString.length() > 0) {
-      List<CharSequence> encodedSegments = SlicedCharSequence.split(encodedString, '.');
-
-      if (encodedSegments.size() > 0) {
-        segments.get(0).decode(encodedSegments.get(0));
-      }
-
-      if (encodedSegments.size() > 1) {
-        segments.get(1).setFieldValue(UsTxField.GPC_SEGMENT_INCLUDED, true);
-        segments.get(1).decode(encodedSegments.get(1));
-      } else {
-        segments.get(1).setFieldValue(UsTxField.GPC_SEGMENT_INCLUDED, false);
-      }
-    }
-
-    return segments;
-  }
-
-  @Override
-  protected CharSequence encodeSection(List<EncodableSegment> segments) {
-    List<CharSequence> encodedSegments = new ArrayList<>(segments.size());
-
-    if(!segments.isEmpty()) {
-      encodedSegments.add(segments.get(0).encodeCharSequence());
-      if(segments.size() >= 2 && segments.get(1).getFieldValue(UsTxField.GPC_SEGMENT_INCLUDED).equals(true)) {
-        encodedSegments.add(segments.get(1).encodeCharSequence());
-      }
-    }
-
-    return SlicedCharSequence.join('.',  encodedSegments);
-  }
-
 
   public Integer getProcessingNotice() {
     return (Integer) this.getFieldValue(UsTxField.PROCESSING_NOTICE);
@@ -98,9 +61,8 @@ public class UsTx extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(UsTxField.TARGETED_ADVERTISING_OPT_OUT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.getFieldValue(UsTxField.SENSITIVE_DATA_PROCESSING);
+  public FixedIntegerList getSensitiveDataProcessing() {
+    return (FixedIntegerList) this.getFieldValue(UsTxField.SENSITIVE_DATA_PROCESSING);
   }
 
   public Integer getKnownChildSensitiveDataConsents() {
@@ -121,14 +83,6 @@ public class UsTx extends AbstractLazilyEncodableSection {
 
   public Integer getMspaServiceProviderMode() {
     return (Integer) this.getFieldValue(UsTxField.MSPA_SERVICE_PROVIDER_MODE);
-  }
-
-  public Integer getGpcSegmentType() {
-    return (Integer) this.getFieldValue(UsTxField.GPC_SEGMENT_TYPE);
-  }
-
-  public Boolean getGpcSegmentIncluded() {
-    return (Boolean) this.getFieldValue(UsTxField.GPC_SEGMENT_INCLUDED);
   }
 
   public Boolean getGpc() {

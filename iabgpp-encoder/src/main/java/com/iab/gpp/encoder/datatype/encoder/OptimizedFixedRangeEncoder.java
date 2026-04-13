@@ -1,49 +1,39 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
 import com.iab.gpp.encoder.bitstring.BitString;
-import com.iab.gpp.encoder.bitstring.BitStringBuilder;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 
 public class OptimizedFixedRangeEncoder {
 
-  public static void encode(BitStringBuilder builder, IntegerSet value) throws EncodingException {
+  public static void encode(BitString builder, IntegerSet value) throws EncodingException {
     // TODO: encoding the range before choosing the shortest is inefficient. There is probably a way
     // to identify in advance which will be shorter based on the array length and values
-    BitStringBuilder rangeBitString = new BitStringBuilder();
+    BitString rangeBitString = new BitString();
     int max = FixedIntegerRangeEncoder.encode(rangeBitString, value);
     int rangeLength = rangeBitString.length();
     int bitFieldLength = max;
 
     if (rangeLength <= bitFieldLength) {
-      FixedIntegerEncoder.encode(builder, max, 16);
-      builder.append(true).append(rangeBitString);
+      builder.writeInt(max, 16);
+      builder.writeBoolean(true);
+      builder.write(rangeBitString);
     } else {
-      FixedIntegerEncoder.encode(builder, max, 16);
-      builder.append(false);
+      builder.writeInt(max, 16);
+      builder.writeBoolean(false);
       for (int i = 0; i < max; i++) {
-        builder.append(value.containsInt(i + 1));
+        builder.writeBoolean(value.containsInt(i + 1));
       }
     }
   }
 
-  public static IntegerSet decode(BitString bitString) throws DecodingException {
-    if (bitString.length() < 12) {
-      throw new DecodingException("Undecodable FixedIntegerRange '" + bitString + "'");
-    }
-
-    if (bitString.getValue(16)) {
-      return FixedIntegerRangeEncoder.decode(bitString.substring(17));
+  public static IntegerSet decode(BitString reader) throws DecodingException {
+    int size = reader.readInt(16);
+    if (reader.readBoolean()) {
+      return FixedIntegerRangeEncoder.decode(reader);
     } else {
-      BitString bits = bitString.substring(17);
-      int length = bits.length();
-      IntegerBitSet value = new IntegerBitSet();
-      for (int i = 0; i < length; i++) {
-        if (bits.getValue(i)) {
-          value.addInt(i + 1);
-        }
-      }
-      return value;
+      return reader.readIntegerSet(size);
     }
   }
 }
