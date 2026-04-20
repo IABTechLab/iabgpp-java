@@ -1,11 +1,8 @@
 package com.iab.gpp.encoder.section;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import com.iab.gpp.encoder.datatype.RangeEntry;
 import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.TcfEuV2Field;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -13,6 +10,13 @@ import com.iab.gpp.encoder.segment.TcfEuV2CoreSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2PublisherPurposesSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2VendorsAllowedSegment;
 import com.iab.gpp.encoder.segment.TcfEuV2VendorsDisclosedSegment;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class TcfEuV2 extends AbstractLazilyEncodableSection {
   
@@ -53,73 +57,90 @@ public class TcfEuV2 extends AbstractLazilyEncodableSection {
     segments.add(new TcfEuV2VendorsDisclosedSegment());
     return segments;
   }
-  
+
   @Override
-  public List<EncodableSegment> decodeSection(String encodedString) {
-    List<EncodableSegment> segments = initializeSegments();
-    
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
-      for (int i = 0; i < encodedSegments.length; i++) {
-        
-        /**
-         * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
-         * 
-         * A-H     = '000' = 0
-         * I-P     = '001' = 1
-         * Q-X     = '010' = 2
-         * Y-Z,a-f = '011' = 3
-         * 
-         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved 
-         * for the encoding version which only coincidentally works here because the version value is less than 8.
-         */
-        
-        String encodedSegment = encodedSegments[i];
-        if(!encodedSegment.isEmpty()) {
-          char firstChar = encodedSegment.charAt(0);
-          
-          // unfortunately, the segment ordering doesn't match the segment ids
-          if(firstChar >= 'A' && firstChar <= 'H') {
-            segments.get(0).decode(encodedSegments[i]);
-          } else if(firstChar >= 'I' && firstChar <= 'P') {
-            segments.get(3).decode(encodedSegments[i]);
-          } else if(firstChar >= 'Q' && firstChar <= 'X') {
-            segments.get(2).decode(encodedSegments[i]);
-          } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
-            segments.get(1).decode(encodedSegments[i]);
-          } else {
-            throw new DecodingException("Invalid segment '" + encodedSegment + "'");
-          }
-        }
+  public List<EncodableSegment> decodeSection(final String encodedString) {
+    final List<EncodableSegment> segments = initializeSegments();
+
+    if (encodedString == null || encodedString.isEmpty()) {
+      return segments;
+    }
+
+    final String[] encodedSegments = encodedString.split("\\.");
+
+    for (final String encodedSegment: encodedSegments) {
+      /**
+       * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
+       *
+       * A-H     = '000' = 0
+       * I-P     = '001' = 1
+       * Q-X     = '010' = 2
+       * Y-Z,a-f = '011' = 3
+       *
+       * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
+       * for the encoding version which only coincidentally works here because the version value is less than 8.
+       */
+      if (encodedSegment.isEmpty()) {
+        continue;
+      }
+
+      final char firstChar = encodedSegment.charAt(0);
+
+      // unfortunately, the segment ordering doesn't match the segment ids
+      if(firstChar >= 'A' && firstChar <= 'H') {
+        segments.get(0).decode(encodedSegment);
+      } else if(firstChar >= 'I' && firstChar <= 'P') {
+        segments.get(3).decode(encodedSegment);
+      } else if(firstChar >= 'Q' && firstChar <= 'X') {
+        segments.get(2).decode(encodedSegment);
+      } else if((firstChar >= 'Y' && firstChar <= 'Z') || (firstChar >= 'a' && firstChar <= 'f')) {
+        segments.get(1).decode(encodedSegment);
+      } else {
+        throw new DecodingException("Invalid segment '" + encodedSegment + "'");
       }
     }
-    
+
     return segments;
   }
 
   @Override
   public String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
-    if (segments.size() >= 1) {
-      encodedSegments.add(segments.get(0).encode());
+    final StringJoiner encodedSegments = new StringJoiner(".");
 
-      Boolean isServiceSpecific = (Boolean) this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
-      if (isServiceSpecific) {
-        if (segments.size() >= 2) {
-          encodedSegments.add(segments.get(1).encode());
-        }
+    /*
+     Only encode a non-core section if it doesn't have default values.
+     This is intended to match https://github.com/InteractiveAdvertisingBureau/iabtcf-java/blob/master/iabtcf-encoder/src/main/java/com/iabtcf/encoder/TCStringEncoder.java.
+     */
+    for (final EncodableSegment segment: segments) {
+      final boolean encode;
+
+      if (
+          segment instanceof TcfEuV2CoreSegment
+            || segment instanceof TcfEuV2VendorsDisclosedSegment
+      ) {
+        /*
+        TcfEuV2VendorsDisclosedSegment is required in the TC string as of TCF 2.3.
+        https://iabeurope.eu/all-you-need-to-know-about-the-transition-to-tcf-v2-3/
+         */
+        encode = true;
+      } else if (segment instanceof TcfEuV2PublisherPurposesSegment) {
+        final List<Boolean> publisherConsents = getPublisherConsents();
+        final List<Boolean> publisherLegitimateInterests = getPublisherLegitimateInterests();
+        encode = (publisherConsents != null && publisherConsents.contains(true))
+            || (publisherLegitimateInterests != null && publisherLegitimateInterests.contains(true))
+            || !Objects.equals(getNumCustomPurposes(), 0);
+      } else if (segment instanceof TcfEuV2VendorsAllowedSegment) {
+        encode = !Objects.equals(getVendorsAllowed(), Collections.emptyList());
       } else {
-        if (segments.size() >= 2) {
-          encodedSegments.add(segments.get(2).encode());
+        throw new EncodingException(String.format("Unknown segment type '%s' for section %s.", segment.getClass().getName(), NAME));
+      }
 
-          if (segments.size() >= 3) {
-            encodedSegments.add(segments.get(3).encode());
-          }
-        }
+      if (encode) {
+        encodedSegments.add(segment.encode());
       }
     }
 
-    return String.join(".", encodedSegments);
+    return encodedSegments.toString();
   }
 
   @Override
