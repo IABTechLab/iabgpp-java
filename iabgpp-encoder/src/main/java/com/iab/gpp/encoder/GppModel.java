@@ -283,13 +283,13 @@ public class GppModel extends AbstractEncodable {
 
   @Override
   protected void doDecode(CharSequence str) {
-    if (str == null || str.isEmpty() || (str.charAt(0) == 'D' && str.charAt(1) == 'B')) {
+    if (str == null || str.length() == 0 || (str.charAt(0) == 'D' && str.charAt(1) == 'B')) {
       if (!sections.isEmpty()) {
         sections.clear();
         header.getSectionsIds().clear();
       }
 
-      if (str != null && !str.isEmpty()) {
+      if (str != null && str.length() != 0) {
         List<CharSequence> encodedSections = SlicedCharSequence.split(str, '~');
         header.decode(encodedSections.get(0));
 
