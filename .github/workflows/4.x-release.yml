@@ -8,13 +8,13 @@
 #   GPG_PASSPHRASE        - Passphrase for the GPG key
 #   PAT                   - Personal access token with repo scope (for pushing commits/tags)
 #
-name: IABGPP-Java Release
+name: IABGPP-Java 4.X Release
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'The release version (e.g., 3.x.x)'
+        description: 'The release version (e.g., 4.x.x)'
         required: true
         default: ''
 
@@ -66,7 +66,7 @@ jobs:
 
       # Pull latest changes from master
       - name: Pull latest changes
-        run: git pull origin master
+        run: git pull origin 4.X
 
       # Set the release version in pom.xml
       - name: Set release version

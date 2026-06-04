@@ -10,28 +10,7 @@ import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
 import com.iab.gpp.encoder.error.InvalidFieldException;
 import com.iab.gpp.encoder.field.HeaderV1Field;
-import com.iab.gpp.encoder.section.EncodableSection;
-import com.iab.gpp.encoder.section.HeaderV1;
-import com.iab.gpp.encoder.section.Sections;
-import com.iab.gpp.encoder.section.TcfCaV1;
-import com.iab.gpp.encoder.section.TcfEuV2;
-import com.iab.gpp.encoder.section.UsCa;
-import com.iab.gpp.encoder.section.UsCo;
-import com.iab.gpp.encoder.section.UsCt;
-import com.iab.gpp.encoder.section.UsDe;
-import com.iab.gpp.encoder.section.UsFl;
-import com.iab.gpp.encoder.section.UsIa;
-import com.iab.gpp.encoder.section.UsMt;
-import com.iab.gpp.encoder.section.UsNat;
-import com.iab.gpp.encoder.section.UsNe;
-import com.iab.gpp.encoder.section.UsNh;
-import com.iab.gpp.encoder.section.UsNj;
-import com.iab.gpp.encoder.section.UsOr;
-import com.iab.gpp.encoder.section.UsTn;
-import com.iab.gpp.encoder.section.UsTx;
-import com.iab.gpp.encoder.section.UsUt;
-import com.iab.gpp.encoder.section.UsVa;
-import com.iab.gpp.encoder.section.UspV1;
+import com.iab.gpp.encoder.section.*;
 
 public class GppModel {
   private Map<String, EncodableSection> sections = new HashMap<>();
@@ -119,6 +98,9 @@ public class GppModel {
       } else if (sectionName.equals(UsTn.NAME)) {
         section = new UsTn();
         this.sections.put(UsTn.NAME, section);
+      } else if (sectionName.equals(UsMn.NAME)) {
+        section = new UsMn();
+        this.sections.put(UsMn.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
@@ -316,6 +298,10 @@ public class GppModel {
     return (UsTn) getSection(UsTn.NAME);
   }
 
+  public UsMn getUsMnSection() {
+    return (UsMn) getSection(UsMn.NAME);
+  }
+
   public List<Integer> getSectionIds() {
     if (!this.decoded) {
       this.sections = this.decodeModel(this.encodedString);
@@ -427,6 +413,9 @@ public class GppModel {
           } else if (sectionIds.get(i).equals(UsTn.ID)) {
             UsTn section = new UsTn(encodedSections[i + 1]);
             sections.put(UsTn.NAME, section);
+          } else if (sectionIds.get(i).equals(UsMn.ID)) {
+            UsMn section = new UsMn(encodedSections[i + 1]);
+            sections.put(UsMn.NAME, section);
           }
         }
       }
@@ -537,6 +526,9 @@ public class GppModel {
       }else if (sectionName.equals(UsTn.NAME)) {
         section = new UsTn();
         this.sections.put(UsTn.NAME, section);
+      }else if (sectionName.equals(UsMn.NAME)) {
+        section = new UsMn();
+        this.sections.put(UsMn.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
