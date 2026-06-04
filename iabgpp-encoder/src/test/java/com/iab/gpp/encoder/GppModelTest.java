@@ -133,7 +133,53 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-            "DBACOYs~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA~BAAAAAQA.QA",
+            "DBACOYs~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~CAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA~BAAAAAQA.QA",
+            gppString);
+  }
+
+  @Test
+  public void testEncodeUsNatV1WithV1Values() {
+    GppModel gppModel = new GppModel();
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.VERSION, 1);
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING, Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(1, 1));
+    String gppString = gppModel.encode();
+    Assertions.assertEquals(
+            "DBABLA~BAAAVVVVUQA.QA",
+            gppString);
+  }
+
+  @Test
+  public void testEncodeUsNatV1WithV2Values() {
+    GppModel gppModel = new GppModel();
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.VERSION, 1);
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING, Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(1, 1, 1));
+    String gppString = gppModel.encode();
+    Assertions.assertEquals(
+            "DBABLA~BAAAVVVVUQA.QA",
+            gppString);
+  }
+
+  @Test
+  public void testEncodeUsNatV2WithV1Values() {
+    GppModel gppModel = new GppModel();
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING, Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(1, 1));
+    String gppString = gppModel.encode();
+    Assertions.assertEquals(
+            "DBABLA~CAAAVVVVAFBA.QA",
+            gppString);
+  }
+
+  @Test
+  public void testEncodeUsNatV2WithV2Values() {
+    GppModel gppModel = new GppModel();
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING, Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    gppModel.setFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, Arrays.asList(1, 1, 1));
+    String gppString = gppModel.encode();
+    Assertions.assertEquals(
+            "DBABLA~CAAAVVVVVVRA.QA",
             gppString);
   }
 
@@ -143,7 +189,7 @@ public class GppModelTest {
       new GppModel("invalid gpp string").getHeader();
     });
   }
-  
+
   @Test()
   public void testDecodeGarbage() {
     Assertions.assertThrows(DecodingException.class, () -> {
@@ -338,26 +384,26 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.VENDOR_LIST_VERSION, 413);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.USE_NON_STANDARD_STACKS, true);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT,
-        Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true));
+            Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(true, true, true, true, true, true, false, false, false, false, false, false, true, true, true,
-            true, true, true, false, false, false, false, false, false));
+            Arrays.asList(true, true, true, true, true, true, false, false, false, false, false, false, true, true, true,
+                    true, true, true, false, false, false, false, false, false));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true, false, false, false,
-            false, false, false, true, true, true, true, true, true));
+            Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true, false, false, false,
+                    false, false, false, true, true, true, true, true, true));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.VENDOR_EXPRESS_CONSENT, Arrays.asList(12, 24, 48));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.VENDOR_IMPLIED_CONSENT, Arrays.asList(18, 30));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true, true,
-            false, false, false, true, true, true, false, false, false));
+            Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true, true,
+                    false, false, false, true, true, true, false, false, false));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false, false,
-            true, true, true, false, false, false, true, true, true));
+            Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false, false,
+                    true, true, true, false, false, false, true, true, true));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.NUM_CUSTOM_PURPOSES, 3);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(false, true, false));
+            Arrays.asList(false, true, false));
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
-        Arrays.asList(true, false, true));
+            Arrays.asList(true, false, true));
 
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.CREATED, utcDateTime);
     gppModel.setFieldValue(TcfCaV1.NAME, TcfCaV1Field.LAST_UPDATED, utcDateTime);
@@ -373,8 +419,8 @@ public class GppModelTest {
 
     String gppString = gppModel.encode();
     Assertions.assertEquals(
-        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN",
-        gppString);
+            "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN",
+            gppString);
 
     Assertions.assertEquals(4, gppString.split("~").length);
 
@@ -429,6 +475,42 @@ public class GppModelTest {
     Assertions.assertEquals(true, gppModel.hasSection(UsNj.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(UsTn.NAME));
     Assertions.assertEquals(true, gppModel.hasSection(UsMn.NAME));
+  }
+
+  @Test
+  public void testDecodeUsNatV1() {
+    String gppString =
+            "DBABLA~BAAAVVVVUQA.QA";
+    GppModel gppModel = new GppModel(gppString);
+
+    Assertions.assertEquals(true, gppModel.hasSection(UsNat.NAME));
+    Assertions.assertEquals(1, gppModel.getFieldValue(UsNat.ID, UsNatField.VERSION));
+    Assertions.assertEquals(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), gppModel.getFieldValue(UsNat.ID, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(1, 1), gppModel.getFieldValue(UsNat.ID, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+
+  @Test
+  public void testDecodeUsNatV2WithV1Values() {
+    String gppString =
+            "DBABLA~CAAAVVVVAFBA.QA";
+    GppModel gppModel = new GppModel(gppString);
+
+    Assertions.assertEquals(true, gppModel.hasSection(UsNat.NAME));
+    Assertions.assertEquals(2, gppModel.getFieldValue(UsNat.ID, UsNatField.VERSION));
+    Assertions.assertEquals(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0), gppModel.getFieldValue(UsNat.ID, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(1, 1, 0), gppModel.getFieldValue(UsNat.ID, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  }
+
+  @Test
+  public void testDecodeUsNatV2WithV2Values() {
+    String gppString =
+            "DBABLA~CAAAVVVVVVRA.QA";
+    GppModel gppModel = new GppModel(gppString);
+
+    Assertions.assertEquals(true, gppModel.hasSection(UsNat.NAME));
+    Assertions.assertEquals(2, gppModel.getFieldValue(UsNat.ID, UsNatField.VERSION));
+    Assertions.assertEquals(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), gppModel.getFieldValue(UsNat.ID, UsNatField.SENSITIVE_DATA_PROCESSING));
+    Assertions.assertEquals(Arrays.asList(1, 1, 1), gppModel.getFieldValue(UsNat.ID, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
   }
 
   @Test
@@ -564,7 +646,7 @@ public class GppModelTest {
   @Test
   public void testDecodeUspv1AndTcfEuV2AndTcfCaV1() {
     String gppString =
-        "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN";
+            "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN";
     GppModel gppModel = new GppModel(gppString);
 
     Assertions.assertEquals(Arrays.asList(2, 5, 6), gppModel.getSectionIds());
@@ -608,29 +690,29 @@ public class GppModelTest {
     Assertions.assertEquals(413, tcfCaV1Section.getVendorListVersion());
     Assertions.assertEquals(true, tcfCaV1Section.getUseNonStandardStacks());
     Assertions.assertEquals(Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true),
-        tcfCaV1Section.getSpecialFeatureExpressConsent());
+            tcfCaV1Section.getSpecialFeatureExpressConsent());
     Assertions
-        .assertEquals(
-            Arrays.asList(true, true, true, true, true, true, false, false, false, false, false, false, true, true,
-                true, true, true, true, false, false, false, false, false, false),
-            tcfCaV1Section.getPurposesExpressConsent());
+            .assertEquals(
+                    Arrays.asList(true, true, true, true, true, true, false, false, false, false, false, false, true, true,
+                            true, true, true, true, false, false, false, false, false, false),
+                    tcfCaV1Section.getPurposesExpressConsent());
     Assertions
-        .assertEquals(
-            Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true, false, false,
-                false, false, false, false, true, true, true, true, true, true),
-            tcfCaV1Section.getPurposesImpliedConsent());
+            .assertEquals(
+                    Arrays.asList(false, false, false, false, false, false, true, true, true, true, true, true, false, false,
+                            false, false, false, false, true, true, true, true, true, true),
+                    tcfCaV1Section.getPurposesImpliedConsent());
     Assertions.assertEquals(Arrays.asList(12, 24, 48), tcfCaV1Section.getVendorExpressConsent());
     Assertions.assertEquals(Arrays.asList(18, 30), tcfCaV1Section.getVendorImpliedConsent());
     Assertions
-        .assertEquals(
-            Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true,
-                true, false, false, false, true, true, true, false, false, false),
-            tcfCaV1Section.getPubPurposesExpressConsent());
+            .assertEquals(
+                    Arrays.asList(true, true, true, false, false, false, true, true, true, false, false, false, true, true,
+                            true, false, false, false, true, true, true, false, false, false),
+                    tcfCaV1Section.getPubPurposesExpressConsent());
     Assertions
-        .assertEquals(
-            Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false,
-                false, true, true, true, false, false, false, true, true, true),
-            tcfCaV1Section.getPubPurposesImpliedConsent());
+            .assertEquals(
+                    Arrays.asList(false, false, false, true, true, true, false, false, false, true, true, true, false, false,
+                            false, true, true, true, false, false, false, true, true, true),
+                    tcfCaV1Section.getPubPurposesImpliedConsent());
     Assertions.assertEquals(3, tcfCaV1Section.getNumCustomPurposes());
     Assertions.assertEquals(Arrays.asList(false, true, false), tcfCaV1Section.getCustomPurposesExpressConsent());
     Assertions.assertEquals(Arrays.asList(true, false, true), tcfCaV1Section.getCustomPurposesImpliedConsent());
@@ -673,7 +755,7 @@ public class GppModelTest {
     gppModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.LAST_UPDATED, utcDateTime);
 
     Assertions.assertEquals("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA",
-        gppModel.encode());
+            gppModel.encode());
   }
 
   @Test
@@ -692,14 +774,14 @@ public class GppModelTest {
   public void testDecode3() {
     GppModel gppModel = new GppModel("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA");
     Assertions.assertEquals(Arrays.asList(1, 173, 722),
-        gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
+            gppModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
   }
-  
+
   @Test
   public void testDecode4() {
     GppModel gppModel = new GppModel("DBABTA~1YYN");
     gppModel.getFieldValue(UspV1.NAME, UspV1Field.VERSION);
-    
+
   }
 
   @Test
@@ -707,68 +789,68 @@ public class GppModelTest {
     GppModel gppModel = new GppModel("DBABLA~BVQqAAAAAgA.QA");
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
   }
-    
+
   @Test
   public void testDecode6() {
-    GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAQA.QA");
+    GppModel gppModel = new GppModel("DBABLA~CAAAAAAAAQA.QA");
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
     Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+            gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
     Assertions.assertEquals(Arrays.asList(0, 0, 0),
-        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+            gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
   }
-  
+
   @Test
   public void testDecode7() {
-    GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAABA.QA");
+    GppModel gppModel = new GppModel("DBABLA~CAAAAAAAAABA.QA");
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
     Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+            gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
     Assertions.assertEquals(Arrays.asList(0, 0, 0),
-        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+            gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
   }
-  
+
   @Test
   public void testDecode8() {
-    GppModel gppModel = new GppModel("DBABLA~BAAAAAABEQA.QA");
+    GppModel gppModel = new GppModel("DBABLA~CAAAAAABEQA.QA");
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
     Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0),
-        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+            gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
     Assertions.assertEquals(Arrays.asList(0, 1, 0),
-        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+            gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
   }
-  
+
   @Test
   public void testDecode9() {
-    GppModel gppModel = new GppModel("DBABLA~BAAAAAAAAQRA.QA");
+    GppModel gppModel = new GppModel("DBABLA~CAAAAAAAAQRA.QA");
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
     Assertions.assertEquals(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-        gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
+            gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING));
     Assertions.assertEquals(Arrays.asList(0, 0, 1),
-        gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+            gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
   }
-  
+
   @Test
   public void testConsistency() {
     GppModel fromObjectModel = new GppModel();
 
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS,
-        Arrays.asList(true, true, true, true, true, true, true, true, true, true));
+            Arrays.asList(true, true, true, true, true, true, true, true, true, true));
     fromObjectModel.setFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS,
-        Arrays.asList(32, 128, 81, 210, 755, 21, 173, 238));
+            Arrays.asList(32, 128, 81, 210, 755, 21, 173, 238));
 
     Assertions.assertEquals(fromObjectModel.getSection(TcfEuV2.NAME).encode(),
-        fromObjectModel.getSection(TcfEuV2.NAME).encode());
+            fromObjectModel.getSection(TcfEuV2.NAME).encode());
     Assertions.assertEquals(fromObjectModel.encode(), fromObjectModel.encode());
 
     GppModel decodedModel = new GppModel(fromObjectModel.encode());
 
     Assertions.assertEquals(
-        Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false),
-        decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS));
+            Arrays.asList(true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+                    false, false, false, false, false, false, false, false, false),
+            decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.PURPOSE_CONSENTS));
     Assertions.assertEquals(Arrays.asList(21, 32, 81, 128, 173, 210, 238, 755),
-        decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
+            decodedModel.getFieldValue(TcfEuV2.NAME, TcfEuV2Field.VENDOR_CONSENTS));
 
   }
 
@@ -824,6 +906,6 @@ public class GppModelTest {
 
     }
   }
-  
-  
+
+
 }
