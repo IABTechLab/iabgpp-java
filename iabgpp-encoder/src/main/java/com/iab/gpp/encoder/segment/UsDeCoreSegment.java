@@ -11,7 +11,6 @@ import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.UsDeField;
-import com.iab.gpp.encoder.field.UsVaField;
 import com.iab.gpp.encoder.section.UsDe;
 
 public class UsDeCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
@@ -61,7 +60,7 @@ public class UsDeCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
     fields.put(UsDeField.SENSITIVE_DATA_PROCESSING,
         new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0))
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
-    fields.put(UsVaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+    fields.put(UsDeField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
         new EncodableFixedIntegerList(2, Arrays.asList(0, 0, 0, 0, 0))
             .withValidator(nullableBooleanAsTwoBitIntegerListValidator));
     fields.put(UsDeField.ADDITIONAL_DATA_PROCESSING_CONSENT,

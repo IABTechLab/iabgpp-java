@@ -34,6 +34,7 @@ public class Sections {
     SECTION_ID_NAME_MAP.put(UsNh.ID, UsNh.NAME);
     SECTION_ID_NAME_MAP.put(UsNj.ID, UsNj.NAME);
     SECTION_ID_NAME_MAP.put(UsTn.ID, UsTn.NAME);
+    SECTION_ID_NAME_MAP.put(UsMn.ID, UsMn.NAME);
 
     SECTION_ORDER = new ArrayList<Integer>(SECTION_ID_NAME_MAP.keySet()).stream().sorted()
         .map(id -> SECTION_ID_NAME_MAP.get(id)).collect(Collectors.toList());

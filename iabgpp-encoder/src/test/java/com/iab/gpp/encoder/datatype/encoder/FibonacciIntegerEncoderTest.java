@@ -1,5 +1,6 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.iab.gpp.encoder.error.DecodingException;
@@ -100,4 +101,9 @@ public class FibonacciIntegerEncoderTest {
     }
   }
 
+  @Test
+  public void testDecodeTooLarge() {
+    String large = FibonacciIntegerEncoder.encode(2 << 17);
+    assertThrows(DecodingException.class, () -> FibonacciIntegerEncoder.decode(large));
+  }
 }

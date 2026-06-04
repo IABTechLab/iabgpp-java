@@ -7,10 +7,11 @@
     <parent>
         <artifactId>iabgpp-core</artifactId>
         <groupId>com.iabgpp</groupId>
-        <version>3.2.3-SNAPSHOT</version>
+        <version>3.2.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>iabgpp-extras-jackson</artifactId>
+    <name>IAB GPP Extras Jackson</name>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -24,7 +25,7 @@
         <dependency>
             <groupId>com.iabgpp</groupId>
             <artifactId>iabgpp-extras</artifactId>
-            <version>3.2.3-SNAPSHOT</version>
+            <version>3.2.6-SNAPSHOT</version>
         </dependency>
 
         <dependency>
