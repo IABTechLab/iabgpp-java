@@ -13,7 +13,7 @@ public class UsOrTest {
   @Test
   public void testEncode1() {
     UsOr usOr = new UsOr();
-    Assertions.assertEquals("BAAAAAABAA.QA", usOr.encode());
+    Assertions.assertEquals("BAAAAAABA.Q", usOr.encode());
   }
 
   @Test
@@ -33,7 +33,7 @@ public class UsOrTest {
     usOr.setFieldValue(UsOrField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usOr.setFieldValue(UsOrField.GPC, true);
 
-    Assertions.assertEquals("BVWSSRpFYA.YA", usOr.encode());
+    Assertions.assertEquals("BVWSSRpFY.Y", usOr.encode());
   }
   
   @Test
@@ -122,11 +122,29 @@ public class UsOrTest {
   public void testEncodeWithGpcSegmentExcluded() {
     UsOr usOr = new UsOr();
     usOr.setFieldValue(UsOrField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAABAA", usOr.encode());
+    Assertions.assertEquals("BAAAAAABA", usOr.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
+    UsOr usOr = new UsOr("BVWSSRpFY.Y");
+
+    Assertions.assertEquals(1, usOr.getProcessingNotice());
+    Assertions.assertEquals(1, usOr.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usOr.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usOr.getSaleOptOut());
+    Assertions.assertEquals(1, usOr.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1, 0, 1, 2), usOr.getSensitiveDataProcessing());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0), usOr.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usOr.getAdditionalDataProcessingConsent());
+    Assertions.assertEquals(1, usOr.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usOr.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usOr.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usOr.getGpc());
+  }
+
+  @Test
+  public void testDecode2() throws DecodingException {
     UsOr usOr = new UsOr("BVWSSRpFYA.YA");
 
     Assertions.assertEquals(1, usOr.getProcessingNotice());
@@ -145,7 +163,7 @@ public class UsOrTest {
 
   @Test
   public void testDecodeWithGpcSegmentExcluded() throws DecodingException {
-    UsOr usOr = new UsOr("BVWSSRpFYA");
+    UsOr usOr = new UsOr("BVWSSRpFY");
 
     Assertions.assertEquals(1, usOr.getProcessingNotice());
     Assertions.assertEquals(1, usOr.getSaleOptOutNotice());

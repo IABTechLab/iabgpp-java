@@ -13,7 +13,7 @@ public class UsIaTest {
   @Test
   public void testEncode1() {
     UsIa usIa = new UsIa();
-    Assertions.assertEquals("BAAAAAQA.QA", usIa.encode());
+    Assertions.assertEquals("BAAAAAQ.Q", usIa.encode());
   }
 
   @Test
@@ -33,7 +33,7 @@ public class UsIaTest {
     usIa.setFieldValue(UsIaField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usIa.setFieldValue(UsIaField.GPC, true);
 
-    Assertions.assertEquals("BVVkklWA.YA", usIa.encode());
+    Assertions.assertEquals("BVVkklW.Y", usIa.encode());
   }
   
   @Test
@@ -122,11 +122,29 @@ public class UsIaTest {
   public void testEncodeWithGpcSegmentExcluded() {
     UsIa usIa = new UsIa();
     usIa.setFieldValue(UsIaField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAQA", usIa.encode());
+    Assertions.assertEquals("BAAAAAQ", usIa.encode());
   }
 
   @Test
   public void testDecode1() throws DecodingException {
+    UsIa usIa = new UsIa("BVVkklW.Y");
+
+    Assertions.assertEquals(1, usIa.getProcessingNotice());
+    Assertions.assertEquals(1, usIa.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usIa.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usIa.getSensitiveDataOptOutNotice());
+    Assertions.assertEquals(1, usIa.getSaleOptOut());
+    Assertions.assertEquals(1, usIa.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usIa.getSensitiveDataProcessing());
+    Assertions.assertEquals(1, usIa.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usIa.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usIa.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usIa.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usIa.getGpc());
+  }
+
+  @Test
+  public void testDecode2() throws DecodingException {
     UsIa usIa = new UsIa("BVVkklWA.YA");
 
     Assertions.assertEquals(1, usIa.getProcessingNotice());

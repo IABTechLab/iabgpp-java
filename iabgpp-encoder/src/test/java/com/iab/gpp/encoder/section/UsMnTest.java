@@ -14,7 +14,7 @@ public class UsMnTest {
   @Test
   public void testEncode1() {
     UsMn usMn = new UsMn();
-    Assertions.assertEquals("BAAAAAQA.QA", usMn.encode());
+    Assertions.assertEquals("BAAAAAQ.Q", usMn.encode());
   }
 
   @Test
@@ -34,7 +34,7 @@ public class UsMnTest {
     usMn.setFieldValue(UsMnField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usMn.setFieldValue(UsMnField.GPC, true);
 
-    Assertions.assertEquals("BVWSSVWA.YA", usMn.encode());
+    Assertions.assertEquals("BVWSSVW.Y", usMn.encode());
   }
   
   @Test
@@ -123,7 +123,7 @@ public class UsMnTest {
   public void testEncodeWithGpcSegmentExcluded() {
     UsMn usMn = new UsMn();
     usMn.setFieldValue(UsMnField.GPC_SEGMENT_INCLUDED, false);
-    Assertions.assertEquals("BAAAAAQA", usMn.encode());
+    Assertions.assertEquals("BAAAAAQ", usMn.encode());
   }
 
   @Test

@@ -13,7 +13,7 @@ public class UsNhTest {
   @Test
   public void testEncode1() {
     UsNh usNh = new UsNh();
-    Assertions.assertEquals("BAAAAABA.QA", usNh.encode());
+    Assertions.assertEquals("BAAAAABA.Q", usNh.encode());
   }
 
   @Test
@@ -33,7 +33,7 @@ public class UsNhTest {
     usNh.setFieldValue(UsNhField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNh.setFieldValue(UsNhField.GPC, true);
 
-    Assertions.assertEquals("BVWSSZFY.YA", usNh.encode());
+    Assertions.assertEquals("BVWSSZFY.Y", usNh.encode());
   }
   
   @Test
@@ -127,6 +127,24 @@ public class UsNhTest {
 
   @Test
   public void testDecode1() throws DecodingException {
+    UsNh usNh = new UsNh("BVWSSZFY.Y");
+
+    Assertions.assertEquals(1, usNh.getProcessingNotice());
+    Assertions.assertEquals(1, usNh.getSaleOptOutNotice());
+    Assertions.assertEquals(1, usNh.getTargetedAdvertisingOptOutNotice());
+    Assertions.assertEquals(1, usNh.getSaleOptOut());
+    Assertions.assertEquals(1, usNh.getTargetedAdvertisingOptOut());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usNh.getSensitiveDataProcessing());
+    Assertions.assertEquals(Arrays.asList(2, 1, 0), usNh.getKnownChildSensitiveDataConsents());
+    Assertions.assertEquals(1, usNh.getAdditionalDataProcessingConsent());
+    Assertions.assertEquals(1, usNh.getMspaCoveredTransaction());
+    Assertions.assertEquals(1, usNh.getMspaOptOutOptionMode());
+    Assertions.assertEquals(2, usNh.getMspaServiceProviderMode());
+    Assertions.assertEquals(true, usNh.getGpc());
+  }
+
+  @Test
+  public void testDecode2() throws DecodingException {
     UsNh usNh = new UsNh("BVWSSZFY.YA");
 
     Assertions.assertEquals(1, usNh.getProcessingNotice());

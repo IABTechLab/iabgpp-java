@@ -302,6 +302,7 @@ public class GppModel {
     return (UsMn) getSection(UsMn.NAME);
   }
 
+
   public List<Integer> getSectionIds() {
     if (!this.decoded) {
       this.sections = this.decodeModel(this.encodedString);
@@ -345,7 +346,7 @@ public class GppModel {
   }
 
   protected Map<String, EncodableSection> decodeModel(String str) {
-    if (str == null || str.isEmpty() || str.startsWith("DB")) {
+    if (str == null || str.isEmpty() || str.startsWith("D")) {
       Map<String, EncodableSection> sections = new HashMap<>();
 
       if (str != null && !str.isEmpty()) {

@@ -22,7 +22,7 @@ public class TcfCaV1Test {
     TcfCaV1 tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", tcfCaV1.encode());
+    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA", tcfCaV1.encode());
   }
 
   @Test
@@ -56,7 +56,7 @@ public class TcfCaV1Test {
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
 
-    Assertions.assertEquals("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao", tcfCaV1.encode());
+    Assertions.assertEquals("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAA.fHHHA4444ao", tcfCaV1.encode());
   }
 
   @Test
@@ -68,7 +68,7 @@ public class TcfCaV1Test {
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
 
-    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5w", tcfCaV1.encode());
+    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA.IAGO5w", tcfCaV1.encode());
   }
 
   @Test
@@ -82,12 +82,12 @@ public class TcfCaV1Test {
 
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", tcfCaV1.encode());
+    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJ.YAAAAAAAAA", tcfCaV1.encode());
   }
 
   @Test
   public void testDecode1() {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA");
 
     Assertions.assertEquals(0, tcfCaV1.getCmpId());
     Assertions.assertEquals(0, tcfCaV1.getCmpVersion());
@@ -129,7 +129,7 @@ public class TcfCaV1Test {
 
   @Test
   public void testDecode2() {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAA.fHHHA4444ao");
 
     Assertions.assertEquals(50, tcfCaV1.getCmpId());
     Assertions.assertEquals(2, tcfCaV1.getCmpVersion());
@@ -168,7 +168,7 @@ public class TcfCaV1Test {
 
   @Test
   public void testDecode3() throws DecodingException {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5w");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA.IAGO5w");
 
     Assertions.assertEquals(1, tcfCaV1.getDisclosedVendorsSegmentType());
     Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 10, 11, 12), tcfCaV1.getDisclosedVendors());
@@ -176,7 +176,7 @@ public class TcfCaV1Test {
 
   @Test
   public void testDecode4() throws DecodingException {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJ.YAAAAAAAAA");
 
     List<RangeEntry> pubRestictions = tcfCaV1.getPubRestrictions();
     Assertions.assertEquals(1, pubRestictions.size());

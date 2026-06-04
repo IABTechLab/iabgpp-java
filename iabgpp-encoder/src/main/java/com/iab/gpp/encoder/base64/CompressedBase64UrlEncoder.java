@@ -16,23 +16,16 @@ public class CompressedBase64UrlEncoder extends AbstractBase64UrlEncoder {
   
   @Override
   protected String pad(String bitString) {
+    // https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform/blob/main/Core/Consent%20String%20Specification.md#creating-a-gpp-string
     char[] chars1 = null;
-    if(bitString.length() % 8 > 0) {
-      chars1 = new char[8 - (bitString.length() % 8)];
+    if(bitString.length() % 6 > 0) {
+      chars1 = new char[6 - (bitString.length() % 6)];
     } else {
       chars1 = new char[0];
     }
     Arrays.fill(chars1, '0');
-    
-    char[] chars2 = null;
-    if((bitString.length() + chars1.length) % 6 > 0) {
-      chars2 = new char[6 - ((bitString.length() + chars1.length) % 6)];
-    } else {
-      chars2 = new char[0];
-    }
-    Arrays.fill(chars2, '0');
-    
-    return bitString + new String(chars1) + new String(chars2);
+
+    return bitString + new String(chars1);
   }
 
 }
