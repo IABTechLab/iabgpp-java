@@ -101,6 +101,9 @@ public class GppModel {
       } else if (sectionName.equals(UsMn.NAME)) {
         section = new UsMn();
         this.sections.put(UsMn.NAME, section);
+      } else if (sectionName.equals(UsRi.NAME)) {
+        section = new UsRi();
+        this.sections.put(UsRi.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
@@ -302,6 +305,10 @@ public class GppModel {
     return (UsMn) getSection(UsMn.NAME);
   }
 
+  public UsRi getUsRiSection() {
+    return (UsRi) getSection(UsRi.NAME);
+  }
+
   public List<Integer> getSectionIds() {
     if (!this.decoded) {
       this.sections = this.decodeModel(this.encodedString);
@@ -416,6 +423,9 @@ public class GppModel {
           } else if (sectionIds.get(i).equals(UsMn.ID)) {
             UsMn section = new UsMn(encodedSections[i + 1]);
             sections.put(UsMn.NAME, section);
+          } else if (sectionIds.get(i).equals(UsRi.ID)) {
+            UsRi section = new UsRi(encodedSections[i + 1]);
+            sections.put(UsRi.NAME, section);
           }
         }
       }
@@ -529,6 +539,9 @@ public class GppModel {
       }else if (sectionName.equals(UsMn.NAME)) {
         section = new UsMn();
         this.sections.put(UsMn.NAME, section);
+      }else if (sectionName.equals(UsRi.NAME)) {
+        section = new UsRi();
+        this.sections.put(UsRi.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
