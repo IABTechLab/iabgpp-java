@@ -82,7 +82,7 @@ public class TcfCaV1Test {
 
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", tcfCaV1.encode());
+    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA", tcfCaV1.encode());
   }
 
   @Test
@@ -176,7 +176,7 @@ public class TcfCaV1Test {
 
   @Test
   public void testDecode4() throws DecodingException {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA");
 
     List<RangeEntry> pubRestictions = tcfCaV1.getPubRestrictions();
     Assertions.assertEquals(1, pubRestictions.size());
@@ -189,15 +189,29 @@ public class TcfCaV1Test {
   public void testEncodeDecodeVendorRangeRoundTrip() {
     // Sparse, high vendor IDs force the OptimizedRange to choose the (Fibonacci) range
     // representation over a bitfield, exercising the Fibonacci range encode/decode path.
+    List<RangeEntry> pubRestrictions = new ArrayList<>();
+    pubRestrictions.add(new RangeEntry(1, 0, Arrays.asList(5, 100, 101, 102, 800)));
+    pubRestrictions.add(new RangeEntry(2, 2, Arrays.asList(3, 500)));
+
     TcfCaV1 tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, Arrays.asList(1, 100, 200));
     tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, Arrays.asList(50, 51, 52, 999));
     tcfCaV1.setFieldValue(TcfCaV1Field.DISCLOSED_VENDORS, Arrays.asList(2, 250, 600));
+    tcfCaV1.setFieldValue(TcfCaV1Field.PUB_RESTRICTIONS, pubRestrictions);
 
     TcfCaV1 decoded = new TcfCaV1(tcfCaV1.encode());
     Assertions.assertEquals(Arrays.asList(1, 100, 200), decoded.getVendorExpressConsent());
     Assertions.assertEquals(Arrays.asList(50, 51, 52, 999), decoded.getVendorImpliedConsent());
     Assertions.assertEquals(Arrays.asList(2, 250, 600), decoded.getDisclosedVendors());
+
+    List<RangeEntry> decodedPubRestrictions = decoded.getPubRestrictions();
+    Assertions.assertEquals(2, decodedPubRestrictions.size());
+    Assertions.assertEquals(1, decodedPubRestrictions.get(0).getKey());
+    Assertions.assertEquals(0, decodedPubRestrictions.get(0).getType());
+    Assertions.assertEquals(Arrays.asList(5, 100, 101, 102, 800), decodedPubRestrictions.get(0).getIds());
+    Assertions.assertEquals(2, decodedPubRestrictions.get(1).getKey());
+    Assertions.assertEquals(2, decodedPubRestrictions.get(1).getType());
+    Assertions.assertEquals(Arrays.asList(3, 500), decodedPubRestrictions.get(1).getIds());
   }
 
   @Test()
