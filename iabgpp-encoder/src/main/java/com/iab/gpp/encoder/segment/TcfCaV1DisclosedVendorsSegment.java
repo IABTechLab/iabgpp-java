@@ -6,7 +6,7 @@ import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
-import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
+import com.iab.gpp.encoder.datatype.EncodableOptimizedFibonacciRange;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
 import com.iab.gpp.encoder.field.TcfCaV1Field;
@@ -34,7 +34,7 @@ public class TcfCaV1DisclosedVendorsSegment extends AbstractLazilyEncodableSegme
   protected EncodableBitStringFields initializeFields() {
     EncodableBitStringFields fields = new EncodableBitStringFields();
     fields.put(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
-    fields.put(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFixedRange(new ArrayList<>()));
+    fields.put(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFibonacciRange(new ArrayList<>()));
     return fields;
   }
 

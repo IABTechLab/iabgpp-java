@@ -56,7 +56,7 @@ public class TcfCaV1Test {
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
 
-    Assertions.assertEquals("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao", tcfCaV1.encode());
+    Assertions.assertEquals("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao", tcfCaV1.encode());
   }
 
   @Test
@@ -129,7 +129,7 @@ public class TcfCaV1Test {
 
   @Test
   public void testDecode2() {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao");
 
     Assertions.assertEquals(50, tcfCaV1.getCmpId());
     Assertions.assertEquals(2, tcfCaV1.getCmpVersion());
@@ -185,6 +185,21 @@ public class TcfCaV1Test {
     Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 9), pubRestictions.get(0).getIds());
   }
   
+  @Test
+  public void testEncodeDecodeVendorRangeRoundTrip() {
+    // Sparse, high vendor IDs force the OptimizedRange to choose the (Fibonacci) range
+    // representation over a bitfield, exercising the Fibonacci range encode/decode path.
+    TcfCaV1 tcfCaV1 = new TcfCaV1();
+    tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, Arrays.asList(1, 100, 200));
+    tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, Arrays.asList(50, 51, 52, 999));
+    tcfCaV1.setFieldValue(TcfCaV1Field.DISCLOSED_VENDORS, Arrays.asList(2, 250, 600));
+
+    TcfCaV1 decoded = new TcfCaV1(tcfCaV1.encode());
+    Assertions.assertEquals(Arrays.asList(1, 100, 200), decoded.getVendorExpressConsent());
+    Assertions.assertEquals(Arrays.asList(50, 51, 52, 999), decoded.getVendorImpliedConsent());
+    Assertions.assertEquals(Arrays.asList(2, 250, 600), decoded.getDisclosedVendors());
+  }
+
   @Test()
   public void testDecodeGarbage1() {
     Assertions.assertThrows(DecodingException.class, () -> {
