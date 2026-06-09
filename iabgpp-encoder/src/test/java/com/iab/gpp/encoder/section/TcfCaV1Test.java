@@ -238,6 +238,37 @@ public class TcfCaV1Test {
     Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 9), pubRestrictions.get(0).getIds());
   }
 
+  @Test
+  public void testDecodeLegacyStringAndReencodeToSpecCompliant() {
+    // A real TcfCaV1 string produced by the pre-fix encoder (fixed-integer OptimizedRange). The
+    // backwards-compatible decoder reads it, and re-encoding emits the spec-compliant Fibonacci form.
+    String legacy =
+        "BQliWsAQliWsAPoABAELC9CoAKgAAJIAAApNAOABUAC0AGgAQwAlgBQAC6AG0AO4AfgBBATAAnMBSYEwYFgAXQBOwC3ALgAc4A7gCAAEmAJ2AT8AxQBmgDOgGfANeAcQA6oCJgEngJyAT-Ao8BUQCpQFvALhAXQAvcBf4DMAGggNNAbUA3EBxoDlgHiAPNAfIBAQCEgEbgI_gSlgmACYIAA.YAAAAAAAAAA";
+    TcfCaV1 tcfCaV1 = new TcfCaV1(legacy);
+
+    Assertions.assertEquals(1000, tcfCaV1.getCmpId());
+    Assertions.assertEquals(1, tcfCaV1.getCmpVersion());
+    Assertions.assertEquals("EL", tcfCaV1.getConsentLanguage());
+    Assertions.assertEquals(189, tcfCaV1.getVendorListVersion());
+    Assertions.assertEquals(true, tcfCaV1.getUseNonStandardStacks());
+    Assertions.assertEquals(Arrays.asList(42, 45, 52, 67, 75, 80, 93, 109, 119, 126, 130, 1216, 1254, 1318),
+        tcfCaV1.getVendorExpressConsent());
+    Assertions.assertEquals(
+        Arrays.asList(93, 157, 183, 184, 231, 238, 256, 294, 315, 319, 394, 410, 413, 415, 431, 452, 469, 550, 591, 626,
+            639, 655, 674, 677, 734, 737, 744, 759, 767, 816, 833, 845, 874, 881, 909, 918, 964, 973, 996, 1028, 1060,
+            1134, 1151, 1189, 1216, 1217),
+        tcfCaV1.getVendorImpliedConsent());
+
+    // Touching the timestamps (preserving their values) marks the core segment dirty so encode()
+    // re-emits the string; setting Created/LastUpdated does not trigger the automatic "now" update.
+    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, tcfCaV1.getCreated());
+    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, tcfCaV1.getLastUpdated());
+
+    Assertions.assertEquals(
+        "BQliWsAQliWsAPoABAELC9CoAKgAAJIAAApNAOBMZZGDDAxMmWskIahojBMGBYoGiOJ4FlhahgNZUxMZiYDUwllGgYGJpYyBjLIwZFqasFllNGqaMhisVpTU1DyeAAA.YAAAAAAAAAA",
+        tcfCaV1.encode());
+  }
+
   @Test()
   public void testDecodeGarbage1() {
     Assertions.assertThrows(DecodingException.class, () -> {
