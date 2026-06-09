@@ -214,6 +214,30 @@ public class TcfCaV1Test {
     Assertions.assertEquals(Arrays.asList(3, 500), decodedPubRestrictions.get(1).getIds());
   }
 
+  @Test
+  public void testDecodeLegacyFixedRangeVendors() {
+    // String produced by the pre-fix encoder, which used fixed-integer ranges for the
+    // VendorExpressConsent / VendorImpliedConsent OptimizedRange fields. The decoder must still
+    // read it correctly via the backwards-compatible fallback.
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+
+    Assertions.assertEquals(Arrays.asList(12, 24, 48), tcfCaV1.getVendorExpressConsent());
+    Assertions.assertEquals(Arrays.asList(18, 30), tcfCaV1.getVendorImpliedConsent());
+  }
+
+  @Test
+  public void testDecodeLegacyFixedRangePubRestrictions() {
+    // String produced by the pre-fix encoder, which used fixed-integer ranges for the
+    // PubRestrictions ids.
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+
+    List<RangeEntry> pubRestrictions = tcfCaV1.getPubRestrictions();
+    Assertions.assertEquals(1, pubRestrictions.size());
+    Assertions.assertEquals(1, pubRestrictions.get(0).getKey());
+    Assertions.assertEquals(1, pubRestrictions.get(0).getType());
+    Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 9), pubRestrictions.get(0).getIds());
+  }
+
   @Test()
   public void testDecodeGarbage1() {
     Assertions.assertThrows(DecodingException.class, () -> {
