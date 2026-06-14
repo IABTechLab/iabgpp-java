@@ -6,6 +6,7 @@ import com.iab.gpp.encoder.base64.AbstractBase64UrlEncoder;
 import com.iab.gpp.encoder.base64.CompressedBase64UrlEncoder;
 import com.iab.gpp.encoder.bitstring.BitStringEncoder;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
+import com.iab.gpp.encoder.datatype.EncodableOptimizedFibonacciRange;
 import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.field.EncodableBitStringFields;
@@ -32,9 +33,23 @@ public class TcfCaV1DisclosedVendorsSegment extends AbstractLazilyEncodableSegme
 
   @Override
   protected EncodableBitStringFields initializeFields() {
+    return buildFields(false);
+  }
+
+  /**
+   * Builds the disclosed-vendors field set. When {@code legacy} is true the OptimizedRange field
+   * uses the pre-fix fixed-integer encoder; otherwise it uses the spec-compliant Fibonacci encoder.
+   * The legacy field set is only used to decode strings produced by the older encoder (see
+   * {@link #decodeSegment}).
+   */
+  private EncodableBitStringFields buildFields(boolean legacy) {
     EncodableBitStringFields fields = new EncodableBitStringFields();
     fields.put(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
-    fields.put(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFixedRange(new ArrayList<>()));
+    if (legacy) {
+      fields.put(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFixedRange(new ArrayList<>()));
+    } else {
+      fields.put(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFibonacciRange(new ArrayList<>()));
+    }
     return fields;
   }
 
@@ -52,9 +67,44 @@ public class TcfCaV1DisclosedVendorsSegment extends AbstractLazilyEncodableSegme
     }
     try {
       String bitString = base64UrlEncoder.decode(encodedString);
+
+      // Prefer the spec-compliant (Fibonacci OptimizedRange) interpretation, falling back to the
+      // legacy (fixed-range) interpretation used by the pre-fix encoder. Re-encoding always
+      // migrates to the spec-compliant format because the values decode into the Fibonacci datatype.
+      if (tryDecode(bitString, fields, false)) {
+        return;
+      }
+      if (tryDecode(bitString, fields, true)) {
+        return;
+      }
+
       bitStringEncoder.decode(bitString, getFieldNames(), fields);
     } catch (Exception e) {
       throw new DecodingException("Unable to decode TcfCaV1DisclosedVendorsSegment '" + encodedString + "'", e);
     }
+  }
+
+  /**
+   * Attempts to decode {@code bitString} using either the current or legacy field set and verifies
+   * the result by re-encoding it: if the re-encoded bits are a prefix of the decoded bits (the tail
+   * being base64 padding), the interpretation produced the string. On success the decoded values
+   * are copied into {@code targetFields} (which always use the current encoders) so that any
+   * subsequent re-encode emits the spec-compliant format.
+   */
+  private boolean tryDecode(String bitString, EncodableBitStringFields targetFields, boolean legacy) {
+    try {
+      EncodableBitStringFields candidate = buildFields(legacy);
+      bitStringEncoder.decode(bitString, getFieldNames(), candidate);
+      String reEncoded = bitStringEncoder.encode(candidate, getFieldNames());
+      if (bitString.startsWith(reEncoded)) {
+        for (String fieldName : getFieldNames()) {
+          targetFields.get(fieldName).setValue(candidate.get(fieldName).getValue());
+        }
+        return true;
+      }
+    } catch (Exception e) {
+      // This interpretation does not apply; the caller will try the next one.
+    }
+    return false;
   }
 }

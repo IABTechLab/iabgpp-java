@@ -56,7 +56,7 @@ public class TcfCaV1Test {
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
 
-    Assertions.assertEquals("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao", tcfCaV1.encode());
+    Assertions.assertEquals("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao", tcfCaV1.encode());
   }
 
   @Test
@@ -82,7 +82,7 @@ public class TcfCaV1Test {
 
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")));
-    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", tcfCaV1.encode());
+    Assertions.assertEquals("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA", tcfCaV1.encode());
   }
 
   @Test
@@ -129,7 +129,7 @@ public class TcfCaV1Test {
 
   @Test
   public void testDecode2() {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao");
 
     Assertions.assertEquals(50, tcfCaV1.getCmpId());
     Assertions.assertEquals(2, tcfCaV1.getCmpVersion());
@@ -176,7 +176,7 @@ public class TcfCaV1Test {
 
   @Test
   public void testDecode4() throws DecodingException {
-    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA");
 
     List<RangeEntry> pubRestictions = tcfCaV1.getPubRestrictions();
     Assertions.assertEquals(1, pubRestictions.size());
@@ -185,6 +185,90 @@ public class TcfCaV1Test {
     Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 9), pubRestictions.get(0).getIds());
   }
   
+  @Test
+  public void testEncodeDecodeVendorRangeRoundTrip() {
+    // Sparse, high vendor IDs force the OptimizedRange to choose the (Fibonacci) range
+    // representation over a bitfield, exercising the Fibonacci range encode/decode path.
+    List<RangeEntry> pubRestrictions = new ArrayList<>();
+    pubRestrictions.add(new RangeEntry(1, 0, Arrays.asList(5, 100, 101, 102, 800)));
+    pubRestrictions.add(new RangeEntry(2, 2, Arrays.asList(3, 500)));
+
+    TcfCaV1 tcfCaV1 = new TcfCaV1();
+    tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, Arrays.asList(1, 100, 200));
+    tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, Arrays.asList(50, 51, 52, 999));
+    tcfCaV1.setFieldValue(TcfCaV1Field.DISCLOSED_VENDORS, Arrays.asList(2, 250, 600));
+    tcfCaV1.setFieldValue(TcfCaV1Field.PUB_RESTRICTIONS, pubRestrictions);
+
+    TcfCaV1 decoded = new TcfCaV1(tcfCaV1.encode());
+    Assertions.assertEquals(Arrays.asList(1, 100, 200), decoded.getVendorExpressConsent());
+    Assertions.assertEquals(Arrays.asList(50, 51, 52, 999), decoded.getVendorImpliedConsent());
+    Assertions.assertEquals(Arrays.asList(2, 250, 600), decoded.getDisclosedVendors());
+
+    List<RangeEntry> decodedPubRestrictions = decoded.getPubRestrictions();
+    Assertions.assertEquals(2, decodedPubRestrictions.size());
+    Assertions.assertEquals(1, decodedPubRestrictions.get(0).getKey());
+    Assertions.assertEquals(0, decodedPubRestrictions.get(0).getType());
+    Assertions.assertEquals(Arrays.asList(5, 100, 101, 102, 800), decodedPubRestrictions.get(0).getIds());
+    Assertions.assertEquals(2, decodedPubRestrictions.get(1).getKey());
+    Assertions.assertEquals(2, decodedPubRestrictions.get(1).getType());
+    Assertions.assertEquals(Arrays.asList(3, 500), decodedPubRestrictions.get(1).getIds());
+  }
+
+  @Test
+  public void testDecodeLegacyFixedRangeVendors() {
+    // String produced by the pre-fix encoder, which used fixed-integer ranges for the
+    // VendorExpressConsent / VendorImpliedConsent OptimizedRange fields. The decoder must still
+    // read it correctly via the backwards-compatible fallback.
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+
+    Assertions.assertEquals(Arrays.asList(12, 24, 48), tcfCaV1.getVendorExpressConsent());
+    Assertions.assertEquals(Arrays.asList(18, 30), tcfCaV1.getVendorImpliedConsent());
+  }
+
+  @Test
+  public void testDecodeLegacyFixedRangePubRestrictions() {
+    // String produced by the pre-fix encoder, which used fixed-integer ranges for the
+    // PubRestrictions ids.
+    TcfCaV1 tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+
+    List<RangeEntry> pubRestrictions = tcfCaV1.getPubRestrictions();
+    Assertions.assertEquals(1, pubRestrictions.size());
+    Assertions.assertEquals(1, pubRestrictions.get(0).getKey());
+    Assertions.assertEquals(1, pubRestrictions.get(0).getType());
+    Assertions.assertEquals(Arrays.asList(1, 2, 3, 5, 6, 7, 9), pubRestrictions.get(0).getIds());
+  }
+
+  @Test
+  public void testDecodeLegacyStringAndReencodeToSpecCompliant() {
+    // A real TcfCaV1 string produced by the pre-fix encoder (fixed-integer OptimizedRange). The
+    // backwards-compatible decoder reads it, and re-encoding emits the spec-compliant Fibonacci form.
+    String legacy =
+        "BQliWsAQliWsAPoABAELC9CoAKgAAJIAAApNAOABUAC0AGgAQwAlgBQAC6AG0AO4AfgBBATAAnMBSYEwYFgAXQBOwC3ALgAc4A7gCAAEmAJ2AT8AxQBmgDOgGfANeAcQA6oCJgEngJyAT-Ao8BUQCpQFvALhAXQAvcBf4DMAGggNNAbUA3EBxoDlgHiAPNAfIBAQCEgEbgI_gSlgmACYIAA.YAAAAAAAAAA";
+    TcfCaV1 tcfCaV1 = new TcfCaV1(legacy);
+
+    Assertions.assertEquals(1000, tcfCaV1.getCmpId());
+    Assertions.assertEquals(1, tcfCaV1.getCmpVersion());
+    Assertions.assertEquals("EL", tcfCaV1.getConsentLanguage());
+    Assertions.assertEquals(189, tcfCaV1.getVendorListVersion());
+    Assertions.assertEquals(true, tcfCaV1.getUseNonStandardStacks());
+    Assertions.assertEquals(Arrays.asList(42, 45, 52, 67, 75, 80, 93, 109, 119, 126, 130, 1216, 1254, 1318),
+        tcfCaV1.getVendorExpressConsent());
+    Assertions.assertEquals(
+        Arrays.asList(93, 157, 183, 184, 231, 238, 256, 294, 315, 319, 394, 410, 413, 415, 431, 452, 469, 550, 591, 626,
+            639, 655, 674, 677, 734, 737, 744, 759, 767, 816, 833, 845, 874, 881, 909, 918, 964, 973, 996, 1028, 1060,
+            1134, 1151, 1189, 1216, 1217),
+        tcfCaV1.getVendorImpliedConsent());
+
+    // Touching the timestamps (preserving their values) marks the core segment dirty so encode()
+    // re-emits the string; setting Created/LastUpdated does not trigger the automatic "now" update.
+    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, tcfCaV1.getCreated());
+    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, tcfCaV1.getLastUpdated());
+
+    Assertions.assertEquals(
+        "BQliWsAQliWsAPoABAELC9CoAKgAAJIAAApNAOBMZZGDDAxMmWskIahojBMGBYoGiOJ4FlhahgNZUxMZiYDUwllGgYGJpYyBjLIwZFqasFllNGqaMhisVpTU1DyeAAA.YAAAAAAAAAA",
+        tcfCaV1.encode());
+  }
+
   @Test()
   public void testDecodeGarbage1() {
     Assertions.assertThrows(DecodingException.class, () -> {
