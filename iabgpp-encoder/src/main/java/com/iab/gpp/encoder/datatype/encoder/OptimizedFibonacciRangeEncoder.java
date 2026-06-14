@@ -36,7 +36,24 @@ public class OptimizedFibonacciRangeEncoder {
   public static IntegerSet decode(BitString reader) throws DecodingException {
     int size = reader.readInt(16);
     if (reader.readBoolean()) {
-      return FibonacciIntegerRangeEncoder.decode(reader);
+      // Range form. It is Fibonacci-coded in the current spec, but strings produced by the previous
+      // encoder used a fixed-integer range here. Decode as Fibonacci and, if the consumed bits do
+      // not re-encode to that same Fibonacci range, re-read them as a fixed-integer range.
+      int mark = reader.getReadIndex();
+      try {
+        IntegerSet value = FibonacciIntegerRangeEncoder.decode(reader);
+        BitString consumed = new BitString();
+        consumed.write(reader, mark, reader.getReadIndex());
+        BitString reEncoded = new BitString();
+        FibonacciIntegerRangeEncoder.encode(reEncoded, value);
+        if (reEncoded.toString().equals(consumed.toString())) {
+          return value;
+        }
+      } catch (RuntimeException e) {
+        // not a valid Fibonacci range; fall back to the legacy fixed-integer range
+      }
+      reader.setReadIndex(mark);
+      return FixedIntegerRangeEncoder.decode(reader);
     } else {
       return reader.readIntegerSet(size);
     }
