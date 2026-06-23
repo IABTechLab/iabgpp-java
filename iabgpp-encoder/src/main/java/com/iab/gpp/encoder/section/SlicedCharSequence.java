@@ -38,7 +38,11 @@ public final class SlicedCharSequence implements CharSequence {
     }
     List<CharSequence> out = null;
     int next = 0;
-    while ((next = base.indexOf(splitter, start, end)) != -1) {
+    // TODO: use base.indexOf(splitter, start, end) if the JDK baseline is set to above 21
+    while ((next = base.indexOf(splitter, start)) != -1) {
+      if (next >= end) {
+        break;
+      }
       if (out == null) {
         // most sections/segments have less than 4 components
         out = new ArrayList<>(4);
