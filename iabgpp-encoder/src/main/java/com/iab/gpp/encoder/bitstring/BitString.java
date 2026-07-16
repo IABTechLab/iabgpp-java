@@ -65,6 +65,16 @@ public final class BitString {
     return readIndex < writeIndex;
   }
 
+  // Used to mark/reset the read cursor when an encoding is ambiguous and may need to be re-read
+  // under a different interpretation (e.g. legacy fixed vs Fibonacci OptimizedRange).
+  public int getReadIndex() {
+    return readIndex;
+  }
+
+  public void setReadIndex(int readIndex) {
+    this.readIndex = readIndex;
+  }
+
   public void writeEmpty(int length) {
     this.writeIndex += length;
   }
