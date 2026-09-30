@@ -1,14 +1,14 @@
 package com.iab.gpp.encoder.field;
 
 import com.iab.gpp.encoder.datatype.DataType;
-import com.iab.gpp.encoder.datatype.EncodableArrayOfFixedIntegerRanges;
+import com.iab.gpp.encoder.datatype.EncodableArrayOfOptimizedFibonacciRanges;
 import com.iab.gpp.encoder.datatype.EncodableBoolean;
 import com.iab.gpp.encoder.datatype.EncodableDatetime;
 import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
 import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
 import com.iab.gpp.encoder.datatype.EncodableFixedString;
 import com.iab.gpp.encoder.datatype.EncodableFlexibleBitfield;
-import com.iab.gpp.encoder.datatype.EncodableOptimizedFixedRange;
+import com.iab.gpp.encoder.datatype.EncodableOptimizedFibonacciRange;
 import com.iab.gpp.encoder.section.TcfCaV1;
 
 public enum TcfCaV1Field implements FieldKey {
@@ -25,9 +25,9 @@ public enum TcfCaV1Field implements FieldKey {
   SPECIAL_FEATURE_EXPRESS_CONSENT(new EncodableFixedBitfield<>("SpecialFeatureExpressConsent", 12)),
   PURPOSES_EXPRESS_CONSENT(new EncodableFixedBitfield<>("PurposesExpressConsent", 24)),
   PURPOSES_IMPLIED_CONSENT(new EncodableFixedBitfield<>("PurposesImpliedConsent", 24)),
-  VENDOR_EXPRESS_CONSENT(new EncodableOptimizedFixedRange<>("VendorExpressConsent")),
-  VENDOR_IMPLIED_CONSENT(new EncodableOptimizedFixedRange<>("VendorImpliedConsent")),
-  PUB_RESTRICTIONS(new EncodableArrayOfFixedIntegerRanges<>("PubRestrictions", 6, 2)),
+  VENDOR_EXPRESS_CONSENT(new EncodableOptimizedFibonacciRange<>("VendorExpressConsent")),
+  VENDOR_IMPLIED_CONSENT(new EncodableOptimizedFibonacciRange<>("VendorImpliedConsent")),
+  PUB_RESTRICTIONS(new EncodableArrayOfOptimizedFibonacciRanges<>("PubRestrictions", 6, 2)),
 
   PUB_PURPOSES_SEGMENT_TYPE(new EncodableFixedInteger<>("PubPurposesSegmentType", 3, 3)),
   PUB_PURPOSES_EXPRESS_CONSENT(new EncodableFixedBitfield<>("PubPurposesExpressConsent", 24)),
@@ -41,7 +41,7 @@ public enum TcfCaV1Field implements FieldKey {
           "CustomPurposesImpliedConsent", TcfCaV1Field.NUM_CUSTOM_PURPOSES)),
 
   DISCLOSED_VENDORS_SEGMENT_TYPE(new EncodableFixedInteger<>("DisclosedVendorsSegmentType", 3, 1)),
-  DISCLOSED_VENDORS(new EncodableOptimizedFixedRange<>("DisclosedVendors"));
+  DISCLOSED_VENDORS(new EncodableOptimizedFibonacciRange<>("DisclosedVendors"));
 
   private final DataType<TcfCaV1Field, ?> type;
 
