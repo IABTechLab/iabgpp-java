@@ -19,7 +19,9 @@ import java.util.stream.StreamSupport;
 public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable {
   private static final Logger LOGGER = Logger.getLogger(IntegerSet.class.getName());
 
-  static final int MAX_COLLECTION_SIZE = 8192;
+  // Vendor ids are 1-based. 8192 dropped id 8193 and above, including 10000+.
+  // 16384 is the highest id this set will store.
+  static final int MAX_COLLECTION_SIZE = 16384;
 
   private boolean dirty;
   private final BitSet bitSet;

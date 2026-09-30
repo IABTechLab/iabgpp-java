@@ -116,4 +116,11 @@ public class FibonacciIntegerRangeEncoderTest {
 
     }
   }
+
+  @Test
+  public void testVendorId10000RoundTrip() throws DecodingException {
+    BitString builder = new BitString();
+    FibonacciIntegerRangeEncoder.encode(builder, Arrays.asList(8192, 8193, 10_000, 16_384));
+    Assertions.assertEquals(Set.of(8192, 8193, 10_000, 16_384), decode(builder.toString()));
+  }
 }
