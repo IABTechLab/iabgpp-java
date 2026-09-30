@@ -1,6 +1,7 @@
 package com.iab.gpp.encoder.datatype;
 
 import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.datatype.encoder.FixedIntegerRangeEncoder;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFibonacciRangeEncoder;
 import com.iab.gpp.encoder.field.FieldKey;
 import com.iab.gpp.encoder.segment.EncodableSegment;
@@ -53,14 +54,37 @@ public final class EncodableArrayOfOptimizedFibonacciRanges<E extends Enum<E> & 
 
   @Override
   protected DirtyableList<RangeEntry> decode(BitString reader, EncodableSegment<E> segment) {
+    // ids are an OptimizedRange in the current spec, but strings produced by the previous encoder
+    // used a fixed-integer range for ids. Decode the current way and, if the consumed bits do not
+    // re-encode to the same thing, re-read using the legacy fixed-integer range.
+    int mark = reader.getReadIndex();
+    try {
+      DirtyableList<RangeEntry> value = decodeEntries(reader, true);
+      BitString consumed = new BitString();
+      consumed.write(reader, mark, reader.getReadIndex());
+      BitString reEncoded = new BitString();
+      encode(reEncoded, value, segment);
+      if (reEncoded.toString().equals(consumed.toString())) {
+        return value;
+      }
+    } catch (RuntimeException e) {
+      // not the current format; fall back to the legacy fixed-integer range ids
+    }
+    reader.setReadIndex(mark);
+    return decodeEntries(reader, false);
+  }
+
+  private DirtyableList<RangeEntry> decodeEntries(BitString reader, boolean optimized) {
     int size = reader.readInt(12);
     DirtyableList<RangeEntry> value = initialize();
     for (int i = 0; i < size; i++) {
       int key = reader.readInt(keyBitStringLength);
       int type = reader.readInt(typeBitStringLength);
-      IntegerSet ids = OptimizedFibonacciRangeEncoder.decode(reader);
-      RangeEntry entry = new RangeEntry(key, type, ids);
-      value.add(entry);
+      IntegerSet ids =
+          optimized
+              ? OptimizedFibonacciRangeEncoder.decode(reader)
+              : FixedIntegerRangeEncoder.decode(reader);
+      value.add(new RangeEntry(key, type, ids));
     }
     return value;
   }

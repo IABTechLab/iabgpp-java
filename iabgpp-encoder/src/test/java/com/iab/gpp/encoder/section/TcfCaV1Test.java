@@ -194,6 +194,42 @@ public class TcfCaV1Test {
     Assertions.assertEquals(Set.of(1, 2, 3, 5, 6, 7, 9), pubRestictions.get(0).getIds());
   }
 
+  @Test
+  public void testDecodeLegacyFixedRangePubRestrictions() throws DecodingException {
+    // String produced by the previous encoder, which encoded PubRestrictions ids as a plain
+    // fixed-integer range. The backwards-compatible decoder must still read it.
+    TcfCaV1 tcfCaV1 =
+        new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+
+    List<RangeEntry> pubRestrictions = tcfCaV1.getPubRestrictions();
+    Assertions.assertEquals(1, pubRestrictions.size());
+    Assertions.assertEquals(1, pubRestrictions.get(0).getKey());
+    Assertions.assertEquals(1, pubRestrictions.get(0).getType());
+    Assertions.assertEquals(Set.of(1, 2, 3, 5, 6, 7, 9), pubRestrictions.get(0).getIds());
+  }
+
+  @Test
+  public void testDecodeLegacyFixedRangeVendors() throws DecodingException {
+    // A real string produced by the previous encoder, which encoded the vendor OptimizedRange
+    // fields using fixed-integer ranges. The backwards-compatible decoder must still read it.
+    TcfCaV1 tcfCaV1 =
+        new TcfCaV1(
+            "BQliWsAQliWsAPoABAELC9CoAKgAAJIAAApNAOABUAC0AGgAQwAlgBQAC6AG0AO4AfgBBATAAnMBSYEwYFgAXQBOwC3ALgAc4A7gCAAEmAJ2AT8AxQBmgDOgGfANeAcQA6oCJgEngJyAT-Ao8BUQCpQFvALhAXQAvcBf4DMAGggNNAbUA3EBxoDlgHiAPNAfIBAQCEgEbgI_gSlgmACYIAA.YAAAAAAAAAA");
+
+    Assertions.assertEquals(1000, tcfCaV1.getCmpId());
+    Assertions.assertEquals("EL", tcfCaV1.getConsentLanguage());
+    Assertions.assertEquals(189, tcfCaV1.getVendorListVersion());
+    Assertions.assertEquals(
+        Set.of(42, 45, 52, 67, 75, 80, 93, 109, 119, 126, 130, 1216, 1254, 1318),
+        tcfCaV1.getVendorExpressConsent());
+    Assertions.assertEquals(
+        Set.of(
+            93, 157, 183, 184, 231, 238, 256, 294, 315, 319, 394, 410, 413, 415, 431, 452, 469, 550,
+            591, 626, 639, 655, 674, 677, 734, 737, 744, 759, 767, 816, 833, 845, 874, 881, 909,
+            918, 964, 973, 996, 1028, 1060, 1134, 1151, 1189, 1216, 1217),
+        tcfCaV1.getVendorImpliedConsent());
+  }
+
   @Test()
   public void testDecodeGarbage1() {
     Assertions.assertThrows(
