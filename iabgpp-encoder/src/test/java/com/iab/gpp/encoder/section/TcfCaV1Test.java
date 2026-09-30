@@ -42,7 +42,7 @@ public class TcfCaV1Test {
         TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT, Arrays.asList(6, 7, 8, 9, 10, 11));
     tcfCaV1.setFieldValue(
         TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16, 17));
+        Arrays.asList(1, 2, 3, 4, 5, 12, 13, 14, 15, 16, 17));
     tcfCaV1.setFieldValue(
         TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
         Arrays.asList(6, 7, 8, 9, 10, 11, 18, 19, 20, 21, 22, 23));
@@ -50,13 +50,13 @@ public class TcfCaV1Test {
     tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, Arrays.asList(18, 30));
     tcfCaV1.setFieldValue(
         TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
-        Arrays.asList(0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20));
+        Arrays.asList(1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20));
     tcfCaV1.setFieldValue(
         TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
         Arrays.asList(3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23));
     tcfCaV1.setFieldValue(TcfCaV1Field.NUM_CUSTOM_PURPOSES, 3);
     tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT, Set.of(1));
-    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT, Set.of(0, 2));
+    tcfCaV1.setFieldValue(TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT, Set.of(2));
 
     tcfCaV1.setFieldValue(
         TcfCaV1Field.CREATED,
@@ -66,7 +66,7 @@ public class TcfCaV1Test {
         ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
 
     Assertions.assertEquals(
-        "BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao", tcfCaV1.encode());
+        "BPSG_8APSG_8AAyACAENGdCg_fA_AA_A_ABhADVqxGAD0AILVgAA.eOOOBxxxwcQ", tcfCaV1.encode());
   }
 
   @Test

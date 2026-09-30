@@ -215,7 +215,7 @@ public final class BitString {
     if (newReadIndex > writeIndex) {
       throw new DecodingException("Bit string access out of range");
     }
-    IntegerSet out = new IntegerSet(bitSet, readIndex, newReadIndex, 1);
+    IntegerSet out = new IntegerSet(bitSet, readIndex, newReadIndex);
     readIndex = newReadIndex;
     return out;
   }

@@ -13,8 +13,13 @@ public class FixedBitfieldEncoderTest {
   public void testEncode1() {
     BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
-    FixedBitfieldEncoder.encode(builder, set, 2);
-    Assertions.assertEquals("00", builder.toString());
+    set.add(2);
+    set.add(4);
+    set.add(6);
+    FixedBitfieldEncoder.encode(builder, set, 6);
+    String encoded = builder.toString();
+    Assertions.assertEquals("010101", encoded);
+    Assertions.assertEquals(set, decode(encoded));
   }
 
   @Test
@@ -29,7 +34,7 @@ public class FixedBitfieldEncoderTest {
   public void testEncode3() {
     BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
-    set.add(0);
+    set.add(1);
     FixedBitfieldEncoder.encode(builder, set, 1);
     Assertions.assertEquals("1", builder.toString());
   }
@@ -48,24 +53,24 @@ public class FixedBitfieldEncoderTest {
     IntegerSet set = new IntegerSet();
     set.addInt(1);
     FixedBitfieldEncoder.encode(builder, set, 2);
-    Assertions.assertEquals("01", builder.toString());
+    Assertions.assertEquals("10", builder.toString());
   }
 
   @Test
   public void testEncode6() {
     BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
-    set.addInt(0);
+    set.addInt(2);
     FixedBitfieldEncoder.encode(builder, set, 2);
-    Assertions.assertEquals("10", builder.toString());
+    Assertions.assertEquals("01", builder.toString());
   }
 
   @Test
   public void testEncode7() {
     BitString builder = new BitString();
     IntegerSet set = new IntegerSet();
-    set.addInt(0);
     set.addInt(1);
+    set.addInt(2);
     FixedBitfieldEncoder.encode(builder, set, 2);
     Assertions.assertEquals("11", builder.toString());
   }
@@ -73,17 +78,17 @@ public class FixedBitfieldEncoderTest {
   @Test
   public void testEncode8() {
     IntegerSet set = new IntegerSet(5);
-    for (int i = 0; i <= 10; i++) {
+    for (int i = 1; i <= 10; i++) {
       set.addInt(i);
     }
-    Assertions.assertEquals(Set.of(0, 1, 2, 3, 4), set);
+    Assertions.assertEquals(Set.of(1, 2, 3, 4, 5), set);
   }
 
   @Test
   public void testEncode9() {
     IntegerSet set = new IntegerSet(5);
-    set.addRange(0, 10);
-    Assertions.assertEquals(Set.of(0, 1, 2, 3, 4), set);
+    set.addRange(1, 10);
+    Assertions.assertEquals(Set.of(1, 2, 3, 4, 5), set);
   }
 
   private IntegerSet decode(String str) {

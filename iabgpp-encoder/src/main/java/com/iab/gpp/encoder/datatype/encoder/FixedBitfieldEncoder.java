@@ -8,7 +8,7 @@ public class FixedBitfieldEncoder {
 
   public static void encode(BitString builder, IntegerSet value, int bitStringLength) {
     for (int i = 0; i < bitStringLength; i++) {
-      builder.writeBoolean(value.containsInt(i));
+      builder.writeBoolean(value.containsInt(i + 1));
     }
   }
 }

@@ -25,21 +25,19 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   private final BitSet bitSet;
   private final int from;
   private final int to;
-  private final int adjustment;
 
-  public IntegerSet(BitSet bitSet, int from, int to, int adjustment) {
+  public IntegerSet(BitSet bitSet, int from, int to) {
     this.bitSet = bitSet;
     this.from = from;
     this.to = to;
-    this.adjustment = adjustment;
   }
 
   public IntegerSet(int limit) {
-    this(new BitSet(limit), 0, limit, 0);
+    this(new BitSet(limit), 0, limit);
   }
 
   public IntegerSet() {
-    this(new BitSet(), 0, MAX_COLLECTION_SIZE, 0);
+    this(new BitSet(), 0, MAX_COLLECTION_SIZE);
   }
 
   @Override
@@ -54,7 +52,7 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   private int getOffset(int value) {
-    int offset = from - adjustment + value;
+    int offset = from - 1 + value;
     if (offset < from) {
       throw new IndexOutOfBoundsException("Negative index provided");
     }
@@ -73,7 +71,7 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   public boolean containsInt(int value) {
-    if (value < adjustment) {
+    if (value < 1) {
       return false;
     }
     int offset = getOffset(value);
@@ -102,7 +100,7 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
         }
         int next = cursor;
         cursor = bitSet.nextSetBit(cursor + 1);
-        return next - from + adjustment;
+        return next - from + 1;
       }
     };
   }
