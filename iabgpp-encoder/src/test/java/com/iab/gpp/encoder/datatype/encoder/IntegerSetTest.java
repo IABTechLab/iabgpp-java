@@ -72,4 +72,21 @@ class IntegerSetTest {
     assertFalse(set.contains(4));
     assertFalse(set.contains(100));
   }
+
+  @Test
+  void vendorIdAbove8192() {
+    IntegerSet set = new IntegerSet();
+    assertTrue(set.addInt(10_000));
+    assertTrue(set.addInt(65_535));
+    assertTrue(set.containsInt(10_000));
+    assertTrue(set.containsInt(65_535));
+    assertEquals(Set.of(10_000, 65_535), set);
+
+    IntegerSet range = new IntegerSet();
+    range.addRange(8192, 10_001);
+    assertTrue(range.containsInt(8192));
+    assertTrue(range.containsInt(8193));
+    assertTrue(range.containsInt(10_000));
+    assertFalse(range.containsInt(10_001));
+  }
 }

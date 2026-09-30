@@ -159,4 +159,11 @@ public class FixedIntegerRangeEncoderTest {
 
     }
   }
+
+  @Test
+  public void testVendorId10000RoundTrip() throws DecodingException {
+    BitString builder = new BitString();
+    FixedIntegerRangeEncoder.encode(builder, Arrays.asList(8192, 8193, 10_000, 65_535));
+    Assertions.assertEquals(Set.of(8192, 8193, 10_000, 65_535), decode(builder.toString()));
+  }
 }

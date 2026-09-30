@@ -54,6 +54,21 @@ public class TcfEuV2Test {
   }
 
   @Test
+  public void testVendorId10000RoundTrip() {
+    TcfEuV2 tcfEuV2 = new TcfEuV2();
+    tcfEuV2.setFieldValue(TcfEuV2Field.VENDOR_CONSENTS, Set.of(12, 10_000));
+    tcfEuV2.setFieldValue(
+        TcfEuV2Field.CREATED,
+        ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
+    tcfEuV2.setFieldValue(
+        TcfEuV2Field.LAST_UPDATED,
+        ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant());
+
+    TcfEuV2 decoded = new TcfEuV2(tcfEuV2.encode());
+    Assertions.assertEquals(Set.of(12, 10_000), decoded.getVendorConsents());
+  }
+
+  @Test
   public void testDecode1() {
     TcfEuV2 tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
 
