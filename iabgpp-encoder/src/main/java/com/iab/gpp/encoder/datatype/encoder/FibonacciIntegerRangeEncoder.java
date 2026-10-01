@@ -1,100 +1,70 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.error.DecodingException;
+import java.util.Collection;
 
 public class FibonacciIntegerRangeEncoder {
+  private FibonacciIntegerRangeEncoder() {}
 
-  private static final Logger LOGGER = Logger.getLogger(FibonacciIntegerRangeEncoder.class.getName());
-  // NOTE: This is a value roughly the 2x the size of this list
-  // https://tools.iabtechlab.com/transparencycenter/explorer/business/gpp
-  static final int MAX_SIZE = 8192;
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
-
-  public static String encode(List<Integer> value) {
-    Collections.sort(value);
-
-    List<List<Integer>> groups = new ArrayList<>();
-
+  public static int encode(BitString builder, Collection<Integer> value) {
+    BitString rangeBuilder = new BitString();
+    int groupStart = -1;
+    int last = Integer.MIN_VALUE;
     int offset = 0;
-    int groupStartIndex = 0;
-    while (groupStartIndex < value.size()) {
-      int groupEndIndex = groupStartIndex;
-      while (groupEndIndex < value.size() - 1 && value.get(groupEndIndex) + 1 == value.get(groupEndIndex + 1)) {
-        groupEndIndex++;
+    int groupCount = 0;
+    for (Integer item : value) {
+      if (last != (item - 1)) {
+        if (groupStart > 0) {
+          groupCount++;
+          writeGroup(rangeBuilder, groupStart, last, offset);
+          offset = last;
+        }
+        groupStart = item;
       }
-
-      groups.add(value.subList(groupStartIndex, groupEndIndex + 1));
-
-      groupStartIndex = groupEndIndex + 1;
+      last = item;
     }
-
-    String bitString = FixedIntegerEncoder.encode(groups.size(), 12);
-    for (int i = 0; i < groups.size(); i++) {
-      if (groups.get(i).size() == 1) {
-        int v = groups.get(i).get(0) - offset;
-        offset = groups.get(i).get(0);
-        bitString += "0" + FibonacciIntegerEncoder.encode(v);
-      } else {
-        int startVal = groups.get(i).get(0) - offset;
-        offset = groups.get(i).get(0);
-        int endVal = groups.get(i).get(groups.get(i).size() - 1) - offset;
-        offset = groups.get(i).get(groups.get(i).size() - 1);
-        bitString += "1" + FibonacciIntegerEncoder.encode(startVal) + FibonacciIntegerEncoder.encode(endVal);
-      }
+    if (groupStart > 0) {
+      groupCount++;
+      writeGroup(rangeBuilder, groupStart, last, offset);
     }
-    return bitString;
+    builder.writeInt(groupCount, 12);
+    builder.write(rangeBuilder);
+    return last;
   }
 
-  public static List<Integer> decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() < 12) {
-      throw new DecodingException("Undecodable FibonacciIntegerRange '" + bitString + "'");
+  private static void writeGroup(BitString builder, int groupStart, int last, int offset) {
+    int base = groupStart - offset;
+    int span = last - groupStart;
+    if (span == 0) {
+      builder.writeBoolean(false);
+      builder.writeFibonacci(base);
+    } else {
+      builder.writeBoolean(true);
+      builder.writeFibonacci(base);
+      builder.writeFibonacci(span);
     }
+  }
 
-    List<Integer> value = new ArrayList<>();
-    int count = FixedIntegerEncoder.decode(bitString.substring(0, 12));
-
+  public static IntegerSet decode(BitString reader) throws DecodingException {
+    int count = reader.readInt(12);
+    IntegerSet value = new IntegerSet();
     int offset = 0;
-    int startIndex = 12;
     for (int i = 0; i < count; i++) {
-      boolean group = BooleanEncoder.decode(bitString.substring(startIndex, startIndex + 1));
-      startIndex++;
-
-      if (group == true) {
-        int index = bitString.indexOf("11", startIndex);
-        int start = FibonacciIntegerEncoder.decode(bitString.substring(startIndex, index + 2)) + offset;
+      boolean group = reader.readBoolean();
+      if (group) {
+        int start = reader.readFibonacci() + offset;
         offset = start;
-        startIndex = index + 2;
-
-        index = bitString.indexOf("11", startIndex);
-        int end = FibonacciIntegerEncoder.decode(bitString.substring(startIndex, index + 2)) + offset;
+        int end = reader.readFibonacci() + offset;
         offset = end;
-        startIndex = index + 2;
-
-        if (value.size() + (end - start) > MAX_SIZE) {
-          LOGGER.warning("FibonacciIntegerRange has too many values");
-          break;
-        }
-        for (int j = start; j <= end; j++) {
-          value.add(j);
-        }
+        value.addRange(start, end + 1);
       } else {
-        int index = bitString.indexOf("11", startIndex);
-        int val = FibonacciIntegerEncoder.decode(bitString.substring(startIndex, index + 2)) + offset;
+        int val = reader.readFibonacci() + offset;
         offset = val;
-        if (value.size() == MAX_SIZE) {
-          LOGGER.warning("FibonacciIntegerRange has too many values");
-          break;
-        }
-        value.add(val);
-        startIndex = index + 2;
+        value.addInt(val);
       }
     }
-
     return value;
   }
 }

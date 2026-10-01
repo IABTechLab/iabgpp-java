@@ -1,68 +1,43 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFixedRangeEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.Collection;
 
+public final class EncodableOptimizedFixedRange<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
-public class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<List<Integer>> {
-
-  protected EncodableOptimizedFixedRange() {
-    super(true);
+  public EncodableOptimizedFixedRange(String name) {
+    super(name, null);
   }
 
-  public EncodableOptimizedFixedRange(List<Integer> value) {
-    super(true);
-    setValue(value);
+  @Override
+  protected IntegerSet initialize() {
+    return new IntegerSet();
   }
 
-  public EncodableOptimizedFixedRange(List<Integer> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
+  @Override
+  protected boolean isPresent(IntegerSet value) {
+    return !value.isEmpty();
   }
 
-  public String encode() {
-    try {
-      return OptimizedFixedRangeEncoder.encode(this.value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+  @Override
+  protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
+    OptimizedFixedRangeEncoder.encode(builder, value);
   }
 
-  public void decode(String bitString) {
-    try {
-      this.value = OptimizedFixedRangeEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
-  }
-
-  public String substring(String bitString, int fromIndex) throws SubstringException {
-    try {
-      int max = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 16));
-      if (bitString.charAt(fromIndex + 16) == '1') {
-        return bitString.substring(fromIndex, fromIndex + 17)
-            + new EncodableFixedIntegerRange().substring(bitString, fromIndex + 17);
-      } else {
-        return bitString.substring(fromIndex, fromIndex + 17 + max);
-      }
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
+    return OptimizedFixedRangeEncoder.decode(reader);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    super.setValue(new ArrayList<>(new TreeSet<>((List<Integer>) value)));
-  }
-
-  @Override
-  public List<Integer> getValue() {
-    return new ArrayList<>(super.getValue());
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

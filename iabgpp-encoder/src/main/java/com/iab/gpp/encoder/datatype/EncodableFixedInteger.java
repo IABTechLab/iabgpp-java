@@ -1,51 +1,44 @@
 package com.iab.gpp.encoder.datatype;
 
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.function.Predicate;
 
-public class EncodableFixedInteger extends AbstractEncodableBitStringDataType<Integer> {
+public final class EncodableFixedInteger<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, Integer> {
 
-  private int bitStringLength;
+  private final int bitStringLength;
+  private final Integer initial;
 
-  protected EncodableFixedInteger(int bitStringLength) {
-    super(true);
+  public EncodableFixedInteger(
+      String name, int bitStringLength, Integer initial, Predicate<Integer> validator) {
+    super(name, validator);
     this.bitStringLength = bitStringLength;
+    this.initial = initial;
   }
 
-  public EncodableFixedInteger(int bitStringLength, Integer value) {
-    super(true);
-    this.bitStringLength = bitStringLength;
-    setValue(value);
+  public EncodableFixedInteger(String name, int bitStringLength, Integer initial) {
+    this(name, bitStringLength, initial, null);
   }
 
-  public EncodableFixedInteger(int bitStringLength, Integer value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    this.bitStringLength = bitStringLength;
-    setValue(value);
+  @Override
+  public String toString() {
+    return name + "=Int(" + bitStringLength + ")";
   }
 
-  public String encode() {
-    try {
-      return FixedIntegerEncoder.encode(this.value, this.bitStringLength);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+  @Override
+  protected Integer initialize() {
+    return initial;
   }
 
-  public void decode(String bitString) {
-    try {
-      this.value = FixedIntegerEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+  @Override
+  protected void encode(BitString builder, Integer value, EncodableSegment<E> segment) {
+    builder.writeInt(value, this.bitStringLength);
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + this.bitStringLength);
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected Integer decode(BitString reader, EncodableSegment<E> segment) {
+    return IntegerCache.valueOf(reader.readInt(bitStringLength));
   }
 }

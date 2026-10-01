@@ -20,12 +20,12 @@ package com.iab.gpp.extras.jackson.gvl;
  * #L%
  */
 
-import java.time.Instant;
-import java.util.List;
-import java.util.Optional;
 import com.iab.gpp.extras.gvl.DataRetention;
 import com.iab.gpp.extras.gvl.Overflow;
 import com.iab.gpp.extras.gvl.VendorUrl;
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
 public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
 
@@ -51,8 +51,8 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
   private List<Integer> dataDeclaration;
 
   /**
-   * A vendor id: a numeric ID which is incrementally assigned and never re-used – deleted Vendors are
-   * just marked as deleted
+   * A vendor id: a numeric ID which is incrementally assigned and never re-used – deleted Vendors
+   * are just marked as deleted
    *
    * @return vendor id
    */
@@ -82,8 +82,8 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
   }
 
   /**
-   * List of Purposes for which the vendor requires to be transparently disclosed as their legitimate
-   * interest
+   * List of Purposes for which the vendor requires to be transparently disclosed as their
+   * legitimate interest
    *
    * @return A {@link List} of purpose ids disclosed as legitimate interests
    */
@@ -104,8 +104,8 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
 
   /**
    * List of purposes where the vendor is flexible regarding the legal basis; they will perform the
-   * processing based on consent or a legitimate interest. The 'default' is determined by which of the
-   * other two mutually-exclusive purpose fields is used to declare the purpose for the vendor
+   * processing based on consent or a legitimate interest. The 'default' is determined by which of
+   * the other two mutually-exclusive purpose fields is used to declare the purpose for the vendor
    *
    * @return A {@link List} of flexible purpose ids
    */
@@ -167,7 +167,8 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
 
   /**
    * object specifying the vendor's http GET request length limit. It is optional. If a vendor entry
-   * does not include this attribute then the vendor has no overflow options and none can be inferred.
+   * does not include this attribute then the vendor has no overflow options and none can be
+   * inferred.
    *
    * @return A {@link com.iab.gpp.extras.gvl.Overflow} object
    */
@@ -183,14 +184,17 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
    */
   @Override
   public boolean isDeleted() {
-    return Optional.ofNullable(this.deletedDate).map(deletedDate -> !deletedDate.isAfter(Instant.now())).orElse(false);
+    return Optional.ofNullable(this.deletedDate)
+        .map(deletedDate -> !deletedDate.isAfter(Instant.now()))
+        .orElse(false);
   }
 
   /**
-   * The number of seconds representing the longest potential duration for cookie storage on a device.
+   * The number of seconds representing the longest potential duration for cookie storage on a
+   * device.
    *
-   * @return The number, in seconds, of the longest potential duration for storage on a device, as set
-   *         when using the cookie method of storage.
+   * @return The number, in seconds, of the longest potential duration for storage on a device, as
+   *     set when using the cookie method of storage.
    */
   @Override
   public Optional<Long> getCookieMaxAgeSeconds() {
@@ -242,7 +246,7 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
 
   /**
    * dataRetention
-   * 
+   *
    * @return dataRetention
    */
   public Optional<DataRetention> getDataRetention() {
@@ -251,7 +255,7 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
 
   /**
    * urls
-   * 
+   *
    * @return urls
    */
   public Optional<List<VendorUrl>> getUrls() {
@@ -260,7 +264,7 @@ public class Vendor implements com.iab.gpp.extras.gvl.Vendor {
 
   /**
    * dataDeclarations
-   * 
+   *
    * @return dataDeclarations
    */
   public Optional<List<Integer>> getDataDeclaration() {

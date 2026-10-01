@@ -20,7 +20,6 @@ package com.iab.gpp.extras.jackson.gvl;
  * #L%
  */
 
-
 public class Overflow implements com.iab.gpp.extras.gvl.Overflow {
 
   private int httpGetLimit;

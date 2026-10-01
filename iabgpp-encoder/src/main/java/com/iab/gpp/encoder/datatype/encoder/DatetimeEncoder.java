@@ -1,27 +1,22 @@
 package com.iab.gpp.encoder.datatype.encoder;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.regex.Pattern;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
+import java.time.Instant;
 
 public class DatetimeEncoder {
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
 
-  public static String encode(ZonedDateTime value) {
+  private DatetimeEncoder() {}
+
+  public static void encode(BitString builder, Instant value) {
     if (value != null) {
-      return FixedLongEncoder.encode(value.toInstant().toEpochMilli() / 100, 36);
+      builder.writeLong(value.toEpochMilli() / 100, 36);
     } else {
-      return FixedLongEncoder.encode(0, 36);
+      builder.writeLong(0, 36);
     }
   }
 
-  public static ZonedDateTime decode(String bitString) throws DecodingException {
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches() || bitString.length() != 36) {
-      throw new DecodingException("Undecodable Datetime '" + bitString + "'");
-    }
-
-    return ZonedDateTime.ofInstant(Instant.ofEpochMilli(FixedLongEncoder.decode(bitString) * 100L), ZoneId.of("UTC"));
+  public static Instant decode(BitString reader) throws DecodingException {
+    return Instant.ofEpochMilli(reader.readLong(36) * 100L);
   }
 }

@@ -58,6 +58,4 @@ public class DataCategory implements com.iab.gpp.extras.gvl.DataCategory {
   public String getDescription() {
     return description;
   }
-
-
 }

@@ -23,9 +23,7 @@ import java.util.Optional;
  * #L%
  */
 
-/**
- * A standard purpose
- */
+/** A standard purpose */
 public interface Purpose {
 
   /**
@@ -51,20 +49,22 @@ public interface Purpose {
 
   /**
    * Legal description of the purpose
+   *
    * @return legal description string
    */
   Optional<String> getDescriptionLegal();
 
   /**
    * A list of illustrations
+   *
    * @since 3.0
    * @return A {@link List} of strings
    */
   Optional<List<String>> getIllustrations();
 
   /**
-   * An optional flag where false means CMPs should never afford users the means to provide an opt-in
-   * consent choice
+   * An optional flag where false means CMPs should never afford users the means to provide an
+   * opt-in consent choice
    *
    * @return consentable boolean
    */

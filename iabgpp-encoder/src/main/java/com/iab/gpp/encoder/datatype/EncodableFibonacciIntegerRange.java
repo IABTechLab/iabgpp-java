@@ -1,70 +1,43 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerRangeEncoder;
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.Collection;
 
-public class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDataType<List<Integer>> {
+public final class EncodableFibonacciIntegerRange<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
-  protected EncodableFibonacciIntegerRange() {
-    super(true);
+  public EncodableFibonacciIntegerRange(String name) {
+    super(name, null);
   }
 
-  public EncodableFibonacciIntegerRange(List<Integer> value) {
-    super(true);
-    setValue(value);
+  @Override
+  public IntegerSet initialize() {
+    return new IntegerSet();
   }
 
-  public EncodableFibonacciIntegerRange(List<Integer> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
-  }
-  
-  public String encode() {
-    try {
-      return FibonacciIntegerRangeEncoder.encode(this.value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+  @Override
+  protected boolean isPresent(IntegerSet value) {
+    return !value.isEmpty();
   }
 
-  public void decode(String bitString) {
-    try {
-      this.value = FibonacciIntegerRangeEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+  @Override
+  protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
+    FibonacciIntegerRangeEncoder.encode(builder, value);
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
-    try {
-      int count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
-      int index = fromIndex + 12;
-      for (int i = 0; i < count; i++) {
-        if (bitString.charAt(index) == '1') {
-          index = bitString.indexOf("11", bitString.indexOf("11", index + 1) + 2) + 2;
-        } else {
-          index = bitString.indexOf("11", index + 1) + 2;
-        }
-      }
-      return bitString.substring(fromIndex, index);
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
+    return FibonacciIntegerRangeEncoder.decode(reader);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    super.setValue(new ArrayList<>(new TreeSet<>((List<Integer>) value)));
-  }
-
-  @Override
-  public List<Integer> getValue() {
-    return new ArrayList<>(super.getValue());
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

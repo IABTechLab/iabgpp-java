@@ -1,48 +1,64 @@
 package com.iab.gpp.encoder.field;
 
-import java.util.Arrays;
-import java.util.List;
+import com.iab.gpp.encoder.datatype.DataType;
+import com.iab.gpp.encoder.datatype.EncodableBoolean;
+import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
+import com.iab.gpp.encoder.datatype.EncodableFixedIntegerList;
+import com.iab.gpp.encoder.datatype.UnencodableBoolean;
+import com.iab.gpp.encoder.section.UsMt;
 
-public class UsMtField {
+public enum UsMtField implements FieldKey {
+  VERSION(new EncodableFixedInteger<>("Version", 6, UsMt.VERSION)),
+  SHARING_NOTICE(new EncodableFixedInteger<>("SharingNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT_NOTICE(new EncodableFixedInteger<>("SaleOptOutNotice", 2, 0, VALIDATOR_012)),
+  TARGETED_ADVERTISING_OPT_OUT_NOTICE(
+      new EncodableFixedInteger<>("TargetedAdvertisingOptOutNotice", 2, 0, VALIDATOR_012)),
+  SALE_OPT_OUT(new EncodableFixedInteger<>("SaleOptOut", 2, 0, VALIDATOR_012)),
+  TARGETED_ADVERTISING_OPT_OUT(
+      new EncodableFixedInteger<>("TargetedAdvertisingOptOut", 2, 0, VALIDATOR_012)),
+  SENSITIVE_DATA_PROCESSING(
+      new EncodableFixedIntegerList<>("SensitiveDataProcessing", 2, 8, VALIDATOR_LIST_012)),
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS(
+      new EncodableFixedIntegerList<>("KnownChildSensitiveDataConsents", 2, 3, VALIDATOR_LIST_012)),
+  ADDITIONAL_DATA_PROCESSING_CONSENT(
+      new EncodableFixedInteger<>("AdditionalDataProcessingConsent", 2, 0, VALIDATOR_012)),
+  MSPA_COVERED_TRANSACTION(
+      new EncodableFixedInteger<>("MspaCoveredTransaction", 2, 1, VALIDATOR_12)),
+  MSPA_OPT_OUT_OPTION_MODE(
+      new EncodableFixedInteger<>("MspaOptOutOptionMode", 2, 0, VALIDATOR_012)),
+  MSPA_SERVICE_PROVIDER_MODE(
+      new EncodableFixedInteger<>("MspaServiceProviderMode", 2, 0, VALIDATOR_012)),
 
-  public static String VERSION = "Version";
-  public static String SHARING_NOTICE = "SharingNotice";
-  public static String SALE_OPT_OUT_NOTICE = "SaleOptOutNotice";
-  public static String TARGETED_ADVERTISING_OPT_OUT_NOTICE = "TargetedAdvertisingOptOutNotice";
-  public static String SALE_OPT_OUT = "SaleOptOut";
-  public static String TARGETED_ADVERTISING_OPT_OUT = "TargetedAdvertisingOptOut";
-  public static String SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing";
-  public static String KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents";
-  public static String ADDITIONAL_DATA_PROCESSING_CONSENT = "AdditionalDataProcessingConsent";
-  public static String MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction";
-  public static String MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode";
-  public static String MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode";
+  GPC_SEGMENT_TYPE(new EncodableFixedInteger<>("GpcSegmentType", 2, 1)),
+  GPC_SEGMENT_INCLUDED(new UnencodableBoolean<>("GpcSegmentIncluded", true)),
+  GPC(new EncodableBoolean<>("Gpc", false));
 
-  public static String GPC_SEGMENT_TYPE = "GpcSegmentType";
-  public static String GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded";
-  public static String GPC = "Gpc";
-  
-  //@formatter:off
-  public static List<String> USMT_CORE_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
-      UsMtField.VERSION,
-      UsMtField.SHARING_NOTICE,
-      UsMtField.SALE_OPT_OUT_NOTICE,
-      UsMtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
-      UsMtField.SALE_OPT_OUT,
-      UsMtField.TARGETED_ADVERTISING_OPT_OUT,
-      UsMtField.SENSITIVE_DATA_PROCESSING,
-      UsMtField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
-      UsMtField.ADDITIONAL_DATA_PROCESSING_CONSENT,
-      UsMtField.MSPA_COVERED_TRANSACTION,
-      UsMtField.MSPA_OPT_OUT_OPTION_MODE,
-      UsMtField.MSPA_SERVICE_PROVIDER_MODE
-  });
-  //@formatter:on
-  
-  //@formatter:off
-  public static List<String> USMT_GPC_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
-      UsMtField.GPC_SEGMENT_TYPE,
-      UsMtField.GPC
-  });
-  //@formatter:on
+  private final DataType<UsMtField, ?> type;
+
+  UsMtField(DataType<UsMtField, ?> type) {
+    this.type = type;
+  }
+
+  @Override
+  public DataType<UsMtField, ?> getType() {
+    return type;
+  }
+
+  public static final FieldNames<UsMtField> USMT_CORE_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          UsMtField.VERSION,
+          UsMtField.SHARING_NOTICE,
+          UsMtField.SALE_OPT_OUT_NOTICE,
+          UsMtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+          UsMtField.SALE_OPT_OUT,
+          UsMtField.TARGETED_ADVERTISING_OPT_OUT,
+          UsMtField.SENSITIVE_DATA_PROCESSING,
+          UsMtField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+          UsMtField.ADDITIONAL_DATA_PROCESSING_CONSENT,
+          UsMtField.MSPA_COVERED_TRANSACTION,
+          UsMtField.MSPA_OPT_OUT_OPTION_MODE,
+          UsMtField.MSPA_SERVICE_PROVIDER_MODE);
+
+  public static FieldNames<UsMtField> USMT_GPC_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(UsMtField.GPC_SEGMENT_TYPE, UsMtField.GPC_SEGMENT_INCLUDED, UsMtField.GPC);
 }

@@ -25,5 +25,4 @@ public interface DataCategory {
    * @return description
    */
   String getDescription();
-
 }

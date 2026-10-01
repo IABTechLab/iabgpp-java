@@ -1,23 +1,21 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.iab.gpp.encoder.datatype.IntegerSet;
 import com.iab.gpp.encoder.field.HeaderV1Field;
-import com.iab.gpp.encoder.segment.EncodableSegment;
-import com.iab.gpp.encoder.segment.HeaderV1CoreSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
-public class HeaderV1 extends AbstractLazilyEncodableSection {
-  
-  public static int ID = 3;
-  public static int VERSION = 1;
-  public static String NAME = "header";
+public class HeaderV1 extends EncodableSection<HeaderV1Field> {
+
+  public static final int ID = 3;
+  public static final int VERSION = 1;
+  public static final String NAME = "header";
 
   public HeaderV1() {
-    super();
+    super(new Base64Segment<>(HeaderV1Field.HEADER_CORE_SEGMENT_FIELD_NAMES));
   }
 
-  public HeaderV1(String encodedString) {
-    super();
+  public HeaderV1(CharSequence encodedString) {
+    this();
     decode(encodedString);
   }
 
@@ -36,44 +34,7 @@ public class HeaderV1 extends AbstractLazilyEncodableSection {
     return HeaderV1.VERSION;
   }
 
-  @Override
-  protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new HeaderV1CoreSegment());
-    return segments;
+  public IntegerSet getSectionsIds() {
+    return (IntegerSet) this.getFieldValue(HeaderV1Field.SECTION_IDS);
   }
-  
-  @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
-    List<EncodableSegment> segments = initializeSegments();
-    
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
-      
-      for(int i=0; i<segments.size(); i++) {
-        if(encodedSegments.length > i) {
-          segments.get(i).decode(encodedSegments[i]);
-        }
-      }
-    }
-    
-    return segments;
-  }
-
-  @Override
-  protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
-    for(EncodableSegment segment : segments) {
-      encodedSegments.add(segment.encode());
-    }
-    return String.join(".", encodedSegments);
-  }
-
-  
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSectionsIds() {
-    return (List<Integer>) this.getFieldValue(HeaderV1Field.SECTION_IDS);
-  }
-  
-  
 }

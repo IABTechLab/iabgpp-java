@@ -47,5 +47,4 @@ public interface VendorUrl {
    * @return legIntClaim
    */
   Optional<String> getLegIntClaim();
-
 }

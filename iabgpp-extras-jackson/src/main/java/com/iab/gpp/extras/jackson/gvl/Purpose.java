@@ -23,9 +23,7 @@ import java.util.Optional;
  * #L%
  */
 
-/**
- * A standard purpose
- */
+/** A standard purpose */
 public class Purpose implements com.iab.gpp.extras.gvl.Purpose {
 
   private int id;
@@ -87,8 +85,8 @@ public class Purpose implements com.iab.gpp.extras.gvl.Purpose {
   }
 
   /**
-   * An optional flag where false means CMPs should never afford users the means to provide an opt-in
-   * consent choice
+   * An optional flag where false means CMPs should never afford users the means to provide an
+   * opt-in consent choice
    *
    * @return consentable boolean
    */

@@ -106,8 +106,8 @@ public interface Gvl {
 
   /**
    * A list of data categories
-   * @since 3.0
    *
+   * @since 3.0
    * @return A {@link List} of {@link DataCategory} objects
    */
   Optional<List<DataCategory>> getDataCategories();

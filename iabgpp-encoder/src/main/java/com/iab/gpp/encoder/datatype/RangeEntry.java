@@ -1,14 +1,23 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.List;
+import java.util.Collection;
 
-public class RangeEntry {
+public final class RangeEntry implements Dirtyable {
 
+  private boolean dirty;
   private int key;
   private int type;
-  private List<Integer> ids;
+  private final IntegerSet ids;
 
-  public RangeEntry(int key, int type, List<Integer> ids) {
+  public RangeEntry(int key, int type, Collection<Integer> ids) {
+    super();
+    this.key = key;
+    this.type = type;
+    this.ids = new IntegerSet();
+    this.ids.addAll(ids);
+  }
+
+  RangeEntry(int key, int type, IntegerSet ids) {
     super();
     this.key = key;
     this.type = type;
@@ -20,6 +29,7 @@ public class RangeEntry {
   }
 
   public void setKey(int key) {
+    this.dirty = true;
     this.key = key;
   }
 
@@ -28,15 +38,33 @@ public class RangeEntry {
   }
 
   public void setType(int type) {
+    this.dirty = true;
     this.type = type;
   }
 
-  public List<Integer> getIds() {
+  public IntegerSet getIds() {
     return ids;
   }
 
-  public void setIds(List<Integer> ids) {
-    this.ids = ids;
+  public void setIds(Collection<Integer> ids) {
+    this.dirty = true;
+    this.ids.clear();
+    this.ids.addAll(ids);
   }
 
+  @Override
+  public boolean isDirty() {
+    return dirty || ids.isDirty();
+  }
+
+  @Override
+  public void setDirty(boolean dirty) {
+    this.dirty = dirty;
+    ids.setDirty(dirty);
+  }
+
+  @Override
+  public String toString() {
+    return "{key=" + key + ", type=" + type + ", ids=" + ids + "}";
+  }
 }

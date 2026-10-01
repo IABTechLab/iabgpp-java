@@ -1,13 +1,11 @@
 package com.iab.gpp.encoder.section;
 
-
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.ValidationException;
 import com.iab.gpp.encoder.field.UsMnField;
+import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 public class UsMnTest {
 
@@ -36,7 +34,7 @@ public class UsMnTest {
 
     Assertions.assertEquals("BVWSSVWA.YA", usMn.encode());
   }
-  
+
   @Test
   public void testSetInvalidValues() {
     UsMn usMn = new UsMn();
@@ -45,77 +43,78 @@ public class UsMnTest {
       usMn.setFieldValue(UsMnField.PROCESSING_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usMn.setFieldValue(UsMnField.SALE_OPT_OUT_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usMn.setFieldValue(UsMnField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usMn.setFieldValue(UsMnField.SALE_OPT_OUT, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usMn.setFieldValue(UsMnField.TARGETED_ADVERTISING_OPT_OUT, -1);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
-      usMn.setFieldValue(UsMnField.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 1, 2, 3, 1, 2, 0, 1));
+      usMn.setFieldValue(
+          UsMnField.SENSITIVE_DATA_PROCESSING, Arrays.asList(0, 1, 2, 3, 1, 2, 0, 1));
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usMn.setFieldValue(UsMnField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usMn.setFieldValue(UsMnField.ADDITIONAL_DATA_PROCESSING_CONSENT, 3);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usMn.setFieldValue(UsMnField.MSPA_COVERED_TRANSACTION, 0);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usMn.setFieldValue(UsMnField.MSPA_OPT_OUT_OPTION_MODE, 4);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
-    
+
     try {
       usMn.setFieldValue(UsMnField.MSPA_SERVICE_PROVIDER_MODE, -1);
       Assertions.fail("Expected ValidationException");
     } catch (ValidationException e) {
-      
+
     }
   }
 
@@ -130,12 +129,14 @@ public class UsMnTest {
   public void testDecode1() throws DecodingException {
     UsMn usMn = new UsMn("BVWSSVWA.YA");
 
+    Assertions.assertEquals(1, usMn.getVersion());
     Assertions.assertEquals(1, usMn.getProcessingNotice());
     Assertions.assertEquals(1, usMn.getSaleOptOutNotice());
     Assertions.assertEquals(1, usMn.getTargetedAdvertisingOptOutNotice());
     Assertions.assertEquals(1, usMn.getSaleOptOut());
     Assertions.assertEquals(1, usMn.getTargetedAdvertisingOptOut());
-    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usMn.getSensitiveDataProcessing());
+    Assertions.assertEquals(
+        Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usMn.getSensitiveDataProcessing());
     Assertions.assertEquals(1, usMn.getKnownChildSensitiveDataConsents());
     Assertions.assertEquals(1, usMn.getAdditionalDataProcessingConsent());
     Assertions.assertEquals(1, usMn.getMspaCoveredTransaction());
@@ -153,7 +154,8 @@ public class UsMnTest {
     Assertions.assertEquals(1, usMn.getTargetedAdvertisingOptOutNotice());
     Assertions.assertEquals(1, usMn.getSaleOptOut());
     Assertions.assertEquals(1, usMn.getTargetedAdvertisingOptOut());
-    Assertions.assertEquals(Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usMn.getSensitiveDataProcessing());
+    Assertions.assertEquals(
+        Arrays.asList(2, 1, 0, 2, 1, 0, 2, 1), usMn.getSensitiveDataProcessing());
     Assertions.assertEquals(1, usMn.getKnownChildSensitiveDataConsents());
     Assertions.assertEquals(1, usMn.getAdditionalDataProcessingConsent());
     Assertions.assertEquals(1, usMn.getMspaCoveredTransaction());
@@ -161,11 +163,13 @@ public class UsMnTest {
     Assertions.assertEquals(2, usMn.getMspaServiceProviderMode());
     Assertions.assertEquals(false, usMn.getGpcSegmentIncluded());
   }
-  
+
   @Test()
   public void testDecodeGarbage() {
-    Assertions.assertThrows(DecodingException.class, () -> {
-      new UsMn("z").getProcessingNotice();
-    });
+    Assertions.assertThrows(
+        DecodingException.class,
+        () -> {
+          new UsMn("z").getProcessingNotice();
+        });
   }
 }
