@@ -119,21 +119,29 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   private static final void logOutOfRange(int value) {
-    LOGGER.warning("Exceeding IntegerBitSet.MAX_COLLECTION_SIZE: " + value);
+    LOGGER.warning("Exceeding IntegerSet.MAX_COLLECTION_SIZE: " + value);
   }
 
   public void addRange(int start, int end) {
+    addRange(start, end, true);
+  }
+
+  public void addRange(int start, int end, boolean strict) {
     if (end < start) {
       throw new IllegalArgumentException("Negative length range");
     }
     int realStart = getOffset(start);
     int realEnd = getOffset(end);
     if (realStart >= to) {
-      logOutOfRange(start);
+      if (strict) {
+        logOutOfRange(start);
+      }
       return;
     }
     if (realEnd > to) {
-      logOutOfRange(end);
+      if (strict) {
+        logOutOfRange(end);
+      }
       realEnd = to;
     }
     dirty = true;
@@ -141,9 +149,15 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   public boolean addInt(int value) {
+    return addInt(value, true);
+  }
+
+  public boolean addInt(int value, boolean strict) {
     int offset = getOffset(value);
     if (offset >= to) {
-      logOutOfRange(value);
+      if (strict) {
+        logOutOfRange(value);
+      }
       return false;
     }
     boolean present = !bitSet.set(offset, true);
@@ -152,9 +166,15 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
   }
 
   public boolean removeInt(int value) {
+    return removeInt(value, true);
+  }
+
+  public boolean removeInt(int value, boolean strict) {
     int offset = getOffset(value);
     if (offset >= to) {
-      logOutOfRange(value);
+      if (strict) {
+        logOutOfRange(value);
+      }
       return false;
     }
     boolean present = bitSet.set(offset, false);

@@ -30,7 +30,7 @@ public final class EncodableFibonacciIntegerRange<E extends Enum<E> & FieldKey>
 
   @Override
   protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
-    return FibonacciIntegerRangeEncoder.decode(reader);
+    return FibonacciIntegerRangeEncoder.decode(reader, true);
   }
 
   @SuppressWarnings("unchecked")
