@@ -63,7 +63,7 @@ public class FibonacciIntegerRangeEncoderTest {
   }
 
   private IntegerSet decode(String str) {
-    return FibonacciIntegerRangeEncoder.decode(BitString.of(str));
+    return FibonacciIntegerRangeEncoder.decode(BitString.of(str), true);
   }
 
   @Test

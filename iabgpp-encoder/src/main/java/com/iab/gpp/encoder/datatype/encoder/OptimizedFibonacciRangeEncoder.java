@@ -41,7 +41,7 @@ public class OptimizedFibonacciRangeEncoder {
       // not re-encode to that same Fibonacci range, re-read them as a fixed-integer range.
       int mark = reader.getReadIndex();
       try {
-        IntegerSet value = FibonacciIntegerRangeEncoder.decode(reader);
+        IntegerSet value = FibonacciIntegerRangeEncoder.decode(reader, false);
         BitString consumed = new BitString();
         consumed.write(reader, mark, reader.getReadIndex());
         BitString reEncoded = new BitString();

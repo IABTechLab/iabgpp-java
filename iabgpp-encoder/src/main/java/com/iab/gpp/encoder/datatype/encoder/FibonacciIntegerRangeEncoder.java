@@ -47,7 +47,7 @@ public class FibonacciIntegerRangeEncoder {
     }
   }
 
-  public static IntegerSet decode(BitString reader) throws DecodingException {
+  public static IntegerSet decode(BitString reader, boolean strict) throws DecodingException {
     int count = reader.readInt(12);
     IntegerSet value = new IntegerSet();
     int offset = 0;
@@ -58,11 +58,11 @@ public class FibonacciIntegerRangeEncoder {
         offset = start;
         int end = reader.readFibonacci() + offset;
         offset = end;
-        value.addRange(start, end + 1);
+        value.addRange(start, end + 1, strict);
       } else {
         int val = reader.readFibonacci() + offset;
         offset = val;
-        value.addInt(val);
+        value.addInt(val, strict);
       }
     }
     return value;
