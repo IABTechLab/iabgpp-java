@@ -1,79 +1,97 @@
 package com.iab.gpp.encoder.base64;
 
-import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
+import com.iab.gpp.encoder.bitstring.BitSet;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.error.DecodingException;
 import com.iab.gpp.encoder.error.EncodingException;
+import java.util.Arrays;
 
 public abstract class AbstractBase64UrlEncoder {
 
-  abstract protected String pad(String bitString);
+  protected abstract void pad(BitString bitString);
+
+  private static final int BASE64_BITS = 6;
+  private static final int NO_SYMBOL = -1;
 
   /**
    * Base 64 URL character set. Different from standard Base64 char set in that '+' and '/' are
    * replaced with '-' and '_'.
    */
-  private static String DICT = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-  // prettier-ignore
-  private static Map<Character, Integer> REVERSE_DICT = Stream
-      .of(new Object[][] {{'A', 0}, {'B', 1}, {'C', 2}, {'D', 3}, {'E', 4}, {'F', 5}, {'G', 6}, {'H', 7}, {'I', 8},
-          {'J', 9}, {'K', 10}, {'L', 11}, {'M', 12}, {'N', 13}, {'O', 14}, {'P', 15}, {'Q', 16}, {'R', 17}, {'S', 18},
-          {'T', 19}, {'U', 20}, {'V', 21}, {'W', 22}, {'X', 23}, {'Y', 24}, {'Z', 25}, {'a', 26}, {'b', 27}, {'c', 28},
-          {'d', 29}, {'e', 30}, {'f', 31}, {'g', 32}, {'h', 33}, {'i', 34}, {'j', 35}, {'k', 36}, {'l', 37}, {'m', 38},
-          {'n', 39}, {'o', 40}, {'p', 41}, {'q', 42}, {'r', 43}, {'s', 44}, {'t', 45}, {'u', 46}, {'v', 47}, {'w', 48},
-          {'x', 49}, {'y', 50}, {'z', 51}, {'0', 52}, {'1', 53}, {'2', 54}, {'3', 55}, {'4', 56}, {'5', 57}, {'6', 58},
-          {'7', 59}, {'8', 60}, {'9', 61}, {'-', 62}, {'_', 63}})
-      .collect(Collectors.toMap(data -> (Character) data[0], data -> (Integer) data[1]));
+  private static final String DICT =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
-  private static Pattern BITSTRING_VERIFICATION_PATTERN = Pattern.compile("^[0-1]*$", Pattern.CASE_INSENSITIVE);
-  private static Pattern BASE64URL_VERIFICATION_PATTERN =
-      Pattern.compile("^[A-Za-z0-9\\-_]*$", Pattern.CASE_INSENSITIVE);
+  private static final int REVERSE_DICT_SIZE = 128;
+  private static final int[] REVERSE_DICT = new int[REVERSE_DICT_SIZE];
 
-  public String encode(String bitString) {
-    // should only be 0 or 1
-    if (!BITSTRING_VERIFICATION_PATTERN.matcher(bitString).matches()) {
-      throw new EncodingException("Unencodable Base64Url '" + bitString + "'");
+  static {
+    Arrays.fill(REVERSE_DICT, NO_SYMBOL);
+    for (int i = 0; i < DICT.length(); i++) {
+      REVERSE_DICT[DICT.charAt(i)] = i;
     }
+  }
 
-    bitString = pad(bitString);
-
-    String str = "";
-
-    int index = 0;
-    while (index <= bitString.length() - 6) {
-      String s = bitString.substring(index, index + 6);
-
+  public StringBuilder encode(BitString bitString) {
+    pad(bitString);
+    int length = bitString.length();
+    StringBuilder str = new StringBuilder(length / BASE64_BITS);
+    while (bitString.hasRemaining()) {
       try {
-        int n = FixedIntegerEncoder.decode(s);
-        Character c = AbstractBase64UrlEncoder.DICT.charAt(n);
-        str += c;
-        index += 6;
+        int n = bitString.readInt(BASE64_BITS);
+        str.append(DICT.charAt(n));
       } catch (DecodingException e) {
         throw new EncodingException("Unencodable Base64Url '" + bitString + "'");
       }
     }
-
     return str;
   }
 
-  public String decode(String str) {
-    // should contain only characters from the base64url set
-    if (!BASE64URL_VERIFICATION_PATTERN.matcher(str).matches()) {
+  public BitString decode(CharSequence str) {
+    try {
+      int length = str.length();
+      int bitLength = length * BASE64_BITS;
+      int numBlocks = length >> 2;
+      byte[] words = new byte[(numBlocks + 1) * 3];
+      int limit = numBlocks << 2;
+      int dst = 0;
+      int src = 0;
+      while (src < limit) {
+        int b1 = REVERSE_DICT[str.charAt(src++)];
+        int b2 = REVERSE_DICT[str.charAt(src++)];
+        int b3 = REVERSE_DICT[str.charAt(src++)];
+        int b4 = REVERSE_DICT[str.charAt(src++)];
+        if ((b1 | b2 | b3 | b4) < 0) {
+          throw new DecodingException("Undecodable Base64URL string");
+        }
+        int bits0 = b1 << 18 | b2 << 12 | b3 << 6 | b4;
+        words[dst++] = (byte) (bits0 >> 16);
+        words[dst++] = (byte) (bits0 >> 8);
+        words[dst++] = (byte) (bits0);
+      }
+      if (length > limit) {
+        remainder(str, words, length, src, dst);
+      }
+      return new BitString(new BitSet(words), bitLength);
+    } catch (ArrayIndexOutOfBoundsException e) {
       throw new DecodingException("Undecodable Base64URL string");
     }
+  }
 
-    String bitString = "";
-
-    for (int i = 0; i < str.length(); i++) {
-      char c = str.charAt(i);
-      Integer n = AbstractBase64UrlEncoder.REVERSE_DICT.get(c);
-      String s = FixedIntegerEncoder.encode(n, 6);
-      bitString += s;
+  private static final void remainder(
+      CharSequence str, byte[] words, int length, int src, int dst) {
+    int b1 = src < length ? REVERSE_DICT[str.charAt(src)] : 0;
+    src++;
+    int b2 = src < length ? REVERSE_DICT[str.charAt(src)] : 0;
+    src++;
+    int b3 = src < length ? REVERSE_DICT[str.charAt(src)] : 0;
+    src++;
+    int b4 = src < length ? REVERSE_DICT[str.charAt(src)] : 0;
+    src++;
+    if ((b1 | b2 | b3 | b4) < 0) {
+      throw new DecodingException("Undecodable Base64URL string");
     }
-
-    return bitString;
+    int bits0 = b1 << 18 | b2 << 12 | b3 << 6 | b4;
+    words[dst++] = (byte) (bits0 >> 16);
+    words[dst++] = (byte) (bits0 >> 8);
+    words[dst++] = (byte) (bits0);
   }
 }

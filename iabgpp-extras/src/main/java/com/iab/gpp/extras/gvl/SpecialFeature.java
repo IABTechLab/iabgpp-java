@@ -25,6 +25,4 @@ package com.iab.gpp.extras.gvl;
  * signal an opt-in choice as to whether vendors may employ the feature when performing any purpose
  * processing. See Policies for specifics.
  */
-public interface SpecialFeature extends Feature {
-
-}
+public interface SpecialFeature extends Feature {}

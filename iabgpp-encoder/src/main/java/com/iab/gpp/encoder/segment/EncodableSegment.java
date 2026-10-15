@@ -1,20 +1,18 @@
 package com.iab.gpp.encoder.segment;
 
-import java.util.List;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.section.AbstractEncodable;
 
-public interface EncodableSegment {
+public abstract class EncodableSegment<E extends Enum<E> & FieldKey> extends AbstractEncodable {
+  public abstract E resolveKey(FieldKey fieldName);
 
-  List<String> getFieldNames();
+  public abstract boolean hasField(E fieldName);
 
-  boolean hasField(String fieldName);
+  public abstract Object getFieldValue(E fieldName);
 
-  Object getFieldValue(String fieldName);
+  protected abstract Object getFieldValueUnsafe(E key);
 
-  void setFieldValue(String fieldName, Object value);
+  public abstract void setFieldValue(E fieldName, Object value);
 
-  String encode();
-
-  void decode(String encodedString);
-
-  default void validate() {};
+  public abstract boolean shouldEncode();
 }

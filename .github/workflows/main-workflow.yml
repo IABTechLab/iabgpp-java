@@ -1,0 +1,109 @@
+# Release to Maven Central via Central Publisher Portal
+# https://central.sonatype.org/publish/publish-portal-guide/
+#
+# Required GitHub secrets (Settings → Secrets and variables → Actions):
+#   CENTRAL_TOKEN_USERNAME - Portal token username (from https://central.sonatype.com/usertoken)
+#   CENTRAL_TOKEN_PASSWORD - Portal token password (from same page; save on first view, cannot be retrieved later)
+#   GPG_SECRET_KEY        - Armored GPG private key for signing
+#   GPG_PASSPHRASE        - Passphrase for the GPG key
+#   PAT                   - Personal access token with repo scope (for pushing commits/tags)
+#
+name: IABGPP-Java 4.X Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The release version (e.g., 4.x.x)'
+        required: true
+        default: ''
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository with full history for tagging
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Set up Java
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # Import GPG secret key for signing
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_SECRET_KEY }}" > secret_key.asc
+          gpg --import --no-tty --batch secret_key.asc || { echo "GPG import failed"; cat secret_key.asc; exit 1; }
+          rm -f secret_key.asc
+
+      # Generate settings.xml with Central Publisher Portal token credentials
+      # Token from: https://central.sonatype.com/usertoken
+      - name: Create settings.xml
+        env:
+          CENTRAL_TOKEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          CENTRAL_TOKEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml << EOF
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+            <servers>
+              <server>
+                <id>central</id>
+                <username>${CENTRAL_TOKEN_USERNAME}</username>
+                <password>${CENTRAL_TOKEN_PASSWORD}</password>
+              </server>
+            </servers>
+          </settings>
+          EOF
+
+      # Pull latest changes from master
+      - name: Pull latest changes
+        run: git pull origin 4.X
+
+      # Set the release version in pom.xml
+      - name: Set release version
+        run: mvn versions:set -DnewVersion=${{ github.event.inputs.version }} -DgenerateBackupPoms=false
+
+      # Build and deploy to Central Publisher Portal (mvn deploy uploads bundle and publishes)
+      - name: Deploy release
+        run: |
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          export GPG_TTY=$(tty || echo /dev/tty)
+          mvn clean deploy --settings ~/.m2/settings.xml -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}" -Prelease
+
+      # Commit the release version and create a tag
+      - name: Commit and tag release
+        run: |
+          git config user.email "mayank@iabtechlab.com"
+          git config user.name "Mayank Mishra"
+          git add .
+          git commit -m "${{ github.event.inputs.version }}"
+          git tag "${{ github.event.inputs.version }}"
+
+      # Set the next snapshot version
+      - name: Set next snapshot version
+        run: mvn versions:set -DnextSnapshot=true -DgenerateBackupPoms=false
+
+      # Commit the snapshot version
+      - name: Commit snapshot version
+        run: |
+          NEW_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          git add .
+          git commit -m "$NEW_VERSION"
+
+      # Push commits and tags to GitHub
+      - name: Push changes
+        run: |
+          git status
+          git push; git push --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}

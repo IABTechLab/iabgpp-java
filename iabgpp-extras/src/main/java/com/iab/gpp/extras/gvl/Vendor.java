@@ -27,8 +27,8 @@ import java.util.Optional;
 public interface Vendor {
 
   /**
-   * A vendor id: a numeric ID which is incrementally assigned and never re-used – deleted Vendors are
-   * just marked as deleted
+   * A vendor id: a numeric ID which is incrementally assigned and never re-used – deleted Vendors
+   * are just marked as deleted
    *
    * @return vendor id
    */
@@ -49,8 +49,8 @@ public interface Vendor {
   List<Integer> getPurposes();
 
   /**
-   * List of Purposes for which the vendor requires to be transparently disclosed as their legitimate
-   * interest
+   * List of Purposes for which the vendor requires to be transparently disclosed as their
+   * legitimate interest
    *
    * @return A {@link List} of purpose ids disclosed as legitimate interests
    */
@@ -66,8 +66,8 @@ public interface Vendor {
 
   /**
    * List of purposes where the vendor is flexible regarding the legal basis; they will perform the
-   * processing based on consent or a legitimate interest. The 'default' is determined by which of the
-   * other two mutually-exclusive purpose fields is used to declare the purpose for the vendor
+   * processing based on consent or a legitimate interest. The 'default' is determined by which of
+   * the other two mutually-exclusive purpose fields is used to declare the purpose for the vendor
    *
    * @return A {@link List} of flexible purpose ids
    */
@@ -97,6 +97,7 @@ public interface Vendor {
 
   /**
    * GDPR/privacy policy page URL
+   *
    * @deprecated since 3.0
    * @return policy url string
    */
@@ -111,7 +112,8 @@ public interface Vendor {
 
   /**
    * object specifying the vendor's http GET request length limit. It is optional. If a vendor entry
-   * does not include this attribute then the vendor has no overflow options and none can be inferred.
+   * does not include this attribute then the vendor has no overflow options and none can be
+   * inferred.
    *
    * @return A {@link Overflow} object
    */
@@ -125,23 +127,23 @@ public interface Vendor {
   boolean isDeleted();
 
   /**
-   * The number of seconds representing the longest potential duration for cookie storage on a device.
-   * If a Vendor uses multiple cookies with differing durations, cookieMaxAgeSeconds represents the
-   * cookie with the longest duration. Note: cookies are the only method of storage or device access
-   * that permit a predictable duration to be set. This is required only if usesCookies is set to
-   * true, else optional
-   * 
-   * @return The number, in seconds, of the longest potential duration for storage on a device, as set
-   *         when using the cookie method of storage. A negative number or a 0 indicate session
-   *         storage similar to the Set-Cookie spec. A "-100" value no longer indicates no cookie
-   *         usage. Note: this only includes what is declared when the storage is set and does not
-   *         consider duration extensions should storage be refreshed
+   * The number of seconds representing the longest potential duration for cookie storage on a
+   * device. If a Vendor uses multiple cookies with differing durations, cookieMaxAgeSeconds
+   * represents the cookie with the longest duration. Note: cookies are the only method of storage
+   * or device access that permit a predictable duration to be set. This is required only if
+   * usesCookies is set to true, else optional
+   *
+   * @return The number, in seconds, of the longest potential duration for storage on a device, as
+   *     set when using the cookie method of storage. A negative number or a 0 indicate session
+   *     storage similar to the Set-Cookie spec. A "-100" value no longer indicates no cookie usage.
+   *     Note: this only includes what is declared when the storage is set and does not consider
+   *     duration extensions should storage be refreshed
    */
   Optional<Long> getCookieMaxAgeSeconds();
 
   /**
    * This boolean field indicates whether the vendor uses cookie storage (session or otherwise).
-   * 
+   *
    * @return True indicates cookie storage is used
    */
   Optional<Boolean> getUsesCookies();
@@ -149,47 +151,49 @@ public interface Vendor {
   /**
    * This true or false field indicates whether any cookies in scope for cookieMaxAgeSeconds are
    * refreshed after being initially set.
-   * 
+   *
    * @return True indicates the vendor refreshes this cookie
    */
-  Optional<Boolean>  getCookieRefresh();
+  Optional<Boolean> getCookieRefresh();
 
   /**
    * This boolean field indicates whether the vendor uses other, non-cookie methods of storage or
    * accessing information already stored on a user’s device. Examples of non-cookie storage and
    * access may be localStorage, indexDB, mobile ad IDs, etc.
-   * 
+   *
    * @return True indicates non-cookie access is used
    */
-  Optional<Boolean>  getUsesNonCookieAccess();
+  Optional<Boolean> getUsesNonCookieAccess();
 
   /**
    * Link to a recommended, vendor-hosted, secure URL for disclosing additional storage information
-   * 
+   *
    * @return Location of vendor-hosted deviceStorage.json file
    */
   Optional<String> getDeviceStorageDisclosureUrl();
 
   /**
    * This object indicates how long vendors retain user's data for each declared purpose
+   *
    * @since 3.0
-   * 
    * @return {@link DataRetention} object
    */
   Optional<DataRetention> getDataRetention();
 
   /**
-   * This list indicates unique urls to privacy policies by language and link to an
-   * explanation of their legitimate interests at stake
+   * This list indicates unique urls to privacy policies by language and link to an explanation of
+   * their legitimate interests at stake
+   *
    * @since 3.0
    * @return A {@link List} of {@link VendorUrl} objects
    */
   Optional<List<VendorUrl>> getUrls();
 
   /**
-   * This list of integers indicates data categories {@link DataCategory} that vendors collect and process
-   * @since 3.0
+   * This list of integers indicates data categories {@link DataCategory} that vendors collect and
+   * process
    *
+   * @since 3.0
    * @return A {@link List} of integers
    */
   Optional<List<Integer>> getDataDeclaration();

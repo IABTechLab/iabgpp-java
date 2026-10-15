@@ -21,7 +21,6 @@ package com.iab.gpp.extras.jackson.cmp;
  */
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.time.Instant;
 import java.util.Optional;
 
@@ -34,7 +33,6 @@ public class Cmp implements com.iab.gpp.extras.cmp.Cmp {
   private boolean isCommercial;
 
   private Instant deletedDate;
-
 
   /**
    * A CMP id: a numeric ID which is incrementally assigned and never re-used – inactive CMPs are
@@ -84,6 +82,8 @@ public class Cmp implements com.iab.gpp.extras.cmp.Cmp {
    */
   @Override
   public boolean isDeleted() {
-    return Optional.ofNullable(this.deletedDate).map(deleteDate -> !deleteDate.isAfter(Instant.now())).orElse(false);
+    return Optional.ofNullable(this.deletedDate)
+        .map(deleteDate -> !deleteDate.isAfter(Instant.now()))
+        .orElse(false);
   }
 }

@@ -1,23 +1,21 @@
 package com.iab.gpp.encoder.section;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.iab.gpp.encoder.datatype.FixedIntegerList;
 import com.iab.gpp.encoder.field.UsVaField;
-import com.iab.gpp.encoder.segment.EncodableSegment;
-import com.iab.gpp.encoder.segment.UsVaCoreSegment;
+import com.iab.gpp.encoder.segment.Base64Segment;
 
-public class UsVa extends AbstractLazilyEncodableSection {
+public class UsVa extends AbstractUsSection<UsVaField> {
 
-  public static int ID = 9;
-  public static int VERSION = 1;
-  public static String NAME = "usva";
+  public static final int ID = 9;
+  public static final int VERSION = 1;
+  public static final String NAME = "usva";
 
   public UsVa() {
-    super();
+    super(new Base64Segment<>(UsVaField.USVA_CORE_SEGMENT_FIELD_NAMES));
   }
 
-  public UsVa(String encodedString) {
-    super();
+  public UsVa(CharSequence encodedString) {
+    this();
     decode(encodedString);
   }
 
@@ -33,42 +31,8 @@ public class UsVa extends AbstractLazilyEncodableSection {
 
   @Override
   public int getVersion() {
-    return UsVa.VERSION;
+    return (Integer) this.getFieldValue(UsVaField.VERSION);
   }
-
-  @Override
-  protected List<EncodableSegment> initializeSegments() {
-    List<EncodableSegment> segments = new ArrayList<>();
-    segments.add(new UsVaCoreSegment());
-    return segments;
-  }
-
-  @Override
-  protected List<EncodableSegment> decodeSection(String encodedString) {
-    List<EncodableSegment> segments = initializeSegments();
-
-    if(encodedString != null && !encodedString.isEmpty()) {
-      String[] encodedSegments = encodedString.split("\\.");
-  
-      for (int i = 0; i < segments.size(); i++) {
-        if (encodedSegments.length > i) {
-          segments.get(i).decode(encodedSegments[i]);
-        }
-      }
-    }
-
-    return segments;
-  }
-
-  @Override
-  protected String encodeSection(List<EncodableSegment> segments) {
-    List<String> encodedSegments = new ArrayList<>();
-    for (EncodableSegment segment : segments) {
-      encodedSegments.add(segment.encode());
-    }
-    return String.join(".", encodedSegments);
-  }
-
 
   public Integer getSharingNotice() {
     return (Integer) this.getFieldValue(UsVaField.SHARING_NOTICE);
@@ -90,9 +54,8 @@ public class UsVa extends AbstractLazilyEncodableSection {
     return (Integer) this.getFieldValue(UsVaField.TARGETED_ADVERTISING_OPT_OUT);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Integer> getSensitiveDataProcessing() {
-    return (List<Integer>) this.getFieldValue(UsVaField.SENSITIVE_DATA_PROCESSING);
+  public FixedIntegerList getSensitiveDataProcessing() {
+    return (FixedIntegerList) this.getFieldValue(UsVaField.SENSITIVE_DATA_PROCESSING);
   }
 
   public Integer getKnownChildSensitiveDataConsents() {

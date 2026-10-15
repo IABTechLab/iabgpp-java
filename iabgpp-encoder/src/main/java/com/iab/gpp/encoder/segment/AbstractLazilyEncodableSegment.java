@@ -1,76 +1,112 @@
 package com.iab.gpp.encoder.segment;
 
 import com.iab.gpp.encoder.error.InvalidFieldException;
-import com.iab.gpp.encoder.field.Fields;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.field.FieldNames;
 
-public abstract class AbstractLazilyEncodableSegment<T extends Fields<?>> implements EncodableSegment {
+abstract class AbstractLazilyEncodableSegment<E extends Enum<E> & FieldKey>
+    extends EncodableSegment<E> {
 
-  protected T fields;
+  protected final FieldNames<E> fieldNames;
+  protected final Object[] values;
+  private boolean dirty;
+  private final boolean optional;
 
-  private String encodedString = null;
-
-  private boolean dirty = false;
-  private boolean decoded = true;
-
-  public AbstractLazilyEncodableSegment() {
-    this.fields = initializeFields();
+  protected AbstractLazilyEncodableSegment(FieldNames<E> fieldNames, boolean optional) {
+    this.fieldNames = fieldNames;
+    this.values = new Object[fieldNames.size()];
+    this.optional = optional;
   }
 
-  protected abstract T initializeFields();
-
-  protected abstract String encodeSegment(T fields);
-
-  protected abstract void decodeSegment(String encodedString, T Fields);
-
-  public boolean hasField(String fieldName) {
-    return this.fields.containsKey(fieldName);
-  }
-
-  public Object getFieldValue(String fieldName) {
-    if (!this.decoded) {
-      this.decodeSegment(this.encodedString, this.fields);
-      this.dirty = false;
-      this.decoded = true;
+  @Override
+  public boolean shouldEncode() {
+    if (!optional) {
+      return true;
     }
+    int size = fieldNames.size();
+    for (int i = 0; i < size; i++) {
+      if (fieldNames.get(i).isPresent(values, i)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-    if (this.fields.containsKey(fieldName)) {
-      return this.fields.get(fieldName).getValue();
+  @Override
+  public final E resolveKey(FieldKey fieldName) {
+    return fieldNames.resolveKey(fieldName);
+  }
+
+  @Override
+  public final boolean hasField(E key) {
+    return fieldNames.getIndex(key) != null;
+  }
+
+  @Override
+  public final boolean isDirty() {
+    if (dirty) {
+      return true;
+    }
+    int size = fieldNames.size();
+    for (int i = 0; i < size; i++) {
+      if (fieldNames.get(i).isDirty(values, i)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public final void setDirty(boolean dirty) {
+    this.dirty = dirty;
+    int size = fieldNames.size();
+    for (int i = 0; i < size; i++) {
+      fieldNames.get(i).setDirty(values, i, dirty);
+    }
+  }
+
+  @Override
+  public final Object getFieldValue(E fieldName) {
+    ensureDecode();
+    return getFieldValueUnsafe(fieldName);
+  }
+
+  @Override
+  protected final Object getFieldValueUnsafe(E fieldName) {
+    Integer index = fieldNames.getIndex(fieldName);
+    if (index != null) {
+      return fieldNames.get(index).get(values, index);
     } else {
       throw new InvalidFieldException("Invalid field: '" + fieldName + "'");
     }
   }
 
-  public void setFieldValue(String fieldName, Object value) {
-    if (!this.decoded) {
-      this.decodeSegment(this.encodedString, this.fields);
-      this.dirty = false;
-      this.decoded = true;
-    }
+  @Override
+  public final void setFieldValue(E fieldName, Object value) {
+    ensureDecode();
+    setFieldValueUnsafe(fieldName, value);
+  }
 
-    if (this.fields.containsKey(fieldName)) {
-      this.fields.get(fieldName).setValue(value);
-      this.dirty = true;
+  protected final void setFieldValueUnsafe(E fieldName, Object value) {
+    Integer index = fieldNames.getIndex(fieldName);
+    if (index != null) {
+      fieldNames.get(index).set(values, index, value);
+      dirty = true;
     } else {
       throw new InvalidFieldException(fieldName + " not found");
     }
   }
 
-  public String encode() {
-    if (this.encodedString == null || this.encodedString.isEmpty() || this.dirty) {
-      this.validate();
-      this.encodedString = encodeSegment(this.fields);
-      this.dirty = false;
-      this.decoded = true;
+  @Override
+  public String toString() {
+    ensureDecode();
+    StringBuilder sb = new StringBuilder();
+    sb.append("{name=").append(getClass().getSimpleName());
+    int size = fieldNames.size();
+    for (int i = 0; i < size; i++) {
+      sb.append(", ").append(fieldNames.get(i).getName()).append('=').append(values[i]);
     }
-
-    return this.encodedString;
+    sb.append('}');
+    return sb.toString();
   }
-
-  public void decode(String encodedString) {
-    this.encodedString = encodedString;
-    this.dirty = false;
-    this.decoded = false;
-  }
-
-
 }

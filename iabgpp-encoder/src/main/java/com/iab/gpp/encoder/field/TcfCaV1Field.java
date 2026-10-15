@@ -1,73 +1,87 @@
 package com.iab.gpp.encoder.field;
 
-import java.util.Arrays;
-import java.util.List;
+import com.iab.gpp.encoder.datatype.DataType;
+import com.iab.gpp.encoder.datatype.EncodableArrayOfOptimizedFibonacciRanges;
+import com.iab.gpp.encoder.datatype.EncodableBoolean;
+import com.iab.gpp.encoder.datatype.EncodableDatetime;
+import com.iab.gpp.encoder.datatype.EncodableFixedBitfield;
+import com.iab.gpp.encoder.datatype.EncodableFixedInteger;
+import com.iab.gpp.encoder.datatype.EncodableFixedString;
+import com.iab.gpp.encoder.datatype.EncodableFlexibleBitfield;
+import com.iab.gpp.encoder.datatype.EncodableOptimizedFibonacciRange;
+import com.iab.gpp.encoder.section.TcfCaV1;
 
-public class TcfCaV1Field {
+public enum TcfCaV1Field implements FieldKey {
+  VERSION(new EncodableFixedInteger<>("Version", 6, TcfCaV1.VERSION)),
+  CREATED(new EncodableDatetime<>("Created")),
+  LAST_UPDATED(new EncodableDatetime<>("LastUpdated")),
+  CMP_ID(new EncodableFixedInteger<>("CmpId", 12, 0)),
+  CMP_VERSION(new EncodableFixedInteger<>("CmpVersion", 12, 0)),
+  CONSENT_SCREEN(new EncodableFixedInteger<>("ConsentScreen", 6, 0)),
+  CONSENT_LANGUAGE(new EncodableFixedString<>("ConsentLanguage", 2, "EN")),
+  VENDOR_LIST_VERSION(new EncodableFixedInteger<>("VendorListVersion", 12, 0)),
+  TCF_POLICY_VERSION(new EncodableFixedInteger<>("TcfPolicyVersion", 6, 2)),
+  USE_NON_STANDARD_STACKS(new EncodableBoolean<>("UseNonStandardStacks", false)),
+  SPECIAL_FEATURE_EXPRESS_CONSENT(new EncodableFixedBitfield<>("SpecialFeatureExpressConsent", 12)),
+  PURPOSES_EXPRESS_CONSENT(new EncodableFixedBitfield<>("PurposesExpressConsent", 24)),
+  PURPOSES_IMPLIED_CONSENT(new EncodableFixedBitfield<>("PurposesImpliedConsent", 24)),
+  VENDOR_EXPRESS_CONSENT(new EncodableOptimizedFibonacciRange<>("VendorExpressConsent")),
+  VENDOR_IMPLIED_CONSENT(new EncodableOptimizedFibonacciRange<>("VendorImpliedConsent")),
+  PUB_RESTRICTIONS(new EncodableArrayOfOptimizedFibonacciRanges<>("PubRestrictions", 6, 2)),
 
-  public static String VERSION = "Version";
-  public static String CREATED = "Created";
-  public static String LAST_UPDATED = "LastUpdated";
-  public static String CMP_ID = "CmpId";
-  public static String CMP_VERSION = "CmpVersion";
-  public static String CONSENT_SCREEN = "ConsentScreen";
-  public static String CONSENT_LANGUAGE = "ConsentLanguage";
-  public static String VENDOR_LIST_VERSION = "VendorListVersion";
-  public static String TCF_POLICY_VERSION = "TcfPolicyVersion";
-  public static String USE_NON_STANDARD_STACKS = "UseNonStandardStacks";
-  public static String SPECIAL_FEATURE_EXPRESS_CONSENT = "SpecialFeatureExpressConsent";
-  public static String PURPOSES_EXPRESS_CONSENT = "PurposesExpressConsent";
-  public static String PURPOSES_IMPLIED_CONSENT = "PurposesImpliedConsent";
-  public static String VENDOR_EXPRESS_CONSENT = "VendorExpressConsent";
-  public static String VENDOR_IMPLIED_CONSENT = "VendorImpliedConsent";
-  public static String PUB_RESTRICTIONS = "PubRestrictions";
+  PUB_PURPOSES_SEGMENT_TYPE(new EncodableFixedInteger<>("PubPurposesSegmentType", 3, 3)),
+  PUB_PURPOSES_EXPRESS_CONSENT(new EncodableFixedBitfield<>("PubPurposesExpressConsent", 24)),
+  PUB_PURPOSES_IMPLIED_CONSENT(new EncodableFixedBitfield<>("PubPurposesImpliedConsent", 24)),
+  NUM_CUSTOM_PURPOSES(new EncodableFixedInteger<>("NumCustomPurposes", 6, 0)),
+  CUSTOM_PURPOSES_EXPRESS_CONSENT(
+      new EncodableFlexibleBitfield<>(
+          "CustomPurposesExpressConsent", TcfCaV1Field.NUM_CUSTOM_PURPOSES)),
+  CUSTOM_PURPOSES_IMPLIED_CONSENT(
+      new EncodableFlexibleBitfield<>(
+          "CustomPurposesImpliedConsent", TcfCaV1Field.NUM_CUSTOM_PURPOSES)),
 
-  public static String PUB_PURPOSES_SEGMENT_TYPE = "PubPurposesSegmentType";
-  public static String PUB_PURPOSES_EXPRESS_CONSENT = "PubPurposesExpressConsent";
-  public static String PUB_PURPOSES_IMPLIED_CONSENT = "PubPurposesImpliedConsent";
-  public static String NUM_CUSTOM_PURPOSES = "NumCustomPurposes";
-  public static String CUSTOM_PURPOSES_EXPRESS_CONSENT = "CustomPurposesExpressConsent";
-  public static String CUSTOM_PURPOSES_IMPLIED_CONSENT = "CustomPurposesImpliedConsent";
+  DISCLOSED_VENDORS_SEGMENT_TYPE(new EncodableFixedInteger<>("DisclosedVendorsSegmentType", 3, 1)),
+  DISCLOSED_VENDORS(new EncodableOptimizedFibonacciRange<>("DisclosedVendors"));
 
-  public static String DISCLOSED_VENDORS_SEGMENT_TYPE = "DisclosedVendorsSegmentType";
-  public static String DISCLOSED_VENDORS = "DisclosedVendors";
-  
-  //@formatter:off
-  public static List<String> TCFCAV1_CORE_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
-      TcfCaV1Field.VERSION,
-      TcfCaV1Field.CREATED,
-      TcfCaV1Field.LAST_UPDATED,
-      TcfCaV1Field.CMP_ID,
-      TcfCaV1Field.CMP_VERSION,
-      TcfCaV1Field.CONSENT_SCREEN,
-      TcfCaV1Field.CONSENT_LANGUAGE,
-      TcfCaV1Field.VENDOR_LIST_VERSION,
-      TcfCaV1Field.TCF_POLICY_VERSION,
-      TcfCaV1Field.USE_NON_STANDARD_STACKS,
-      TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT,
-      TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
-      TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
-      TcfCaV1Field.VENDOR_EXPRESS_CONSENT,
-      TcfCaV1Field.VENDOR_IMPLIED_CONSENT,
-      TcfCaV1Field.PUB_RESTRICTIONS
-  });
-  //@formatter:on
+  private final DataType<TcfCaV1Field, ?> type;
 
-  //@formatter:off
-  public static List<String> TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
-    TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE,
-    TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
-    TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
-    TcfCaV1Field.NUM_CUSTOM_PURPOSES,
-    TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
-    TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT,
-  });
-  //@formatter:on
-  
-  //@formatter:off
-  public static List<String> TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES = Arrays.asList(new String[] {
-    TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE,
-    TcfCaV1Field.DISCLOSED_VENDORS,
-  });
-  //@formatter:on
+  TcfCaV1Field(DataType<TcfCaV1Field, ?> type) {
+    this.type = type;
+  }
+
+  @Override
+  public DataType<TcfCaV1Field, ?> getType() {
+    return type;
+  }
+
+  public static final FieldNames<TcfCaV1Field> TCFCAV1_CORE_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          TcfCaV1Field.VERSION,
+          TcfCaV1Field.CREATED,
+          TcfCaV1Field.LAST_UPDATED,
+          TcfCaV1Field.CMP_ID,
+          TcfCaV1Field.CMP_VERSION,
+          TcfCaV1Field.CONSENT_SCREEN,
+          TcfCaV1Field.CONSENT_LANGUAGE,
+          TcfCaV1Field.VENDOR_LIST_VERSION,
+          TcfCaV1Field.TCF_POLICY_VERSION,
+          TcfCaV1Field.USE_NON_STANDARD_STACKS,
+          TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT,
+          TcfCaV1Field.PURPOSES_EXPRESS_CONSENT,
+          TcfCaV1Field.PURPOSES_IMPLIED_CONSENT,
+          TcfCaV1Field.VENDOR_EXPRESS_CONSENT,
+          TcfCaV1Field.VENDOR_IMPLIED_CONSENT,
+          TcfCaV1Field.PUB_RESTRICTIONS);
+
+  public static final FieldNames<TcfCaV1Field> TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(
+          TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE,
+          TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT,
+          TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT,
+          TcfCaV1Field.NUM_CUSTOM_PURPOSES,
+          TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT,
+          TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT);
+
+  public static final FieldNames<TcfCaV1Field> TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES =
+      new FieldNames<>(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE, TcfCaV1Field.DISCLOSED_VENDORS);
 }
