@@ -8,7 +8,7 @@
     <artifactId>iabgpp-core</artifactId>
     <version>4.0.0</version>
     <name>IAB GPP Core Library</name>
-    <url>https://github.com/IABTechLabs/iabtcf-java</url>
+    <url>https://github.com/IABTechLab/iabgpp-java</url>
     <description>Encode and decode consent information with the IAB GPP v4.0</description>
     <packaging>pom</packaging>
 
@@ -200,7 +200,7 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.10.0</version>
+                        <version>0.12.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
