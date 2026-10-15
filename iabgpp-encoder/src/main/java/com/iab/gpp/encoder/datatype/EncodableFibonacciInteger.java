@@ -1,51 +1,31 @@
 package com.iab.gpp.encoder.datatype;
 
-import com.iab.gpp.encoder.datatype.encoder.FibonacciIntegerEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public class EncodableFibonacciInteger extends AbstractEncodableBitStringDataType<Integer> {
+public final class EncodableFibonacciInteger<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, Integer> {
 
-  protected EncodableFibonacciInteger() {
-    super(true);
+  private final Integer initial;
+
+  public EncodableFibonacciInteger(String name, Integer initial) {
+    super(name, null);
+    this.initial = initial;
   }
 
-  public EncodableFibonacciInteger(Integer value) {
-    super(true);
-    setValue(value);
+  @Override
+  protected Integer initialize() {
+    return initial;
   }
 
-  public EncodableFibonacciInteger(Integer value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
+  @Override
+  protected void encode(BitString builder, Integer value, EncodableSegment<E> segment) {
+    builder.writeFibonacci(value);
   }
 
-  public String encode() {
-    try {
-      return FibonacciIntegerEncoder.encode(this.value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
-  }
-
-  public void decode(String bitString) {
-    try {
-      this.value = FibonacciIntegerEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
-  }
-
-  public String substring(String bitString, int fromIndex) throws SubstringException {
-    try {
-      int index = bitString.indexOf("11", fromIndex);
-      if (index > 0) {
-        return bitString.substring(fromIndex, index + 2);
-      } else {
-        return bitString;
-      }
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected Integer decode(BitString reader, EncodableSegment<E> segment) {
+    return reader.readFibonacci();
   }
 }

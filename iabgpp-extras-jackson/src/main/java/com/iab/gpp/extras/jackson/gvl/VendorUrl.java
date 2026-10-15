@@ -60,5 +60,4 @@ public class VendorUrl implements com.iab.gpp.extras.gvl.VendorUrl {
   public Optional<String> getLegIntClaim() {
     return Optional.ofNullable(legIntClaim);
   }
-
 }

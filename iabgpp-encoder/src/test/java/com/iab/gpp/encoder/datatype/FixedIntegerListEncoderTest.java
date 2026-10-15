@@ -1,0 +1,257 @@
+package com.iab.gpp.encoder.datatype;
+
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
+import com.iab.gpp.encoder.error.DecodingException;
+import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.UsNatField;
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+public class FixedIntegerListEncoderTest {
+
+  @Test
+  public void testEncode1() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, new ArrayList<>(), 2, 2);
+    Assertions.assertEquals("0000", builder.toString());
+  }
+
+  @Test
+  public void testEncode2() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0), 2, 2);
+    Assertions.assertEquals("0000", builder.toString());
+  }
+
+  @Test
+  public void testEncode3() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0, 0), 2, 2);
+    Assertions.assertEquals("0000", builder.toString());
+  }
+
+  @Test
+  public void testEncode4() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0, 1), 2, 2);
+    Assertions.assertEquals("0001", builder.toString());
+  }
+
+  @Test
+  public void testEncode5() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0, 2), 2, 2);
+    Assertions.assertEquals("0010", builder.toString());
+  }
+
+  @Test
+  public void testEncode6() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(0, 3), 2, 2);
+    Assertions.assertEquals("0011", builder.toString());
+  }
+
+  @Test
+  public void testEncode7() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(1, 0), 2, 2);
+    Assertions.assertEquals("0100", builder.toString());
+  }
+
+  @Test
+  public void testEncode8() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(1, 1), 2, 2);
+    Assertions.assertEquals("0101", builder.toString());
+  }
+
+  @Test
+  public void testEncode9() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(1, 2), 2, 2);
+    Assertions.assertEquals("0110", builder.toString());
+  }
+
+  @Test
+  public void testEncode10() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(1, 3), 2, 2);
+    Assertions.assertEquals("0111", builder.toString());
+  }
+
+  @Test
+  public void testEncode11() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(2, 0), 2, 2);
+    Assertions.assertEquals("1000", builder.toString());
+  }
+
+  @Test
+  public void testEncode12() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(2, 1), 2, 2);
+    Assertions.assertEquals("1001", builder.toString());
+  }
+
+  @Test
+  public void testEncode13() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(2, 2), 2, 2);
+    Assertions.assertEquals("1010", builder.toString());
+  }
+
+  @Test
+  public void testEncode14() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(2, 3), 2, 2);
+    Assertions.assertEquals("1011", builder.toString());
+  }
+
+  @Test
+  public void testEncode15() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 0), 2, 2);
+    Assertions.assertEquals("1100", builder.toString());
+  }
+
+  @Test
+  public void testEncode16() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 1), 2, 2);
+    Assertions.assertEquals("1101", builder.toString());
+  }
+
+  @Test
+  public void testEncode17() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 2), 2, 2);
+    Assertions.assertEquals("1110", builder.toString());
+  }
+
+  @Test
+  public void testEncode18() {
+    BitString builder = new BitString();
+    FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 3), 2, 2);
+    Assertions.assertEquals("1111", builder.toString());
+  }
+
+  @Test
+  public void testEncode19() {
+    try {
+      BitString builder = new BitString();
+      FixedIntegerListEncoder.encode(builder, Arrays.asList(3, 3), 1, 1);
+      Assertions.fail("EncodingException expected");
+    } catch (EncodingException e) {
+
+    }
+  }
+
+  private FixedIntegerList decode(String str) {
+    EncodableFixedIntegerList<UsNatField> encodable =
+        new EncodableFixedIntegerList<>("", 2, 2, null);
+    return encodable.decode(BitString.of(str), null);
+  }
+
+  @Test
+  public void testDecode2() {
+    Assertions.assertEquals(Arrays.asList(0, 0), decode("0000"));
+  }
+
+  @Test
+  public void testDecode3() {
+    Assertions.assertEquals(Arrays.asList(0, 1), decode("0001"));
+  }
+
+  @Test
+  public void testDecode4() {
+    Assertions.assertEquals(Arrays.asList(0, 2), decode("0010"));
+  }
+
+  @Test
+  public void testDecode5() {
+    Assertions.assertEquals(Arrays.asList(0, 3), decode("0011"));
+  }
+
+  @Test
+  public void testDecode6() {
+    Assertions.assertEquals(Arrays.asList(1, 0), decode("0100"));
+  }
+
+  @Test
+  public void testDecode7() {
+    Assertions.assertEquals(Arrays.asList(1, 1), decode("0101"));
+  }
+
+  @Test
+  public void testDecode8() {
+    Assertions.assertEquals(Arrays.asList(1, 2), decode("0110"));
+  }
+
+  @Test
+  public void testDecode9() {
+    Assertions.assertEquals(Arrays.asList(1, 3), decode("0111"));
+  }
+
+  @Test
+  public void testDecode10() {
+    Assertions.assertEquals(Arrays.asList(2, 0), decode("1000"));
+  }
+
+  @Test
+  public void testDecode11() {
+    Assertions.assertEquals(Arrays.asList(2, 1), decode("1001"));
+  }
+
+  @Test
+  public void testDecode12() {
+    Assertions.assertEquals(Arrays.asList(2, 2), decode("1010"));
+  }
+
+  @Test
+  public void testDecode13() {
+    Assertions.assertEquals(Arrays.asList(2, 3), decode("1011"));
+  }
+
+  @Test
+  public void testDecode14() {
+    Assertions.assertEquals(Arrays.asList(3, 0), decode("1100"));
+  }
+
+  @Test
+  public void testDecode15() {
+    Assertions.assertEquals(Arrays.asList(3, 1), decode("1101"));
+  }
+
+  @Test
+  public void testDecode16() {
+    Assertions.assertEquals(Arrays.asList(3, 2), decode("1110"));
+  }
+
+  @Test
+  public void testDecode17() {
+    Assertions.assertEquals(Arrays.asList(3, 3), decode("1111"));
+  }
+
+  @Test
+  public void testDecode19() {
+    try {
+      decode("2");
+      Assertions.fail("DecodingException expected");
+    } catch (DecodingException e) {
+
+    }
+  }
+
+  @Test
+  public void testDecode20() {
+    try {
+      decode("111");
+      Assertions.fail("DecodingException expected");
+    } catch (DecodingException e) {
+
+    }
+  }
+}

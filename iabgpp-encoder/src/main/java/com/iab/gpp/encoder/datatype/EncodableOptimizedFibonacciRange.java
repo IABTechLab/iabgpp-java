@@ -1,67 +1,43 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
-import com.iab.gpp.encoder.datatype.encoder.FixedIntegerEncoder;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.OptimizedFibonacciRangeEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.Collection;
 
-public class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<List<Integer>> {
+public final class EncodableOptimizedFibonacciRange<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, IntegerSet> {
 
-  protected EncodableOptimizedFibonacciRange() {
-    super(true);
+  public EncodableOptimizedFibonacciRange(String name) {
+    super(name, null);
   }
 
-  public EncodableOptimizedFibonacciRange(List<Integer> value) {
-    super(true);
-    setValue(value);
+  @Override
+  protected IntegerSet initialize() {
+    return new IntegerSet();
   }
 
-  public EncodableOptimizedFibonacciRange(List<Integer> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
+  @Override
+  protected boolean isPresent(IntegerSet value) {
+    return !value.isEmpty();
   }
 
-  public String encode() {
-    try {
-      return OptimizedFibonacciRangeEncoder.encode(this.value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+  @Override
+  protected void encode(BitString builder, IntegerSet value, EncodableSegment<E> segment) {
+    OptimizedFibonacciRangeEncoder.encode(builder, value);
   }
 
-  public void decode(String bitString) {
-    try {
-      this.value = OptimizedFibonacciRangeEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
-  }
-
-  public String substring(String bitString, int fromIndex) throws SubstringException {
-    try {
-      int max = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 16));
-      if (bitString.charAt(fromIndex + 16) == '1') {
-        return (bitString.substring(fromIndex, fromIndex + 17)
-            + new EncodableFibonacciIntegerRange().substring(bitString, fromIndex + 17));
-      } else {
-        return bitString.substring(fromIndex, fromIndex + 17 + max);
-      }
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected IntegerSet decode(BitString reader, EncodableSegment<E> segment) {
+    return OptimizedFibonacciRangeEncoder.decode(reader);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    super.setValue(new ArrayList<>(new TreeSet<>((List<Integer>) value)));
-  }
-
-  @Override
-  public List<Integer> getValue() {
-    return new ArrayList<>(super.getValue());
+  protected IntegerSet processValue(IntegerSet oldValue, Object newValue) {
+    oldValue.clear();
+    oldValue.addAll((Collection<Integer>) newValue);
+    return oldValue;
   }
 }

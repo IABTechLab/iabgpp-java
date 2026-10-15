@@ -1,6 +1,5 @@
 package com.iab.gpp.extras.gvl;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -49,5 +48,4 @@ public interface DataRetention {
    * @return specialPurposes
    */
   Map<Integer, Integer> getSpecialPurposes();
-
 }

@@ -1,46 +1,31 @@
 package com.iab.gpp.encoder.datatype;
 
-import com.iab.gpp.encoder.datatype.encoder.BooleanEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
 
-public class EncodableBoolean extends AbstractEncodableBitStringDataType<Boolean> {
+public final class EncodableBoolean<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, Boolean> {
 
-  protected EncodableBoolean() {
-    super(true);
+  private final Boolean initial;
+
+  public EncodableBoolean(String name, Boolean initial) {
+    super(name, null);
+    this.initial = initial;
   }
 
-  public EncodableBoolean(Boolean value) {
-    super(true);
-    setValue(value);
+  @Override
+  protected Boolean initialize() {
+    return initial;
   }
 
-  public EncodableBoolean(Boolean value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
+  @Override
+  protected void encode(BitString builder, Boolean value, EncodableSegment<E> segment) {
+    builder.writeBoolean(value);
   }
 
-  public String encode() {
-    try {
-      return BooleanEncoder.encode(this.value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
-  }
-
-  public void decode(String bitString) {
-    try {
-      this.value = BooleanEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
-  }
-
-  public String substring(String bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + 1);
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected Boolean decode(BitString reader, EncodableSegment<E> segment) {
+    return reader.readBoolean();
   }
 }

@@ -1,57 +1,30 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.Collection;
+import com.iab.gpp.encoder.bitstring.BitString;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import com.iab.gpp.encoder.error.ValidationException;
 
-public abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
-  //this if for backwards compatibility with the newer fields
-  protected boolean hardFailIfMissing = true;
-  protected Predicate<T> validator = null;
-  protected T value;
+public abstract class AbstractEncodableBitStringDataType<E extends Enum<E> & FieldKey, T>
+    extends DataType<E, T> {
 
-  protected AbstractEncodableBitStringDataType(boolean hardFailIfMissing) {
-    this.hardFailIfMissing = hardFailIfMissing;
-  }
-  
-  public AbstractEncodableBitStringDataType<T> withValidator(Predicate<T> validator) {
-    this.validator = validator;
-    return this;
-  }
-  
-  public boolean hasValue() {
-    return this.value != null;
+  protected AbstractEncodableBitStringDataType(String name, Predicate<T> validator) {
+    super(name, validator);
   }
 
-  public T getValue() {
-    return this.value;
+  @Override
+  public final void encode(
+      BitString writer, Object[] values, int index, EncodableSegment<E> segment) {
+    encode(writer, get(values, index), segment);
   }
 
-  @SuppressWarnings("unchecked")
-  public void setValue(Object value) {
-    T v = (T) value;
-    if (validator == null || validator.test(v)) {
-      this.value = v;
-    } else {
-      if (v instanceof Collection) {
-        throw new ValidationException("Invalid value '"
-            + ((Collection<?>) v).stream().map(i -> i.toString()).collect(Collectors.joining(",")) + "'");
-      } else {
-        throw new ValidationException("Invalid value '" + v + "'");
-      }
-    }
+  protected abstract void encode(BitString writer, T value, EncodableSegment<E> segment);
 
+  @Override
+  public final void decode(
+      BitString reader, Object[] values, int index, EncodableSegment<E> segment) {
+    values[index] = decode(reader, segment);
   }
 
-  public boolean getHardFailIfMissing() {
-    return this.hardFailIfMissing;
-  }
-
-  public abstract String encode();
-
-  public abstract void decode(String bitString);
-
-  public abstract String substring(String bitString, int fromIndex) throws SubstringException;
-
+  protected abstract T decode(BitString reader, EncodableSegment<E> segment);
 }

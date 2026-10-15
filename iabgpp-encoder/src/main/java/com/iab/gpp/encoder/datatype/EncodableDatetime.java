@@ -1,47 +1,30 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.time.ZonedDateTime;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.DatetimeEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.time.Instant;
 
-public class EncodableDatetime extends AbstractEncodableBitStringDataType<ZonedDateTime> {
+public final class EncodableDatetime<E extends Enum<E> & FieldKey>
+    extends AbstractEncodableBitStringDataType<E, Instant> {
 
-  protected EncodableDatetime() {
-    super(true);
+  public EncodableDatetime(String name) {
+    super(name, null);
   }
 
-  public EncodableDatetime(ZonedDateTime value) {
-    super(true);
-    setValue(value);
+  @Override
+  protected Instant initialize() {
+    return Instant.EPOCH;
   }
 
-  public EncodableDatetime(ZonedDateTime value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    setValue(value);
+  @Override
+  protected void encode(BitString builder, Instant value, EncodableSegment<E> segment) {
+    DatetimeEncoder.encode(builder, value);
   }
 
-  public String encode() {
-    try {
-      return DatetimeEncoder.encode(this.value);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
-  }
-
-  public void decode(String bitString) {
-    try {
-      this.value = DatetimeEncoder.decode(bitString);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
-  }
-
-  public String substring(String bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + 36);
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected Instant decode(BitString reader, EncodableSegment<E> segment) {
+    return DatetimeEncoder.decode(reader);
   }
 }

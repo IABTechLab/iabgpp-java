@@ -1,75 +1,61 @@
 package com.iab.gpp.encoder.datatype;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.iab.gpp.encoder.bitstring.BitString;
 import com.iab.gpp.encoder.datatype.encoder.FixedIntegerListEncoder;
-import com.iab.gpp.encoder.error.DecodingException;
-import com.iab.gpp.encoder.error.EncodingException;
+import com.iab.gpp.encoder.field.FieldKey;
+import com.iab.gpp.encoder.segment.EncodableSegment;
+import java.util.List;
+import java.util.function.Predicate;
 
-public class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<List<Integer>> {
+public final class EncodableFixedIntegerList<E extends Enum<E> & FieldKey>
+    extends AbstractDirtyableBitStringDataType<E, FixedIntegerList> {
 
-  private int elementBitStringLength;
-  private int numElements;
+  private final int elementBitStringLength;
+  private final int numElements;
 
-  protected EncodableFixedIntegerList(int elementBitStringLength, int numElements) {
-    super(true);
+  public EncodableFixedIntegerList(
+      String name,
+      int elementBitStringLength,
+      int numElements,
+      Predicate<FixedIntegerList> validator) {
+    super(name, validator);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = numElements;
   }
 
-  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value) {
-    super(true);
-    this.elementBitStringLength = elementBitStringLength;
-    this.numElements = value.size();
-    setValue(value);
+  @Override
+  public String toString() {
+    return name + "=Int(" + elementBitStringLength + "," + numElements + ")";
   }
 
-  public EncodableFixedIntegerList(int elementBitStringLength, List<Integer> value, boolean hardFailIfMissing) {
-    super(hardFailIfMissing);
-    this.elementBitStringLength = elementBitStringLength;
-    this.numElements = value.size();
-    setValue(value);
+  @Override
+  protected FixedIntegerList initialize() {
+    return new FixedIntegerList(elementBitStringLength, numElements);
   }
 
-  public String encode() {
-    try {
-      return FixedIntegerListEncoder.encode(this.value, this.elementBitStringLength, this.numElements);
-    } catch (Exception e) {
-      throw new EncodingException(e);
-    }
+  @Override
+  protected boolean isPresent(FixedIntegerList value) {
+    return value.isPresent();
   }
 
-  public void decode(String bitString) {
-    try {
-      this.value = FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements);
-    } catch (Exception e) {
-      throw new DecodingException(e);
-    }
+  @Override
+  protected void encode(BitString builder, FixedIntegerList value, EncodableSegment<E> segment) {
+    FixedIntegerListEncoder.encode(builder, value, this.elementBitStringLength, this.numElements);
   }
 
-  public String substring(String bitString, int fromIndex) throws SubstringException {
-    try {
-      return bitString.substring(fromIndex, fromIndex + (this.elementBitStringLength * numElements));
-    } catch (Exception e) {
-      throw new SubstringException(e);
-    }
+  @Override
+  protected FixedIntegerList decode(BitString reader, EncodableSegment<E> segment) {
+    return reader.readFixedIntegerList(elementBitStringLength, numElements);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(Object value) {
-    List<Integer> v = new ArrayList<>((List<Integer>) value);
-    for (int i = v.size(); i < numElements; i++) {
-      v.add(0);
+  protected FixedIntegerList processValue(FixedIntegerList oldValue, Object newValue) {
+    List<Integer> list = (List<Integer>) newValue;
+    int size = list.size();
+    for (int i = 0; i < numElements; i++) {
+      oldValue.set(i, i < size ? list.get(i) : 0);
     }
-    if (v.size() > numElements) {
-      v = v.subList(0, numElements);
-    }
-    super.setValue(v);
-  }
-
-  @Override
-  public List<Integer> getValue() {
-    return new ArrayList<>(super.getValue());
+    return oldValue;
   }
 }
