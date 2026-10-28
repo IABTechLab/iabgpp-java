@@ -107,6 +107,7 @@ public class TcfEuV2Test {
     Assertions.assertEquals(Set.of(), tcfEuV2.getVendorsDisclosed());
 
     Assertions.assertEquals(2, tcfEuV2.getId());
+    assertIsEmptyMatchesSizeZero(tcfEuV2);
   }
 
   @Test
@@ -148,6 +149,7 @@ public class TcfEuV2Test {
     Assertions.assertEquals(Set.of(), tcfEuV2.getVendorsDisclosed());
 
     Assertions.assertEquals(2, tcfEuV2.getId());
+    assertIsEmptyMatchesSizeZero(tcfEuV2);
   }
 
   @Test
@@ -286,6 +288,7 @@ public class TcfEuV2Test {
         tcfEuV2.getVendorsDisclosedSegmentType());
     Assertions.assertEquals(
         tcfEuV2.getFieldValue(TcfEuV2Field.VENDORS_DISCLOSED), tcfEuV2.getVendorsDisclosed());
+    assertIsEmptyMatchesSizeZero(tcfEuV2);
   }
 
   @Test
@@ -320,6 +323,7 @@ public class TcfEuV2Test {
 
     Assertions.assertEquals(
         280, ((IntegerSet) tcfEuV2.getFieldValue(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS)).size());
+    assertIsEmptyMatchesSizeZero(tcfEuV2);
   }
 
   @Test
@@ -354,6 +358,7 @@ public class TcfEuV2Test {
 
     Assertions.assertEquals(
         254, ((IntegerSet) tcfEuV2.getFieldValue(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS)).size());
+    assertIsEmptyMatchesSizeZero(tcfEuV2);
   }
 
   @Test
@@ -390,6 +395,7 @@ public class TcfEuV2Test {
     Assertions.assertEquals(
         Set.of(2, 6, 8, 12, 18, 23, 37, 42),
         tcfEuV2.getFieldValue(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS));
+    assertIsEmptyMatchesSizeZero(tcfEuV2);
   }
 
   @SuppressWarnings("unchecked")
@@ -433,6 +439,7 @@ public class TcfEuV2Test {
     Assertions.assertEquals(1, rangeEntry.getKey());
     Assertions.assertEquals(0, rangeEntry.getType());
     Assertions.assertEquals(Set.of(10), rangeEntry.getIds());
+    assertIsEmptyMatchesSizeZero(tcfEuV2);
   }
 
   @Test()
@@ -451,5 +458,57 @@ public class TcfEuV2Test {
         () -> {
           new TcfEuV2("z").getCreated();
         });
+  }
+
+  @Test
+  public void testSpecExampleEmptyFieldsRespectViewBounds() {
+    TcfEuV2 t =
+        new TcfEuV2(
+            "CQSbk4AQSbk4ANwAAAENAwCgAAAAAAAAAAYgACPAAAAA.IDKQA4AAgAKAGQAygAAA.YAAAAAAAAAAA");
+    IntegerSet sf = t.getSpecialFeatureOptins();
+    Assertions.assertTrue(sf.isEmpty());
+    Assertions.assertEquals(0, sf.size());
+    Assertions.assertFalse(sf.iterator().hasNext());
+    assertIsEmptyMatchesSizeZero(t);
+  }
+
+  @Test
+  public void testDisclosedVendorsEmptyBitfieldWithPaddingBit() {
+    TcfEuV2 t =
+        new TcfEuV2(
+            "CQSU_AAQSU_AAEsACBENCWFgAP_gAEAAAAYgAxwAgACgBjAAAAAA.IAFAABA");
+    IntegerSet d = t.getVendorsDisclosed();
+    Assertions.assertTrue(d.isEmpty());
+    Assertions.assertEquals(0, d.size());
+    Assertions.assertFalse(d.iterator().hasNext());
+    assertIsEmptyMatchesSizeZero(t);
+  }
+
+  private void assertIsEmptyMatchesSizeZero(TcfEuV2 t) {
+    List<IntegerSet> sets =
+        Arrays.asList(
+            t.getSpecialFeatureOptins(),
+            t.getPurposeConsents(),
+            t.getPurposeLegitimateInterests(),
+            t.getVendorConsents(),
+            t.getVendorLegitimateInterests(),
+            t.getPublisherConsents(),
+            t.getPublisherLegitimateInterests(),
+            t.getPublisherCustomConsents(),
+            t.getPublisherCustomLegitimateInterests(),
+            t.getVendorsAllowed(),
+            t.getVendorsDisclosed());
+    for (IntegerSet set : sets) {
+      if (set != null) {
+        Assertions.assertEquals(
+            set.size() == 0,
+            set.isEmpty(),
+            "isEmpty() must match (size() == 0) for " + set);
+        Assertions.assertEquals(
+            !set.iterator().hasNext(),
+            set.isEmpty(),
+            "isEmpty() must match !iterator().hasNext() for " + set);
+      }
+    }
   }
 }

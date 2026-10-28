@@ -71,6 +71,42 @@ class IntegerSetTest {
     assertTrue(set.contains(3));
     assertFalse(set.contains(4));
     assertFalse(set.contains(100));
+
+    IntegerSet emptyBefore = new IntegerSet(bitSet, 0, 10);
+    assertTrue(emptyBefore.isEmpty());
+    assertEquals(0, emptyBefore.size());
+    assertFalse(emptyBefore.iterator().hasNext());
+
+    IntegerSet emptyAfter = new IntegerSet(bitSet, 14, 20);
+    assertTrue(emptyAfter.isEmpty());
+    assertEquals(0, emptyAfter.size());
+    assertFalse(emptyAfter.iterator().hasNext());
+  }
+
+  @Test
+  void testIsEmptyRespectsViewBounds() {
+    BitSet bitSet = new BitSet();
+    bitSet.set(15);
+
+    IntegerSet before = new IntegerSet(bitSet, 0, 10);
+    assertTrue(before.isEmpty());
+    assertEquals(0, before.size());
+    assertFalse(before.iterator().hasNext());
+
+    IntegerSet containing = new IntegerSet(bitSet, 10, 20);
+    assertFalse(containing.isEmpty());
+    assertEquals(1, containing.size());
+    assertTrue(containing.iterator().hasNext());
+
+    IntegerSet after = new IntegerSet(bitSet, 20, 30);
+    assertTrue(after.isEmpty());
+    assertEquals(0, after.size());
+    assertFalse(after.iterator().hasNext());
+
+    IntegerSet excludedUpper = new IntegerSet(bitSet, 10, 15);
+    assertTrue(excludedUpper.isEmpty());
+    assertEquals(0, excludedUpper.size());
+    assertFalse(excludedUpper.iterator().hasNext());
   }
 
   @Test

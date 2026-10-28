@@ -69,7 +69,8 @@ public final class IntegerSet extends AbstractSet<Integer> implements Dirtyable 
 
   @Override
   public boolean isEmpty() {
-    return bitSet.nextSetBit(from) == -1;
+    int next = bitSet.nextSetBit(from);
+    return next == -1 || next >= to;
   }
 
   public boolean containsInt(int value) {
